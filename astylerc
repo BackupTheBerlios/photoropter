@@ -1,0 +1,14 @@
+mode=c
+suffix=none
+style=ansi
+indent=spaces=4
+indent-classes
+indent-switches
+indent-cases
+indent-namespaces
+indent-labels
+indent-preprocessor
+convert-tabs
+break-blocks=all
+unpad=paren
+pad=paren-out
