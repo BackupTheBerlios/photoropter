@@ -60,6 +60,29 @@ if(USE_BOOST_SCOPED_PTR)
 endif(USE_BOOST_SCOPED_PTR)
 
 ########################################
+# doxygen
+########################################
+
+find_package(Doxygen)
+
+if(DOXYGEN_FOUND)
+  message("Generating HTML documentation.")
+
+  set(DOXYGEN_CONF_IN ${CMAKE_CURRENT_SOURCE_DIR}/doxygen.conf.in)
+  set(DOXYGEN_CONF ${CMAKE_CURRENT_BINARY_DIR}/doxygen.conf)
+  set(DOXYGEN_SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR})
+  set(DOXYGEN_DOC_DIR ${CMAKE_CURRENT_BINARY_DIR}/doc)
+
+  configure_file(${DOXYGEN_CONF_IN} ${DOXYGEN_CONF})
+
+  add_custom_target(doc ALL ${DOXYGEN_EXECUTABLE} ${DOXYGEN_CONF})
+
+else(DOXYGEN_FOUND)
+  message("Doxygen not found, documentation will not be generated.")
+
+endif(DOXYGEN_FOUND)
+
+########################################
 # configure program components
 ########################################
 
