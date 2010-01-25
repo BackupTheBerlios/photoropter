@@ -6,6 +6,10 @@
 
 #include "types.h"
 
+/**
+* \brief Main namespace of the Photoropter library.
+*/
+
 namespace phtr
 {
 
@@ -79,21 +83,19 @@ namespace phtr
                 // nil
             }
 
+        public:
             /**
-            * \brief Write a channel value.
+            * \brief Write a channel value to the current pixel.
             * \param chan The channel.
             * \param val  The value.
             */
-
-        public:
             virtual void write_px_val (channel::type chan, channel_t val) = 0;
 
+        public:
             /**
             * \brief Increment the current position.
             * \attention Boundary checks are not guaranteed.
             */
-
-        public:
             virtual void inc_pos();
 
     }; // class IImageViewIterW
@@ -117,6 +119,7 @@ namespace phtr
             */
             virtual void write_px_val (channel::type chan, coord_t x, coord_t y, channel_t val) = 0;
 
+        public:
             /**
             * \brief Get a pixel iterator.
             * A new iterator is instatiated and returned inside an auto_ptr object
@@ -124,9 +127,17 @@ namespace phtr
             * objects 'by value').
             * \return The iterator.
             */
+            virtual std::auto_ptr<IImageViewIterW> get_iter (coord_t x, coord_t y) = 0;
 
         public:
-            virtual std::auto_ptr<IImageViewIterW> get_iter (coord_t x, coord_t y) = 0;
+            /**
+            * \brief Get the current region of interest.
+            * \param x_min The minimal x coordinate.
+            * \param y_min The minimal y coordinate.
+            * \param x_max The maximal x coordinate.
+            * \param y_max The maximal y coordinate.
+            */
+            virtual void get_roi (coord_t x_min, coord_t y_min, coord_t x_max, coord_t y_max) = 0;
 
     }; // class IImageViewW
 
