@@ -1,6 +1,6 @@
 #include "storagetypes.h"
 
-namespace phr
+namespace phtr
 {
 
     namespace storage
@@ -48,4 +48,4 @@ namespace phr
 
     } // namespace storage
 
-} // namespace phr
+} // namespace phtr

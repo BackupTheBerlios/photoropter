@@ -4,7 +4,7 @@
 #include "image_impl.h"
 #include "exception.h"
 
-namespace phr
+namespace phtr
 {
 
     basic_image_impl::basic_image_impl()
@@ -62,4 +62,4 @@ namespace phr
         }
     }
 
-} // namespace phr
+} // namespace phtr

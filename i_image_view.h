@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-namespace phr
+namespace phtr
 {
 
     /**
@@ -130,6 +130,6 @@ namespace phr
 
     }; // class i_image_view_w
 
-} // namespace phr
+} // namespace phtr
 
 #endif // __I_IMAGE_VIEW_H__

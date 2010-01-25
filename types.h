@@ -8,7 +8,7 @@
 #include <boost/scoped_ptr.hpp>
 #endif // USE_BOOST_SCOPED_PTR
 
-namespace phr
+namespace phtr
 {
 
     class basic_image_impl;
@@ -53,6 +53,6 @@ namespace phr
         };
     }
 
-} // namespace phr
+} // namespace phtr
 
 #endif // __TYPES_H__

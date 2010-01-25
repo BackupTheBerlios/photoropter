@@ -1,7 +1,7 @@
 #include "basic_image.h"
 #include "image_impl.h"
 
-namespace phr
+namespace phtr
 {
 
     basic_image::basic_image(storage::type ty, size_t width, size_t height)
@@ -33,4 +33,4 @@ namespace phr
         return height_;
     }
 
-} // namespace phr
+} // namespace phtr

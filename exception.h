@@ -3,7 +3,7 @@
 
 #include <string>
 
-namespace phr
+namespace phtr
 {
 
     namespace exception
@@ -29,6 +29,6 @@ namespace phr
 
     } // namespace exception
 
-} // namespace phr
+} // namespace phtr
 
 #endif // __EXCEPTION_H__

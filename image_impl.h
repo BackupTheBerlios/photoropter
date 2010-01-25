@@ -6,7 +6,7 @@
 #include "storagetypes.h"
 #include "gil_storagetypes.h"
 
-namespace phr
+namespace phtr
 {
 
     template <storage::type ty>
@@ -37,7 +37,7 @@ namespace phr
         friend class basic_image_impl;
     }; // template class image_impl
 
-} // namespace phr
+} // namespace phtr
 
 #include "image_impl.hpp"
 

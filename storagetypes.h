@@ -1,7 +1,7 @@
 #ifndef __STORAGETYPES_H__
 #define __STORAGETYPES_H__
 
-namespace phr
+namespace phtr
 {
 
     namespace storage
@@ -28,6 +28,6 @@ namespace phr
 
     } // namespace storage
 
-} // namespace phr
+} // namespace phtr
 
 #endif // __STORAGETYPES_H__

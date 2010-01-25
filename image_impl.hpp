@@ -1,4 +1,4 @@
-namespace phr
+namespace phtr
 {
 
     template <storage::type ty>
@@ -21,4 +21,4 @@ namespace phr
         return storage_type_;
     }
 
-} // namespace phr
+} // namespace phtr

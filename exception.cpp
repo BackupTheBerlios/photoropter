@@ -1,6 +1,6 @@
 #include "exception.h"
 
-namespace phr
+namespace phtr
 {
 
     namespace exception
@@ -30,4 +30,4 @@ namespace phr
 
     } // namespace exception
 
-} // namespace phr
+} // namespace phtr

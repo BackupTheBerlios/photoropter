@@ -4,7 +4,7 @@
 #include "storagetypes.h"
 #include "types.h"
 
-namespace phr
+namespace phtr
 {
 
     class basic_image_impl;
@@ -33,6 +33,6 @@ namespace phr
         size_t height_;
     };
 
-} // namespace phr
+} // namespace phtr
 
 #endif // __BASIC_IMAGE_H__

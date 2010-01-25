@@ -3,7 +3,7 @@
 
 #include "storagetypes.h"
 
-namespace phr
+namespace phtr
 {
 
     class basic_image_impl
@@ -25,6 +25,6 @@ namespace phr
         basic_image_impl& operator=(const basic_image_impl& orig);
     }; // class basic_image_impl
 
-} // namespace phr
+} // namespace phtr
 
 #endif // __BASIC_IMAGE_IMPL_H__

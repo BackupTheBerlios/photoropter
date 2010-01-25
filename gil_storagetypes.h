@@ -5,7 +5,7 @@
 #include <boost/gil/typedefs.hpp>
 #include "storagetypes.h"
 
-namespace phr
+namespace phtr
 {
 
     template <storage::type t>
@@ -86,6 +86,6 @@ namespace phr
         typedef boost::gil::rgba32_image_t type;
     };
 
-} // namespace phr
+} // namespace phtr
 
 #endif // __GIL_STORAGETYPES_H__
