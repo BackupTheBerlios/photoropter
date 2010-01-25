@@ -16,7 +16,7 @@
 
 #include "gil_storagetypes.h"
 #include "basic_image.h"
-#include "i_image_view.h"
+#include "image_view.h"
 
 #include <typeinfo>
 #include <limits>

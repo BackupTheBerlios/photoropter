@@ -1,0 +1,17 @@
+/**
+
+@mainpage Photoropter
+
+@section intro Introduction
+
+This is the documentation to Photoropter.
+
+@section toc Contents
+<ol>
+<li>@ref overview</li>
+<li>@ref license</li>
+<li>@ref codingstyle</li>
+</ol>
+
+*/
+

@@ -1,0 +1,10 @@
+/**
+
+@page license License
+
+The Photoropter library is licensed under the terms of the @ref lgpl.
+
+@page lgpl GNU Lesser General Public License, version 3
+\verbinclude lgpl-3.0.txt
+
+*/

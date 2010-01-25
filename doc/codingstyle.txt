@@ -1,0 +1,74 @@
+/**
+
+@page codingstyle Photoropter coding style
+
+@section code_org Code organisation
+
+@subsection code_org_classes Classes and structs
+
+<ul>
+<li>The interface of polymorphic classes is extracted in form of a
+(fully abstract) interface class, from which all implementing classes
+inherit.</li>
+<li>Semantically different parts of a class's interface are
+extracted into separate interface definitions.</li>
+<li>Usually a header contains only a single class
+definition. Exception: closely related interface definitons that form
+a coherent unit.</li>
+</ul>
+
+@subsection code_org_misc Miscellaneous
+
+<ul>
+<li>Functions that receive objects as parameters use references to the
+interface base class wherever possible.</li>
+<li>Enumerations are usually placed inside their own descriptive namespace and
+given a generic name like e.g. 'type'. This allows to refer to both
+the enumeration as a whole as well as its values by using the
+descriptive sub-namespace, and thus avoids namespace pollution. </li>
+</ul>
+
+@section naming Naming
+
+@subsection naming_general General
+
+<ul>
+<li>All identifiers are plain English.</li>
+<li>Identifiers are descriptive. Especially very short names
+like i,k,l or x,y,z are used only for very shortlived variables (e.g.,
+loop counters), and only if there cannot be any doubt about their
+purpose.</li>
+<li>Variables and typedefs are written in small letters, only using
+[a-z0-9] as characters.</li>
+<li>Variables and typedefs that contain more than one english word are
+separated using "_".</li>
+<li>Typedefs are marked with a "_t" suffix.</li>
+<li>Private variables in classes are marked with a single "_" suffix.</li>
+</ul>
+
+@subsection naming_classes Classes and structs
+
+<ul>
+<li>The same naming principles apply, with the following exceptions.</li>
+<li>The first letter of a class name is capitalised. The following
+letters remain lower-case.</li>
+<li>Multiple words in a class name are separated by capitalisation
+rather than "_" (i.e., 'camel casing' is used).</li>
+<li>Interface definitions (i.e., fully abstract class definitions) are
+marked by an initial letter "I". This is not considered the first
+letter of the class name (i.e., (2) still applies).</li>
+</ul>
+
+@section langfeatures Language features
+
+<ul>
+<li>The 'const' keyword is used proactively.</li>
+<li>Namespaces are used wherever sensible. Semantically independent
+parts of the code reside in separate namespaces.</li>
+<li>The 'using' keyword is generally avoided, especially in the form
+'using namespace [...]' at global scope.</li>
+<li>Multiple inheritance is generally avoided. Exception: inheritance
+of interface class definitions.</li>
+</ul>
+
+*/

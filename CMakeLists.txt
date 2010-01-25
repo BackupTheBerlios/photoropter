@@ -102,7 +102,7 @@ add_executable(vxltest
   basic_image_impl.cpp
   image_impl.h
   image_impl.hpp
-  i_image_view.h
+  image_view.h
   )
 
 target_link_libraries(vxltest

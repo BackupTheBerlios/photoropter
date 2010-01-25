@@ -1,5 +1,5 @@
-#ifndef __I_IMAGE_VIEW_H__
-#define __I_IMAGE_VIEW_H__
+#ifndef __IMAGE_VIEW_H__
+#define __IMAGE_VIEW_H__
 
 #include <cstddef>
 #include <memory>
@@ -13,7 +13,7 @@ namespace phtr
     * \brief Basic image view interface.
     */
 
-    class i_image_view_base
+    class IImageViewBase
     {
 
         protected:
@@ -21,7 +21,7 @@ namespace phtr
             * \brief Destructor.
             * Declared 'virtual' for proper polymorphic behaviour.
             */
-            virtual ~i_image_view_base()
+            virtual ~IImageViewBase()
             {
                 // nil
             }
@@ -40,13 +40,13 @@ namespace phtr
             */
             virtual size_t height() const = 0;
 
-    }; // class i_image_view_base
+    }; // class IImageViewBase
 
     /**
     * \brief Image view interface for reading of data.
     */
 
-    class i_image_view_r : public virtual i_image_view_base
+    class IImageViewR : public virtual IImageViewBase
     {
 
         public:
@@ -59,14 +59,14 @@ namespace phtr
             */
             virtual channel_t get_px_val (channel::type chan, coord_t x, coord_t y) const = 0;
 
-    }; // class i_image_view_r
+    }; // class IImageViewR
 
     /**
     * \brief Iterator class for write access to an image.
     * This class is used to implement fast linewise access to an image.
     */
 
-    class i_image_view_iter_w
+    class IImageViewIterW
     {
 
         protected:
@@ -74,7 +74,7 @@ namespace phtr
             * \brief Destructor.
             * Declared 'virtual' for proper polymorphic behaviour.
             */
-            virtual ~i_image_view_iter_w()
+            virtual ~IImageViewIterW()
             {
                 // nil
             }
@@ -96,7 +96,7 @@ namespace phtr
         public:
             virtual void inc_pos();
 
-    }; // class i_image_view_iter_w
+    }; // class IImageViewIterW
 
     /**
     * \brief Image view interface for writing of data.
@@ -104,7 +104,7 @@ namespace phtr
     * for increased performance are defined.
     */
 
-    class i_image_view_w : public virtual i_image_view_base
+    class IImageViewW : public virtual IImageViewBase
     {
 
         public:
@@ -126,10 +126,10 @@ namespace phtr
             */
 
         public:
-            virtual std::auto_ptr<i_image_view_iter_w> get_iter (coord_t x, coord_t y) = 0;
+            virtual std::auto_ptr<IImageViewIterW> get_iter (coord_t x, coord_t y) = 0;
 
-    }; // class i_image_view_w
+    }; // class IImageViewW
 
 } // namespace phtr
 
-#endif // __I_IMAGE_VIEW_H__
+#endif // __IMAGE_VIEW_H__
