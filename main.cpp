@@ -15,7 +15,6 @@
 #include <boost/gil/pixel.hpp>
 
 #include "gil_storagetypes.h"
-#include "basic_image.h"
 #include "image_view.h"
 
 #include <typeinfo>

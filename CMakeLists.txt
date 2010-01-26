@@ -51,8 +51,8 @@ if(CMAKE_COMPILER_IS_GNUCXX)
 endif(CMAKE_COMPILER_IS_GNUCXX)
 
 # set compiler options; these have to come last to take precedence
-set(CMAKE_CXX_FLAGS_DEBUG "-O0 -g -ansi -pedantic -Wall -Wextra -Werror -DDEBUG")
-set(CMAKE_CXX_FLAGS_RELEASE "-O2 -ansi -DNDEBUG")
+set(CMAKE_CXX_FLAGS_DEBUG "-O0 -g -ansi -pedantic -Wall -Wextra -Werror -Wno-long-long -DDEBUG")
+set(CMAKE_CXX_FLAGS_RELEASE "-O2 -ansi -DNDEBUG -Wno-long-long")
 
 if(USE_BOOST_SCOPED_PTR)
   set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DUSE_BOOST_SCOPED_PTR")
@@ -96,13 +96,11 @@ add_executable(vxltest
   gil_storagetypes.h
   exception.h
   exception.cpp
-  basic_image.h
-  basic_image.cpp
-  basic_image_impl.h
-  basic_image_impl.cpp
-  image_impl.h
-  image_impl.hpp
   image_view.h
+  mem_image_view_r.h
+  mem_image_view_r.cpp
+  mem_image_r.h
+  mem_image_r.cpp
   )
 
 target_link_libraries(vxltest
