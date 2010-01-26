@@ -569,10 +569,10 @@ WARN_LOGFILE           =
 # with spaces.
 
 INPUT                  = ${DOXYGEN_SRC_DIR} \
-		         ${DOXYGEN_SRC_DIR}/doc/main.txt \
-		         ${DOXYGEN_SRC_DIR}/doc/overview.txt \
-		         ${DOXYGEN_SRC_DIR}/doc/license.txt \
-		         ${DOXYGEN_SRC_DIR}/doc/codingstyle.txt
+		         ${DOXYGEN_SRC_DIR}/doc-src/main.txt \
+		         ${DOXYGEN_SRC_DIR}/doc-src/overview.txt \
+		         ${DOXYGEN_SRC_DIR}/doc-src/license.txt \
+		         ${DOXYGEN_SRC_DIR}/doc-src/codingstyle.txt
 
 # This tag can be used to specify the character encoding of the source files
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding, which is
@@ -629,7 +629,7 @@ EXCLUDE_SYMBOLS        =
 # directories that contain example code fragments that are included (see
 # the \include command).
 
-EXAMPLE_PATH           = ${DOXYGEN_SRC_DIR}/doc
+EXAMPLE_PATH           = ${DOXYGEN_SRC_DIR}/doc-src
 
 # If the value of the EXAMPLE_PATH tag contains directories, you can use the
 # EXAMPLE_PATTERNS tag to specify one or more wildcard pattern (like *.cpp
