@@ -8,7 +8,7 @@
 
 <ul>
 <li>The interface of polymorphic classes is extracted in form of a
-(fully abstract) interface class, from which all implementing classes
+(fully abstract) interface class, from which all the implementing classes
 inherit.</li>
 <li>Semantically different parts of a class's interface are
 extracted into separate interface definitions.</li>
@@ -20,12 +20,24 @@ a coherent unit.</li>
 @subsection code_org_misc Miscellaneous
 
 <ul>
+<li>Variables are declared one by one, each in a separate declaration
+statement.</li>
 <li>Functions that receive objects as parameters use references to the
 interface base class wherever possible.</li>
 <li>Enumerations are usually placed inside their own descriptive namespace and
 given a generic name like e.g. 'type'. This allows to refer to both
 the enumeration as a whole as well as its values by using the
 descriptive sub-namespace, and thus avoids namespace pollution. </li>
+</ul>
+
+@section formatting Formatting
+
+<ul>
+<li>The source code is formatted according to the ANSI style.</li>
+<li>Scope braces ('curly braces') are usually placed on separate lines.</li>
+<li>Blocks are indented by 4 spaces. However, the corresponding scope braces
+are not indented.</li>
+<li>A sample configuration file for the astyle code formatter is provided.</li>
 </ul>
 
 @section naming Naming
@@ -40,8 +52,8 @@ loop counters), and only if there cannot be any doubt about their
 purpose.</li>
 <li>Variables and typedefs are written in small letters, only using
 [a-z0-9] as characters.</li>
-<li>Variables and typedefs that contain more than one english word are
-separated using "_".</li>
+<li>Variables and typedefs that contain more than one word are separated
+using "_".</li>
 <li>Typedefs are marked with a "_t" suffix.</li>
 <li>Private variables in classes are marked with a single "_" suffix.</li>
 </ul>

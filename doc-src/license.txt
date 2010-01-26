@@ -1,0 +1,20 @@
+/**
+
+@page license License
+
+The Photoropter library itself is distributed under the terms of the
+@ref mit-lic. All accompanying utility programs are distributed under the
+terms of the @ref gpl.
+
+This effectively means that you <em>can</em> use Photoropter in just about
+any software, provided you give credit for it. However, all utility programs
+(e.g., for lens database maintenance or calibration) are copylefted. You have
+been warned.
+
+@page gpl GNU General Public License, version 3
+\verbinclude gpl-3.0.txt
+
+@page mit-lic MIT License
+\verbinclude mit-lic.txt
+
+*/
