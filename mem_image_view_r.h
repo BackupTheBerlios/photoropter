@@ -9,30 +9,103 @@
 namespace phtr
 {
 
+    /**
+    * \brief Class template implementing an 'image view' of a given memory position.
+    * \details The template uses internal templates to deal efficiently with different
+    * storage types.
+    */
     class MemImageViewR : public IImageViewR
     {
 
-        public:
-            MemImageViewR (coord_t width, coord_t height);
-            virtual ~MemImageViewR();
-
-        protected:
+        private:
+            /**
+            * \brief The type of the internal storage info object.
+            */
+            typedef MemStorageInfo<Storage::rgb_8_inter> storage_info_t;
 
         private:
-            typedef MemStorageInfo<Storage::rgb_8_inter> storage_info_t;
+            /**
+            * \brief The channel storage type (e.g., uint8_t).
+            */
             typedef storage_info_t::channel_storage_t channel_storage_t;
 
+        public:
+            /**
+            * \brief Constructor.
+            * \param base_addr The base address of the image data in memory.
+            * \param width The image width.
+            * \param height The image height.
+            */
+            MemImageViewR (const channel_storage_t* base_addr,
+                           coord_t width,
+                           coord_t height);
+
+        public:
+            /**
+            * \brief Desctructor.
+            */
+            virtual ~MemImageViewR();
+
+        private:
+            /**
+            * \brief Internal storage info object, used to calculate the memory
+            * layout parameters.
+            */
             storage_info_t storage_info;
 
+        private:
+            /**
+            * \brief The base address of the image.
+            */
+            const channel_storage_t* base_addr_;
+
+        private:
+            /**
+            * \brief The image width.
+            */
             const coord_t width_;
+
+        private:
+            /**
+            * \brief The image height.
+            */
             const coord_t height_;
 
-            channel_storage_t* base_addr_;
+        private:
+            /**
+            * \brief The minimal value a channel can hold.
+            */
             const channel_storage_t min_chan_val_;
+
+        private:
+            /**
+            * \brief The maximal value a channel can hold.
+            */
             const channel_storage_t max_chan_val_;
+
+        private:
+            /**
+            * \brief The distance between two adjacent pixels, in multiples
+            * of the channel storage unit.
+            */
             const size_t step_;
+
+        private:
+            /**
+            * \brief The offset of the red channel to the current memory position.
+            */
             const size_t r_offs_;
+
+        private:
+            /**
+            * \brief The offset of the green channel to the current memory position.
+            */
             const size_t g_offs_;
+
+        private:
+            /**
+            * \brief The offset of the blue channel to the current memory position.
+            */
             const size_t b_offs_;
     };
 

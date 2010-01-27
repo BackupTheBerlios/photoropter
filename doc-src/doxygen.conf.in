@@ -214,7 +214,8 @@ OPTIMIZE_OUTPUT_VHDL   = NO
 # the parsers supported by doxygen: IDL, Java, Javascript, C#, C, C++, D, PHP,
 # Objective-C, Python, Fortran, VHDL, C, C++. For instance to make doxygen treat
 # .inc files as Fortran files (default is PHP), and .f files as C (default is Fortran),
-# use: inc=Fortran f=C. Note that for custom extensions you also need to set FILE_PATTERNS otherwise the files are not read by doxygen.
+# use: inc=Fortran f=C. Note that for custom extensions you also need to set FILE_PATTERNS
+# otherwise the files are not read by doxygen.
 
 EXTENSION_MAPPING      =
 
@@ -302,12 +303,12 @@ EXTRACT_ALL            = NO
 # If the EXTRACT_PRIVATE tag is set to YES all private members of a class
 # will be included in the documentation.
 
-EXTRACT_PRIVATE        = NO
+EXTRACT_PRIVATE        = ${DOXYGEN_EXTRACT_PRIVATE}
 
 # If the EXTRACT_STATIC tag is set to YES all static members of a file
 # will be included in the documentation.
 
-EXTRACT_STATIC         = NO
+EXTRACT_STATIC         = ${DOXYGEN_EXTRACT_STATIC}
 
 # If the EXTRACT_LOCAL_CLASSES tag is set to YES classes (and structs)
 # defined locally in source files will be included in the documentation.
@@ -405,7 +406,12 @@ SORT_MEMBER_DOCS       = YES
 
 SORT_BRIEF_DOCS        = NO
 
-# If the SORT_MEMBERS_CTORS_1ST tag is set to YES then doxygen will sort the (brief and detailed) documentation of class members so that constructors and destructors are listed first. If set to NO (the default) the constructors will appear in the respective orders defined by SORT_MEMBER_DOCS and SORT_BRIEF_DOCS. This tag will be ignored for brief docs if SORT_BRIEF_DOCS is set to NO and ignored for detailed docs if SORT_MEMBER_DOCS is set to NO.
+# If the SORT_MEMBERS_CTORS_1ST tag is set to YES then doxygen will sort
+# the (brief and detailed) documentation of class members so that constructors
+# and destructors are listed first. If set to NO (the default) the constructors
+# will appear in the respective orders defined by SORT_MEMBER_DOCS and
+# SORT_BRIEF_DOCS. This tag will be ignored for brief docs if SORT_BRIEF_DOCS is set
+# to NO and ignored for detailed docs if SORT_MEMBER_DOCS is set to NO.
 
 SORT_MEMBERS_CTORS_1ST = NO
 
@@ -569,10 +575,11 @@ WARN_LOGFILE           =
 # with spaces.
 
 INPUT                  = ${DOXYGEN_SRC_DIR} \
-		         ${DOXYGEN_SRC_DIR}/doc-src/main.txt \
-		         ${DOXYGEN_SRC_DIR}/doc-src/overview.txt \
-		         ${DOXYGEN_SRC_DIR}/doc-src/license.txt \
-		         ${DOXYGEN_SRC_DIR}/doc-src/codingstyle.txt
+                         ${DOXYGEN_DOCSRC_DIR} \
+                         ${DOXYGEN_DOCSRC_DIR}/main.txt \
+                         ${DOXYGEN_DOCSRC_DIR}/overview.txt \
+                         ${DOXYGEN_DOCSRC_DIR}/license.txt \
+                         ${DOXYGEN_DOCSRC_DIR}/codingstyle.txt
 
 # This tag can be used to specify the character encoding of the source files
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding, which is
@@ -798,7 +805,7 @@ HTML_FOOTER            =
 # the style sheet file to the HTML output directory, so don't put your own
 # stylesheet in the HTML output directory as well, or it will be erased!
 
-HTML_STYLESHEET        =
+HTML_STYLESHEET        = ${DOXYGEN_DOCSRC_DIR}/customdoxy.css
 
 # If the HTML_ALIGN_MEMBERS tag is set to YES, the members of classes,
 # files or namespaces will be aligned in HTML using tables. If set to

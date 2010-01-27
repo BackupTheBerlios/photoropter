@@ -29,6 +29,10 @@ given a generic name like e.g. 'type'. This allows to refer to both
 the enumeration as a whole as well as its values by using the
 descriptive struct name, and thus avoids namespace pollution. </li>
 <li>Every 'switch' statement contains a 'default:' label.</li>
+<li>All public class interface elements and functions (especially those
+that are expected to be used "from the outside") are documented using
+Doxygen comments. Private classes members are generally also documented if
+possible.</li>
 </ul>
 
 @section formatting Formatting
@@ -69,11 +73,12 @@ letters remain lower-case.</li>
 rather than "_" (i.e., 'camel casing' is used).</li>
 <li>Interface definitions (i.e., fully abstract class definitions) are
 marked by an initial letter "I". This is not considered the first
-letter of the class name (i.e., (2) still applies).</li>
+letter of the class name (i.e., the second point still applies).</li>
 </ul>
 
 @section langfeatures Language features
 
+@subsection langfeatures_general General
 <ul>
 <li>The 'const' keyword is used proactively.</li>
 <li>Namespaces are used wherever sensible. Semantically independent
@@ -82,6 +87,30 @@ parts of the code reside in separate namespaces.</li>
 'using namespace [...]' at global scope.</li>
 <li>Multiple inheritance is generally avoided. Exception: inheritance
 of interface class definitions.</li>
+<li>Visibility specifiers in classes and structs (e.g., 'public', 'private')
+are repeated in front of every member declaration. Exception: public
+members of structs are generally not specially marked (and non-public
+members are usually shifted towards the end of the struct, if used at all).</li>
 </ul>
 
+@subsection langfeatures_classes Classes and structs
+
+<ul>
+<li>Structs are not considered classes (even if C++ does treat them like that).
+The 'struct' keyword is only used for types that are semantically "not a class"
+(see next point). Classes use the 'class' keyword exclusively.</li>
+<li>A struct is only used for:<ul>
+ <li>interoperability with C, or</li>
+ <li>to hold constant, static and/or type information.</li>
+ </ul></li>
+<li>Structs have no 'surprising' side effects (like initialisation of buffers).</li>
+<li>A struct is never used as base class.</li>
+<li>Apart from constructors for member initialisation and 'const' functions
+without side effects, a struct does not contain member functions.</li>
+<li>Structs do not contain virtual members.</li>
+<li>All classes usually declare a virtual destructor.</li>
+<li>If there is a good reason to declare the destructor of a class non-virtual,
+it is marked (and explained) in the documentation.</li>
+<li>A class without virtual destructor is never used as base class.</li>
+</ul>
 */

@@ -15,8 +15,6 @@ namespace phtr
 
         protected:
             MemImageR();
-
-        private:
     };
 
 } // namespace phtr

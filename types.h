@@ -11,14 +11,6 @@
 namespace phtr
 {
 
-    class basic_image_impl;
-
-#ifdef USE_BOOST_SCOPED_PTR
-    typedef boost::scoped_ptr<basic_image_impl> img_sptr_t;
-#else
-    typedef std::auto_ptr<basic_image_impl> img_sptr_t;
-#endif // USE_BOOST_SCOPED_PTR
-
     /**
     * \brief Channel value type.
     */

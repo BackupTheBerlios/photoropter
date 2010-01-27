@@ -62,6 +62,7 @@ endif(PHTR_USE_SCOPED_PTR)
 ########################################
 
 set(PHTR_BUILD_DOCUMENTATION true CACHE BOOL "Build Doxygen documentation")
+set(PHTR_DOCUMENT_PRIVATE false CACHE BOOL "Include private members in documentation")
 
 if(PHTR_BUILD_DOCUMENTATION)
   find_package(Doxygen)
@@ -69,10 +70,19 @@ if(PHTR_BUILD_DOCUMENTATION)
   if(DOXYGEN_FOUND)
     message(STATUS "HTML documentation will be generated.")
 
-    set(DOXYGEN_CONF_IN ${CMAKE_CURRENT_SOURCE_DIR}/doxygen.conf.in)
-    set(DOXYGEN_CONF ${CMAKE_CURRENT_BINARY_DIR}/doxygen.conf)
     set(DOXYGEN_SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR})
+    set(DOXYGEN_DOCSRC_DIR ${DOXYGEN_SRC_DIR}/doc-src)
     set(DOXYGEN_DOC_DIR ${CMAKE_CURRENT_BINARY_DIR}/doc)
+
+    set(DOXYGEN_CONF_IN ${DOXYGEN_DOCSRC_DIR}/doxygen.conf.in)
+    set(DOXYGEN_CONF ${DOXYGEN_DOC_DIR}/doxygen.conf)
+    if(PHTR_DOCUMENT_PRIVATE)
+      set(DOXYGEN_EXTRACT_PRIVATE "YES")
+      set(DOXYGEN_EXTRACT_STATIC "YES")
+    else(PHTR_DOCUMENT_PRIVATE)
+      set(DOXYGEN_EXTRACT_PRIVATE "NO")
+      set(DOXYGEN_EXTRACT_STATIC "NO")
+    endif(PHTR_DOCUMENT_PRIVATE)
 
     configure_file(${DOXYGEN_CONF_IN} ${DOXYGEN_CONF})
 
