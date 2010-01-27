@@ -6,7 +6,7 @@ include(${VXL_CMAKE_DIR}/UseVXL.cmake)
 set(CMAKE_CXX_FLAGS_DEBUG "-O0 -g -ansi -pedantic -Wall -Wextra -Werror -Wno-long-long -DDEBUG")
 set(CMAKE_CXX_FLAGS_RELEASE "-O2 -ansi -DNDEBUG -Wno-long-long")
 
-include_directories(../include ${VXL_CORE_INCLUDE_DIR})
+include_directories(.. ../include ${VXL_CORE_INCLUDE_DIR})
 
 add_executable(phtrtest
   main.cpp
