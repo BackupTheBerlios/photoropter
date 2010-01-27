@@ -6,13 +6,13 @@
 namespace phtr
 {
 
-   /**
-    * \brief Template for determining the channel storage type
-    * to a given \ref Storage::type.
-    * \details This template \em has to be
-    * specialised for every supported type. In each specialisation,
-    * a member typedef 'type' has to be provided.
-    */
+    /**
+     * \brief Template for determining the channel storage type
+     * to a given \ref Storage::type.
+     * \details This template \em has to be
+     * specialised for every supported type. In each specialisation,
+     * a member typedef 'type' has to be provided.
+     */
     template <Storage::type T>
     struct ChannelStorage
     {

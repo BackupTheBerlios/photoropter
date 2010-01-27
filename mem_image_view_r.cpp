@@ -11,7 +11,7 @@ namespace phtr
             width_(width),
             height_(height),
             min_chan_val_(storage_info.min_val),
-            max_chan_val_(storage_info.min_val),
+            max_chan_val_(storage_info.max_val),
             step_(storage_info.step),
             r_offs_(storage_info.r_offs),
             g_offs_(storage_info.g_offs),
@@ -37,17 +37,17 @@ namespace phtr
 
     channel_t MemImageViewR::get_px_val_r(coord_t x, coord_t y) const
     {
-        return *(get_px_addr(x, y) + r_offs_);
+        return scale_px(*(get_px_addr(x, y) + r_offs_));
     }
 
     channel_t MemImageViewR::get_px_val_g(coord_t x, coord_t y) const
     {
-        return *(get_px_addr(x, y) + g_offs_);
+        return scale_px(*(get_px_addr(x, y) + g_offs_));
     }
 
     channel_t MemImageViewR::get_px_val_b(coord_t x, coord_t y) const
     {
-        return *(get_px_addr(x, y) + b_offs_);
+        return scale_px(*(get_px_addr(x, y) + b_offs_));
     }
 
     const MemImageViewR::channel_storage_t*
@@ -55,5 +55,12 @@ namespace phtr
     {
         return base_addr_ + (((y * width_) + x) * step_);
     }
+
+    channel_t MemImageViewR::scale_px(channel_storage_t raw_val) const
+    {
+        return (static_cast<phtr::channel_t>(raw_val) - static_cast<phtr::channel_t>(min_chan_val_))
+               / (static_cast<phtr::channel_t>(max_chan_val_) - static_cast<phtr::channel_t>(min_chan_val_));
+    }
+
 
 } // namespace phtr

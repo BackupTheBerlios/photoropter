@@ -8,6 +8,7 @@
 #include <vil/vil_copy.h>
 #include <vil/vil_image_view.h>
 
+#include "types.h"
 #include "image_view.h"
 #include "mem_image_view_r.h"
 
@@ -54,7 +55,15 @@ int main()
 
 //    tiff_read_image("/home/robert/kombi1.tif",img);
 
-    phtr::MemImageViewR phtr_mem_view(0, width, height);
+    std::uint8_t* buf = new std::uint8_t[30000];
+    buf[0] = 255;
+    buf[1] = 127;
+    buf[2] = 63;
+    phtr::MemImageViewR phtr_mem_view(buf, 100, 100);
+    vcl_cerr << phtr_mem_view.get_px_val_r(0,0)
+    << " " << phtr_mem_view.get_px_val_g(0,0)
+    << " " << phtr_mem_view.get_px_val_b(0,0) << vcl_endl;
+    delete[] buf;
 
     return 0;
 }

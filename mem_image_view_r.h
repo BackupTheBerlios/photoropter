@@ -97,6 +97,13 @@ namespace phtr
 
         private:
             /**
+            * \brief Scale a pixel value to the [0:1] interval.
+            * \param raw_val The raw (i.e., stored) value.
+            */
+            channel_t scale_px(channel_storage_t raw_val) const;
+
+        private:
+            /**
             * \brief Internal storage info object, used to calculate the memory
             * layout parameters.
             */
