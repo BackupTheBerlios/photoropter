@@ -3,14 +3,16 @@
 namespace phtr
 {
 
-MemImageViewR::MemImageViewR()
-{
-    //ctor
-}
+    MemImageViewR::MemImageViewR (size_t width, size_t height)
+            : width_ (width),
+            height_ (height)
+    {
+        //ctor
+    }
 
-MemImageViewR::~MemImageViewR()
-{
-    //dtor
-}
+    MemImageViewR::~MemImageViewR()
+    {
+        //dtor
+    }
 
 } // namespace phtr

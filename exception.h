@@ -11,20 +11,22 @@ namespace phtr
 
         class base_exception : public std::exception
         {
-        public:
-            base_exception(const std::string& msg);
-            virtual ~base_exception() throw ();
 
-            virtual const char* what() throw ();
+            public:
+                base_exception (const std::string& msg);
+                virtual ~base_exception() throw ();
 
-        private:
-            const std::string msg_;
+                virtual const char* what() throw ();
+
+            private:
+                const std::string msg_;
         };
 
         class not_implemented: public base_exception
         {
-        public:
-            not_implemented(const std::string& msg);
+
+            public:
+                not_implemented (const std::string& msg);
         };
 
     } // namespace exception

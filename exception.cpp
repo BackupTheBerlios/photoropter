@@ -6,9 +6,9 @@ namespace phtr
     namespace exception
     {
 
-        base_exception::base_exception(const std::string& msg)
+        base_exception::base_exception (const std::string& msg)
                 : std::exception(),
-                msg_(msg)
+                msg_ (msg)
         {
         }
 
@@ -22,8 +22,8 @@ namespace phtr
             return msg_.c_str();
         }
 
-        not_implemented::not_implemented(const std::string& msg)
-                : base_exception(msg)
+        not_implemented::not_implemented (const std::string& msg)
+                : base_exception (msg)
         {
             // NIL
         }

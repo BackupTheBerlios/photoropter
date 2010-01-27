@@ -3,30 +3,31 @@
 
 namespace phtr
 {
+    /**
+    * \brief Class containing image storage types.
+    */
 
-    namespace storage
+    class Storage
     {
 
-        enum type
-        {
-            unknown,
-            rgb_8_inter,
-            rgba_8_inter,
-            rgb_16_inter,
-            rgba_16_inter,
-            rgb_32_inter,
-            rgba_32_inter,
-            rgb_8_planar,
-            rgba_8_planar,
-            rgb_16_planar,
-            rgba_16_planar,
-            rgb_32_planar,
-            rgba_32_planar
-        }; // enum storage::type
+        public:
+            /**
+            * \brief The enum containing the actual storage types.
+            */
+            enum type
+            {
+                unknown,
+                rgb_8_inter,
+                rgb_16_inter,
+                rgb_32_inter,
+                rgb_8_planar,
+                rgb_16_planar,
+                rgb_32_planar
+            }; // enum storage::type
 
-        type get_type(int bits, bool alpha, bool interleaved);
+            static type get_type_dontuse (int bits, bool interleaved);
 
-    } // namespace storage
+    }; // class Storage
 
 } // namespace phtr
 

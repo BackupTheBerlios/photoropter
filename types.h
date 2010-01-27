@@ -35,23 +35,25 @@ namespace phtr
     typedef double interp_coord_t;
 
     /**
-    * \brief Namespace containing channel designations.
-    * The namespace contains an enum which defines the actual channels.
+    * \brief Class containing channel designations.
+    * \note The class contains an enum which defines the actual channels.
     */
 
-    namespace channel
+    class Channel
     {
-        /**
-        * \brief The actual enum containing channel designations.
-        */
-        enum type
-        {
-            red = 0,
-            green,
-            blue,
-            alpha
-        };
-    }
+
+        public:
+            /**
+            * \brief The actual enum containing channel designations.
+            */
+            enum type
+            {
+                red = 0,
+                green,
+                blue
+            };
+
+    }; // class Channel
 
 } // namespace phtr
 

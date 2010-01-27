@@ -61,7 +61,34 @@ namespace phtr
             * \param y    The y coordinate.
             * \return The channel value.
             */
-            virtual channel_t get_px_val (channel::type chan, coord_t x, coord_t y) const = 0;
+            virtual channel_t get_px_val (Channel::type chan, coord_t x, coord_t y) const;
+
+        public:
+            /**
+            * \brief Read the 'red' channel value.
+            * \param x    The x coordinate.
+            * \param y    The y coordinate.
+            * \return The channel value.
+            */
+            virtual channel_t get_px_val_r (coord_t x, coord_t y) const = 0;
+
+        public:
+            /**
+            * \brief Read the 'green' channel value.
+            * \param x    The x coordinate.
+            * \param y    The y coordinate.
+            * \return The channel value.
+            */
+            virtual channel_t get_px_val_g (coord_t x, coord_t y) const = 0;
+
+        public:
+            /**
+            * \brief Read the 'blue' channel value.
+            * \param x    The x coordinate.
+            * \param y    The y coordinate.
+            * \return The channel value.
+            */
+            virtual channel_t get_px_val_b (coord_t x, coord_t y) const = 0;
 
     }; // class IImageViewR
 
@@ -89,7 +116,7 @@ namespace phtr
             * \param chan The channel.
             * \param val  The value.
             */
-            virtual void write_px_val (channel::type chan, channel_t val) = 0;
+            virtual void write_px_val (Channel::type chan, channel_t val) = 0;
 
         public:
             /**
@@ -117,7 +144,7 @@ namespace phtr
             * \param y    The y coordinate.
             * \param val  The value.
             */
-            virtual void write_px_val (channel::type chan, coord_t x, coord_t y, channel_t val) = 0;
+            virtual void write_px_val (Channel::type chan, coord_t x, coord_t y, channel_t val) = 0;
 
         public:
             /**

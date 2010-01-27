@@ -24,10 +24,11 @@ a coherent unit.</li>
 statement.</li>
 <li>Functions that receive objects as parameters use references to the
 interface base class wherever possible.</li>
-<li>Enumerations are usually placed inside their own descriptive namespace and
+<li>Enumerations are usually placed inside their own descriptive struct and
 given a generic name like e.g. 'type'. This allows to refer to both
 the enumeration as a whole as well as its values by using the
-descriptive sub-namespace, and thus avoids namespace pollution. </li>
+descriptive struct name, and thus avoids namespace pollution. </li>
+<li>Every 'switch' statement contains a 'default:' label.</li>
 </ul>
 
 @section formatting Formatting

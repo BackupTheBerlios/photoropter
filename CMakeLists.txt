@@ -95,10 +95,10 @@ add_executable(vxltest
   types.h
   storagetypes.h
   storagetypes.cpp
-  gil_storagetypes.h
   exception.h
   exception.cpp
   image_view.h
+  image_view.cpp
   mem_image_view_r.h
   mem_image_view_r.cpp
   mem_image_r.h
