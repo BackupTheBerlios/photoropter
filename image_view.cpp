@@ -1,4 +1,5 @@
 #include "image_view.h"
+#include "mem_image_view_r.h"
 
 namespace phtr
 {
@@ -23,5 +24,43 @@ namespace phtr
                 break;
         }
     }
+
+    IImageViewR* IImageViewR::get_mem_image_view_r(Storage::type storage_type,
+            const void* base_addr,
+            coord_t width,
+            coord_t height)
+    {
+        switch (storage_type)
+        {
+            case Storage::rgb_8_inter:
+                return new MemImageViewR<Storage::rgb_8_inter>(base_addr, width, height);
+                break;
+
+            case Storage::rgb_16_inter:
+                return new MemImageViewR<Storage::rgb_16_inter>(base_addr, width, height);
+                break;
+
+            case Storage::rgb_32_inter:
+                return new MemImageViewR<Storage::rgb_32_inter>(base_addr, width, height);
+                break;
+
+            case Storage::rgb_8_planar:
+                return new MemImageViewR<Storage::rgb_8_planar>(base_addr, width, height);
+                break;
+
+            case Storage::rgb_16_planar:
+                return new MemImageViewR<Storage::rgb_16_planar>(base_addr, width, height);
+                break;
+
+            case Storage::rgb_32_planar:
+                return new MemImageViewR<Storage::rgb_32_planar>(base_addr, width, height);
+                break;
+
+            default:
+                return 0;
+                break;
+        }
+    }
+
 
 } // namespace phtr

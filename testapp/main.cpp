@@ -10,8 +10,8 @@
 
 #include "types.h"
 #include "image_view.h"
-#include "mem_image_view_r.h"
 
+#include <memory>
 #include <typeinfo>
 #include <limits>
 
@@ -55,14 +55,19 @@ int main()
 
 //    tiff_read_image("/home/robert/kombi1.tif",img);
 
-    std::uint8_t* buf = new std::uint8_t[30000];
-    buf[0] = 255;
-    buf[1] = 127;
-    buf[2] = 63;
-    phtr::MemImageViewR phtr_mem_view(buf, 100, 100);
-    vcl_cerr << phtr_mem_view.get_px_val_r(0,0)
-    << " " << phtr_mem_view.get_px_val_g(0,0)
-    << " " << phtr_mem_view.get_px_val_b(0,0) << vcl_endl;
+    std::uint16_t* buf = new std::uint16_t[30000];
+    buf[0] = 65535;
+    buf[10000] = 32767;
+    buf[20000] = 16383;
+
+    std::auto_ptr<phtr::IImageViewR> phtr_mem_view(
+        phtr::IImageViewR::get_mem_image_view_r(phtr::Storage::rgb_16_planar, buf, 100, 100)
+    );
+
+    vcl_cerr << phtr_mem_view->get_px_val_r(0,0)
+    << " " << phtr_mem_view->get_px_val_g(0,0)
+    << " " << phtr_mem_view->get_px_val_b(0,0) << vcl_endl;
+
     delete[] buf;
 
     return 0;

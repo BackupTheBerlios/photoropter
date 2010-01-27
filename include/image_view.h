@@ -1,10 +1,8 @@
 #ifndef __IMAGE_VIEW_H__
 #define __IMAGE_VIEW_H__
 
-#include <cstddef>
-#include <memory>
-
 #include "types.h"
+#include "storagetypes.h"
 
 /**
 * \brief Main namespace of the Photoropter library.
@@ -90,6 +88,19 @@ namespace phtr
             */
             virtual channel_t get_px_val_b(coord_t x, coord_t y) const = 0;
 
+        public:
+            /**
+            * \brief Create a new @ref MemImageViewR instance.
+            * \param storage_type The storage type.
+            * \param base_addr    The buffer address.
+            * \param width        The image width.
+            * \param height       The image height.
+            */
+            static IImageViewR* get_mem_image_view_r(Storage::type storage_type,
+                    const void* base_addr,
+                    coord_t width,
+                    coord_t height);
+
     }; // class IImageViewR
 
     /**
@@ -149,12 +160,12 @@ namespace phtr
         public:
             /**
             * \brief Get a pixel iterator.
-            * A new iterator is instatiated and returned inside an auto_ptr object
+            * A new iterator is instatiated and a pointer to it is returned
             * (this is necessary since C++ does not support to return polymorphic
             * objects 'by value').
             * \return The iterator.
             */
-            virtual std::auto_ptr<IImageViewIterW> get_iter(coord_t x, coord_t y) = 0;
+            virtual IImageViewIterW* get_iter(coord_t x, coord_t y) = 0;
 
         public:
             /**

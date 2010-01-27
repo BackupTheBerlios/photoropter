@@ -107,7 +107,7 @@ set(PHTR_SOURCES
   exception.cpp
   image_view.cpp
   mem_image_view_r.h
-  mem_image_view_r.cpp
+  mem_image_view_r.tpl.h
   mem_image_r.h
   mem_image_r.cpp
   mem_layout.h
