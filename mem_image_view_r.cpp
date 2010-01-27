@@ -17,12 +17,12 @@ namespace phtr
             g_offs_(storage_info.g_offs),
             b_offs_(storage_info.b_offs)
     {
-        //ctor
+        //NIL
     }
 
     MemImageViewR::~MemImageViewR()
     {
-        //dtor
+        //NIL
     }
 
     coord_t MemImageViewR::width() const
@@ -37,17 +37,17 @@ namespace phtr
 
     channel_t MemImageViewR::get_px_val_r(coord_t x, coord_t y) const
     {
-        return *(get_addr(x, y) + r_offs_);
+        return *(get_px_addr(x, y) + r_offs_);
     }
 
     channel_t MemImageViewR::get_px_val_g(coord_t x, coord_t y) const
     {
-        return *(get_addr(x, y) + g_offs_);
+        return *(get_px_addr(x, y) + g_offs_);
     }
 
     channel_t MemImageViewR::get_px_val_b(coord_t x, coord_t y) const
     {
-        return *(get_addr(x, y) + b_offs_);
+        return *(get_px_addr(x, y) + b_offs_);
     }
 
     const MemImageViewR::channel_storage_t*

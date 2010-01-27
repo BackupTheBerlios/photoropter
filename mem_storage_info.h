@@ -4,6 +4,8 @@
 #include <limits>
 
 #include "storagetypes.h"
+#include "channel_storage.h"
+#include "mem_layout.h"
 
 namespace phtr
 {

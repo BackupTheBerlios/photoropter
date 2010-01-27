@@ -1,139 +1,11 @@
-#ifndef __STORAGETYPES_H__
-#define __STORAGETYPES_H__
+#ifndef __MEM_LAYOUT_H__
+#define __MEM_LAYOUT_H__
 
 #include "types.h"
-
-namespace std
-{
-#include <stdint.h>
-}
+#include "storagetypes.h"
 
 namespace phtr
 {
-    /**
-    * \brief Class containing image storage types.
-    */
-    struct Storage
-    {
-
-        /**
-        * \brief The enum containing the actual storage types.
-        */
-        enum type
-        {
-            /**
-            * \brief Unknown type.
-            */
-            unknown,
-            /**
-            * \brief 8 bit unsigned RGB, interleaved.
-            */
-            rgb_8_inter,
-            /**
-            * \brief 16 bit unsigned RGB, interleaved.
-            */
-            rgb_16_inter,
-            /**
-            * \brief 32 bit unsigned RGB, interleaved.
-            */
-            rgb_32_inter,
-            /**
-            * \brief 8 bit unsigned RGB, planar.
-            */
-            rgb_8_planar,
-            /**
-            * \brief 16 bit unsigned RGB, planar.
-            */
-            rgb_16_planar,
-            /**
-            * \brief 32 bit unsigned RGB, planar.
-            */
-            rgb_32_planar
-        }; // enum storage::type
-
-    }; // class Storage
-
-
-
-    /**
-    * \brief Template for determining the channel storage type
-    * to a given \ref Storage::type.
-    * \details This template \em has to be
-    * specialised for every supported type. In each specialisation,
-    * a member typedef 'type' has to be provided.
-    */
-    template <Storage::type T>
-    struct ChannelStorage
-    {
-    }; // template struct ChannelStorage
-
-    /**
-    * \brief Specialisation of \ref ChannelStorage for \ref Storage::rgb_8_inter.
-    */
-    template <>
-    struct ChannelStorage<Storage::rgb_8_inter>
-    {
-
-        typedef std::uint8_t type;
-
-    }; // template struct ChannelStorage<Storage::rgb_8_inter>
-
-    /**
-    * \brief Specialisation of \ref ChannelStorage for \ref Storage::rgb_16_inter.
-    */
-    template <>
-    struct ChannelStorage<Storage::rgb_16_inter>
-    {
-
-        typedef std::uint16_t type;
-
-    }; // template struct ChannelStorage<Storage::rgb_16_inter>
-
-    /**
-    * \brief Specialisation of \ref ChannelStorage for \ref Storage::rgb_32_inter.
-    */
-    template <>
-    struct ChannelStorage<Storage::rgb_32_inter>
-    {
-
-        typedef std::uint32_t type;
-
-    }; // template struct ChannelStorage<Storage::rgb_32_inter>
-
-    /**
-    * \brief Specialisation of \ref ChannelStorage for \ref Storage::rgb_8_planar.
-    */
-    template <>
-    struct ChannelStorage<Storage::rgb_8_planar>
-    {
-
-        typedef std::uint8_t type;
-
-    }; // template struct ChannelStorage<Storage::rgb_8_planar>
-
-    /**
-    * \brief Specialisation of \ref ChannelStorage for \ref Storage::rgb_16_planar.
-    */
-    template <>
-    struct ChannelStorage<Storage::rgb_16_planar>
-    {
-
-        typedef std::uint16_t type;
-
-    }; // template struct ChannelStorage<Storage::rgb_16_planar>
-
-    /**
-    * \brief Specialisation of \ref ChannelStorage for \ref Storage::rgb_32_planar.
-    */
-    template <>
-    struct ChannelStorage<Storage::rgb_32_planar>
-    {
-
-        typedef std::uint32_t type;
-
-    }; // template struct ChannelStorage<Storage::rgb_32_planar>
-
-
 
     /**
     * \brief Template to describe the memory layout of
@@ -324,4 +196,4 @@ namespace phtr
 
 } // namespace phtr
 
-#endif // __STORAGETYPES_H__
+#endif // __MEM_LAYOUT_H__
