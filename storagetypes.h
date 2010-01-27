@@ -155,22 +155,22 @@ namespace phtr
     struct MemLayout<Storage::rgb_8_inter>
     {
 
-        static size_t step (coord_t, coord_t)
+        static size_t step(coord_t, coord_t)
         {
             return 3;
         }
 
-        static size_t r_offs (coord_t, coord_t)
+        static size_t r_offs(coord_t, coord_t)
         {
             return 0;
         }
 
-        static size_t g_offs (coord_t, coord_t)
+        static size_t g_offs(coord_t, coord_t)
         {
             return 1;
         }
 
-        static size_t b_offs (coord_t, coord_t)
+        static size_t b_offs(coord_t, coord_t)
         {
             return 2;
         }
@@ -184,22 +184,22 @@ namespace phtr
     struct MemLayout<Storage::rgb_16_inter>
     {
 
-        static size_t step (coord_t, coord_t)
+        static size_t step(coord_t, coord_t)
         {
             return 3;
         }
 
-        static size_t r_offs (coord_t, coord_t)
+        static size_t r_offs(coord_t, coord_t)
         {
             return 0;
         }
 
-        static size_t g_offs (coord_t, coord_t)
+        static size_t g_offs(coord_t, coord_t)
         {
             return 1;
         }
 
-        static size_t b_offs (coord_t, coord_t)
+        static size_t b_offs(coord_t, coord_t)
         {
             return 2;
         }
@@ -213,22 +213,22 @@ namespace phtr
     struct MemLayout<Storage::rgb_32_inter>
     {
 
-        static size_t step (coord_t, coord_t)
+        static size_t step(coord_t, coord_t)
         {
             return 3;
         }
 
-        static size_t r_offs (coord_t, coord_t)
+        static size_t r_offs(coord_t, coord_t)
         {
             return 0;
         }
 
-        static size_t g_offs (coord_t, coord_t)
+        static size_t g_offs(coord_t, coord_t)
         {
             return 1;
         }
 
-        static size_t b_offs (coord_t, coord_t)
+        static size_t b_offs(coord_t, coord_t)
         {
             return 2;
         }
@@ -242,22 +242,22 @@ namespace phtr
     struct MemLayout<Storage::rgb_8_planar>
     {
 
-        static size_t step (coord_t, coord_t)
+        static size_t step(coord_t, coord_t)
         {
             return 1;
         }
 
-        static size_t r_offs (coord_t, coord_t)
+        static size_t r_offs(coord_t, coord_t)
         {
             return 0;
         }
 
-        static size_t g_offs (coord_t width, coord_t height)
+        static size_t g_offs(coord_t width, coord_t height)
         {
             return width * height;
         }
 
-        static size_t b_offs (coord_t width, coord_t height)
+        static size_t b_offs(coord_t width, coord_t height)
         {
             return 2 * width * height;
         }
@@ -271,22 +271,22 @@ namespace phtr
     struct MemLayout<Storage::rgb_16_planar>
     {
 
-        static size_t step (coord_t, coord_t)
+        static size_t step(coord_t, coord_t)
         {
             return 1;
         }
 
-        static size_t r_offs (coord_t, coord_t)
+        static size_t r_offs(coord_t, coord_t)
         {
             return 0;
         }
 
-        static size_t g_offs (coord_t width, coord_t height)
+        static size_t g_offs(coord_t width, coord_t height)
         {
             return width * height;
         }
 
-        static size_t b_offs (coord_t width, coord_t height)
+        static size_t b_offs(coord_t width, coord_t height)
         {
             return 2 * width * height;
         }
@@ -300,22 +300,22 @@ namespace phtr
     struct MemLayout<Storage::rgb_32_planar>
     {
 
-        static size_t step (coord_t, coord_t)
+        static size_t step(coord_t, coord_t)
         {
             return 1;
         }
 
-        static size_t r_offs (coord_t, coord_t)
+        static size_t r_offs(coord_t, coord_t)
         {
             return 0;
         }
 
-        static size_t g_offs (coord_t width, coord_t height)
+        static size_t g_offs(coord_t width, coord_t height)
         {
             return width * height;
         }
 
-        static size_t b_offs (coord_t width, coord_t height)
+        static size_t b_offs(coord_t width, coord_t height)
         {
             return 2 * width * height;
         }

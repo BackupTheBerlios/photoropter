@@ -10,4 +10,4 @@ indent-labels
 indent-preprocessor
 convert-tabs
 unpad=paren
-pad=paren-out
+pad=oper

@@ -61,7 +61,7 @@ namespace phtr
             * \param y    The y coordinate.
             * \return The channel value.
             */
-            virtual channel_t get_px_val (Channel::type chan, coord_t x, coord_t y) const;
+            virtual channel_t get_px_val(Channel::type chan, coord_t x, coord_t y) const;
 
         public:
             /**
@@ -70,7 +70,7 @@ namespace phtr
             * \param y    The y coordinate.
             * \return The channel value.
             */
-            virtual channel_t get_px_val_r (coord_t x, coord_t y) const = 0;
+            virtual channel_t get_px_val_r(coord_t x, coord_t y) const = 0;
 
         public:
             /**
@@ -79,7 +79,7 @@ namespace phtr
             * \param y    The y coordinate.
             * \return The channel value.
             */
-            virtual channel_t get_px_val_g (coord_t x, coord_t y) const = 0;
+            virtual channel_t get_px_val_g(coord_t x, coord_t y) const = 0;
 
         public:
             /**
@@ -88,7 +88,7 @@ namespace phtr
             * \param y    The y coordinate.
             * \return The channel value.
             */
-            virtual channel_t get_px_val_b (coord_t x, coord_t y) const = 0;
+            virtual channel_t get_px_val_b(coord_t x, coord_t y) const = 0;
 
     }; // class IImageViewR
 
@@ -116,7 +116,7 @@ namespace phtr
             * \param chan The channel.
             * \param val  The value.
             */
-            virtual void write_px_val (Channel::type chan, channel_t val) = 0;
+            virtual void write_px_val(Channel::type chan, channel_t val) = 0;
 
         public:
             /**
@@ -144,7 +144,7 @@ namespace phtr
             * \param y    The y coordinate.
             * \param val  The value.
             */
-            virtual void write_px_val (Channel::type chan, coord_t x, coord_t y, channel_t val) = 0;
+            virtual void write_px_val(Channel::type chan, coord_t x, coord_t y, channel_t val) = 0;
 
         public:
             /**
@@ -154,7 +154,7 @@ namespace phtr
             * objects 'by value').
             * \return The iterator.
             */
-            virtual std::auto_ptr<IImageViewIterW> get_iter (coord_t x, coord_t y) = 0;
+            virtual std::auto_ptr<IImageViewIterW> get_iter(coord_t x, coord_t y) = 0;
 
         public:
             /**
@@ -164,7 +164,7 @@ namespace phtr
             * \param x_max The maximal x coordinate.
             * \param y_max The maximal y coordinate.
             */
-            virtual void get_roi (coord_t x_min, coord_t y_min, coord_t x_max, coord_t y_max) = 0;
+            virtual void get_roi(coord_t x_min, coord_t y_min, coord_t x_max, coord_t y_max) = 0;
 
     }; // class IImageViewW
 

@@ -13,10 +13,10 @@ namespace phtr
         {
 
             public:
-                base_exception (const std::string& msg);
-                virtual ~base_exception() throw ();
+                base_exception(const std::string& msg);
+                virtual ~base_exception() throw();
 
-                virtual const char* what() throw ();
+                virtual const char* what() throw();
 
             private:
                 const std::string msg_;
@@ -26,7 +26,7 @@ namespace phtr
         {
 
             public:
-                not_implemented (const std::string& msg);
+                not_implemented(const std::string& msg);
         };
 
     } // namespace exception

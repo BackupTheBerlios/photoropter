@@ -30,15 +30,15 @@ namespace phtr
         * \param width The image width.
         * \param height The image height.
         */
-        MemStorageInfo (coord_t width, coord_t height)
-                : width (width),
-                height (height),
-                min_val (std::numeric_limits<channel_storage_t>::min()),
-                max_val (std::numeric_limits<channel_storage_t>::max()),
-                step (mem_layout_t::step (width, height)),
-                r_offs (mem_layout_t::r_offs (width, height)),
-                g_offs (mem_layout_t::g_offs (width, height)),
-                b_offs (mem_layout_t::b_offs (width, height))
+        MemStorageInfo(coord_t width, coord_t height)
+                : width(width),
+                height(height),
+                min_val(std::numeric_limits<channel_storage_t>::min()),
+                max_val(std::numeric_limits<channel_storage_t>::max()),
+                step(mem_layout_t::step(width, height)),
+                r_offs(mem_layout_t::r_offs(width, height)),
+                g_offs(mem_layout_t::g_offs(width, height)),
+                b_offs(mem_layout_t::b_offs(width, height))
         {
         }
 

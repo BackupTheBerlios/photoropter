@@ -36,15 +36,64 @@ namespace phtr
             * \param width The image width.
             * \param height The image height.
             */
-            MemImageViewR (const channel_storage_t* base_addr,
-                           coord_t width,
-                           coord_t height);
+            MemImageViewR(const channel_storage_t* base_addr,
+                          coord_t width,
+                          coord_t height);
 
         public:
             /**
             * \brief Desctructor.
             */
             virtual ~MemImageViewR();
+
+        public:
+            /**
+            * \brief Get the image width.
+            * \return The width.
+            */
+            virtual coord_t width() const;
+
+        public:
+            /**
+            * \brief Get the image height.
+            * \return The height.
+            */
+            virtual coord_t height() const;
+
+        public:
+            /**
+            * \brief Read the 'red' channel value.
+            * \param x    The x coordinate.
+            * \param y    The y coordinate.
+            * \return The channel value.
+            */
+            virtual channel_t get_px_val_r(coord_t x, coord_t y) const;
+
+        public:
+            /**
+            * \brief Read the 'green' channel value.
+            * \param x    The x coordinate.
+            * \param y    The y coordinate.
+            * \return The channel value.
+            */
+            virtual channel_t get_px_val_g(coord_t x, coord_t y) const;
+
+        public:
+            /**
+            * \brief Read the 'blue' channel value.
+            * \param x    The x coordinate.
+            * \param y    The y coordinate.
+            * \return The channel value.
+            */
+            virtual channel_t get_px_val_b(coord_t x, coord_t y) const;
+
+        private:
+            /**
+            * \brief Determine the 'pixel address' to a given set of coordinates.
+            * \param x    The x coordinate.
+            * \param y    The y coordinate.
+            */
+            const channel_storage_t* get_px_addr(coord_t x, coord_t y) const;
 
         private:
             /**
