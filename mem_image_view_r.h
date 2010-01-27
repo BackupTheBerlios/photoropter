@@ -2,6 +2,7 @@
 #define __MEM_IMAGE_VIEW_R_H__
 
 #include "image_view.h"
+#include "mem_storage_info.h"
 
 #include <stdint.h>
 
@@ -12,24 +13,27 @@ namespace phtr
     {
 
         public:
-            MemImageViewR (size_t width, size_t height);
+            MemImageViewR (coord_t width, coord_t height);
             virtual ~MemImageViewR();
 
         protected:
 
         private:
-            typedef uint8_t channel_storage_t;
+            typedef MemStorageInfo<Storage::rgb_8_inter> storage_info_t;
+            typedef storage_info_t::channel_storage_t channel_storage_t;
 
-            size_t width_;
-            size_t height_;
+            storage_info_t storage_info;
+
+            const coord_t width_;
+            const coord_t height_;
 
             channel_storage_t* base_addr_;
-            channel_storage_t min_chan_val_;
-            channel_storage_t max_chan_val_;
-            size_t step;
-            size_t r_offs_;
-            size_t g_offs_;
-            size_t b_offs_;
+            const channel_storage_t min_chan_val_;
+            const channel_storage_t max_chan_val_;
+            const size_t step_;
+            const size_t r_offs_;
+            const size_t g_offs_;
+            const size_t b_offs_;
     };
 
 } // namespace phtr

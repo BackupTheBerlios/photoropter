@@ -9,6 +9,5 @@ indent-namespaces
 indent-labels
 indent-preprocessor
 convert-tabs
-break-blocks=all
 unpad=paren
 pad=paren-out

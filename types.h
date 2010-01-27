@@ -39,19 +39,18 @@ namespace phtr
     * \note The class contains an enum which defines the actual channels.
     */
 
-    class Channel
+    struct Channel
     {
 
-        public:
-            /**
-            * \brief The actual enum containing channel designations.
-            */
-            enum type
-            {
-                red = 0,
-                green,
-                blue
-            };
+        /**
+        * \brief The actual enum containing channel designations.
+        */
+        enum type
+        {
+            red = 0,
+            green,
+            blue
+        };
 
     }; // class Channel
 

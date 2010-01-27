@@ -35,14 +35,14 @@ namespace phtr
             * \brief Get the image width.
             * \return The width.
             */
-            virtual size_t width() const = 0;
+            virtual coord_t width() const = 0;
 
         public:
             /**
             * \brief Get the image height.
             * \return The height.
             */
-            virtual size_t height() const = 0;
+            virtual coord_t height() const = 0;
 
     }; // class IImageViewBase
 

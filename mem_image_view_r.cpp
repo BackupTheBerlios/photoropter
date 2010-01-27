@@ -4,8 +4,15 @@ namespace phtr
 {
 
     MemImageViewR::MemImageViewR (size_t width, size_t height)
-            : width_ (width),
-            height_ (height)
+            : storage_info (width, height),
+            width_ (width),
+            height_ (height),
+            min_chan_val_ (storage_info.min_val),
+            max_chan_val_ (storage_info.min_val),
+            step_ (storage_info.step),
+            r_offs_ (storage_info.r_offs),
+            g_offs_ (storage_info.g_offs),
+            b_offs_ (storage_info.b_offs)
     {
         //ctor
     }

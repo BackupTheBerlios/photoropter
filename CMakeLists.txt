@@ -6,7 +6,7 @@
 cmake_minimum_required(VERSION 2.6)
 
 # project name
-project(vxltest)
+project(Photoropter)
 
 # set default build type
 if(NOT CMAKE_BUILD_TYPE)
@@ -90,11 +90,10 @@ endif(PHTR_BUILD_DOCUMENTATION)
 
 include_directories(${VXL_CORE_INCLUDE_DIR} ${Boost_INCLUDE_DIR})
 
-add_executable(vxltest
+add_executable(phtr_test
   main.cpp
   types.h
   storagetypes.h
-  storagetypes.cpp
   exception.h
   exception.cpp
   image_view.h
@@ -103,9 +102,10 @@ add_executable(vxltest
   mem_image_view_r.cpp
   mem_image_r.h
   mem_image_r.cpp
+  mem_storage_info.h
   )
 
-target_link_libraries(vxltest
+target_link_libraries(phtr_test
   vil
   vil_io
   vil_algo
