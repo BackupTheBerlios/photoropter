@@ -10,6 +10,7 @@ project(vxltest)
 
 # set default build type
 if(NOT CMAKE_BUILD_TYPE)
+  message("No build type set, defaulting to 'Debug'.")
   set(CMAKE_BUILD_TYPE
     "Debug"
     CACHE STRING "Build type (Debug|Release)" FORCE)
@@ -17,11 +18,8 @@ endif(NOT CMAKE_BUILD_TYPE)
 
 # set usage of boost::scoped_ptr over std::auto_ptr (nice for debugging,
 # but unnecessary build dependency afterwards)
-if(NOT USE_BOOST_SCOPED_PTR)
-  set(USE_BOOST_SCOPED_PTR
-  false
-  CACHE BOOL "Use boost::scoped_ptr instead of std::auto_ptr where applicable" FORCE)
-endif(NOT USE_BOOST_SCOPED_PTR)
+set(PHTR_USE_SCOPED_PTR false CACHE BOOL
+  "Use boost::scoped_ptr instead of std::auto_ptr where applicable")
 
 ########################################
 # configure libraries
@@ -54,33 +52,37 @@ endif(CMAKE_COMPILER_IS_GNUCXX)
 set(CMAKE_CXX_FLAGS_DEBUG "-O0 -g -ansi -pedantic -Wall -Wextra -Werror -Wno-long-long -DDEBUG")
 set(CMAKE_CXX_FLAGS_RELEASE "-O2 -ansi -DNDEBUG -Wno-long-long")
 
-if(USE_BOOST_SCOPED_PTR)
+if(PHTR_USE_SCOPED_PTR)
   set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DUSE_BOOST_SCOPED_PTR")
   set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DUSE_BOOST_SCOPED_PTR")
-endif(USE_BOOST_SCOPED_PTR)
+endif(PHTR_USE_SCOPED_PTR)
 
 ########################################
-# doxygen
+# doxygen documentation
 ########################################
 
-find_package(Doxygen)
+set(PHTR_BUILD_DOCUMENTATION true CACHE BOOL "Build Doxygen documentation")
 
-if(DOXYGEN_FOUND)
-  message("Generating HTML documentation.")
+if(PHTR_BUILD_DOCUMENTATION)
+  find_package(Doxygen)
 
-  set(DOXYGEN_CONF_IN ${CMAKE_CURRENT_SOURCE_DIR}/doxygen.conf.in)
-  set(DOXYGEN_CONF ${CMAKE_CURRENT_BINARY_DIR}/doxygen.conf)
-  set(DOXYGEN_SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR})
-  set(DOXYGEN_DOC_DIR ${CMAKE_CURRENT_BINARY_DIR}/doc)
+  if(DOXYGEN_FOUND)
+    message(STATUS "HTML documentation will be generated.")
 
-  configure_file(${DOXYGEN_CONF_IN} ${DOXYGEN_CONF})
+    set(DOXYGEN_CONF_IN ${CMAKE_CURRENT_SOURCE_DIR}/doxygen.conf.in)
+    set(DOXYGEN_CONF ${CMAKE_CURRENT_BINARY_DIR}/doxygen.conf)
+    set(DOXYGEN_SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR})
+    set(DOXYGEN_DOC_DIR ${CMAKE_CURRENT_BINARY_DIR}/doc)
 
-  add_custom_target(doc ALL ${DOXYGEN_EXECUTABLE} ${DOXYGEN_CONF})
+    configure_file(${DOXYGEN_CONF_IN} ${DOXYGEN_CONF})
 
-else(DOXYGEN_FOUND)
-  message("Doxygen not found, documentation will not be generated.")
+    add_custom_target(doc ALL ${DOXYGEN_EXECUTABLE} ${DOXYGEN_CONF})
 
-endif(DOXYGEN_FOUND)
+  else(DOXYGEN_FOUND)
+    message("Doxygen not found, documentation will not be generated!")
+
+  endif(DOXYGEN_FOUND)
+endif(PHTR_BUILD_DOCUMENTATION)
 
 ########################################
 # configure program components
