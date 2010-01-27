@@ -2,4 +2,27 @@
 
 @page overview Overview
 
+Photoropter is a C++ library to correct a series of flaws commonly found in
+images taken with digital cameras. The library aims to be reasonably light-weight,
+yet providing a clean interface and proper code encapsulation.
+
+Templates and inheritance are used extensively inside the library. However, one
+does usually not have to deal with those in order to use Photoropter. The current
+API is pure object oriented C++, and thus the library cannot be called from a C program
+directly. However, writing the needed adapter code is usually quite simple and
+straightforward, and I will be glad to advise you on that matter.
+
+@section intro_devenv Development environment
+
+Photoropter is developed on a Linux machine using the GNU compiler collection (GCC),
+currently version 4.4. It should be quite portable, and any compiler supporting a reasonable
+subset of ANSI C++ should work. The only feature that can be considered partially non-standard
+is the usage of the ISO/C99 header "stdint.h". However, almost all current C++ compilers
+also support a sufficiently large subset of ISO/C99, so this should not be a problem.
+
+For building and configuring the sources, the powerful CMake system is used. This also
+should enable Photoropter to be built on a variety of systems using different compilers.
+However, currently no other compilers apart from GCC 4 on POSIX systems have been tested.
+Feedback and fixes to the build scripts are welcome.
+
 */

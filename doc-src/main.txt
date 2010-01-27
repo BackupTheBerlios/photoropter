@@ -4,7 +4,10 @@
 
 @section intro Introduction
 
-This is the documentation to Photoropter.
+This is the documentation to Photoropter, a C++ library to correct a series of
+flaws commonly found in images taken with digital cameras. The library aims to
+be reasonably light-weight, yet providing a clean interface and proper code
+encapsulation.
 
 @section toc Contents
 <ol>
