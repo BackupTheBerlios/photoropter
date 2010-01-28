@@ -11,6 +11,7 @@
 #include "types.h"
 #include "image_view.h"
 #include "image_buffer.h"
+#include "channel_storage.h"
 
 #include <memory>
 #include <typeinfo>
@@ -18,28 +19,32 @@
 
 int main()
 {
-    std::auto_ptr<phtr::IImageBuffer> img_buf(
-        phtr::IImageBuffer::get_image_buffer
-        (phtr::Storage::rgb_16_planar, 100, 100)
+    using namespace phtr;
+    const Storage::type storage_type(Storage::rgb_16_planar);
+    typedef ChannelStorage<storage_type>::type channel_storage_t;
+
+    std::auto_ptr<IImageBuffer> img_buf(
+        IImageBuffer::get_image_buffer
+        (storage_type, 100, 100)
     );
 
-    std::uint16_t* buf = static_cast<std::uint16_t*>(img_buf->data());
+    channel_storage_t* buf = static_cast<channel_storage_t*>(img_buf->data());
     buf[0] = 65535;
     buf[10000] = 32767;
     buf[20000] = 16383;
 
-    std::auto_ptr<phtr::IImageViewW> phtr_mem_view_w(
-        phtr::IImageViewW::get_mem_image_view_w(
-            phtr::Storage::rgb_16_planar, buf, 100, 100)
+    std::auto_ptr<IImageViewW> phtr_mem_view_w(
+        IImageViewW::get_mem_image_view_w(
+            storage_type, buf, 100, 100)
     );
 
     phtr_mem_view_w->write_px_val_r(50, 50, 1.0);
     phtr_mem_view_w->write_px_val_g(50, 50, 0.7);
     phtr_mem_view_w->write_px_val_b(50, 50, 0.5);
 
-    std::auto_ptr<phtr::IImageViewR> phtr_mem_view(
-        phtr::IImageViewR::get_mem_image_view_r(
-            phtr::Storage::rgb_16_planar, buf, 100, 100)
+    std::auto_ptr<IImageViewR> phtr_mem_view(
+        IImageViewR::get_mem_image_view_r(
+            storage_type, buf, 100, 100)
     );
 
     vcl_cerr << phtr_mem_view->get_px_val_r(0, 0)

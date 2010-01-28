@@ -64,7 +64,7 @@ endif(PHTR_USE_SCOPED_PTR)
 # doxygen documentation
 ########################################
 
-  find_package(Doxygen)
+find_package(Doxygen)
 
 if(DOXYGEN_FOUND)
   message(STATUS "Doxygen found: HTML documentation can be generated.")
@@ -90,10 +90,10 @@ if(DOXYGEN_FOUND)
   # if documentation is not requested, add target, but not as default
   if(PHTR_BUILD_DOCUMENTATION)
     message(STATUS "Documentation will be generated in default build.")
-    add_custom_target(doc ${DOXYGEN_EXECUTABLE} ${DOXYGEN_CONF})
+    add_custom_target(doc ALL ${DOXYGEN_EXECUTABLE} ${DOXYGEN_CONF})
   else(PHTR_BUILD_DOCUMENTATION)
     message(STATUS "Documentation will not be generated in default build.")
-    add_custom_target(doc ALL ${DOXYGEN_EXECUTABLE} ${DOXYGEN_CONF})
+    add_custom_target(doc ${DOXYGEN_EXECUTABLE} ${DOXYGEN_CONF})
   endif(PHTR_BUILD_DOCUMENTATION)
 
 else(DOXYGEN_FOUND)
@@ -110,8 +110,8 @@ set(PHTR_SOURCES
   include/storagetypes.h
   include/image_view.h
   include/image_buffer.h
-  channel_storage.h
-  exception.h
+  include/channel_storage.h
+  include/exception.h
   exception.cpp
   image_view.cpp
   mem_image_view_r.h
