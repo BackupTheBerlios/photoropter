@@ -26,6 +26,10 @@ namespace phtr
     template <>
     struct MemLayout<Storage::rgb_8_inter>
     {
+        static size_t num_channels()
+        {
+            return 3;
+        }
 
         static size_t step(coord_t, coord_t)
         {
@@ -56,6 +60,11 @@ namespace phtr
     struct MemLayout<Storage::rgb_16_inter>
     {
 
+        static size_t num_channels()
+        {
+            return 3;
+        }
+
         static size_t step(coord_t, coord_t)
         {
             return 3;
@@ -84,6 +93,11 @@ namespace phtr
     template <>
     struct MemLayout<Storage::rgb_32_inter>
     {
+
+        static size_t num_channels()
+        {
+            return 3;
+        }
 
         static size_t step(coord_t, coord_t)
         {
@@ -114,6 +128,11 @@ namespace phtr
     struct MemLayout<Storage::rgb_8_planar>
     {
 
+        static size_t num_channels()
+        {
+            return 3;
+        }
+
         static size_t step(coord_t, coord_t)
         {
             return 1;
@@ -143,6 +162,11 @@ namespace phtr
     struct MemLayout<Storage::rgb_16_planar>
     {
 
+        static size_t num_channels()
+        {
+            return 3;
+        }
+
         static size_t step(coord_t, coord_t)
         {
             return 1;
@@ -171,6 +195,11 @@ namespace phtr
     template <>
     struct MemLayout<Storage::rgb_32_planar>
     {
+
+        static size_t num_channels()
+        {
+            return 3;
+        }
 
         static size_t step(coord_t, coord_t)
         {

@@ -10,6 +10,7 @@
 
 #include "types.h"
 #include "image_view.h"
+#include "image_buffer.h"
 
 #include <memory>
 #include <typeinfo>
@@ -17,6 +18,25 @@
 
 int main()
 {
+    phtr::IImageBuffer* img_buf = phtr::IImageBuffer::get_image_buffer
+    (phtr::Storage::rgb_16_planar, 100, 100);
+
+    std::uint16_t* buf = static_cast<std::uint16_t*>(img_buf->data());
+    buf[0] = 65535;
+    buf[10000] = 32767;
+    buf[20000] = 16383;
+
+    std::auto_ptr<phtr::IImageViewR> phtr_mem_view(
+        phtr::IImageViewR::get_mem_image_view_r(
+            phtr::Storage::rgb_16_planar, buf, 100, 100)
+    );
+
+    vcl_cerr << phtr_mem_view->get_px_val_r(0,0)
+    << " " << phtr_mem_view->get_px_val_g(0,0)
+    << " " << phtr_mem_view->get_px_val_b(0,0) << vcl_endl;
+
+    delete[] buf;
+
     vcl_cout << "Loading image."  << vcl_endl;
     vil_image_resource_sptr img_rsc = vil_load_image_resource("/home/robert/kombi1.tif");
 
@@ -54,21 +74,6 @@ int main()
     << pixel.A() << vcl_endl;
 
 //    tiff_read_image("/home/robert/kombi1.tif",img);
-
-    std::uint16_t* buf = new std::uint16_t[30000];
-    buf[0] = 65535;
-    buf[10000] = 32767;
-    buf[20000] = 16383;
-
-    std::auto_ptr<phtr::IImageViewR> phtr_mem_view(
-        phtr::IImageViewR::get_mem_image_view_r(phtr::Storage::rgb_16_planar, buf, 100, 100)
-    );
-
-    vcl_cerr << phtr_mem_view->get_px_val_r(0,0)
-    << " " << phtr_mem_view->get_px_val_g(0,0)
-    << " " << phtr_mem_view->get_px_val_b(0,0) << vcl_endl;
-
-    delete[] buf;
 
     return 0;
 }

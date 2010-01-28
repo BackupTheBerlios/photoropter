@@ -38,6 +38,7 @@ namespace phtr
                 min_val(std::numeric_limits<channel_storage_t>::min()),
                 max_val(std::numeric_limits<channel_storage_t>::max()),
                 step(mem_layout_t::step(width, height)),
+                num_channels(mem_layout_t::num_channels()),
                 r_offs(mem_layout_t::r_offs(width, height)),
                 g_offs(mem_layout_t::g_offs(width, height)),
                 b_offs(mem_layout_t::b_offs(width, height))
@@ -69,6 +70,11 @@ namespace phtr
         * storage unit (e.g., 1 for planar images, 3 for interleaved).
         */
         const size_t step;
+
+        /**
+        * \brief The number of channels (e.g., 3).
+        */
+        const size_t num_channels;
 
         /**
         * \brief The offset of the red channel to the current memory position

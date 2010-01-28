@@ -1,12 +1,7 @@
 #ifndef __TYPES_H__
 #define __TYPES_H__
 
-#include <memory>
 #include <cstddef>
-
-#ifdef USE_BOOST_SCOPED_PTR
-#include <boost/scoped_ptr.hpp>
-#endif // USE_BOOST_SCOPED_PTR
 
 namespace phtr
 {

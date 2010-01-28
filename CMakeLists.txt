@@ -64,36 +64,42 @@ endif(PHTR_USE_SCOPED_PTR)
 # doxygen documentation
 ########################################
 
-if(PHTR_BUILD_DOCUMENTATION)
   find_package(Doxygen)
 
-  if(DOXYGEN_FOUND)
-    message(STATUS "HTML documentation will be generated.")
+if(DOXYGEN_FOUND)
+  message(STATUS "Doxygen found: HTML documentation can be generated.")
 
-    set(DOXYGEN_SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR})
-    set(DOXYGEN_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
-    set(DOXYGEN_DOCSRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/doc-src)
-    set(DOXYGEN_DOC_DIR ${CMAKE_CURRENT_BINARY_DIR}/doc)
+  set(DOXYGEN_SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR})
+  set(DOXYGEN_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
+  set(DOXYGEN_DOCSRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/doc-src)
+  set(DOXYGEN_DOC_DIR ${CMAKE_CURRENT_BINARY_DIR}/doc)
 
-    set(DOXYGEN_CONF_IN ${DOXYGEN_DOCSRC_DIR}/doxygen.conf.in)
-    set(DOXYGEN_CONF ${CMAKE_CURRENT_BINARY_DIR}/doxygen.conf)
-    if(PHTR_DOCUMENT_PRIVATE)
-      set(DOXYGEN_EXTRACT_PRIVATE "YES")
-      set(DOXYGEN_EXTRACT_STATIC "YES")
-    else(PHTR_DOCUMENT_PRIVATE)
-      set(DOXYGEN_EXTRACT_PRIVATE "NO")
-      set(DOXYGEN_EXTRACT_STATIC "NO")
-    endif(PHTR_DOCUMENT_PRIVATE)
+  set(DOXYGEN_CONF_IN ${DOXYGEN_DOCSRC_DIR}/doxygen.conf.in)
+  set(DOXYGEN_CONF ${CMAKE_CURRENT_BINARY_DIR}/doxygen.conf)
 
-    configure_file(${DOXYGEN_CONF_IN} ${DOXYGEN_CONF})
+  if(PHTR_DOCUMENT_PRIVATE)
+    set(DOXYGEN_EXTRACT_PRIVATE "YES")
+    set(DOXYGEN_EXTRACT_STATIC "YES")
+  else(PHTR_DOCUMENT_PRIVATE)
+    set(DOXYGEN_EXTRACT_PRIVATE "NO")
+     set(DOXYGEN_EXTRACT_STATIC "NO")
+  endif(PHTR_DOCUMENT_PRIVATE)
 
+  configure_file(${DOXYGEN_CONF_IN} ${DOXYGEN_CONF})
+
+  # if documentation is not requested, add target, but not as default
+  if(PHTR_BUILD_DOCUMENTATION)
+    message(STATUS "Documentation will be generated in default build.")
+    add_custom_target(doc ${DOXYGEN_EXECUTABLE} ${DOXYGEN_CONF})
+  else(PHTR_BUILD_DOCUMENTATION)
+    message(STATUS "Documentation will not be generated in default build.")
     add_custom_target(doc ALL ${DOXYGEN_EXECUTABLE} ${DOXYGEN_CONF})
+  endif(PHTR_BUILD_DOCUMENTATION)
 
-  else(DOXYGEN_FOUND)
-    message("Doxygen not found, documentation will not be generated!")
+else(DOXYGEN_FOUND)
+  message("Doxygen not found: documentation cannnot be generated.")
 
-  endif(DOXYGEN_FOUND)
-endif(PHTR_BUILD_DOCUMENTATION)
+endif(DOXYGEN_FOUND)
 
 ########################################
 # configure library components
@@ -103,14 +109,16 @@ set(PHTR_SOURCES
   include/types.h
   include/storagetypes.h
   include/image_view.h
+  include/image_buffer.h
   channel_storage.h
   exception.h
   exception.cpp
   image_view.cpp
   mem_image_view_r.h
   mem_image_view_r.tpl.h
-  mem_image_r.h
-  mem_image_r.cpp
+  image_buffer.cpp
+  image_buffer_impl.h
+  image_buffer_impl.tpl.h
   mem_layout.h
   mem_storage_info.h
   )
