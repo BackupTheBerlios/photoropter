@@ -25,6 +25,9 @@ namespace phtr
     struct ChannelStorage<Storage::rgb_8_inter>
     {
 
+        /**
+        * \brief The storage type.
+        */
         typedef std::uint8_t type;
 
     }; // template struct ChannelStorage<Storage::rgb_8_inter>
@@ -36,6 +39,9 @@ namespace phtr
     struct ChannelStorage<Storage::rgb_16_inter>
     {
 
+        /**
+        * \brief The storage type.
+        */
         typedef std::uint16_t type;
 
     }; // template struct ChannelStorage<Storage::rgb_16_inter>
@@ -47,6 +53,9 @@ namespace phtr
     struct ChannelStorage<Storage::rgb_32_inter>
     {
 
+        /**
+        * \brief The storage type.
+        */
         typedef std::uint32_t type;
 
     }; // template struct ChannelStorage<Storage::rgb_32_inter>
@@ -58,6 +67,9 @@ namespace phtr
     struct ChannelStorage<Storage::rgb_8_planar>
     {
 
+        /**
+        * \brief The storage type.
+        */
         typedef std::uint8_t type;
 
     }; // template struct ChannelStorage<Storage::rgb_8_planar>
@@ -69,6 +81,9 @@ namespace phtr
     struct ChannelStorage<Storage::rgb_16_planar>
     {
 
+        /**
+        * \brief The storage type.
+        */
         typedef std::uint16_t type;
 
     }; // template struct ChannelStorage<Storage::rgb_16_planar>
@@ -80,6 +95,9 @@ namespace phtr
     struct ChannelStorage<Storage::rgb_32_planar>
     {
 
+        /**
+        * \brief The storage type.
+        */
         typedef std::uint32_t type;
 
     }; // template struct ChannelStorage<Storage::rgb_32_planar>

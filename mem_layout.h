@@ -26,26 +26,47 @@ namespace phtr
     template <>
     struct MemLayout<Storage::rgb_8_inter>
     {
+
+        /**
+        * \brief Return the number of channels (e.g., 3).
+        * \return The number of channels.
+        */
         static size_t num_channels()
         {
             return 3;
         }
 
+        /**
+        * \brief Return the 'step' between pixels (e.g., 3 for RGB interleaved)
+        * \return The step value.
+        */
         static size_t step(coord_t, coord_t)
         {
             return 3;
         }
 
+        /**
+        * \brief Return the red channel offset (e.g., 0).
+        * \return The red offset.
+        */
         static size_t r_offs(coord_t, coord_t)
         {
             return 0;
         }
 
+        /**
+        * \brief Return the green channel offset (e.g., 0).
+        * \return The green offset.
+        */
         static size_t g_offs(coord_t, coord_t)
         {
             return 1;
         }
 
+        /**
+        * \brief Return the blue channel offset (e.g., 0).
+        * \return The blue offset.
+        */
         static size_t b_offs(coord_t, coord_t)
         {
             return 2;
@@ -60,26 +81,46 @@ namespace phtr
     struct MemLayout<Storage::rgb_16_inter>
     {
 
+        /**
+        * \brief Return the number of channels (e.g., 3).
+        * \return The number of channels.
+        */
         static size_t num_channels()
         {
             return 3;
         }
 
+        /**
+        * \brief Return the 'step' between pixels (e.g., 3 for RGB interleaved)
+        * \return The step value.
+        */
         static size_t step(coord_t, coord_t)
         {
             return 3;
         }
 
+        /**
+        * \brief Return the red channel offset (e.g., 0).
+        * \return The red offset.
+        */
         static size_t r_offs(coord_t, coord_t)
         {
             return 0;
         }
 
+        /**
+        * \brief Return the green channel offset (e.g., 0).
+        * \return The green offset.
+        */
         static size_t g_offs(coord_t, coord_t)
         {
             return 1;
         }
 
+        /**
+        * \brief Return the blue channel offset (e.g., 0).
+        * \return The blue offset.
+        */
         static size_t b_offs(coord_t, coord_t)
         {
             return 2;
@@ -94,26 +135,46 @@ namespace phtr
     struct MemLayout<Storage::rgb_32_inter>
     {
 
+        /**
+        * \brief Return the number of channels (e.g., 3).
+        * \return The number of channels.
+        */
         static size_t num_channels()
         {
             return 3;
         }
 
+        /**
+        * \brief Return the 'step' between pixels (e.g., 3 for RGB interleaved)
+        * \return The step value.
+        */
         static size_t step(coord_t, coord_t)
         {
             return 3;
         }
 
+        /**
+        * \brief Return the red channel offset (e.g., 0).
+        * \return The red offset.
+        */
         static size_t r_offs(coord_t, coord_t)
         {
             return 0;
         }
 
+        /**
+        * \brief Return the green channel offset (e.g., 0).
+        * \return The green offset.
+        */
         static size_t g_offs(coord_t, coord_t)
         {
             return 1;
         }
 
+        /**
+        * \brief Return the blue channel offset (e.g., 0).
+        * \return The blue offset.
+        */
         static size_t b_offs(coord_t, coord_t)
         {
             return 2;
@@ -128,26 +189,46 @@ namespace phtr
     struct MemLayout<Storage::rgb_8_planar>
     {
 
+        /**
+        * \brief Return the number of channels (e.g., 3).
+        * \return The number of channels.
+        */
         static size_t num_channels()
         {
             return 3;
         }
 
+        /**
+        * \brief Return the 'step' between pixels (e.g., 3 for RGB interleaved)
+        * \return The step value.
+        */
         static size_t step(coord_t, coord_t)
         {
             return 1;
         }
 
+        /**
+        * \brief Return the red channel offset (e.g., 0).
+        * \return The red offset.
+        */
         static size_t r_offs(coord_t, coord_t)
         {
             return 0;
         }
 
+        /**
+        * \brief Return the green channel offset (e.g., 0).
+        * \return The green offset.
+        */
         static size_t g_offs(coord_t width, coord_t height)
         {
             return width * height;
         }
 
+        /**
+        * \brief Return the blue channel offset (e.g., 0).
+        * \return The blue offset.
+        */
         static size_t b_offs(coord_t width, coord_t height)
         {
             return 2 * width * height;
@@ -162,26 +243,46 @@ namespace phtr
     struct MemLayout<Storage::rgb_16_planar>
     {
 
+        /**
+        * \brief Return the number of channels (e.g., 3).
+        * \return The number of channels.
+        */
         static size_t num_channels()
         {
             return 3;
         }
 
+        /**
+        * \brief Return the 'step' between pixels (e.g., 3 for RGB interleaved)
+        * \return The step value.
+        */
         static size_t step(coord_t, coord_t)
         {
             return 1;
         }
 
+        /**
+        * \brief Return the red channel offset (e.g., 0).
+        * \return The red offset.
+        */
         static size_t r_offs(coord_t, coord_t)
         {
             return 0;
         }
 
+        /**
+        * \brief Return the green channel offset (e.g., 0).
+        * \return The green offset.
+        */
         static size_t g_offs(coord_t width, coord_t height)
         {
             return width * height;
         }
 
+        /**
+        * \brief Return the blue channel offset (e.g., 0).
+        * \return The blue offset.
+        */
         static size_t b_offs(coord_t width, coord_t height)
         {
             return 2 * width * height;
@@ -196,26 +297,46 @@ namespace phtr
     struct MemLayout<Storage::rgb_32_planar>
     {
 
+        /**
+        * \brief Return the number of channels (e.g., 3).
+        * \return The number of channels.
+        */
         static size_t num_channels()
         {
             return 3;
         }
 
+        /**
+        * \brief Return the 'step' between pixels (e.g., 3 for RGB interleaved)
+        * \return The step value.
+        */
         static size_t step(coord_t, coord_t)
         {
             return 1;
         }
 
+        /**
+        * \brief Return the red channel offset (e.g., 0).
+        * \return The red offset.
+        */
         static size_t r_offs(coord_t, coord_t)
         {
             return 0;
         }
 
+        /**
+        * \brief Return the green channel offset (e.g., 0).
+        * \return The green offset.
+        */
         static size_t g_offs(coord_t width, coord_t height)
         {
             return width * height;
         }
 
+        /**
+        * \brief Return the blue channel offset (e.g., 0).
+        * \return The blue offset.
+        */
         static size_t b_offs(coord_t width, coord_t height)
         {
             return 2 * width * height;

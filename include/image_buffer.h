@@ -55,7 +55,7 @@ namespace phtr
         public:
             /**
             * \brief Get an image buffer instance.
-            * \param storage_type The storage type (e.g., \ref rgb_8_inter).
+            * \param storage_type The storage type (e.g., \ref Storage::rgb_8_inter).
             * \param width The image width.
             * \param height The image height.
             * \return Pointer to the buffer object.
