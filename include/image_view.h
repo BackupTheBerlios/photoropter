@@ -98,19 +98,6 @@ namespace phtr
             */
             virtual channel_t get_px_val_b(coord_t x, coord_t y) const = 0;
 
-        public:
-            /**
-            * \brief Create a new @ref MemImageViewR instance.
-            * \param storage_type The storage type.
-            * \param base_addr    The buffer address.
-            * \param width        The image width.
-            * \param height       The image height.
-            */
-            static IImageViewR* get_mem_image_view_r(Storage::type storage_type,
-                    const void* base_addr,
-                    coord_t width,
-                    coord_t height);
-
     }; // class IImageViewR
 
     /**
@@ -232,9 +219,30 @@ namespace phtr
             */
             virtual void get_roi(coord_t& x_min, coord_t& y_min, coord_t& x_max, coord_t& y_max) = 0;
 
+    }; // class IImageViewW
+
+    /**
+    * \brief Factory class to create image views.
+    */
+    class ImageViewFactory
+    {
+
         public:
             /**
             * \brief Create a new @ref MemImageViewR instance.
+            * \param storage_type The storage type.
+            * \param base_addr    The buffer address.
+            * \param width        The image width.
+            * \param height       The image height.
+            */
+            static IImageViewR* get_mem_image_view_r(Storage::type storage_type,
+                    const void* base_addr,
+                    coord_t width,
+                    coord_t height);
+
+        public:
+            /**
+            * \brief Create a new @ref MemImageViewW instance.
             * \param storage_type The storage type.
             * \param base_addr    The buffer address.
             * \param width        The image width.
@@ -245,7 +253,7 @@ namespace phtr
                     coord_t width,
                     coord_t height);
 
-    }; // class IImageViewW
+    }; // class ImageViewFactory
 
 } // namespace phtr
 

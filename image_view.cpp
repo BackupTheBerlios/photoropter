@@ -26,7 +26,28 @@ namespace phtr
 
     }
 
-    IImageViewR* IImageViewR::get_mem_image_view_r(Storage::type storage_type,
+    void IImageViewW::write_px_val(Channel::type chan, coord_t x, coord_t y, channel_t val)
+    {
+
+        switch (chan)
+        {
+            case Channel::red:
+                write_px_val_r(x, y, val);
+                break;
+
+            case Channel::green:
+                write_px_val_g(x, y, val);
+                break;
+
+            case Channel::blue:
+            default:
+                write_px_val_b(x, y, val);
+                break;
+        }
+
+    }
+
+    IImageViewR* ImageViewFactory::get_mem_image_view_r(Storage::type storage_type,
             const void* base_addr,
             coord_t width,
             coord_t height)
@@ -65,28 +86,7 @@ namespace phtr
 
     }
 
-    void IImageViewW::write_px_val(Channel::type chan, coord_t x, coord_t y, channel_t val)
-    {
-
-        switch (chan)
-        {
-            case Channel::red:
-                write_px_val_r(x, y, val);
-                break;
-
-            case Channel::green:
-                write_px_val_g(x, y, val);
-                break;
-
-            case Channel::blue:
-            default:
-                write_px_val_b(x, y, val);
-                break;
-        }
-
-    }
-
-    IImageViewW* IImageViewW::get_mem_image_view_w(Storage::type storage_type,
+    IImageViewW* ImageViewFactory::get_mem_image_view_w(Storage::type storage_type,
             void* base_addr,
             coord_t width,
             coord_t height)

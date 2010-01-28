@@ -34,7 +34,7 @@ int main()
     buf[20000] = 16383;
 
     std::auto_ptr<IImageViewW> phtr_mem_view_w(
-        IImageViewW::get_mem_image_view_w(
+        ImageViewFactory::get_mem_image_view_w(
             storage_type, buf, 100, 100)
     );
 
@@ -43,7 +43,7 @@ int main()
     phtr_mem_view_w->write_px_val_b(50, 50, 0.5);
 
     std::auto_ptr<IImageViewR> phtr_mem_view(
-        IImageViewR::get_mem_image_view_r(
+        ImageViewFactory::get_mem_image_view_r(
             storage_type, buf, 100, 100)
     );
 

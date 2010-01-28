@@ -9,7 +9,7 @@ namespace phtr
 {
 
     /**
-    * \brief Class template implementing an (writing) 'image view' of a given
+    * \brief Class template implementing a (writing) 'image view' of a given
     *  memory position.
     * \details The template uses internal templates to deal efficiently with
     * different storage types.
