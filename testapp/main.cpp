@@ -18,24 +18,39 @@
 
 int main()
 {
-    phtr::IImageBuffer* img_buf = phtr::IImageBuffer::get_image_buffer
-    (phtr::Storage::rgb_16_planar, 100, 100);
+    std::auto_ptr<phtr::IImageBuffer> img_buf(
+        phtr::IImageBuffer::get_image_buffer
+        (phtr::Storage::rgb_16_planar, 100, 100)
+    );
 
     std::uint16_t* buf = static_cast<std::uint16_t*>(img_buf->data());
     buf[0] = 65535;
     buf[10000] = 32767;
     buf[20000] = 16383;
 
+    std::auto_ptr<phtr::IImageViewW> phtr_mem_view_w(
+        phtr::IImageViewW::get_mem_image_view_w(
+            phtr::Storage::rgb_16_planar, buf, 100, 100)
+    );
+
+    phtr_mem_view_w->write_px_val_r(50, 50, 1.0);
+    phtr_mem_view_w->write_px_val_g(50, 50, 0.7);
+    phtr_mem_view_w->write_px_val_b(50, 50, 0.5);
+
     std::auto_ptr<phtr::IImageViewR> phtr_mem_view(
         phtr::IImageViewR::get_mem_image_view_r(
             phtr::Storage::rgb_16_planar, buf, 100, 100)
     );
 
-    vcl_cerr << phtr_mem_view->get_px_val_r(0,0)
-    << " " << phtr_mem_view->get_px_val_g(0,0)
-    << " " << phtr_mem_view->get_px_val_b(0,0) << vcl_endl;
+    vcl_cerr << phtr_mem_view->get_px_val_r(0, 0)
+    << " " << phtr_mem_view->get_px_val_g(0, 0)
+    << " " << phtr_mem_view->get_px_val_b(0, 0) << vcl_endl;
 
-    delete[] buf;
+    vcl_cerr << phtr_mem_view->get_px_val_r(50, 50)
+    << " " << phtr_mem_view->get_px_val_g(50, 50)
+    << " " << phtr_mem_view->get_px_val_b(50, 50) << vcl_endl;
+
+    return 0;
 
     vcl_cout << "Loading image."  << vcl_endl;
     vil_image_resource_sptr img_rsc = vil_load_image_resource("/home/robert/kombi1.tif");

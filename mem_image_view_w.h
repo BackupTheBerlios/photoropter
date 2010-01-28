@@ -1,5 +1,5 @@
-#ifndef __MEM_IMAGE_VIEW_R_H__
-#define __MEM_IMAGE_VIEW_R_H__
+#ifndef __MEM_IMAGE_VIEW_W_H__
+#define __MEM_IMAGE_VIEW_W_H__
 
 #include "storagetypes.h"
 #include "image_view.h"
@@ -9,13 +9,13 @@ namespace phtr
 {
 
     /**
-    * \brief Class template implementing an (reading) 'image view' of a given
+    * \brief Class template implementing an (writing) 'image view' of a given
     *  memory position.
     * \details The template uses internal templates to deal efficiently with
     * different storage types.
     */
     template <Storage::type T>
-    class MemImageViewR : public IImageViewR
+    class MemImageViewW : public IImageViewW
     {
 
         private:
@@ -37,7 +37,7 @@ namespace phtr
             * \param width The image width.
             * \param height The image height.
             */
-            MemImageViewR(const void* base_addr,
+            MemImageViewW(void* base_addr,
                           coord_t width,
                           coord_t height);
 
@@ -45,7 +45,7 @@ namespace phtr
             /**
             * \brief Desctructor.
             */
-            virtual ~MemImageViewR();
+            virtual ~MemImageViewW();
 
         public:
             /**
@@ -63,30 +63,50 @@ namespace phtr
 
         public:
             /**
-            * \brief Read the 'red' channel value.
-            * \param x The x coordinate.
-            * \param y The y coordinate.
-            * \return The channel value.
+            * \brief Write the 'red' channel value.
+            * \param x   The x coordinate.
+            * \param y   The y coordinate.
+            * \param val The channel value.
             */
-            virtual channel_t get_px_val_r(coord_t x, coord_t y) const;
+            virtual void write_px_val_r(coord_t x, coord_t y, channel_t val);
 
         public:
             /**
-            * \brief Read the 'green' channel value.
-            * \param x The x coordinate.
-            * \param y The y coordinate.
-            * \return The channel value.
+            * \brief Write the 'green' channel value.
+            * \param x   The x coordinate.
+            * \param y   The y coordinate.
+            * \param val The channel value.
             */
-            virtual channel_t get_px_val_g(coord_t x, coord_t y) const;
+            virtual void write_px_val_g(coord_t x, coord_t y, channel_t val);
 
         public:
             /**
-            * \brief Read the 'blue' channel value.
-            * \param x The x coordinate.
-            * \param y The y coordinate.
-            * \return The channel value.
+            * \brief Write the 'blue' channel value.
+            * \param x   The x coordinate.
+            * \param y   The y coordinate.
+            * \param val The channel value.
             */
-            virtual channel_t get_px_val_b(coord_t x, coord_t y) const;
+            virtual void write_px_val_b(coord_t x, coord_t y, channel_t val);
+
+        public:
+            /**
+            * \brief Get a pixel iterator.
+            * A new iterator is instatiated and a pointer to it is returned
+            * (this is necessary since C++ does not support to return polymorphic
+            * objects 'by value').
+            * \return The iterator.
+            */
+            IImageViewIterW* get_iter(coord_t x, coord_t y);
+
+        public:
+            /**
+            * \brief Get the current region of interest.
+            * \param x_min The minimal x coordinate.
+            * \param y_min The minimal y coordinate.
+            * \param x_max The maximal x coordinate.
+            * \param y_max The maximal y coordinate.
+            */
+            void get_roi(coord_t& x_min, coord_t& y_min, coord_t& x_max, coord_t& y_max);
 
         private:
             /**
@@ -107,10 +127,11 @@ namespace phtr
 
         private:
             /**
-            * \brief Scale a pixel value to the [0:1] interval.
-            * \param raw_val The raw (i.e., stored) value.
+            * \brief Scale a pixel value from to the [0:1] interval to the raw interval.
+            * \param scaled_val The scaled value.
+            * \return The raw (i.e., stored) value.
             */
-            channel_t scale_px(channel_storage_t raw_val) const;
+            channel_storage_t scale_px(channel_t scaled_val) const;
 
         private:
             /**
@@ -129,7 +150,7 @@ namespace phtr
             /**
             * \brief The base address of the image.
             */
-            const channel_storage_t* base_addr_;
+            channel_storage_t* base_addr_;
 
         private:
             /**
@@ -183,6 +204,6 @@ namespace phtr
 
 } // namespace phtr
 
-#include "mem_image_view_r.tpl.h"
+#include "mem_image_view_w.tpl.h"
 
-#endif // __MEM_IMAGE_VIEW_R_H__
+#endif // __MEM_IMAGE_VIEW_W_H__

@@ -20,12 +20,22 @@ namespace phtr
 
         protected:
             /**
+            * \brief Constructor.
+            */
+            IImageViewBase()
+            {
+                //NIL
+            }
+
+
+        public:
+            /**
             * \brief Destructor.
             * Declared 'virtual' for proper polymorphic behaviour.
             */
             virtual ~IImageViewBase()
             {
-                // nil
+                //NIL
             }
 
         public:
@@ -113,12 +123,21 @@ namespace phtr
 
         protected:
             /**
+            * \brief Constructor.
+            */
+            IImageViewIterW()
+            {
+                //NIL
+            }
+
+        public:
+            /**
             * \brief Destructor.
             * Declared 'virtual' for proper polymorphic behaviour.
             */
             virtual ~IImageViewIterW()
             {
-                // nil
+                //NIL
             }
 
         public:
@@ -147,6 +166,15 @@ namespace phtr
     class IImageViewW : public virtual IImageViewBase
     {
 
+        protected:
+            /**
+            * \brief Constructor.
+            */
+            IImageViewW()
+            {
+                //NIL
+            }
+
         public:
             /**
             * \brief Write a channel value directly to a pixel.
@@ -155,7 +183,34 @@ namespace phtr
             * \param y    The y coordinate.
             * \param val  The value.
             */
-            virtual void write_px_val(Channel::type chan, coord_t x, coord_t y, channel_t val) = 0;
+            virtual void write_px_val(Channel::type chan, coord_t x, coord_t y, channel_t val);
+
+        public:
+            /**
+            * \brief Write the 'red' channel value directly to a pixel.
+            * \param x    The x coordinate.
+            * \param y    The y coordinate.
+            * \param val  The value.
+            */
+            virtual void write_px_val_r(coord_t x, coord_t y, channel_t val) = 0;
+
+        public:
+            /**
+            * \brief Write the 'green' channel value directly to a pixel.
+            * \param x    The x coordinate.
+            * \param y    The y coordinate.
+            * \param val  The value.
+            */
+            virtual void write_px_val_g(coord_t x, coord_t y, channel_t val) = 0;
+
+        public:
+            /**
+            * \brief Write the 'blue' channel value directly to a pixel.
+            * \param x    The x coordinate.
+            * \param y    The y coordinate.
+            * \param val  The value.
+            */
+            virtual void write_px_val_b(coord_t x, coord_t y, channel_t val) = 0;
 
         public:
             /**
@@ -175,7 +230,20 @@ namespace phtr
             * \param x_max The maximal x coordinate.
             * \param y_max The maximal y coordinate.
             */
-            virtual void get_roi(coord_t x_min, coord_t y_min, coord_t x_max, coord_t y_max) = 0;
+            virtual void get_roi(coord_t& x_min, coord_t& y_min, coord_t& x_max, coord_t& y_max) = 0;
+
+        public:
+            /**
+            * \brief Create a new @ref MemImageViewR instance.
+            * \param storage_type The storage type.
+            * \param base_addr    The buffer address.
+            * \param width        The image width.
+            * \param height       The image height.
+            */
+            static IImageViewW* get_mem_image_view_w(Storage::type storage_type,
+                    void* base_addr,
+                    coord_t width,
+                    coord_t height);
 
     }; // class IImageViewW
 

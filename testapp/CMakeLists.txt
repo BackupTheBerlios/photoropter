@@ -1,12 +1,8 @@
-# search for VXL and include VXL configuration
+# search for VXL
 find_package(VXL REQUIRED)
-include(${VXL_CMAKE_DIR}/UseVXL.cmake)
 
-# set compiler options; these have to come last to take precedence
-set(CMAKE_CXX_FLAGS_DEBUG "-O0 -g -ansi -pedantic -Wall -Wextra -Werror -Wno-long-long -DDEBUG")
-set(CMAKE_CXX_FLAGS_RELEASE "-O2 -ansi -DNDEBUG -Wno-long-long")
-
-include_directories(../include ${VXL_CORE_INCLUDE_DIR})
+include_directories(../include ${VXL_VCL_INCLUDE_DIR} ${VXL_CORE_INCLUDE_DIR})
+link_directories(${VXL_LIBRARY_DIR})
 
 add_executable(phtrtest
   main.cpp

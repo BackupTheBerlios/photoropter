@@ -116,6 +116,8 @@ set(PHTR_SOURCES
   image_view.cpp
   mem_image_view_r.h
   mem_image_view_r.tpl.h
+  mem_image_view_w.h
+  mem_image_view_w.tpl.h
   image_buffer.cpp
   image_buffer_impl.h
   image_buffer_impl.tpl.h

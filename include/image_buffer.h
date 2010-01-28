@@ -21,7 +21,7 @@ namespace phtr
                 //NIL
             }
 
-        protected:
+        public:
             /**
             * \brief Destructor.
             * \note Declared 'virtual' for proper polymorphic behaviour.
