@@ -9,7 +9,7 @@ namespace phtr
             roi_x_min_(0),
             roi_x_max_(width - 1),
             roi_y_min_(0),
-            roi_y_max_(height -1)
+            roi_y_max_(height - 1)
     {
         //NIL
     }

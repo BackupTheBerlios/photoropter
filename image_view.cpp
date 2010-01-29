@@ -29,7 +29,7 @@ namespace phtr
     void IImageViewIterW::write_px_val(Channel::type chan, channel_t val)
     {
 
-        switch(chan)
+        switch (chan)
         {
             case Channel::red:
                 return write_px_val_r(val);

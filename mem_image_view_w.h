@@ -108,25 +108,25 @@ namespace phtr
             */
             typename MemImageViewBase<T>::channel_storage_t scale_px(channel_t scaled_val) const;
 
-            private:
+        private:
             /**
             * \brief The position of the left edge of the region of interest.
             */
             coord_t roi_x_min_;
 
-            private:
+        private:
             /**
             * \brief The position of the right edge of the region of interest.
             */
             coord_t roi_x_max_;
 
-            private:
+        private:
             /**
             * \brief The position of the lower edge of the region of interest.
             */
             coord_t roi_y_min_;
 
-            private:
+        private:
             /**
             * \brief The position of the top edge of the region of interest.
             */
