@@ -3,9 +3,13 @@ namespace phtr
 
     template <Storage::type T>
     MemImageViewW<T>::MemImageViewW(void* base_addr,
-                                    size_t width,
-                                    size_t height)
-            : MemImageViewBase<T>(base_addr, width, height)
+                                    coord_t width,
+                                    coord_t height)
+            : MemImageViewBase<T>(base_addr, width, height),
+            roi_x_min_(0),
+            roi_x_max_(width - 1),
+            roi_y_min_(0),
+            roi_y_max_(height -1)
     {
         //NIL
     }
@@ -52,13 +56,21 @@ namespace phtr
     }
 
     template <Storage::type T>
+    void MemImageViewW<T>::set_roi(coord_t x_min, coord_t y_min, coord_t x_max, coord_t y_max)
+    {
+        roi_x_min_ = x_min;
+        roi_x_max_ = x_max;
+        roi_y_min_ = y_min;
+        roi_y_max_ = y_max;
+    }
+
+    template <Storage::type T>
     void MemImageViewW<T>::get_roi(coord_t& x_min, coord_t& y_min, coord_t& x_max, coord_t& y_max)
     {
-        // FIXME
-        x_min = 0;
-        y_min = 0;
-        x_max = 0;
-        y_max = 0;
+        x_min = roi_x_min_;
+        x_max = roi_x_max_;
+        y_min = roi_y_min_;
+        y_max = roi_y_max_;
     }
 
 

@@ -78,6 +78,16 @@ namespace phtr
 
         public:
             /**
+            * \brief Set the region of interest.
+            * \param x_min The minimal x coordinate.
+            * \param y_min The minimal y coordinate.
+            * \param x_max The maximal x coordinate.
+            * \param y_max The maximal y coordinate.
+            */
+            void set_roi(coord_t x_min, coord_t y_min, coord_t x_max, coord_t y_max);
+
+        public:
+            /**
             * \brief Get the current region of interest.
             * \param x_min The minimal x coordinate.
             * \param y_min The minimal y coordinate.
@@ -97,6 +107,31 @@ namespace phtr
             * \return The raw (i.e., stored) value.
             */
             typename MemImageViewBase<T>::channel_storage_t scale_px(channel_t scaled_val) const;
+
+            private:
+            /**
+            * \brief The position of the left edge of the region of interest.
+            */
+            coord_t roi_x_min_;
+
+            private:
+            /**
+            * \brief The position of the right edge of the region of interest.
+            */
+            coord_t roi_x_max_;
+
+            private:
+            /**
+            * \brief The position of the lower edge of the region of interest.
+            */
+            coord_t roi_y_min_;
+
+            private:
+            /**
+            * \brief The position of the top edge of the region of interest.
+            */
+            coord_t roi_y_max_;
+
 
     }; // template class MemImageViewW
 

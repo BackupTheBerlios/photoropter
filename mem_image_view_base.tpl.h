@@ -3,8 +3,8 @@ namespace phtr
 
     template <Storage::type T>
     MemImageViewBase<T>::MemImageViewBase(void* base_addr,
-                                          size_t width,
-                                          size_t height)
+                                          coord_t width,
+                                          coord_t height)
             : storage_type_(T),
             storage_info_(width, height),
             base_addr_(static_cast<MemImageViewBase::channel_storage_t*>(base_addr)),

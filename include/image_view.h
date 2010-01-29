@@ -114,14 +114,35 @@ namespace phtr
             * \param chan The channel.
             * \param val  The value.
             */
-            virtual void write_px_val(Channel::type chan, channel_t val) = 0;
+            virtual void write_px_val(Channel::type chan, channel_t val);
+
+        public:
+            /**
+            * \brief Write the 'red' channel value to the current pixel.
+            * \param val  The value.
+            */
+            virtual void write_px_val_r(channel_t val) = 0;
+
+        public:
+            /**
+            * \brief Write the 'green' channel value to the current pixel.
+            * \param val  The value.
+            */
+            virtual void write_px_val_g(channel_t val) = 0;
+
+        public:
+            /**
+            * \brief Write the 'blue' channel value to the current pixel.
+            * \param val  The value.
+            */
+            virtual void write_px_val_b(channel_t val) = 0;
 
         public:
             /**
             * \brief Increment the current position.
             * \attention Boundary checks are not guaranteed.
             */
-            virtual void inc_pos();
+            virtual void inc_pos() = 0;
 
         public:
             /**

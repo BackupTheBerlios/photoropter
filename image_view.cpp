@@ -26,6 +26,27 @@ namespace phtr
 
     }
 
+    void IImageViewIterW::write_px_val(Channel::type chan, channel_t val)
+    {
+
+        switch(chan)
+        {
+            case Channel::red:
+                return write_px_val_r(val);
+                break;
+
+            case Channel::green:
+                return write_px_val_g(val);
+                break;
+
+            case Channel::blue:
+            default:
+                return write_px_val_b(val);
+                break;
+        }
+
+    }
+
     void IImageViewW::write_px_val(Channel::type chan, coord_t x, coord_t y, channel_t val)
     {
 

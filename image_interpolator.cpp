@@ -6,8 +6,8 @@ namespace phtr
     ImageInterpolator::ImageInterpolator(IImageViewR* image_view)
             : image_view_(image_view)
     {
-        scale_x_ = static_cast<interp_coord_t>(image_view_->width());
-        scale_y_ = static_cast<interp_coord_t>(image_view_->height());
+        scale_x_ = static_cast<interp_coord_t>(image_view_->width()) - 1;
+        scale_y_ = static_cast<interp_coord_t>(image_view_->height() - 1);
     }
 
     ImageInterpolator::~ImageInterpolator()
