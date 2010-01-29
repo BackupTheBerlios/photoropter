@@ -19,26 +19,6 @@ namespace phtr
     class IImageViewBase
     {
 
-        protected:
-            /**
-            * \brief Constructor.
-            */
-            IImageViewBase()
-            {
-                //NIL
-            }
-
-
-        public:
-            /**
-            * \brief Destructor.
-            * Declared 'virtual' for proper polymorphic behaviour.
-            */
-            virtual ~IImageViewBase()
-            {
-                //NIL
-            }
-
         public:
             /**
             * \brief Get the image width.
@@ -52,6 +32,25 @@ namespace phtr
             * \return The height.
             */
             virtual coord_t height() const = 0;
+
+        public:
+            /**
+            * \brief Destructor.
+            * Declared 'virtual' for proper polymorphic behaviour.
+            */
+            virtual ~IImageViewBase()
+            {
+                //NIL
+            }
+
+        protected:
+            /**
+            * \brief Constructor.
+            */
+            IImageViewBase()
+            {
+                //NIL
+            }
 
     }; // class IImageViewBase
 
@@ -109,25 +108,6 @@ namespace phtr
     class IImageViewIterW
     {
 
-        protected:
-            /**
-            * \brief Constructor.
-            */
-            IImageViewIterW()
-            {
-                //NIL
-            }
-
-        public:
-            /**
-            * \brief Destructor.
-            * Declared 'virtual' for proper polymorphic behaviour.
-            */
-            virtual ~IImageViewIterW()
-            {
-                //NIL
-            }
-
         public:
             /**
             * \brief Write a channel value to the current pixel.
@@ -143,6 +123,25 @@ namespace phtr
             */
             virtual void inc_pos();
 
+        public:
+            /**
+            * \brief Destructor.
+            * Declared 'virtual' for proper polymorphic behaviour.
+            */
+            virtual ~IImageViewIterW()
+            {
+                //NIL
+            }
+
+        protected:
+            /**
+            * \brief Constructor.
+            */
+            IImageViewIterW()
+            {
+                //NIL
+            }
+
     }; // class IImageViewIterW
 
     /**
@@ -153,15 +152,6 @@ namespace phtr
 
     class IImageViewW : public virtual IImageViewBase
     {
-
-        protected:
-            /**
-            * \brief Constructor.
-            */
-            IImageViewW()
-            {
-                //NIL
-            }
 
         public:
             /**
@@ -219,6 +209,15 @@ namespace phtr
             * \param y_max The maximal y coordinate.
             */
             virtual void get_roi(coord_t& x_min, coord_t& y_min, coord_t& x_max, coord_t& y_max) = 0;
+
+        protected:
+            /**
+            * \brief Constructor.
+            */
+            IImageViewW()
+            {
+                //NIL
+            }
 
     }; // class IImageViewW
 

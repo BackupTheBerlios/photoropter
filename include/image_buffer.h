@@ -12,25 +12,6 @@ namespace phtr
     class IImageBuffer
     {
 
-        protected:
-            /**
-            * \brief Constructor.
-            */
-            IImageBuffer()
-            {
-                //NIL
-            }
-
-        public:
-            /**
-            * \brief Destructor.
-            * \note Declared 'virtual' for proper polymorphic behaviour.
-            */
-            virtual ~IImageBuffer()
-            {
-                //NIL
-            }
-
         public:
             /**
             * \brief Return a pointer to the data the buffer holds.
@@ -63,6 +44,25 @@ namespace phtr
             static IImageBuffer* get_image_buffer(phtr::Storage::type storage_type,
                                                   coord_t width,
                                                   coord_t height);
+
+        public:
+            /**
+            * \brief Destructor.
+            * \note Declared 'virtual' for proper polymorphic behaviour.
+            */
+            virtual ~IImageBuffer()
+            {
+                //NIL
+            }
+
+        protected:
+            /**
+            * \brief Constructor.
+            */
+            IImageBuffer()
+            {
+                //NIL
+            }
 
     }; // class IImageBuffer
 

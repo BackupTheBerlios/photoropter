@@ -16,13 +16,18 @@ namespace phtr
     template <phtr::Storage::type T>
     class ImageBufferImpl : public IImageBuffer
     {
+
+            /* ****************************************
+             * public interface
+             * **************************************** */
+
         public:
             /**
             * \brief The channel storage type.
             */
             typedef typename phtr::ChannelStorage<T>::type channel_storage_t;
 
-        private:
+        public:
             /**
             * \brief The type of the internal storage info object.
             */
@@ -62,6 +67,10 @@ namespace phtr
             * \return The number of bytes.
             */
             size_t num_bytes();
+
+            /* ****************************************
+             * internals
+             * **************************************** */
 
         private:
             /**

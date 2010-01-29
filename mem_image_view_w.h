@@ -15,20 +15,12 @@ namespace phtr
     * different storage types.
     */
     template <Storage::type T>
-    class MemImageViewW : public IImageViewW
+    class MemImageViewW : public IImageViewW, public MemImageViewBase<T>
     {
 
-        private:
-            /**
-            * \brief The type of the internal storage info object.
-            */
-            typedef typename phtr::MemStorageInfo<T> storage_info_t;
-
-        public:
-            /**
-            * \brief The channel storage type for this image (e.g., uint8_t).
-            */
-            typedef typename storage_info_t::channel_storage_t channel_storage_t;
+            /* ****************************************
+             * public interface
+             * **************************************** */
 
         public:
             /**
@@ -46,20 +38,6 @@ namespace phtr
             * \brief Desctructor.
             */
             virtual ~MemImageViewW();
-
-        public:
-            /**
-            * \brief Get the image width.
-            * \return The width.
-            */
-            virtual coord_t width() const;
-
-        public:
-            /**
-            * \brief Get the image height.
-            * \return The height.
-            */
-            virtual coord_t height() const;
 
         public:
             /**
@@ -108,22 +86,9 @@ namespace phtr
             */
             void get_roi(coord_t& x_min, coord_t& y_min, coord_t& x_max, coord_t& y_max);
 
-        private:
-            /**
-            * \brief Determine the 'pixel address' to a given set of coordinates.
-            * \param x    The x coordinate.
-            * \param y    The y coordinate.
-            */
-            const channel_storage_t* get_px_addr(coord_t x, coord_t y) const;
-
-        private:
-            /**
-            * \brief Determine the 'pixel offset' to a given set of coordinates.
-            * \param x The x coordinate.
-            * \param y The y coordinate.
-            * \return The offset
-            */
-            size_t get_px_offs(coord_t x, coord_t y) const;
+            /* ****************************************
+             * internals
+             * **************************************** */
 
         private:
             /**
@@ -131,76 +96,9 @@ namespace phtr
             * \param scaled_val The scaled value.
             * \return The raw (i.e., stored) value.
             */
-            channel_storage_t scale_px(channel_t scaled_val) const;
+            typename MemImageViewBase<T>::channel_storage_t scale_px(channel_t scaled_val) const;
 
-        private:
-            /**
-            * \brief The storage type of the image.
-            */
-            const Storage::type storage_type_;
-
-        private:
-            /**
-            * \brief Internal storage info object, used to calculate the memory
-            * layout parameters.
-            */
-            storage_info_t storage_info_;
-
-        private:
-            /**
-            * \brief The base address of the image.
-            */
-            channel_storage_t* base_addr_;
-
-        private:
-            /**
-            * \brief The image width.
-            */
-            const coord_t width_;
-
-        private:
-            /**
-            * \brief The image height.
-            */
-            const coord_t height_;
-
-        private:
-            /**
-            * \brief The minimal value a channel can hold.
-            */
-            const channel_storage_t min_chan_val_;
-
-        private:
-            /**
-            * \brief The maximal value a channel can hold.
-            */
-            const channel_storage_t max_chan_val_;
-
-        private:
-            /**
-            * \brief The distance between two adjacent pixels, in multiples
-            * of the channel storage unit.
-            */
-            const size_t step_;
-
-        private:
-            /**
-            * \brief The offset of the red channel to the current memory position.
-            */
-            const size_t r_offs_;
-
-        private:
-            /**
-            * \brief The offset of the green channel to the current memory position.
-            */
-            const size_t g_offs_;
-
-        private:
-            /**
-            * \brief The offset of the blue channel to the current memory position.
-            */
-            const size_t b_offs_;
-    };
+    }; // template class MemImageViewW
 
 } // namespace phtr
 

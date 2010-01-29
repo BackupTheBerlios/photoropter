@@ -115,6 +115,8 @@ set(PHTR_SOURCES
   include/exception.h
   exception.cpp
   image_view.cpp
+  mem_image_view_base.h
+  mem_image_view_base.tpl.h
   mem_image_view_r.h
   mem_image_view_r.tpl.h
   mem_image_view_w.h
