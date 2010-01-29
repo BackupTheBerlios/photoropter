@@ -9,7 +9,7 @@ namespace std
 namespace phtr
 {
     /**
-    * \brief Class containing image storage types.
+    * \brief Struct containing image storage types.
     */
     struct Storage
     {
@@ -22,7 +22,7 @@ namespace phtr
             /**
             * \brief Unknown type.
             */
-            unknown,
+            unknown = 0,
             /**
             * \brief 8 bit unsigned RGB, interleaved.
             */
@@ -47,7 +47,7 @@ namespace phtr
             * \brief 32 bit unsigned RGB, planar.
             */
             rgb_32_planar
-        }; // enum storage::type
+        }; // enum Storage::type
 
     }; // class Storage
 

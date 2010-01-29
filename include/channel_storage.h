@@ -1,7 +1,7 @@
 #ifndef __CHANNEL_STORAGE_H__
 #define __CHANNEL_STORAGE_H__
 
-#include "storagetypes.h"
+#include "storage_type.h"
 
 namespace phtr
 {

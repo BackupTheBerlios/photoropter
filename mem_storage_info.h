@@ -3,7 +3,7 @@
 
 #include <limits>
 
-#include "storagetypes.h"
+#include "storage_type.h"
 #include "channel_storage.h"
 #include "mem_layout.h"
 

@@ -2,7 +2,8 @@
 #define __IMAGE_VIEW_H__
 
 #include "types.h"
-#include "storagetypes.h"
+#include "channel_type.h"
+#include "storage_type.h"
 
 /**
 * \brief Main namespace of the Photoropter library.

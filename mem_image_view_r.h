@@ -1,7 +1,7 @@
 #ifndef __MEM_IMAGE_VIEW_R_H__
 #define __MEM_IMAGE_VIEW_R_H__
 
-#include "storagetypes.h"
+#include "storage_type.h"
 #include "image_view.h"
 #include "mem_storage_info.h"
 

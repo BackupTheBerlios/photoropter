@@ -107,7 +107,8 @@ endif(DOXYGEN_FOUND)
 
 set(PHTR_SOURCES
   include/types.h
-  include/storagetypes.h
+  include/storage_type.h
+  include/channel_type.h
   include/image_view.h
   include/image_buffer.h
   include/channel_storage.h

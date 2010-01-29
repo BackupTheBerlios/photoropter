@@ -3,7 +3,7 @@
 
 #include "image_buffer.h"
 #include "types.h"
-#include "storagetypes.h"
+#include "storage_type.h"
 #include "channel_storage.h"
 #include "mem_storage_info.h"
 

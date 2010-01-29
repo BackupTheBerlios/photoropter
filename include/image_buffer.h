@@ -2,7 +2,7 @@
 #define __IMAGE_BUFFER_H__
 
 #include "types.h"
-#include "storagetypes.h"
+#include "storage_type.h"
 
 namespace phtr
 {

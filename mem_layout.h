@@ -2,7 +2,7 @@
 #define __MEM_LAYOUT_H__
 
 #include "types.h"
-#include "storagetypes.h"
+#include "storage_type.h"
 
 namespace phtr
 {
