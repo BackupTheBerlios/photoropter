@@ -23,6 +23,7 @@ set(PHTR_USE_SCOPED_PTR false CACHE BOOL
 
 # build documentation?
 set(PHTR_BUILD_DOCUMENTATION true CACHE BOOL "Build Doxygen documentation")
+set(PHTR_DOCUMENT_ALL false CACHE BOOL "Build documentation for all library files")
 set(PHTR_DOCUMENT_PRIVATE false CACHE BOOL "Include private members in documentation")
 
 # build shared?
@@ -69,21 +70,42 @@ find_package(Doxygen)
 if(DOXYGEN_FOUND)
   message(STATUS "Doxygen found: HTML documentation can be generated.")
 
-  set(DOXYGEN_SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR})
-  set(DOXYGEN_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
+  set(DOXYGEN_SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
   set(DOXYGEN_DOCSRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/doc-src)
   set(DOXYGEN_DOC_DIR ${CMAKE_CURRENT_BINARY_DIR}/doc)
 
   set(DOXYGEN_CONF_IN ${DOXYGEN_DOCSRC_DIR}/doxygen.conf.in)
   set(DOXYGEN_CONF ${CMAKE_CURRENT_BINARY_DIR}/doxygen.conf)
 
-  if(PHTR_DOCUMENT_PRIVATE)
-    set(DOXYGEN_EXTRACT_PRIVATE "YES")
-    set(DOXYGEN_EXTRACT_STATIC "YES")
-  else(PHTR_DOCUMENT_PRIVATE)
-    set(DOXYGEN_EXTRACT_PRIVATE "NO")
-     set(DOXYGEN_EXTRACT_STATIC "NO")
-  endif(PHTR_DOCUMENT_PRIVATE)
+  # now set variables that will be used by doxygen itself
+  set(DOXY_DOCSRC_DIR "\"${DOXYGEN_DOCSRC_DIR}\"")
+  set(DOXY_DOC_DIR "\"${DOXYGEN_DOC_DIR}\"")
+
+  set(DOXY_CSS "\"${DOXYGEN_DOCSRC_DIR}/customdoxy.css\"")
+  set(DOXY_PROJECT "\"${CMAKE_PROJECT_NAME}\"")
+
+  set(DOXY_INPUT "\"${DOXYGEN_SRC_DIR}\"")
+  set(DOXY_INPUT "${DOXY_INPUT} \"${DOXYGEN_DOCSRC_DIR}\"")
+  set(DOXY_INPUT "${DOXY_INPUT} \"${DOXYGEN_DOCSRC_DIR}/main.txt\"")
+  set(DOXY_INPUT "${DOXY_INPUT} \"${DOXYGEN_DOCSRC_DIR}/overview.txt\"")
+  set(DOXY_INPUT "${DOXY_INPUT} \"${DOXYGEN_DOCSRC_DIR}/license.txt\"")
+  set(DOXY_INPUT "${DOXY_INPUT} \"${DOXYGEN_DOCSRC_DIR}/codingstyle.txt\"")
+
+  if(PHTR_DOCUMENT_ALL)
+    set(DOXY_INPUT "${DOXY_INPUT} \"${CMAKE_CURRENT_SOURCE_DIR}\"")
+
+    if(PHTR_DOCUMENT_PRIVATE)
+      set(DOXY_EXTRACT_PRIVATE "YES")
+      set(DOXY_EXTRACT_STATIC "YES")
+    else(PHTR_DOCUMENT_PRIVATE)
+      set(DOXY_EXTRACT_PRIVATE "NO")
+      set(DOXY_EXTRACT_STATIC "NO")
+    endif(PHTR_DOCUMENT_PRIVATE)
+
+  else(PHTR_DOCUMENT_ALL)
+    set(DOXY_EXTRACT_PRIVATE "NO")
+    set(DOXY_EXTRACT_STATIC "NO")
+  endif(PHTR_DOCUMENT_ALL)
 
   configure_file(${DOXYGEN_CONF_IN} ${DOXYGEN_CONF})
 
