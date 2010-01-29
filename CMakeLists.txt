@@ -133,6 +133,7 @@ set(PHTR_SOURCES
   include/channel_type.h
   include/image_view.h
   include/image_buffer.h
+  include/image_interpolator.h
   include/channel_storage.h
   include/exception.h
   exception.cpp
@@ -146,6 +147,7 @@ set(PHTR_SOURCES
   image_buffer.cpp
   image_buffer_impl.h
   image_buffer_impl.tpl.h
+  image_interpolator.cpp
   mem_layout.h
   mem_storage_info.h
   )
