@@ -11,6 +11,32 @@ any software, provided you give credit for it. However, all utility programs
 (e.g., for lens database maintenance or calibration) are copylefted. You have
 been warned.
 
+@section licens_contrib How to contribute
+
+Photoropter is not only open source software: it is free software. This means
+that you are free to change Photoropter in just about any way you like, including
+(but not limited to) bug fixes and improvements to its functionality. You
+are invited to make your changes available to the project, so that everybody
+can benefit.
+
+I will be happy to look at any suggested patch. However, please be aware
+that this does not necessarily mean your change will immediately be adopted
+into Photoropter. The following points are also worthy of note:
+<ul>
+<li>By sending me a patch, you irrevocably provide your changes under
+the terms of the MIT license or the GPL respectively, depending on which
+part of Photoropter you contributed.</li>
+<li>You agree to indemnify me from and against any copyright violations
+you may or may not have committed. This essentially means that if you steal
+code from someone else and present it to me as your own, I \em will
+make you regret it.</li>
+<li>One of the easiest ways for me get your changes is for you to setup
+a temporary Mercurial repository and notify me to pull from it.</li>
+<li>Direct access to the central source repository is only considered for
+those who wish to work continuously on Photoropter, and only after
+several contributions which underline that intent.</li>
+</ul>
+
 @page gpl GNU General Public License, version 3
 \verbinclude gpl-3.0.txt
 

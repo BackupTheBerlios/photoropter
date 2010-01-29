@@ -2,6 +2,13 @@
 
 @page codingstyle Photoropter coding style
 
+Photoropter is written in C++, a language that provides the developer with
+a great deal of flexibility. However, quite a lot of things that are possible
+with C++ are not necessarily sensible as well. This document outlines the
+coding style used in the development of the Photoropter library; mainly to
+make life easier for potential contributers, but if you want to adopt these
+guidelines for your own project, feel free to do so.
+
 @section code_org Code organisation
 
 @subsection code_org_classes Classes and structs
@@ -66,7 +73,7 @@ using "_".</li>
 @subsection naming_classes Classes and structs
 
 <ul>
-<li>The same naming principles apply, with the following exceptions.</li>
+<li>The general naming principles apply, with the following exceptions.</li>
 <li>The first letter of a class name is capitalised. The following
 letters remain lower-case.</li>
 <li>Multiple words in a class name are separated by capitalisation
@@ -74,6 +81,37 @@ rather than "_" (i.e., 'camel casing' is used).</li>
 <li>Interface definitions (i.e., fully abstract class definitions) are
 marked by an initial letter "I". This is not considered the first
 letter of the class name (i.e., the second point still applies).</li>
+<li>A class name always differs from the interface it implements by more
+than the "I" prefix. E.g., a class implementing "IImageView" cannot use
+the name "ImageView".</li>
+</ul>
+
+@subsection naming_macros Macros
+
+<ul>
+<li>The general naming rules apply, with the following differences.</li>
+<li>Macro names are completely capitalised.</li>
+<li>All macro names use a descriptive prefix (e.g., "PHTR_") to avoid
+name collisions.</li>
+</ul>
+
+@subsection naming_files Files
+
+<ul>
+<li>Filenames are descriptive. If no descriptive name can easily be found,
+this is a sign that too many different things are included in that file.</li>
+<li>A file that contains the declaration or implementation of a class
+is named like that class, with the following differences:<ol>
+ <li>No capitalisation.</li>
+ <li>Multiple words are separated by "_" rather than capital letters.</li>
+ <li>The "I" prefix of interface classes is omitted.</li></ol>E.g.,
+ the file containing the declaration of "IImageView" will be called
+ 'image_view.h'.</li>
+<li>Plain C files use the suffix ".c".</li>
+<li>C++ files use the suffix ".cpp".</li>
+<li>Header files (C and C++) use the suffix ".h".</li>
+<li>Inline definitons use the double suffix ".inl.h".</li>
+<li>Template definitions use the double suffix ".tpl.h".</li>
 </ul>
 
 @section langfeatures Language features
@@ -96,21 +134,43 @@ members are usually shifted towards the end of the struct, if used at all).</li>
 @subsection langfeatures_classes Classes and structs
 
 <ul>
-<li>Structs are not considered classes (even if C++ does treat them like that).
+<li>All classes usually declare a virtual destructor.</li>
+<li>If there is a good reason to declare the destructor of a class non-virtual,
+it is marked (and explained) in the documentation.</li>
+<li>A class without virtual destructor is never used as base class.</li>
+<li>Structs are not considered classes (even if C++ does treat them that way).
 The 'struct' keyword is only used for types that are semantically "not a class"
 (see next point). Classes use the 'class' keyword exclusively.</li>
 <li>A struct is only used for:<ul>
  <li>interoperability with C, or</li>
- <li>to hold constant, static and/or type information.</li>
- </ul></li>
+ <li>to hold constant, static and/or type information.</li></ul></li>
 <li>Structs have no 'surprising' side effects (like initialisation of buffers).</li>
 <li>A struct is never used as base class.</li>
 <li>Apart from constructors for member initialisation and 'const' functions
 without side effects, a struct does not contain member functions.</li>
 <li>Structs do not contain virtual members.</li>
-<li>All classes usually declare a virtual destructor.</li>
-<li>If there is a good reason to declare the destructor of a class non-virtual,
-it is marked (and explained) in the documentation.</li>
-<li>A class without virtual destructor is never used as base class.</li>
 </ul>
+
+@subsection langfeatures_templates Templates
+
+<ul>
+<li>Only inline templates are used.</li>
+<li>If the implementation of a template is contained in a separate file,
+that file will be included in the declaration header (so-called
+'inclusion model').</li>
+<li>The "export" keyword is not used, since it is only supported by two
+(semi-)popular compilers at the moment (Comeau and Intel, which also uses
+the Comeau frontend).</li>
+</ul>
+
+@subsection langfeatures_macros Macros
+
+<ul>
+<li>Macros are generally avoided where possible.</li>
+<li>If a macro must be used, it is as short as possible and avoids
+'unexpected' side effects.</li>
+<li>Macros are never used to change identifiers.</li>
+<li>Macros are never used to replace keywords.</li>
+</ul>
+
 */
