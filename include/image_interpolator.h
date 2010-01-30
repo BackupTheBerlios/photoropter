@@ -34,6 +34,30 @@ namespace phtr
 {
 
     /**
+    * \brief Struct describing interpolation types.
+    */
+    struct Interpolation
+    {
+
+        /**
+        * \brief The enum holding the actual values.
+        */
+        enum type
+        {
+            /**
+            * \brief 'Nearest neighbour' interpolation.
+            */
+            nearest_neighbour = 0
+        }
+
+    }; // struct Interpolation
+
+} // namespace phtr
+
+namespace phtr
+{
+
+    /**
     * \brief Class to facilitate image interpolation.
     * \details The image is represented using floating-point coordinates ranging from
     *  -0.5 to 0.5. (0.0, 0.0) represents the image's center, (-0.5,-0.5) the upper left corner.
