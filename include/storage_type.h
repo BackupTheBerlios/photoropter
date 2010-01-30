@@ -29,7 +29,9 @@ THE SOFTWARE.
 
 namespace std
 {
+extern "C" {
 #include <stdint.h>
+}
 }
 
 namespace phtr
