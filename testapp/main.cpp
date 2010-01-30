@@ -42,6 +42,14 @@ int main()
     phtr_mem_view_w->write_px_val_g(50, 50, 0.7);
     phtr_mem_view_w->write_px_val_b(50, 50, 0.5);
 
+    std::auto_ptr<IImageViewIterW> phtr_iter(
+        phtr_mem_view_w->get_iter(51, 50)
+    );
+
+    phtr_iter->write_px_val_r(0.1);
+    phtr_iter->write_px_val_g(0.2);
+    phtr_iter->write_px_val_b(0.3);
+
     std::auto_ptr<IImageViewR> phtr_mem_view(
         ImageViewFactory::get_mem_image_view_r(
             storage_type, buf, 100, 100)
@@ -54,6 +62,10 @@ int main()
     vcl_cerr << phtr_mem_view->get_px_val_r(50, 50)
     << " " << phtr_mem_view->get_px_val_g(50, 50)
     << " " << phtr_mem_view->get_px_val_b(50, 50) << vcl_endl;
+
+    vcl_cerr << phtr_mem_view->get_px_val_r(51, 50)
+    << " " << phtr_mem_view->get_px_val_g(51, 50)
+    << " " << phtr_mem_view->get_px_val_b(51, 50) << vcl_endl;
 
     return 0;
 

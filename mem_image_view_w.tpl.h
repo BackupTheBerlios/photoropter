@@ -49,10 +49,11 @@ namespace phtr
     }
 
     template <Storage::type T>
-    IImageViewIterW* MemImageViewW<T>::get_iter(coord_t, coord_t)
+    IImageViewIterW* MemImageViewW<T>::get_iter(coord_t x, coord_t y)
     {
-        // FIXME
-        return 0;
+        return new MemImageViewIterW<T>(this->width_,
+                                        this->height_,
+                                        this->base_addr_ + this->get_px_offs(x, y));
     }
 
     template <Storage::type T>

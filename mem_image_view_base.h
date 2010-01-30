@@ -89,7 +89,7 @@ namespace phtr
             * \brief Internal storage info object, used to calculate the memory
             * layout parameters.
             */
-            storage_info_t storage_info_;
+            const storage_info_t storage_info_;
 
         protected:
             /**

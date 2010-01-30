@@ -4,6 +4,7 @@
 #include "storage_type.h"
 #include "image_view.h"
 #include "mem_storage_info.h"
+#include "mem_image_view_iter_w.h"
 
 namespace phtr
 {
