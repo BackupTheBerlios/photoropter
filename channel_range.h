@@ -24,42 +24,50 @@ THE SOFTWARE.
 
 */
 
-#ifndef __CHANNEL_TYPES_H__
-#define __CHANNEL_TYPES_H__
+#ifndef __CHANNEL_RANGE_H__
+#define __CHANNEL_RANGE_H__
+
+#include "channel_storage.h"
 
 namespace phtr
 {
 
     /**
-    * \brief Struct containing channel designations.
-    * \note The class contains an enum which defines the actual channels.
+    * \brief A struct template for accessing the minimal and maximal values of a
+    * channel storage type. Uses std::numeric_limits.
     */
-    struct Channel
+    template <Storage::type T>
+    struct ChannelRange
     {
 
+    public:
         /**
-        * \brief The actual enum containing channel designations.
+        * \brief The channel storage type (e.g., uint8_t).
         */
-        enum type
+        typedef typename ChannelStorage<T>::type channel_storage_t;
+
+    public:
+        /**
+        * \brief The minimal value a channel can store (e.g. 0 for unsigned types).
+        * \return The min value.
+        */
+        static channel_storage_t min()
         {
+            return std::numeric_limits<channel_storage_t>::min();
+        }
 
-            /**
-            * \brief The 'red' channel.
-            */
-            red = 0,
-            /**
-            * \brief The 'green' channel.
-            */
-            green,
-            /**
-            * \brief The 'blue' channel.
-            */
-            blue
+    public:
+        /**
+        * \brief The maximal value a channel can store (e.g. 255 for uint8_t).
+        * \return The max value.
+        */
+        static channel_storage_t max()
+        {
+            return std::numeric_limits<channel_storage_t>::max();
+        }
 
-        }; // enum Channel::type
-
-    }; // class Channel
+    }; // namespace phtr
 
 } // namespace phtr
 
-#endif // __CHANNEL_TYPES_H__
+#endif // __CHANNEL_RANGE_H__

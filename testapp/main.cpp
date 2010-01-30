@@ -43,9 +43,10 @@ int main()
     phtr_mem_view_w->write_px_val_b(50, 50, 0.5);
 
     std::auto_ptr<IImageViewIterW> phtr_iter(
-        phtr_mem_view_w->get_iter(51, 50)
+        phtr_mem_view_w->get_iter(50, 50)
     );
 
+    phtr_iter->inc_pos();
     phtr_iter->write_px_val_r(0.1);
     phtr_iter->write_px_val_g(0.2);
     phtr_iter->write_px_val_b(0.3);

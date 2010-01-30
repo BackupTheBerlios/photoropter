@@ -136,6 +136,7 @@ set(PHTR_SOURCES
   include/image_interpolator.h
   include/channel_storage.h
   include/exception.h
+  channel_range.h
   exception.cpp
   image_view.cpp
   mem_image_view_base.h
