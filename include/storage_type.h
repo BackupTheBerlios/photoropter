@@ -48,6 +48,7 @@ namespace phtr
         */
         enum type
         {
+
             /**
             * \brief Unknown type.
             */
@@ -76,6 +77,7 @@ namespace phtr
             * \brief 32 bit unsigned RGB, planar.
             */
             rgb_32_planar
+
         }; // enum Storage::type
 
     }; // class Storage

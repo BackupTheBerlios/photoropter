@@ -48,7 +48,7 @@ namespace phtr
             * \brief 'Nearest neighbour' interpolation.
             */
             nearest_neighbour = 0
-        }
+        };
 
     }; // struct Interpolation
 
