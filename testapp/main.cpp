@@ -13,6 +13,7 @@
 #include "mem_image_view_w.h"
 #include "image_buffer.h"
 #include "channel_storage.h"
+#include "image_interpolator.h"
 
 #include <memory>
 #include <typeinfo>
@@ -29,6 +30,7 @@ int main()
     typedef MemImageViewR<storage_type> view_r_t;
     typedef MemImageViewW<storage_type> view_w_t;
     typedef view_w_t::iter_t iter_t;
+    typedef ImageInterpolator<Interpolation::nearest_neighbour, view_r_t> interp_t;
 
     buffer_t img_buf(100, 100);
 
@@ -63,6 +65,8 @@ int main()
     vcl_cerr << phtr_mem_view.get_px_val_r(51, 50)
     << " " << phtr_mem_view.get_px_val_g(51, 50)
     << " " << phtr_mem_view.get_px_val_b(51, 50) << vcl_endl;
+
+    interp_t interp(&phtr_mem_view);
 
     return 0;
 

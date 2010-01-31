@@ -44,6 +44,7 @@ namespace phtr
     template <Storage::type T>
     struct MemLayout
     {
+        // provoke a compile-time error whenever this unspecialised version is used
         struct must_be_specialised_t;
         const size_t must_be_specialised;
         MemLayout() : must_be_specialised(sizeof(must_be_specialised_t)) {}

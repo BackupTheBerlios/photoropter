@@ -37,7 +37,7 @@ namespace phtr
 {
 
     /**
-    * \brief Class template implementing the \ref IImageBuffer interface.
+    * \brief Class template for managing an image buffer.
     */
     template <phtr::Storage::type T>
     class ImageBuffer

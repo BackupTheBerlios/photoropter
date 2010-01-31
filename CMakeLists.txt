@@ -137,7 +137,6 @@ set(PHTR_SOURCES
   include/channel_storage.h
   include/exception.h
   include/channel_range.h
-  exception.cpp
   include/mem_image_view_base.h
   include/mem_image_view_base.tpl.h
   include/mem_image_view_r.h
@@ -146,9 +145,10 @@ set(PHTR_SOURCES
   include/mem_image_view_w.tpl.h
   include/mem_image_view_iter_w.h
   include/mem_image_view_iter_w.tpl.h
-  image_interpolator.cpp
+  include/image_interpolator.tpl.h
   include/mem_layout.h
   include/mem_storage_info.h
+  exception.cpp
   )
 
 include_directories(include ${Boost_INCLUDE_DIR})

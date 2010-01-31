@@ -47,7 +47,15 @@ namespace phtr
             /**
             * \brief 'Nearest neighbour' interpolation.
             */
-            nearest_neighbour = 0
+            nearest_neighbour = 0,
+            /**
+            * \brief Bilinear interpolation.
+            */
+            bilinear,
+            /**
+            * \brief Lanczos interpolation.
+            */
+            lanczos
         };
 
     }; // struct Interpolation
@@ -62,14 +70,30 @@ namespace phtr
     * \details The image is represented using floating-point coordinates ranging from
     *  -0.5 to 0.5. (0.0, 0.0) represents the image's center, (-0.5,-0.5) the upper left corner.
     */
+    template <Interpolation::type inter_t, typename view_t>
     class ImageInterpolator
+    {
+            // provoke a compile-time error whenever this unspecialised version is used
+            struct must_be_specialised_t;
+            const size_t must_be_specialised;
+            ImageInterpolator() : must_be_specialised(sizeof(must_be_specialised_t)) {}
+    };
+
+    /**
+    * \brief Class to facilitate image interpolation.
+    * \details The image is represented using floating-point coordinates ranging from
+    *  -0.5 to 0.5. (0.0, 0.0) represents the image's center, (-0.5,-0.5) the upper left corner.
+    * \note This is the specialisation for 'nearest neighbor' interpolation.
+    */
+    template <typename view_t>
+    class ImageInterpolator<Interpolation::nearest_neighbour, view_t>
     {
 
         public:
             /**
             * \brief Constructor.
             */
-            ImageInterpolator(MemImageViewR<Storage::rgb_16_planar>* image_view);
+            ImageInterpolator(view_t* image_view);
 
         public:
             /**
@@ -88,13 +112,13 @@ namespace phtr
 
         private:
             /**
-            * \brief Pointer to an internal \ref IImageViewR instance which is used
+            * \brief Pointer to the internal image view instance that is used
             * for image access.
             * \param x The x coordinate.
             * \param y The y coordinate.
             * \return The channel value.
             */
-            MemImageViewR<Storage::rgb_16_planar>* image_view_;
+            view_t* image_view_;
 
         private:
             /**
@@ -111,5 +135,7 @@ namespace phtr
     }; // class ImageInterpolator
 
 } // namespace phtr
+
+#include "image_interpolator.tpl.h"
 
 #endif // __IMAGE_INTERPOLATOR_H__
