@@ -69,6 +69,8 @@ namespace phtr
     * \brief Class to facilitate image interpolation.
     * \details The image is represented using floating-point coordinates ranging from
     *  -0.5 to 0.5. (0.0, 0.0) represents the image's center, (-0.5,-0.5) the upper left corner.
+    * \note This (unspecialised) version does not provide any functionality. Have a look at
+    * e.g., \ref ImageInterpolator<Interpolation::nearest_neighbour, view_t>.
     */
     template <Interpolation::type inter_t, typename view_t>
     class ImageInterpolator
