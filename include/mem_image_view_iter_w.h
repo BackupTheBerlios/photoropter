@@ -27,7 +27,6 @@ THE SOFTWARE.
 #ifndef __MEM_IMAGE_VIEW_ITER_W_H__
 #define __MEM_IMAGE_VIEW_ITER_W_H__
 
-#include "image_view.h"
 #include "storage_type.h"
 #include "channel_range.h"
 #include "mem_layout.h"
@@ -40,7 +39,7 @@ namespace phtr
     * \details Instances of this class are usually created by \ref MemImageViewW.
     */
     template <Storage::type T>
-    class MemImageViewIterW : public IImageViewIterW
+    class MemImageViewIterW
     {
 
             /* ****************************************
@@ -75,28 +74,28 @@ namespace phtr
             * \brief Write the 'red' channel value to the current pixel.
             * \param val  The value.
             */
-            virtual void write_px_val_r(channel_t val);
+            void write_px_val_r(channel_t val);
 
         public:
             /**
             * \brief Write the 'green' channel value to the current pixel.
             * \param val  The value.
             */
-            virtual void write_px_val_g(channel_t val);
+            void write_px_val_g(channel_t val);
 
         public:
             /**
             * \brief Write the 'blue' channel value to the current pixel.
             * \param val  The value.
             */
-            virtual void write_px_val_b(channel_t val);
+            void write_px_val_b(channel_t val);
 
         public:
             /**
             * \brief Increment the current position.
             * \attention Boundary checks are currently not implemented.
             */
-            virtual void inc_pos();
+            void inc_pos();
 
             /* ****************************************
              * internals

@@ -27,7 +27,7 @@ THE SOFTWARE.
 #ifndef __IMAGE_INTERPOLATOR_H__
 #define __IMAGE_INTERPOLATOR_H__
 
-#include "image_view.h"
+#include "mem_image_view_r.h"
 #include "types.h"
 
 namespace phtr
@@ -69,7 +69,7 @@ namespace phtr
             /**
             * \brief Constructor.
             */
-            ImageInterpolator(IImageViewR* image_view);
+            ImageInterpolator(MemImageViewR<Storage::rgb_16_planar>* image_view);
 
         public:
             /**
@@ -94,7 +94,7 @@ namespace phtr
             * \param y The y coordinate.
             * \return The channel value.
             */
-            IImageViewR* image_view_;
+            MemImageViewR<Storage::rgb_16_planar>* image_view_;
 
         private:
             /**

@@ -9,7 +9,8 @@
 #include <vil/vil_image_view.h>
 
 #include "types.h"
-#include "image_view.h"
+#include "mem_image_view_r.h"
+#include "mem_image_view_w.h"
 #include "image_buffer.h"
 #include "channel_storage.h"
 
@@ -20,55 +21,63 @@
 int main()
 {
     using namespace phtr;
+
     const Storage::type storage_type(Storage::rgb_16_planar);
     typedef ChannelStorage<storage_type>::type channel_storage_t;
 
-    std::auto_ptr<IImageBuffer> img_buf(
-        IImageBuffer::get_image_buffer
-        (storage_type, 100, 100)
-    );
+    typedef ImageBuffer<storage_type> buffer_t;
+    typedef MemImageViewR<storage_type> view_r_t;
+    typedef MemImageViewW<storage_type> view_w_t;
+    typedef view_w_t::iter_t iter_t;
 
-    channel_storage_t* buf = static_cast<channel_storage_t*>(img_buf->data());
+    buffer_t img_buf(100, 100);
+
+    channel_storage_t* buf = static_cast<channel_storage_t*>(img_buf.data());
     buf[0] = 65535;
     buf[10000] = 32767;
     buf[20000] = 16383;
 
-    std::auto_ptr<IImageViewW> phtr_mem_view_w(
-        ImageViewFactory::get_mem_image_view_w(
-            storage_type, buf, 100, 100)
-    );
+    view_w_t phtr_mem_view_w(buf, 100, 100);
 
-    phtr_mem_view_w->write_px_val_r(50, 50, 1.0);
-    phtr_mem_view_w->write_px_val_g(50, 50, 0.7);
-    phtr_mem_view_w->write_px_val_b(50, 50, 0.5);
+    phtr_mem_view_w.write_px_val_r(50, 50, 1.0);
+    phtr_mem_view_w.write_px_val_g(50, 50, 0.7);
+    phtr_mem_view_w.write_px_val_b(50, 50, 0.5);
 
-    std::auto_ptr<IImageViewIterW> phtr_iter(
-        phtr_mem_view_w->get_iter(50, 50)
-    );
+    std::auto_ptr<iter_t> phtr_iter(phtr_mem_view_w.get_iter(50, 50));
 
     phtr_iter->inc_pos();
     phtr_iter->write_px_val_r(0.1);
     phtr_iter->write_px_val_g(0.2);
     phtr_iter->write_px_val_b(0.3);
 
-    std::auto_ptr<IImageViewR> phtr_mem_view(
-        ImageViewFactory::get_mem_image_view_r(
-            storage_type, buf, 100, 100)
-    );
+    view_r_t phtr_mem_view(buf, 100, 100);
 
-    vcl_cerr << phtr_mem_view->get_px_val_r(0, 0)
-    << " " << phtr_mem_view->get_px_val_g(0, 0)
-    << " " << phtr_mem_view->get_px_val_b(0, 0) << vcl_endl;
+    vcl_cerr << phtr_mem_view.get_px_val_r(0, 0)
+    << " " << phtr_mem_view.get_px_val_g(0, 0)
+    << " " << phtr_mem_view.get_px_val_b(0, 0) << vcl_endl;
 
-    vcl_cerr << phtr_mem_view->get_px_val_r(50, 50)
-    << " " << phtr_mem_view->get_px_val_g(50, 50)
-    << " " << phtr_mem_view->get_px_val_b(50, 50) << vcl_endl;
+    vcl_cerr << phtr_mem_view.get_px_val_r(50, 50)
+    << " " << phtr_mem_view.get_px_val_g(50, 50)
+    << " " << phtr_mem_view.get_px_val_b(50, 50) << vcl_endl;
 
-    vcl_cerr << phtr_mem_view->get_px_val_r(51, 50)
-    << " " << phtr_mem_view->get_px_val_g(51, 50)
-    << " " << phtr_mem_view->get_px_val_b(51, 50) << vcl_endl;
+    vcl_cerr << phtr_mem_view.get_px_val_r(51, 50)
+    << " " << phtr_mem_view.get_px_val_g(51, 50)
+    << " " << phtr_mem_view.get_px_val_b(51, 50) << vcl_endl;
 
     return 0;
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     vcl_cout << "Loading image."  << vcl_endl;
     vil_image_resource_sptr img_rsc = vil_load_image_resource("/home/robert/kombi1.tif");

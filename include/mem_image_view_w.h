@@ -28,7 +28,6 @@ THE SOFTWARE.
 #define __MEM_IMAGE_VIEW_W_H__
 
 #include "storage_type.h"
-#include "image_view.h"
 #include "mem_storage_info.h"
 #include "mem_image_view_iter_w.h"
 
@@ -42,12 +41,18 @@ namespace phtr
     * different storage types.
     */
     template <Storage::type T>
-    class MemImageViewW : public IImageViewW, public MemImageViewBase<T>
+    class MemImageViewW : public MemImageViewBase<T>
     {
 
             /* ****************************************
              * public interface
              * **************************************** */
+
+        public:
+            /**
+            * \brief The type of the internal iterator.
+            */
+            typedef typename phtr::MemImageViewIterW<T> iter_t;
 
         public:
             /**
@@ -73,7 +78,7 @@ namespace phtr
             * \param y   The y coordinate.
             * \param val The channel value.
             */
-            virtual void write_px_val_r(coord_t x, coord_t y, channel_t val);
+            void write_px_val_r(coord_t x, coord_t y, channel_t val);
 
         public:
             /**
@@ -82,7 +87,7 @@ namespace phtr
             * \param y   The y coordinate.
             * \param val The channel value.
             */
-            virtual void write_px_val_g(coord_t x, coord_t y, channel_t val);
+            void write_px_val_g(coord_t x, coord_t y, channel_t val);
 
         public:
             /**
@@ -91,7 +96,7 @@ namespace phtr
             * \param y   The y coordinate.
             * \param val The channel value.
             */
-            virtual void write_px_val_b(coord_t x, coord_t y, channel_t val);
+            void write_px_val_b(coord_t x, coord_t y, channel_t val);
 
         public:
             /**
@@ -101,7 +106,7 @@ namespace phtr
             * objects 'by value').
             * \return The iterator.
             */
-            IImageViewIterW* get_iter(coord_t x, coord_t y);
+            iter_t* get_iter(coord_t x, coord_t y);
 
         public:
             /**

@@ -28,6 +28,7 @@ THE SOFTWARE.
 #define __CHANNEL_STORAGE_H__
 
 #include "storage_type.h"
+#include <cstddef>
 
 namespace phtr
 {

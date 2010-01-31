@@ -28,7 +28,7 @@ namespace phtr
 {
 
     template <phtr::Storage::type T>
-    ImageBufferImpl<T>::ImageBufferImpl(coord_t width, coord_t height)
+    ImageBuffer<T>::ImageBuffer(coord_t width, coord_t height)
             : storage_info_(width, height),
             data_(0),
             width_(width),
@@ -42,25 +42,25 @@ namespace phtr
     }
 
     template <phtr::Storage::type T>
-    ImageBufferImpl<T>::~ImageBufferImpl()
+    ImageBuffer<T>::~ImageBuffer()
     {
         delete[] data_;
     }
 
     template <phtr::Storage::type T>
-    void* ImageBufferImpl<T>::data()
+    void* ImageBuffer<T>::data()
     {
         return data_;
     }
 
     template <phtr::Storage::type T>
-    size_t ImageBufferImpl<T>::num_pixels()
+    size_t ImageBuffer<T>::num_pixels()
     {
         return num_pixels_;
     }
 
     template <phtr::Storage::type T>
-    size_t ImageBufferImpl<T>::num_bytes()
+    size_t ImageBuffer<T>::num_bytes()
     {
         return num_bytes_;
     }

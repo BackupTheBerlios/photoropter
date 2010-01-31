@@ -28,9 +28,11 @@ THE SOFTWARE.
 #define __MEM_IMAGE_VIEW_BASE_H__
 
 #include "storage_type.h"
-#include "image_view.h"
 #include "mem_storage_info.h"
 
+/**
+* \brief Main namespace of the Photoropter library.
+*/
 namespace phtr
 {
 
@@ -41,7 +43,7 @@ namespace phtr
     * different storage types.
     */
     template <Storage::type T>
-    class MemImageViewBase : public virtual IImageViewBase
+    class MemImageViewBase
     {
 
             /* ****************************************
@@ -82,14 +84,14 @@ namespace phtr
             * \brief Get the image width.
             * \return The width.
             */
-            virtual coord_t width() const;
+            coord_t width() const;
 
         public:
             /**
             * \brief Get the image height.
             * \return The height.
             */
-            virtual coord_t height() const;
+            coord_t height() const;
 
             /* ****************************************
              * internals

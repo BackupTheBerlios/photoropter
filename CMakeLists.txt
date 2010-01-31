@@ -131,28 +131,24 @@ set(PHTR_SOURCES
   include/types.h
   include/storage_type.h
   include/channel_type.h
-  include/image_view.h
   include/image_buffer.h
+  include/image_buffer.tpl.h
   include/image_interpolator.h
   include/channel_storage.h
   include/exception.h
-  channel_range.h
+  include/channel_range.h
   exception.cpp
-  image_view.cpp
-  mem_image_view_base.h
-  mem_image_view_base.tpl.h
-  mem_image_view_r.h
-  mem_image_view_r.tpl.h
-  mem_image_view_w.h
-  mem_image_view_w.tpl.h
-  mem_image_view_iter_w.h
-  mem_image_view_iter_w.tpl.h
-  image_buffer.cpp
-  image_buffer_impl.h
-  image_buffer_impl.tpl.h
+  include/mem_image_view_base.h
+  include/mem_image_view_base.tpl.h
+  include/mem_image_view_r.h
+  include/mem_image_view_r.tpl.h
+  include/mem_image_view_w.h
+  include/mem_image_view_w.tpl.h
+  include/mem_image_view_iter_w.h
+  include/mem_image_view_iter_w.tpl.h
   image_interpolator.cpp
-  mem_layout.h
-  mem_storage_info.h
+  include/mem_layout.h
+  include/mem_storage_info.h
   )
 
 include_directories(include ${Boost_INCLUDE_DIR})

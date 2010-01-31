@@ -28,7 +28,6 @@ THE SOFTWARE.
 #define __MEM_IMAGE_VIEW_R_H__
 
 #include "mem_image_view_base.h"
-#include "image_view.h"
 
 namespace phtr
 {
@@ -40,7 +39,7 @@ namespace phtr
     * different storage types.
     */
     template <Storage::type T>
-    class MemImageViewR : public IImageViewR, public MemImageViewBase<T>
+    class MemImageViewR : public MemImageViewBase<T>
     {
 
             /* ****************************************
@@ -71,7 +70,7 @@ namespace phtr
             * \param y The y coordinate.
             * \return The channel value.
             */
-            virtual channel_t get_px_val_r(coord_t x, coord_t y) const;
+            channel_t get_px_val_r(coord_t x, coord_t y) const;
 
         public:
             /**
@@ -80,7 +79,7 @@ namespace phtr
             * \param y The y coordinate.
             * \return The channel value.
             */
-            virtual channel_t get_px_val_g(coord_t x, coord_t y) const;
+            channel_t get_px_val_g(coord_t x, coord_t y) const;
 
         public:
             /**
@@ -89,7 +88,7 @@ namespace phtr
             * \param y The y coordinate.
             * \return The channel value.
             */
-            virtual channel_t get_px_val_b(coord_t x, coord_t y) const;
+            channel_t get_px_val_b(coord_t x, coord_t y) const;
 
             /* ****************************************
              * internals

@@ -24,74 +24,126 @@ THE SOFTWARE.
 
 */
 
-#ifndef __IMAGE_BUFFER_H__
-#define __IMAGE_BUFFER_H__
+#ifndef __IMAGE_BUFFER_IMPL_H__
+#define __IMAGE_BUFFER_IMPL_H__
 
+#include "image_buffer.h"
 #include "types.h"
 #include "storage_type.h"
+#include "channel_storage.h"
+#include "mem_storage_info.h"
 
 namespace phtr
 {
+
     /**
-    * \brief Interface class representing a buffer for an image.
+    * \brief Class template implementing the \ref IImageBuffer interface.
     */
-    class IImageBuffer
+    template <phtr::Storage::type T>
+    class ImageBuffer
     {
+
+            /* ****************************************
+             * public interface
+             * **************************************** */
+
+        public:
+            /**
+            * \brief The channel storage type.
+            */
+            typedef typename phtr::ChannelStorage<T>::type channel_storage_t;
+
+        public:
+            /**
+            * \brief The type of the internal storage info object.
+            */
+            typedef typename phtr::MemStorageInfo<T> storage_info_t;
+
+        public:
+            /**
+            * \brief Constructor.
+            * \param width Image width.
+            * \param height Image height.
+            */
+            ImageBuffer(coord_t width, coord_t height);
+
+        public:
+            /**
+            * \brief Destructor.
+            */
+            ~ImageBuffer();
 
         public:
             /**
             * \brief Return a pointer to the data the buffer holds.
             * \return Pointer to the data.
             */
-            virtual void* data() = 0;
+            void* data();
 
         public:
             /**
             * \brief Return the number of pixels the buffer can hold.
             * \return The number of pixels.
             */
-            virtual size_t num_pixels() = 0;
+            size_t num_pixels();
 
         public:
             /**
             * \brief Return the number of bytes the buffer holds.
             * \return The number of bytes.
             */
-            virtual size_t num_bytes() = 0;
+            size_t num_bytes();
 
-        public:
+            /* ****************************************
+             * internals
+             * **************************************** */
+
+        private:
             /**
-            * \brief Get an image buffer instance.
-            * \param storage_type The storage type (e.g., \ref Storage::rgb_8_inter).
-            * \param width The image width.
-            * \param height The image height.
-            * \return Pointer to the buffer object.
+            * \brief The internal storage info object.
             */
-            static IImageBuffer* get_image_buffer(phtr::Storage::type storage_type,
-                                                  coord_t width,
-                                                  coord_t height);
+            storage_info_t storage_info_;
 
-        public:
+        private:
             /**
-            * \brief Destructor.
-            * \note Declared 'virtual' for proper polymorphic behaviour.
+            * \brief Pointer to the image buffer.
             */
-            virtual ~IImageBuffer()
-            {
-                //NIL
-            }
+            channel_storage_t* data_;
 
-        protected:
+        private:
             /**
-            * \brief Constructor.
+            * \brief The image width.
             */
-            IImageBuffer()
-            {
-                //NIL
-            }
+            coord_t width_;
 
-    }; // class IImageBuffer
+        private:
+            /**
+            * \brief The image height.
+            */
+            coord_t height_;
+
+        private:
+            /**
+            * \brief The number of channels (e.g., 3).
+            */
+            size_t num_channels_;
+
+        private:
+            /**
+            * \brief The number of pixels in the buffer.
+            */
+            size_t num_pixels_;
+
+        private:
+            /**
+            * \brief The number of bytes in the buffer.
+            */
+            size_t num_bytes_;
+
+    };
 
 } // namespace phtr
 
-#endif // __IMAGE_BUFFER_H__
+#include "image_buffer.tpl.h"
+
+#endif // __IMAGE_BUFFER_IMPL_H__
