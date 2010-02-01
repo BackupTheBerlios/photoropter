@@ -23,8 +23,8 @@ namespace phtr
     get_px_val_r
     (interp_coord_t x, interp_coord_t y)
     {
-        interp_coord_t x_scaled = (x + 0.5) * scale_x_;
-        interp_coord_t y_scaled = (y + 0.5) * scale_y_;
+        interp_coord_t x_scaled = (x + 0.5) * scale_x_ + 0.5;
+        interp_coord_t y_scaled = (y + 0.5) * scale_y_ + 0.5;
 
         return image_view_.get_px_val_r(x_scaled, y_scaled);
     }
@@ -35,8 +35,8 @@ namespace phtr
     get_px_val_g
     (interp_coord_t x, interp_coord_t y)
     {
-        interp_coord_t x_scaled = (x + 0.5) * scale_x_;
-        interp_coord_t y_scaled = (y + 0.5) * scale_y_;
+        interp_coord_t x_scaled = (x + 0.5) * scale_x_ + 0.5;
+        interp_coord_t y_scaled = (y + 0.5) * scale_y_ + 0.5;
 
         return image_view_.get_px_val_g(x_scaled, y_scaled);
     }
@@ -47,8 +47,8 @@ namespace phtr
     get_px_val_b
     (interp_coord_t x, interp_coord_t y)
     {
-        interp_coord_t x_scaled = (x + 0.5) * scale_x_;
-        interp_coord_t y_scaled = (y + 0.5) * scale_y_;
+        interp_coord_t x_scaled = (x + 0.5) * scale_x_ + 0.5;
+        interp_coord_t y_scaled = (y + 0.5) * scale_y_ + 0.5;
 
         return image_view_.get_px_val_b(x_scaled, y_scaled);
     }

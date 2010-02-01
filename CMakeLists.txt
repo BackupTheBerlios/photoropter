@@ -54,7 +54,7 @@ endif(CMAKE_COMPILER_IS_GNUCXX)
 
 # set compiler options; these have to come last to take precedence
 set(CMAKE_CXX_FLAGS_DEBUG "-O0 -g -ansi -pedantic -Wall -Wextra -Werror -Wno-long-long -DDEBUG")
-set(CMAKE_CXX_FLAGS_RELEASE "-O2 -ansi -DNDEBUG -Wno-long-long")
+set(CMAKE_CXX_FLAGS_RELEASE "-O3 -ffast-math -march=k8 -ansi -DNDEBUG -Wno-long-long")
 
 if(PHTR_USE_SCOPED_PTR)
   set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DUSE_BOOST_SCOPED_PTR")

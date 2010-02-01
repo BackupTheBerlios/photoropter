@@ -21,7 +21,7 @@
 #include <typeinfo>
 #include <limits>
 
-int main()
+void simple_test()
 {
     using namespace phtr;
 
@@ -78,52 +78,70 @@ int main()
     transform_t img_transform(phtr_mem_view, phtr_mem_view_w);
     img_transform.do_transform();
 
-    //
-    // VIL stuff
-    //
+}
+
+void vil_test()
+{
+    using namespace phtr;
+
+    // typedefs and constants
+    const Storage::type storage_type(Storage::rgb_16_planar);
+
+    typedef ImageBuffer<storage_type> buffer_t;
+    typedef MemImageViewR<storage_type> view_r_t;
+    typedef MemImageViewW<storage_type> view_w_t;
+    typedef view_w_t::iter_t iter_t;
+    typedef ImageInterpolator<Interpolation::nearest_neighbour, view_r_t> interp_t;
+    typedef ImageTransform<interp_t, view_w_t> transform_t;
+
+    // the equivalent vil type
     typedef vxl_uint_16 vil_channel_t;
 
-    // create image resource for input image
+    // create image resource for the input image
     vcl_cout << "Loading test image."  << vcl_endl;
-    vil_image_resource_sptr vil_loaded_img = vil_load_image_resource("test.jpg");
-    size_t img_width = vil_loaded_img->ni();
-    size_t img_height = vil_loaded_img->nj();
+    vil_image_view<vil_channel_t> loaded_img =
+        vil_convert_to_n_planes(3, vil_convert_stretch_range(vil_channel_t(), vil_load("test.jpg")));
+
+    // set image size
+    size_t img_width = loaded_img.ni();
+    size_t img_height = loaded_img.nj();
     size_t dst_width = img_width;
     size_t dst_height = img_height;
     //size_t dst_width = 150;
     //size_t dst_height = 100;
 
     // create image buffers
-    buffer_t phtr_src_buf(img_width, img_height);
-    view_r_t phtr_view_r(phtr_src_buf.data(), img_width, img_height);
-    buffer_t phtr_dst_buf(dst_width, dst_height);
-    view_w_t phtr_view_w(phtr_dst_buf.data(), dst_width, dst_height);
+    vcl_cout << "Creating buffers for Photoropter."  << vcl_endl;
 
-    // create VIL view for filling and saving the buffers
+    // input buffer
+    buffer_t src_img_buf(img_width, img_height);
+    view_r_t src_img_view(src_img_buf.data(), img_width, img_height);
+    // output buffer
+    buffer_t dst_img_buf(dst_width, dst_height);
+    view_w_t dst_img_view(dst_img_buf.data(), dst_width, dst_height);
+
+    // VIL views for I/O
     vil_image_view<vil_channel_t> vil_src_view
-    (static_cast<vil_channel_t*>(phtr_src_buf.data()), img_width, img_height, 3, 1, img_width, img_width * img_height);
+    (static_cast<vil_channel_t*>(src_img_buf.data()), img_width, img_height, 3, 1, img_width, img_width * img_height);
     vil_image_view<vil_channel_t> vil_dst_view
-    (static_cast<vil_channel_t*>(phtr_dst_buf.data()), dst_width, dst_height, 3, 1, dst_width, dst_width * dst_height);
+    (static_cast<vil_channel_t*>(dst_img_buf.data()), dst_width, dst_height, 3, 1, dst_width, dst_width * dst_height);
 
     // load image, convert and copy data
-    vcl_cout << "Copying image to buffer...";
-    vcl_cout.flush();
-    vil_image_view_base_sptr vil_src_img =
-        vil_convert_stretch_range(vil_channel_t(), vil_loaded_img->get_view());
-    vil_image_view<vil_channel_t> vil_tmp_view(vil_src_img);
-    vcl_cout << "...";
-    vcl_cout.flush();
-    vil_src_view.deep_copy(vil_tmp_view);
-    vcl_cout << "done."  << vcl_endl;
+    vcl_cout << "Copying image to buffer." << vcl_endl;
+    vil_src_view.deep_copy(loaded_img);
 
-    vcl_cout << "Transforming...";
-    vcl_cout.flush();
-    transform_t phtr_transform(phtr_view_r, phtr_view_w);
-    phtr_transform.do_transform();
-    vcl_cout << "done."  << vcl_endl;
+    vcl_cout << "Transforming." << vcl_endl;
+    transform_t transform(src_img_view, dst_img_view);
+    transform.do_transform();
 
     vcl_cout << "Saving output image."  << vcl_endl;
     vil_save(vil_dst_view, "out.png");
+}
+
+int main()
+{
+    simple_test();
+    vil_test();
 
     return 0;
 }

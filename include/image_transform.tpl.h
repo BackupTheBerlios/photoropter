@@ -24,6 +24,8 @@ THE SOFTWARE.
 
 */
 
+#include <memory>
+
 namespace phtr
 {
 
@@ -56,14 +58,23 @@ namespace phtr
 
         for (coord_t j = 0; j < height; ++j)
         {
+
+            std::auto_ptr<typename image_view_w_t::iter_t> iter(image_view_w_.get_iter(0, j));
+
             for (coord_t i = 0; i < width; ++i)
             {
-                interp_coord_t x = (i * scale_x) - 0.5;
-                interp_coord_t y = (j * scale_y) - 0.5;
+                interp_coord_t dst_x = (i * scale_x) - 0.5;
+                interp_coord_t dst_y = (j * scale_y) - 0.5;
 
-                image_view_w_.write_px_val_r(i, j, interpolator_.get_px_val_r(x, y));
-                image_view_w_.write_px_val_g(i, j, interpolator_.get_px_val_g(x, y));
-                image_view_w_.write_px_val_b(i, j, interpolator_.get_px_val_b(x, y));
+                // get transformed coordinates in source image
+                interp_coord_t src_x = -dst_x;
+                interp_coord_t src_y = -dst_y;
+
+                iter->write_px_val_r(interpolator_.get_px_val_r(src_x, src_y));
+                iter->write_px_val_g(interpolator_.get_px_val_g(src_x, src_y));
+                iter->write_px_val_b(interpolator_.get_px_val_b(src_x, src_y));
+
+                iter->inc_pos();
             }
         }
     }
