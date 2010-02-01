@@ -17,8 +17,8 @@ namespace phtr
 
     template <typename view_t>
     channel_t
-     ImageInterpolator<Interpolation::nearest_neighbour, view_t>::get_px_val_r
-     (interp_coord_t x, interp_coord_t y)
+    ImageInterpolator<Interpolation::nearest_neighbour, view_t>::get_px_val_r
+    (interp_coord_t x, interp_coord_t y)
     {
         interp_coord_t x_scaled = (x + 0.5) * scale_x_;
         interp_coord_t y_scaled = (y + 0.5) * scale_y_;
@@ -28,8 +28,8 @@ namespace phtr
 
     template <typename view_t>
     channel_t
-     ImageInterpolator<Interpolation::nearest_neighbour, view_t>::get_px_val_g
-     (interp_coord_t x, interp_coord_t y)
+    ImageInterpolator<Interpolation::nearest_neighbour, view_t>::get_px_val_g
+    (interp_coord_t x, interp_coord_t y)
     {
         interp_coord_t x_scaled = (x + 0.5) * scale_x_;
         interp_coord_t y_scaled = (y + 0.5) * scale_y_;
@@ -39,8 +39,8 @@ namespace phtr
 
     template <typename view_t>
     channel_t
-     ImageInterpolator<Interpolation::nearest_neighbour, view_t>::get_px_val_b
-     (interp_coord_t x, interp_coord_t y)
+    ImageInterpolator<Interpolation::nearest_neighbour, view_t>::get_px_val_b
+    (interp_coord_t x, interp_coord_t y)
     {
         interp_coord_t x_scaled = (x + 0.5) * scale_x_;
         interp_coord_t y_scaled = (y + 0.5) * scale_y_;
