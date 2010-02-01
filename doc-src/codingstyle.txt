@@ -19,6 +19,9 @@ guidelines for your own project, feel free to do so.
 inherit.</li>
 <li>Semantically different parts of a class's interface are
 extracted into separate interface definitions.</li>
+<li>Interface definitions aim to be minimal: if e.g. a class offers functions
+both for reading from and writing to a file, this usually means it implements
+two distinct interfaces (one for reading, one for writing).</li>
 <li>Usually a header contains only a single class
 definition. Exception: closely related interface definitons that form
 a coherent unit.</li>
@@ -29,16 +32,18 @@ a coherent unit.</li>
 <ul>
 <li>Variables are declared one by one, each in a separate declaration
 statement.</li>
-<li>Functions that receive objects as parameters use references to the
-interface base class wherever possible.</li>
+<li>Functions that receive objects as parameters use references or pointers
+to the interface base class wherever possible. This improves both flexibility
+and readability of the code.</li>
 <li>Enumerations are usually placed inside their own descriptive struct and
-given a generic name like e.g. 'type'. This allows to refer to both
-the enumeration as a whole as well as its values by using the
-descriptive struct name, and thus avoids namespace pollution. </li>
+given a generic name like e.g. 'type'. This places the enum's values in their own
+namespace and thus allows to refer to both the enumeration as a whole as well
+as its values by using the descriptive struct name. This avoids namespace
+pollution. </li>
 <li>Every 'switch' statement contains a 'default:' label.</li>
 <li>All public class interface elements and functions (especially those
 that are expected to be used "from the outside") are documented using
-Doxygen comments. Private classes members are generally also documented if
+Doxygen comments. Private class members are generally also documented if
 possible.</li>
 </ul>
 
@@ -171,8 +176,19 @@ the Comeau frontend).</li>
 <li>Macros are generally avoided where possible.</li>
 <li>If a macro must be used, it is as short as possible and avoids
 'unexpected' side effects.</li>
-<li>Macros are never used to change identifiers.</li>
+<li>Macros are never used to change identifiers (e.g., variable or type names).</li>
 <li>Macros are never used to replace keywords.</li>
+<lI>Macros are not used for metaprogramming (i.e., to generate classes etc.); metaprogramming is
+usually achieved by using templates.</li>
+</ul>
+
+@subsection langfeatures_memory Memory Management
+
+<ul>
+<li>Resource aquisition is initialisation (RAII). All resources aquired in the constructor
+are freed in the destructor.</li>
+<li>Naked pointers are generally avoided; references are used wherever possible.</li>
+<li>Pointers returned e.g. by factory functions are wrapped in smart pointers if possible.</li>
 </ul>
 
 */
