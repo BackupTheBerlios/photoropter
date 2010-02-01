@@ -32,6 +32,7 @@ a coherent unit.</li>
 <ul>
 <li>Variables are declared one by one, each in a separate declaration
 statement.</li>
+<li>Every variable is initialised upon declaration.</li>
 <li>Functions that receive objects as parameters use references or pointers
 to the interface base class wherever possible. This improves both flexibility
 and readability of the code.</li>
@@ -51,7 +52,9 @@ possible.</li>
 
 <ul>
 <li>The source code is formatted according to the ANSI style.</li>
-<li>Scope braces ('curly braces') are usually placed on separate lines.</li>
+<li>Scoping braces ('curly braces') are usually placed on separate lines.</li>
+<li>Single-line blocks (e.g., in loops or if-clauses) are always marked with
+scoping braces. This avoids errors when expanding such a block.</li>
 <li>Blocks are indented by 4 spaces. However, the corresponding scope braces
 are not indented.</li>
 <li>A sample configuration file for the astyle code formatter is provided.</li>
