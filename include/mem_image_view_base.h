@@ -77,7 +77,7 @@ namespace phtr
             /**
             * \brief Desctructor.
             */
-            virtual ~MemImageViewBase();
+            ~MemImageViewBase();
 
         public:
             /**

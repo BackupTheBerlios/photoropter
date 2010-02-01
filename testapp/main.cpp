@@ -66,7 +66,14 @@ int main()
     << " " << phtr_mem_view.get_px_val_g(51, 50)
     << " " << phtr_mem_view.get_px_val_b(51, 50) << vcl_endl;
 
-    interp_t interp(&phtr_mem_view);
+
+
+    interp_t interpolator(&phtr_mem_view);
+    vcl_cerr << interpolator.get_px_val_r(0.0051, 0.0051)
+    << " " << interpolator.get_px_val_g(0.0051, 0.0051)
+    << " " << interpolator.get_px_val_b(0.0051, 0.0051) << vcl_endl;
+
+
 
     return 0;
 

@@ -134,8 +134,10 @@ members are usually shifted towards the end of the struct, if used at all).</li>
 @subsection langfeatures_classes Classes and structs
 
 <ul>
-<li>All classes usually declare a virtual destructor.</li>
-<li>If there is a good reason to declare the destructor of a class non-virtual,
+<li>All classes usually declare a virtual destructor. Exception: most class template
+structures that use static polymorphism, traits or similar techniques, since these
+(technically) do not use inheritance anyway.</li>
+<li>If there is a good reason to declare the destructor of a regular class non-virtual,
 it is marked (and explained) in the documentation.</li>
 <li>A class without virtual destructor is never used as base class.</li>
 <li>Structs are not considered classes (even if C++ does treat them that way).

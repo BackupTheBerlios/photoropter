@@ -66,7 +66,7 @@ namespace phtr
 {
 
     /**
-    * \brief Class to facilitate image interpolation.
+    * \brief Class template to facilitate image interpolation.
     * \details The image is represented using floating-point coordinates ranging from
     *  -0.5 to 0.5. (0.0, 0.0) represents the image's center, (-0.5,-0.5) the upper left corner.
     * \note This (unspecialised) version does not provide any functionality. Have a look at
@@ -101,7 +101,7 @@ namespace phtr
             /**
             * \brief Destructor.
             */
-            virtual ~ImageInterpolator();
+            ~ImageInterpolator();
 
         public:
             /**
@@ -111,6 +111,24 @@ namespace phtr
             * \return The channel value.
             */
             channel_t get_px_val_r(interp_coord_t x, interp_coord_t y);
+
+        public:
+            /**
+            * \brief Get the value of the 'red' channel at the given coordinates.
+            * \param x The x coordinate.
+            * \param y The y coordinate.
+            * \return The channel value.
+            */
+            channel_t get_px_val_g(interp_coord_t x, interp_coord_t y);
+
+        public:
+            /**
+            * \brief Get the value of the 'red' channel at the given coordinates.
+            * \param x The x coordinate.
+            * \param y The y coordinate.
+            * \return The channel value.
+            */
+            channel_t get_px_val_b(interp_coord_t x, interp_coord_t y);
 
         private:
             /**

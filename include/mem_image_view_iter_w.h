@@ -67,7 +67,7 @@ namespace phtr
             /**
             * \brief Destructor.
             */
-            virtual ~MemImageViewIterW();
+            ~MemImageViewIterW();
 
         public:
             /**
