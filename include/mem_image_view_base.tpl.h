@@ -28,9 +28,8 @@ namespace phtr
 {
 
     template <Storage::type T>
-    MemImageViewBase<T>::MemImageViewBase(void* base_addr,
-                                          coord_t width,
-                                          coord_t height)
+    MemImageViewBase<T>::MemImageViewBase
+    (void* base_addr, coord_t width, coord_t height)
             : storage_type_(T),
             storage_info_(width, height),
             base_addr_(static_cast<MemImageViewBase::channel_storage_t*>(base_addr)),
@@ -47,26 +46,32 @@ namespace phtr
     }
 
     template <Storage::type T>
-    MemImageViewBase<T>::~MemImageViewBase()
+    MemImageViewBase<T>::~MemImageViewBase
+    ()
     {
         //NIL
     }
 
     template <Storage::type T>
-    coord_t MemImageViewBase<T>::width() const
+    coord_t
+    MemImageViewBase<T>::width
+    () const
     {
         return width_;
     }
 
     template <Storage::type T>
-    coord_t MemImageViewBase<T>::height() const
+    coord_t
+    MemImageViewBase<T>::height()
+    const
     {
         return height_;
     }
 
     template <Storage::type T>
-    inline
-    size_t MemImageViewBase<T>::get_px_offs(coord_t x, coord_t y) const
+    inline size_t
+    MemImageViewBase<T>::get_px_offs
+    (coord_t x, coord_t y) const
     {
         return ((y * width_) + x) * step_;
     }

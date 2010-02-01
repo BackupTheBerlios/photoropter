@@ -148,6 +148,8 @@ set(PHTR_SOURCES
   include/image_interpolator.tpl.h
   include/mem_layout.h
   include/mem_storage_info.h
+  include/image_transform.h
+  include/image_transform.tpl.h
   exception.cpp
   )
 

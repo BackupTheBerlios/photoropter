@@ -28,7 +28,8 @@ namespace phtr
 {
 
     template <Storage::type T>
-    MemImageViewIterW<T>::MemImageViewIterW(coord_t width, coord_t height, channel_storage_t* addr)
+    MemImageViewIterW<T>::MemImageViewIterW
+    (coord_t width, coord_t height, channel_storage_t* addr)
             : addr_(addr),
             storage_type_(T),
             step_(mem_layout_t::step(width, height)),
@@ -38,46 +39,52 @@ namespace phtr
             min_chan_val_(ChannelRange<T>::min()),
             max_chan_val_(ChannelRange<T>::max())
     {
-        //ctor
+        //NIL
     }
 
     template <Storage::type T>
-    MemImageViewIterW<T>::~MemImageViewIterW()
+    MemImageViewIterW<T>::~MemImageViewIterW
+    ()
     {
-        //dtor
+        //NIL
     }
 
     template <Storage::type T>
     void
-    MemImageViewIterW<T>::write_px_val_r(channel_t val)
+    MemImageViewIterW<T>::write_px_val_r
+    (channel_t val)
     {
         addr_[r_offs_] = scale_px(val);
     }
 
     template <Storage::type T>
     void
-    MemImageViewIterW<T>::write_px_val_g(channel_t val)
+    MemImageViewIterW<T>::write_px_val_g
+    (channel_t val)
     {
         addr_[g_offs_] = scale_px(val);
     }
 
     template <Storage::type T>
     void
-    MemImageViewIterW<T>::write_px_val_b(channel_t val)
+    MemImageViewIterW<T>::write_px_val_b
+    (channel_t val)
     {
         addr_[b_offs_] = scale_px(val);
     }
 
     template <Storage::type T>
     void
-    MemImageViewIterW<T>::inc_pos()
+    MemImageViewIterW<T>::inc_pos
+    ()
     {
         addr_ += step_;
     }
 
     template <Storage::type T>
     typename MemImageViewIterW<T>::channel_storage_t
-    MemImageViewIterW<T>::scale_px(channel_t scaled_val) const
+    MemImageViewIterW<T>::scale_px
+    (channel_t scaled_val) const
     {
         return static_cast<channel_storage_t>(
                    ((static_cast<phtr::channel_t>(this->max_chan_val_)

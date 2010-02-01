@@ -90,12 +90,17 @@ namespace phtr
     template <typename view_t>
     class ImageInterpolator<Interpolation::nearest_neighbour, view_t>
     {
+        public:
+            /**
+            * \brief The type of the image view used.
+            */
+            typedef view_t image_view_t;
 
         public:
             /**
             * \brief Constructor.
             */
-            ImageInterpolator(view_t* image_view);
+            ImageInterpolator(const view_t& image_view);
 
         public:
             /**
@@ -138,7 +143,7 @@ namespace phtr
             * \param y The y coordinate.
             * \return The channel value.
             */
-            view_t* image_view_;
+            const view_t& image_view_;
 
         private:
             /**

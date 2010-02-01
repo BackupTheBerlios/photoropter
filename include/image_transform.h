@@ -24,53 +24,38 @@ THE SOFTWARE.
 
 */
 
+#ifndef __IMAGE_TRANSFORM_H__
+#define __IMAGE_TRANSFORM_H__
+
 namespace phtr
 {
 
-    template <phtr::Storage::type T>
-    ImageBuffer<T>::ImageBuffer
-    (coord_t width, coord_t height)
-            : storage_info_(width, height),
-            data_(0),
-            width_(width),
-            height_(height),
-            num_channels_(storage_info_.num_channels)
+    template <typename interpolator_t, typename image_view_w_t>
+    class ImageTransform
     {
-        num_pixels_ = width_ * height_;
-        num_bytes_ = num_pixels_ * num_channels_ * sizeof(channel_storage_t);
 
-        data_ = new channel_storage_t[num_pixels_ * num_channels_];
-    }
+        public:
+            typedef typename interpolator_t::image_view_t image_view_t;
 
-    template <phtr::Storage::type T>
-    ImageBuffer<T>::~ImageBuffer
-    ()
-    {
-        delete[] data_;
-    }
+        public:
+            ImageTransform(const image_view_t& image_view_r, image_view_w_t& image_view_w);
 
-    template <phtr::Storage::type T>
-    void*
-    ImageBuffer<T>::data
-    ()
-    {
-        return data_;
-    }
+        public:
+            ~ImageTransform();
 
-    template <phtr::Storage::type T>
-    size_t
-    ImageBuffer<T>::num_pixels
-    ()
-    {
-        return num_pixels_;
-    }
+        public:
+            void do_transform();
 
-    template <phtr::Storage::type T>
-    size_t
-    ImageBuffer<T>::num_bytes
-    ()
-    {
-        return num_bytes_;
-    }
+        private:
+            interpolator_t interpolator_;
+
+        private:
+            image_view_w_t& image_view_w_;
+
+    }; // class ImageTransform
 
 } // namespace phtr
+
+#include "image_transform.tpl.h"
+
+#endif // __IMAGE_TRANSFORM_H__

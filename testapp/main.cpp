@@ -3,6 +3,7 @@
 #include <vxl_config.h>
 #include <vil/vil_rgb.h>
 #include <vil/vil_load.h>
+#include <vil/vil_save.h>
 #include <vil/vil_convert.h>
 #include <vil/vil_fill.h>
 #include <vil/vil_copy.h>
@@ -14,6 +15,7 @@
 #include "image_buffer.h"
 #include "channel_storage.h"
 #include "image_interpolator.h"
+#include "image_transform.h"
 
 #include <memory>
 #include <typeinfo>
@@ -31,6 +33,7 @@ int main()
     typedef MemImageViewW<storage_type> view_w_t;
     typedef view_w_t::iter_t iter_t;
     typedef ImageInterpolator<Interpolation::nearest_neighbour, view_r_t> interp_t;
+    typedef ImageTransform<interp_t, view_w_t> transform_t;
 
     buffer_t img_buf(100, 100);
 
@@ -66,14 +69,50 @@ int main()
     << " " << phtr_mem_view.get_px_val_g(51, 50)
     << " " << phtr_mem_view.get_px_val_b(51, 50) << vcl_endl;
 
-
-
-    interp_t interpolator(&phtr_mem_view);
+    interp_t interpolator(phtr_mem_view);
     vcl_cerr << interpolator.get_px_val_r(0.0051, 0.0051)
     << " " << interpolator.get_px_val_g(0.0051, 0.0051)
     << " " << interpolator.get_px_val_b(0.0051, 0.0051) << vcl_endl;
 
+    transform_t img_transform(phtr_mem_view, phtr_mem_view_w);
+    img_transform.do_transform();
 
+    //
+    // VIL stuff
+    //
+    typedef vxl_uint_16 vil_channel_t;
+
+    // create image resource for input image
+    vcl_cout << "Loading test image."  << vcl_endl;
+    vil_image_resource_sptr vil_loaded_img = vil_load_image_resource("test.jpg");
+    size_t img_width = vil_loaded_img->ni();
+    size_t img_height = vil_loaded_img->nj();
+
+    // now create an image in memory for Photoropter to use
+    // as destination buffer
+    vil_image_view<vil_channel_t> vil_dst_img(img_width, img_height, 3, 1);
+    vil_image_view<vil_channel_t> vil_dst_view(vil_dst_img);
+
+    // create a fitting view on the src buffer and copy the data into it
+    vcl_cout << "Copying image to buffer...";
+    vcl_cout.flush();
+    vil_image_view_base_sptr vil_src_img =
+        vil_convert_stretch_range(vil_channel_t(), vil_loaded_img->get_view());
+    vil_image_view<vil_channel_t> vil_src_view(vil_src_img);
+    vcl_cout << "done."  << vcl_endl;
+
+    vcl_cout << "Transforming...";
+    vcl_cout.flush();
+    view_r_t phtr_view_r(vil_src_view.memory_chunk().as_pointer(), img_width, img_height);
+    view_w_t phtr_view_w(vil_src_view.memory_chunk().as_pointer(), img_width, img_height);
+
+    transform_t phtr_transform(phtr_view_r, phtr_view_w);
+    phtr_transform.do_transform();
+
+    vcl_cout << "done."  << vcl_endl;
+
+    vcl_cout << "Saving output image."  << vcl_endl;
+    vil_save(vil_dst_view, "out.png");
 
     return 0;
 
