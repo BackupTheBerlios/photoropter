@@ -99,6 +99,12 @@ namespace phtr
              * **************************************** */
 
         private:
+            ImageBuffer(const ImageBuffer<T>& orig);
+
+        private:
+            ImageBuffer<T>& operator=(const ImageBuffer<T>& orig);
+
+        private:
             /**
             * \brief The internal storage info object.
             */

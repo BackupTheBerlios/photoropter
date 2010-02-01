@@ -51,7 +51,7 @@ namespace phtr
     MemImageViewW<T>::write_px_val_r
     (coord_t x, coord_t y, channel_t val)
     {
-        this->base_addr_[this->get_px_offs(x,y) + this->r_offs_] = scale_px(val);
+        this->base_addr_[this->get_px_offs(x, y) + this->r_offs_] = scale_px(val);
     }
 
     template <Storage::type T>
@@ -59,7 +59,7 @@ namespace phtr
     MemImageViewW<T>::write_px_val_g
     (coord_t x, coord_t y, channel_t val)
     {
-        this->base_addr_[this->get_px_offs(x,y) + this->g_offs_] = scale_px(val);
+        this->base_addr_[this->get_px_offs(x, y) + this->g_offs_] = scale_px(val);
     }
 
     template <Storage::type T>
@@ -67,7 +67,7 @@ namespace phtr
     MemImageViewW<T>::write_px_val_b
     (coord_t x, coord_t y, channel_t val)
     {
-        this->base_addr_[this->get_px_offs(x,y) + this->b_offs_] = scale_px(val);
+        this->base_addr_[this->get_px_offs(x, y) + this->b_offs_] = scale_px(val);
     }
 
     template <Storage::type T>

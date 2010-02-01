@@ -58,8 +58,8 @@ namespace phtr
         {
             for (coord_t i = 0; i < width; ++i)
             {
-                coord_t x = (i * scale_x) - 0.5;
-                coord_t y = (i * scale_y) - 0.5;
+                interp_coord_t x = (i * scale_x) - 0.5;
+                interp_coord_t y = (j * scale_y) - 0.5;
 
                 image_view_w_.write_px_val_r(i, j, interpolator_.get_px_val_r(x, y));
                 image_view_w_.write_px_val_g(i, j, interpolator_.get_px_val_g(x, y));

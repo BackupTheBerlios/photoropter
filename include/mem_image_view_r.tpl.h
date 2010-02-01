@@ -47,7 +47,7 @@ namespace phtr
     MemImageViewR<T>::get_px_val_r
     (coord_t x, coord_t y) const
     {
-        return scale_px(this->base_addr_[this->get_px_offs(x,y) + this->r_offs_]);
+        return scale_px(this->base_addr_[this->get_px_offs(x, y) + this->r_offs_]);
     }
 
     template <Storage::type T>
@@ -55,7 +55,7 @@ namespace phtr
     MemImageViewR<T>::get_px_val_g
     (coord_t x, coord_t y) const
     {
-        return scale_px(this->base_addr_[this->get_px_offs(x,y) + this->g_offs_]);
+        return scale_px(this->base_addr_[this->get_px_offs(x, y) + this->g_offs_]);
     }
 
     template <Storage::type T>
@@ -63,7 +63,7 @@ namespace phtr
     MemImageViewR<T>::get_px_val_b
     (coord_t x, coord_t y) const
     {
-        return scale_px(this->base_addr_[this->get_px_offs(x,y) + this->b_offs_]);
+        return scale_px(this->base_addr_[this->get_px_offs(x, y) + this->b_offs_]);
     }
 
     template <Storage::type T>

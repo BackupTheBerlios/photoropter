@@ -35,6 +35,7 @@ int main()
     typedef ImageInterpolator<Interpolation::nearest_neighbour, view_r_t> interp_t;
     typedef ImageTransform<interp_t, view_w_t> transform_t;
 
+    // simple tests
     buffer_t img_buf(100, 100);
 
     channel_storage_t* buf = static_cast<channel_storage_t*>(img_buf.data());
@@ -87,85 +88,42 @@ int main()
     vil_image_resource_sptr vil_loaded_img = vil_load_image_resource("test.jpg");
     size_t img_width = vil_loaded_img->ni();
     size_t img_height = vil_loaded_img->nj();
+    size_t dst_width = img_width;
+    size_t dst_height = img_height;
+    //size_t dst_width = 150;
+    //size_t dst_height = 100;
 
-    // now create an image in memory for Photoropter to use
-    // as destination buffer
-    vil_image_view<vil_channel_t> vil_dst_img(img_width, img_height, 3, 1);
-    vil_image_view<vil_channel_t> vil_dst_view(vil_dst_img);
+    // create image buffers
+    buffer_t phtr_src_buf(img_width, img_height);
+    view_r_t phtr_view_r(phtr_src_buf.data(), img_width, img_height);
+    buffer_t phtr_dst_buf(dst_width, dst_height);
+    view_w_t phtr_view_w(phtr_dst_buf.data(), dst_width, dst_height);
 
-    // create a fitting view on the src buffer and copy the data into it
+    // create VIL view for filling and saving the buffers
+    vil_image_view<vil_channel_t> vil_src_view
+    (static_cast<vil_channel_t*>(phtr_src_buf.data()), img_width, img_height, 3, 1, img_width, img_width * img_height);
+    vil_image_view<vil_channel_t> vil_dst_view
+    (static_cast<vil_channel_t*>(phtr_dst_buf.data()), dst_width, dst_height, 3, 1, dst_width, dst_width * dst_height);
+
+    // load image, convert and copy data
     vcl_cout << "Copying image to buffer...";
     vcl_cout.flush();
     vil_image_view_base_sptr vil_src_img =
         vil_convert_stretch_range(vil_channel_t(), vil_loaded_img->get_view());
-    vil_image_view<vil_channel_t> vil_src_view(vil_src_img);
+    vil_image_view<vil_channel_t> vil_tmp_view(vil_src_img);
+    vcl_cout << "...";
+    vcl_cout.flush();
+    vil_src_view.deep_copy(vil_tmp_view);
     vcl_cout << "done."  << vcl_endl;
 
     vcl_cout << "Transforming...";
     vcl_cout.flush();
-    view_r_t phtr_view_r(vil_src_view.memory_chunk().as_pointer(), img_width, img_height);
-    view_w_t phtr_view_w(vil_src_view.memory_chunk().as_pointer(), img_width, img_height);
-
     transform_t phtr_transform(phtr_view_r, phtr_view_w);
     phtr_transform.do_transform();
-
     vcl_cout << "done."  << vcl_endl;
 
     vcl_cout << "Saving output image."  << vcl_endl;
     vil_save(vil_dst_view, "out.png");
-
-    return 0;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    vcl_cout << "Loading image."  << vcl_endl;
-    vil_image_resource_sptr img_rsc = vil_load_image_resource("/home/robert/kombi1.tif");
-
-    typedef vxl_uint_32 channel_t;
-
-    vcl_cout << "Converting to 32bit int."  << vcl_endl;
-    vil_image_view_base_sptr img_planes =
-        vil_convert_to_n_planes(4,
-                                vil_convert_stretch_range(channel_t(),
-                                                          img_rsc->get_view()
-                                                         )
-                               );
-    // create interim view of the alpha plane (select 1 plane, starting with 3)
-    vil_image_view<channel_t> alpha = vil_planes(vil_image_view<channel_t> (img_planes), 3, 1, 1);
-    // set alpha to white
-    vil_fill(alpha, std::numeric_limits<channel_t>::max());
-    // convert to component order
-    vcl_cout << "Converting to component order."  << vcl_endl;
-    vil_image_view<vil_rgba<channel_t> > img_view =
-        vil_convert_to_component_order(img_planes);
-    //vil_image_view<vxl_int_32> alpha = vil_planes(img_view, 3, 1, 1);
-
-    size_t width = img_view.ni();
-    size_t height = img_view.nj();
-    unsigned int nplanes = img_view.nplanes();
-
-    vcl_cerr << "Dimensions: " << width << " x " << height << " x " << nplanes << vcl_endl;
-
-    // fetch pixel falue
-    const vil_rgba<channel_t>& pixel = img_view(100, 100);
-    vcl_cerr << "Pixel (100, 100) = "
-    << pixel.R() << ", "
-    << pixel.G() << ", "
-    << pixel.B() << ", "
-    << pixel.A() << vcl_endl;
-
-//    tiff_read_image("/home/robert/kombi1.tif",img);
 
     return 0;
 }
