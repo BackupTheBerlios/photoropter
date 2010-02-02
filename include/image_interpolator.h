@@ -30,6 +30,8 @@ THE SOFTWARE.
 #include "mem_image_view_r.h"
 #include "types.h"
 
+#include <cmath>
+
 namespace phtr
 {
 
@@ -90,6 +92,10 @@ namespace phtr
     template <typename view_t>
     class ImageInterpolator<Interpolation::nearest_neighbour, view_t>
     {
+            /* ****************************************
+             * public interface
+             * **************************************** */
+
         public:
             /**
             * \brief The type of the image view used.
@@ -135,6 +141,10 @@ namespace phtr
             */
             interp_channel_t get_px_val_b(interp_coord_t x, interp_coord_t y);
 
+            /* ****************************************
+             * internals
+             * **************************************** */
+
         private:
             /**
             * \brief Pointer to the internal image view instance that is used
@@ -175,7 +185,111 @@ namespace phtr
             */
             interp_channel_t null_val_;
 
-    }; // class ImageInterpolator
+    }; // class ImageInterpolator<Interpolation::nearest_neighbour, ...>
+
+    /**
+    * \brief Class template to facilitate image interpolation.
+    * \details The image is represented using floating-point coordinates ranging from
+    *  -0.5 to 0.5. (0.0, 0.0) represents the image's center, (-0.5,-0.5) the upper left corner.
+    * \note This is the specialisation for bilinear interpolation.
+    */
+    template <typename view_t>
+    class ImageInterpolator<Interpolation::bilinear, view_t>
+    {
+            /* ****************************************
+             * public interface
+             * **************************************** */
+
+        public:
+            /**
+            * \brief The type of the image view used.
+            */
+            typedef view_t image_view_t;
+
+        public:
+            /**
+            * \brief Constructor.
+            */
+            ImageInterpolator(const view_t& image_view);
+
+        public:
+            /**
+            * \brief Destructor.
+            */
+            ~ImageInterpolator();
+
+        public:
+            /**
+            * \brief Get the value of the 'red' channel at the given coordinates.
+            * \param x The x coordinate.
+            * \param y The y coordinate.
+            * \return The channel value.
+            */
+            interp_channel_t get_px_val_r(interp_coord_t x, interp_coord_t y);
+
+        public:
+            /**
+            * \brief Get the value of the 'green' channel at the given coordinates.
+            * \param x The x coordinate.
+            * \param y The y coordinate.
+            * \return The channel value.
+            */
+            interp_channel_t get_px_val_g(interp_coord_t x, interp_coord_t y);
+
+        public:
+            /**
+            * \brief Get the value of the 'blue' channel at the given coordinates.
+            * \param x The x coordinate.
+            * \param y The y coordinate.
+            * \return The channel value.
+            */
+            interp_channel_t get_px_val_b(interp_coord_t x, interp_coord_t y);
+
+            /* ****************************************
+             * internals
+             * **************************************** */
+
+        private:
+            /**
+            * \brief Pointer to the internal image view instance that is used
+            * for image access.
+            * \param x The x coordinate.
+            * \param y The y coordinate.
+            * \return The channel value.
+            */
+            const view_t& image_view_;
+
+        private:
+            /**
+            * \brief Interal scaling factor for the horizontal axis.
+            */
+            interp_channel_t scale_x_;
+
+        private:
+            /**
+            * \brief Interal scaling factor for the vertical axis.
+            */
+            interp_channel_t scale_y_;
+
+        private:
+            /**
+            * \brief The image width.
+            */
+            coord_t width_;
+
+        private:
+            /**
+            * \brief The image height.
+            */
+            coord_t height_;
+
+        private:
+            /**
+            * \brief The value to return for areas outside the image.
+            */
+            interp_channel_t null_val_;
+
+    }; // class ImageInterpolator<Interpolation::bilinear, ...>
 
 } // namespace phtr
 
