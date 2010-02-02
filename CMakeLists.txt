@@ -19,11 +19,6 @@ if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_CXX_FLAGS_DEBUG "-O0 -g -ansi -pedantic -Wall -Wextra -Werror -Wno-long-long -DDEBUG")
   set(CMAKE_CXX_FLAGS_RELEASE "-O3 -ffast-math -ansi -DNDEBUG -Wno-long-long")
 
-  if(PHTR_USE_SCOPED_PTR)
-    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DUSE_BOOST_SCOPED_PTR")
-    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DUSE_BOOST_SCOPED_PTR")
-  endif(PHTR_USE_SCOPED_PTR)
-
   # override default cache values set by CMake
   set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG}"
     CACHE STRING "Compiler options for debug builds" FORCE)
@@ -66,6 +61,11 @@ if(CMAKE_COMPILER_IS_GNUCXX)
   endif(NOT ${GNU_CPP_VERSION} VERSION_LESS 4.4
     AND ${Boost_MAJOR_VERSION}.${Boost_MINOR_VERSION} VERSION_LESS 1.41)
 endif(CMAKE_COMPILER_IS_GNUCXX)
+
+if(PHTR_USE_SCOPED_PTR)
+  set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DUSE_BOOST_SCOPED_PTR")
+  set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DUSE_BOOST_SCOPED_PTR")
+endif(PHTR_USE_SCOPED_PTR)
 
 ########################################
 # doxygen documentation
