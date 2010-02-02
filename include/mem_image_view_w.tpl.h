@@ -75,9 +75,9 @@ namespace phtr
     MemImageViewW<T>::get_iter
     (coord_t x, coord_t y)
     {
-        return new MemImageViewIterW<T>(this->width_,
-                                        this->height_,
-                                        this->base_addr_ + this->get_px_offs(x, y));
+        return new MemImageIterW<T>(this->width_,
+                                    this->height_,
+                                    this->base_addr_ + this->get_px_offs(x, y));
     }
 
     template <Storage::type T>

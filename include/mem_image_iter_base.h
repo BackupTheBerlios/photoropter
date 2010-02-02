@@ -24,8 +24,8 @@ THE SOFTWARE.
 
 */
 
-#ifndef __MEM_IMAGE_VIEW_ITER_W_H__
-#define __MEM_IMAGE_VIEW_ITER_W_H__
+#ifndef __MEM_IMAGE_ITER_BASE_H__
+#define __MEM_IMAGE_ITER_BASE_H__
 
 #include "storage_type.h"
 #include "channel_range.h"
@@ -35,16 +35,17 @@ namespace phtr
 {
 
     /**
-    * \brief Iterator class for write access to an image in memory.
-    * \details Instances of this class are usually created by \ref MemImageViewW.
+    * \brief Base class template for iterator classes. See \ref MemImageIterR
+    * and \ref MemImageIterW for details.
     */
     template <Storage::type T>
-    class MemImageViewIterW
+    class MemImageIterBase
     {
 
             /* ****************************************
              * public interface
              * **************************************** */
+
         public:
             /**
             * \brief Struct describing the memory layout.
@@ -61,34 +62,13 @@ namespace phtr
             /**
             * \brief Constructor.
             */
-            MemImageViewIterW(coord_t width, coord_t height, channel_storage_t* addr);
+            MemImageIterBase(coord_t width, coord_t height, channel_storage_t* addr);
 
         public:
             /**
             * \brief Destructor.
             */
-            ~MemImageViewIterW();
-
-        public:
-            /**
-            * \brief Write the 'red' channel value to the current pixel.
-            * \param val  The value.
-            */
-            void write_px_val_r(channel_storage_t val);
-
-        public:
-            /**
-            * \brief Write the 'green' channel value to the current pixel.
-            * \param val  The value.
-            */
-            void write_px_val_g(channel_storage_t val);
-
-        public:
-            /**
-            * \brief Write the 'blue' channel value to the current pixel.
-            * \param val  The value.
-            */
-            void write_px_val_b(channel_storage_t val);
+            ~MemImageIterBase();
 
         public:
             /**
@@ -122,43 +102,43 @@ namespace phtr
              * internals
              * **************************************** */
 
-        private:
+        protected:
             /**
             * \brief The current address.
             */
             channel_storage_t* addr_;
 
-        private:
+        protected:
             /**
             * \brief The storage type.
             */
             const Storage::type storage_type_;
 
-        private:
+        protected:
             /**
             * \brief The step between adjacent pixels.
             */
             const size_t step_;
 
-        private:
+        protected:
             /**
             * \brief The step between lines.
             */
             const size_t line_step_;
 
-        private:
+        protected:
             /**
             * \brief The offset of the 'red' channel.
             */
             const size_t r_offs_;
 
-        private:
+        protected:
             /**
             * \brief The offset of the 'green' channel.
             */
             const size_t g_offs_;
 
-        private:
+        protected:
             /**
             * \brief The offset of the 'blue' channel.
             */
@@ -177,10 +157,10 @@ namespace phtr
             const channel_storage_t max_chan_val_;
 
 
-    }; // class MemImageViewIterW
+    }; // template class MemImageIterBase<>
 
 } // namespace phtr
 
-#include "mem_image_view_iter_w.tpl.h"
+#include "mem_image_iter_base.tpl.h"
 
-#endif // __MEM_IMAGE_VIEW_ITER_W_H__
+#endif // __MEM_IMAGE_ITER_BASE_H__

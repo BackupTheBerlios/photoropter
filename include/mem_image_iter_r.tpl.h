@@ -28,52 +28,35 @@ namespace phtr
 {
 
     template <Storage::type T>
-    MemImageViewR<T>::MemImageViewR
-    (const void* base_addr, coord_t width, coord_t height)
-            : MemImageViewBase<T>(const_cast<void*>(base_addr), width, height)
+    MemImageIterR<T>::MemImageIterR
+    (coord_t width, coord_t height, const channel_storage_t* addr)
+    : MemImageIterBase<T>(width, height, const_cast<channel_storage_t*>(addr))
     {
         //NIL
     }
 
     template <Storage::type T>
-    MemImageViewR<T>::~MemImageViewR
+    typename MemImageIterR<T>::channel_storage_t
+    MemImageIterR<T>::read_px_val_r
     ()
     {
-        //NIL
+        return this->addr_[this->r_offs_];
     }
 
     template <Storage::type T>
-    typename MemImageViewR<T>::channel_storage_t
-    MemImageViewR<T>::get_px_val_r
-    (coord_t x, coord_t y) const
+    typename MemImageIterR<T>::channel_storage_t
+    MemImageIterR<T>::read_px_val_g
+    ()
     {
-        return this->base_addr_[this->get_px_offs(x, y) + this->r_offs_];
+        return this->addr_[this->g_offs_];
     }
 
     template <Storage::type T>
-    typename MemImageViewR<T>::channel_storage_t
-    MemImageViewR<T>::get_px_val_g
-    (coord_t x, coord_t y) const
+    typename MemImageIterR<T>::channel_storage_t
+    MemImageIterR<T>::read_px_val_b
+    ()
     {
-        return this->base_addr_[this->get_px_offs(x, y) + this->g_offs_];
-    }
-
-    template <Storage::type T>
-    typename MemImageViewR<T>::channel_storage_t
-    MemImageViewR<T>::get_px_val_b
-    (coord_t x, coord_t y) const
-    {
-        return this->base_addr_[this->get_px_offs(x, y) + this->b_offs_];
-    }
-
-    template <Storage::type T>
-    typename MemImageViewR<T>::iter_t*
-    MemImageViewR<T>::get_iter
-    (coord_t x, coord_t y)
-    {
-        return new MemImageIterR<T>(this->width_,
-                                    this->height_,
-                                    this->base_addr_ + this->get_px_offs(x, y));
+        return this->addr_[this->b_offs_];
     }
 
 } // namespace phtr

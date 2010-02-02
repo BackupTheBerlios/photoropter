@@ -27,9 +27,8 @@ THE SOFTWARE.
 #ifndef __MEM_IMAGE_VIEW_W_H__
 #define __MEM_IMAGE_VIEW_W_H__
 
-#include "storage_type.h"
-#include "mem_storage_info.h"
-#include "mem_image_view_iter_w.h"
+#include "mem_image_view_base.h"
+#include "mem_image_iter_w.h"
 
 namespace phtr
 {
@@ -64,7 +63,7 @@ namespace phtr
             /**
             * \brief The type of the internal iterator.
             */
-            typedef typename phtr::MemImageViewIterW<T> iter_t;
+            typedef typename phtr::MemImageIterW<T> iter_t;
 
         public:
             /**
@@ -169,7 +168,7 @@ namespace phtr
             coord_t roi_y_max_;
 
 
-    }; // template class MemImageViewW
+    }; // template class MemImageViewW<>
 
 } // namespace phtr
 

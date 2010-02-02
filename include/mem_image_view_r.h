@@ -28,6 +28,7 @@ THE SOFTWARE.
 #define __MEM_IMAGE_VIEW_R_H__
 
 #include "mem_image_view_base.h"
+#include "mem_image_iter_r.h"
 
 namespace phtr
 {
@@ -57,6 +58,12 @@ namespace phtr
             * \brief The channel storage type for this image (e.g., uint8_t).
             */
             typedef typename MemImageViewBase<T>::channel_storage_t channel_storage_t;
+
+        public:
+            /**
+            * \brief The type of the internal iterator.
+            */
+            typedef typename phtr::MemImageIterR<T> iter_t;
 
         public:
             /**
@@ -105,11 +112,17 @@ namespace phtr
             channel_storage_t
             get_px_val_b(coord_t x, coord_t y) const;
 
-            /* ****************************************
-             * internals
-             * **************************************** */
+        public:
+            /**
+            * \brief Get a pixel iterator.
+            * A new iterator is instatiated and a pointer to it is returned
+            * (this is necessary since C++ does not support to return polymorphic
+            * objects 'by value').
+            * \return The iterator.
+            */
+            iter_t* get_iter(coord_t x, coord_t y);
 
-    }; // template class MemImageViewR
+    }; // template class MemImageViewR<>
 
 } // namespace phtr
 

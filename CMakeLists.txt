@@ -151,8 +151,12 @@ set(PHTR_SOURCES
   include/mem_image_view_r.tpl.h
   include/mem_image_view_w.h
   include/mem_image_view_w.tpl.h
-  include/mem_image_view_iter_w.h
-  include/mem_image_view_iter_w.tpl.h
+  include/mem_image_iter_base.h
+  include/mem_image_iter_base.tpl.h
+  include/mem_image_iter_r.h
+  include/mem_image_iter_r.tpl.h
+  include/mem_image_iter_w.h
+  include/mem_image_iter_w.tpl.h
   include/image_interpolator.tpl.h
   include/mem_layout.h
   include/mem_storage_info.h

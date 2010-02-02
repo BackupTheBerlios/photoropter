@@ -37,10 +37,8 @@ namespace phtr
 {
 
     /**
-    * \brief Class template implementing a (reading) 'image view' of a given
-    *  memory position.
-    * \details The template uses internal templates to deal efficiently with
-    * different storage types.
+    * \brief Base class template for image views. See \ref MemImageViewR and
+    * \ref MemImageViewW for details.
     */
     template <Storage::type T>
     class MemImageViewBase
@@ -174,7 +172,7 @@ namespace phtr
             */
             const size_t b_offs_;
 
-    }; // template class MemImageViewBase
+    }; // template class MemImageViewBase<>
 
 } // namespace phtr
 

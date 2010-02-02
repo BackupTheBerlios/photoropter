@@ -28,52 +28,58 @@ namespace phtr
 {
 
     template <Storage::type T>
-    MemImageViewR<T>::MemImageViewR
-    (const void* base_addr, coord_t width, coord_t height)
-            : MemImageViewBase<T>(const_cast<void*>(base_addr), width, height)
+    MemImageIterBase<T>::MemImageIterBase
+    (coord_t width, coord_t height, channel_storage_t* addr)
+            : addr_(addr),
+            storage_type_(T),
+            step_(mem_layout_t::step(width, height)),
+            line_step_(mem_layout_t::line_step(width, height)),
+            r_offs_(mem_layout_t::r_offs(width, height)),
+            g_offs_(mem_layout_t::g_offs(width, height)),
+            b_offs_(mem_layout_t::b_offs(width, height)),
+            min_chan_val_(ChannelRange<T>::min()),
+            max_chan_val_(ChannelRange<T>::max())
     {
         //NIL
     }
 
     template <Storage::type T>
-    MemImageViewR<T>::~MemImageViewR
+    MemImageIterBase<T>::~MemImageIterBase
     ()
     {
         //NIL
     }
 
     template <Storage::type T>
-    typename MemImageViewR<T>::channel_storage_t
-    MemImageViewR<T>::get_px_val_r
-    (coord_t x, coord_t y) const
+    void
+    MemImageIterBase<T>::inc_x
+    ()
     {
-        return this->base_addr_[this->get_px_offs(x, y) + this->r_offs_];
+        addr_ += step_;
     }
 
     template <Storage::type T>
-    typename MemImageViewR<T>::channel_storage_t
-    MemImageViewR<T>::get_px_val_g
-    (coord_t x, coord_t y) const
+    void
+    MemImageIterBase<T>::dec_x
+    ()
     {
-        return this->base_addr_[this->get_px_offs(x, y) + this->g_offs_];
+        addr_ -= step_;
     }
 
     template <Storage::type T>
-    typename MemImageViewR<T>::channel_storage_t
-    MemImageViewR<T>::get_px_val_b
-    (coord_t x, coord_t y) const
+    void
+    MemImageIterBase<T>::inc_y
+    ()
     {
-        return this->base_addr_[this->get_px_offs(x, y) + this->b_offs_];
+        addr_ += line_step_;
     }
 
     template <Storage::type T>
-    typename MemImageViewR<T>::iter_t*
-    MemImageViewR<T>::get_iter
-    (coord_t x, coord_t y)
+    void
+    MemImageIterBase<T>::dec_y
+    ()
     {
-        return new MemImageIterR<T>(this->width_,
-                                    this->height_,
-                                    this->base_addr_ + this->get_px_offs(x, y));
+        addr_ -= line_step_;
     }
 
 } // namespace phtr

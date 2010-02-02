@@ -28,82 +28,35 @@ namespace phtr
 {
 
     template <Storage::type T>
-    MemImageViewIterW<T>::MemImageViewIterW
+    MemImageIterW<T>::MemImageIterW
     (coord_t width, coord_t height, channel_storage_t* addr)
-            : addr_(addr),
-            storage_type_(T),
-            step_(mem_layout_t::step(width, height)),
-            line_step_(mem_layout_t::line_step(width, height)),
-            r_offs_(mem_layout_t::r_offs(width, height)),
-            g_offs_(mem_layout_t::g_offs(width, height)),
-            b_offs_(mem_layout_t::b_offs(width, height)),
-            min_chan_val_(ChannelRange<T>::min()),
-            max_chan_val_(ChannelRange<T>::max())
-    {
-        //NIL
-    }
-
-    template <Storage::type T>
-    MemImageViewIterW<T>::~MemImageViewIterW
-    ()
+    : MemImageIterBase<T>(width, height, addr)
     {
         //NIL
     }
 
     template <Storage::type T>
     void
-    MemImageViewIterW<T>::write_px_val_r
+    MemImageIterW<T>::write_px_val_r
     (channel_storage_t val)
     {
-        addr_[r_offs_] = val;
+        this->addr_[this->r_offs_] = val;
     }
 
     template <Storage::type T>
     void
-    MemImageViewIterW<T>::write_px_val_g
+    MemImageIterW<T>::write_px_val_g
     (channel_storage_t val)
     {
-        addr_[g_offs_] = val;
+        this->addr_[this->g_offs_] = val;
     }
 
     template <Storage::type T>
     void
-    MemImageViewIterW<T>::write_px_val_b
+    MemImageIterW<T>::write_px_val_b
     (channel_storage_t val)
     {
-        addr_[b_offs_] = val;
-    }
-
-    template <Storage::type T>
-    void
-    MemImageViewIterW<T>::inc_x
-    ()
-    {
-        addr_ += step_;
-    }
-
-    template <Storage::type T>
-    void
-    MemImageViewIterW<T>::dec_x
-    ()
-    {
-        addr_ -= step_;
-    }
-
-    template <Storage::type T>
-    void
-    MemImageViewIterW<T>::inc_y
-    ()
-    {
-        addr_ += line_step_;
-    }
-
-    template <Storage::type T>
-    void
-    MemImageViewIterW<T>::dec_y
-    ()
-    {
-        addr_ -= line_step_;
+        this->addr_[this->b_offs_] = val;
     }
 
 } // namespace phtr
