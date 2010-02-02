@@ -85,7 +85,7 @@ namespace phtr
                 iter->write_px_val_g(val_g);
                 iter->write_px_val_b(val_b);
 
-                iter->inc_pos();
+                iter->inc_x();
 
             } // column loop
 

@@ -51,7 +51,7 @@ void simple_test()
 
     std::auto_ptr<iter_t> phtr_iter(phtr_mem_view_w.get_iter(50, 50));
 
-    phtr_iter->inc_pos();
+    phtr_iter->inc_x();
     phtr_iter->write_px_val_r(10);
     phtr_iter->write_px_val_g(20);
     phtr_iter->write_px_val_b(30);

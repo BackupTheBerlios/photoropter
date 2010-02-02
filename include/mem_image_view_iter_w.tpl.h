@@ -33,6 +33,7 @@ namespace phtr
             : addr_(addr),
             storage_type_(T),
             step_(mem_layout_t::step(width, height)),
+            line_step_(mem_layout_t::line_step(width, height)),
             r_offs_(mem_layout_t::r_offs(width, height)),
             g_offs_(mem_layout_t::g_offs(width, height)),
             b_offs_(mem_layout_t::b_offs(width, height)),
@@ -75,10 +76,34 @@ namespace phtr
 
     template <Storage::type T>
     void
-    MemImageViewIterW<T>::inc_pos
+    MemImageViewIterW<T>::inc_x
     ()
     {
         addr_ += step_;
+    }
+
+    template <Storage::type T>
+    void
+    MemImageViewIterW<T>::dec_x
+    ()
+    {
+        addr_ -= step_;
+    }
+
+    template <Storage::type T>
+    void
+    MemImageViewIterW<T>::inc_y
+    ()
+    {
+        addr_ += line_step_;
+    }
+
+    template <Storage::type T>
+    void
+    MemImageViewIterW<T>::dec_y
+    ()
+    {
+        addr_ -= line_step_;
     }
 
 } // namespace phtr

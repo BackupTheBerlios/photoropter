@@ -92,10 +92,31 @@ namespace phtr
 
         public:
             /**
-            * \brief Increment the current position.
+            * \brief Increment the current position (horizontally).
             * \attention Boundary checks are currently not implemented.
             */
-            void inc_pos();
+            void inc_x();
+
+        public:
+            /**
+            * \brief Decrement the current position (horizontally).
+            * \attention Boundary checks are currently not implemented.
+            */
+            void dec_x();
+
+        public:
+            /**
+            * \brief Increment the current position (vertically).
+            * \attention Boundary checks are currently not implemented.
+            */
+            void inc_y();
+
+        public:
+            /**
+            * \brief Decrement the current position (vertically).
+            * \attention Boundary checks are currently not implemented.
+            */
+            void dec_y();
 
             /* ****************************************
              * internals
@@ -115,9 +136,15 @@ namespace phtr
 
         private:
             /**
-            * \brief The channel step.
+            * \brief The step between adjacent pixels.
             */
             const size_t step_;
+
+        private:
+            /**
+            * \brief The step between lines.
+            */
+            const size_t line_step_;
 
         private:
             /**
