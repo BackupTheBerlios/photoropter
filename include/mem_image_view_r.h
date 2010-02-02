@@ -83,7 +83,7 @@ namespace phtr
             * \return The channel value.
             */
             channel_storage_t
-             get_px_val_r(coord_t x, coord_t y) const;
+            get_px_val_r(coord_t x, coord_t y) const;
 
         public:
             /**
@@ -93,7 +93,7 @@ namespace phtr
             * \return The channel value.
             */
             channel_storage_t
-             get_px_val_g(coord_t x, coord_t y) const;
+            get_px_val_g(coord_t x, coord_t y) const;
 
         public:
             /**
@@ -103,7 +103,7 @@ namespace phtr
             * \return The channel value.
             */
             channel_storage_t
-             get_px_val_b(coord_t x, coord_t y) const;
+            get_px_val_b(coord_t x, coord_t y) const;
 
             /* ****************************************
              * internals

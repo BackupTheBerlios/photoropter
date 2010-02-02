@@ -16,8 +16,10 @@ if(NOT CMAKE_BUILD_TYPE)
     CACHE STRING "Build type (Debug|Release)" FORCE)
 
   # set compiler options
-  set(CMAKE_CXX_FLAGS_DEBUG "-O0 -g -ansi -pedantic -Wall -Wextra -Werror -Wno-long-long -DDEBUG")
-  set(CMAKE_CXX_FLAGS_RELEASE "-O3 -ffast-math -ansi -DNDEBUG -Wno-long-long")
+  if(CMAKE_COMPILER_IS_GNUCXX)
+    set(CMAKE_CXX_FLAGS_DEBUG "-O0 -g -ansi -pedantic -Wall -Wextra -Werror -Wno-long-long -DDEBUG")
+    set(CMAKE_CXX_FLAGS_RELEASE "-O3 -ffast-math -ansi -DNDEBUG -Wno-long-long")
+  endif(CMAKE_COMPILER_IS_GNUCXX)
 
   # override default cache values set by CMake
   set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG}"

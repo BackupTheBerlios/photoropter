@@ -157,6 +157,24 @@ namespace phtr
             */
             interp_channel_t scale_y_;
 
+        private:
+            /**
+            * \brief The image width.
+            */
+            coord_t width_;
+
+        private:
+            /**
+            * \brief The image height.
+            */
+            coord_t height_;
+
+        private:
+            /**
+            * \brief The value to return for areas outside the image.
+            */
+            interp_channel_t null_val_;
+
     }; // class ImageInterpolator
 
 } // namespace phtr
