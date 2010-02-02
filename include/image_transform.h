@@ -27,6 +27,8 @@ THE SOFTWARE.
 #ifndef __IMAGE_TRANSFORM_H__
 #define __IMAGE_TRANSFORM_H__
 
+#include <memory>
+
 namespace phtr
 {
 

@@ -30,7 +30,7 @@ namespace phtr
     template <Storage::type T>
     MemImageIterW<T>::MemImageIterW
     (coord_t width, coord_t height, channel_storage_t* addr)
-    : MemImageIterBase<T>(width, height, addr)
+            : MemImageIterBase<T>(width, height, addr)
     {
         //NIL
     }

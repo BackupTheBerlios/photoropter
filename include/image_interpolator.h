@@ -31,6 +31,7 @@ THE SOFTWARE.
 #include "types.h"
 
 #include <cmath>
+#include <memory>
 
 namespace phtr
 {

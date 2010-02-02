@@ -30,14 +30,14 @@ namespace phtr
     template <Storage::type T>
     MemImageIterR<T>::MemImageIterR
     (coord_t width, coord_t height, const channel_storage_t* addr)
-    : MemImageIterBase<T>(width, height, const_cast<channel_storage_t*>(addr))
+            : MemImageIterBase<T>(width, height, const_cast<channel_storage_t*>(addr))
     {
         //NIL
     }
 
     template <Storage::type T>
     typename MemImageIterR<T>::channel_storage_t
-    MemImageIterR<T>::read_px_val_r
+    MemImageIterR<T>::get_px_val_r
     ()
     {
         return this->addr_[this->r_offs_];
@@ -45,7 +45,7 @@ namespace phtr
 
     template <Storage::type T>
     typename MemImageIterR<T>::channel_storage_t
-    MemImageIterR<T>::read_px_val_g
+    MemImageIterR<T>::get_px_val_g
     ()
     {
         return this->addr_[this->g_offs_];
@@ -53,7 +53,7 @@ namespace phtr
 
     template <Storage::type T>
     typename MemImageIterR<T>::channel_storage_t
-    MemImageIterR<T>::read_px_val_b
+    MemImageIterR<T>::get_px_val_b
     ()
     {
         return this->addr_[this->b_offs_];

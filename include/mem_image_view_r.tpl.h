@@ -69,7 +69,7 @@ namespace phtr
     template <Storage::type T>
     typename MemImageViewR<T>::iter_t*
     MemImageViewR<T>::get_iter
-    (coord_t x, coord_t y)
+    (coord_t x, coord_t y) const
     {
         return new MemImageIterR<T>(this->width_,
                                     this->height_,

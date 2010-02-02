@@ -67,21 +67,21 @@ namespace phtr
             * \brief Read the 'red' channel value.
             * \param val  The value.
             */
-            channel_storage_t read_px_val_r();
+            channel_storage_t get_px_val_r();
 
         public:
             /**
             * \brief Read the 'green' channel value.
             * \param val  The value.
             */
-            channel_storage_t read_px_val_g();
+            channel_storage_t get_px_val_g();
 
         public:
             /**
             * \brief Read the 'blue' channel value.
             * \param val  The value.
             */
-            channel_storage_t read_px_val_b();
+            channel_storage_t get_px_val_b();
 
     }; // template class MemImageIterR<>
 

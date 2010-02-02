@@ -122,11 +122,17 @@ namespace phtr
         interp_coord_t x_2 = x_1 + 1;
         interp_coord_t y_2 = y_1 + 1;
 
+        std::auto_ptr<typename view_t::iter_t> iter(image_view_.get_iter(x_1, y_1));
+
         // edge values
-        interp_channel_t val_11 = image_view_.get_px_val_r(x_1, y_1);
-        interp_channel_t val_12 = image_view_.get_px_val_r(x_1, y_2);
-        interp_channel_t val_21 = image_view_.get_px_val_r(x_2, y_1);
-        interp_channel_t val_22 = image_view_.get_px_val_r(x_2, y_2);
+        interp_channel_t val_11 = iter->get_px_val_r();
+        iter->inc_x();
+        interp_channel_t val_12 = iter->get_px_val_r();
+        iter->inc_y();
+        iter->dec_x();
+        interp_channel_t val_21 = iter->get_px_val_r();
+        iter->inc_x();
+        interp_channel_t val_22 = iter->get_px_val_r();
 
         // interpolate in x direction
         interp_channel_t tmp_val_1 = (x_2 - x_scaled) * val_11 + (x_scaled - x_1) * val_21;
@@ -159,11 +165,17 @@ namespace phtr
         interp_coord_t x_2 = x_1 + 1;
         interp_coord_t y_2 = y_1 + 1;
 
+        std::auto_ptr<typename view_t::iter_t> iter(image_view_.get_iter(x_1, y_1));
+
         // edge values
-        interp_channel_t val_11 = image_view_.get_px_val_g(x_1, y_1);
-        interp_channel_t val_12 = image_view_.get_px_val_g(x_1, y_2);
-        interp_channel_t val_21 = image_view_.get_px_val_g(x_2, y_1);
-        interp_channel_t val_22 = image_view_.get_px_val_g(x_2, y_2);
+        interp_channel_t val_11 = iter->get_px_val_g();
+        iter->inc_x();
+        interp_channel_t val_12 = iter->get_px_val_g();
+        iter->inc_y();
+        iter->dec_x();
+        interp_channel_t val_21 = iter->get_px_val_g();
+        iter->inc_x();
+        interp_channel_t val_22 = iter->get_px_val_g();
 
         // interpolate in x direction
         interp_channel_t tmp_val_1 = (x_2 - x_scaled) * val_11 + (x_scaled - x_1) * val_21;
@@ -196,11 +208,17 @@ namespace phtr
         interp_coord_t x_2 = x_1 + 1;
         interp_coord_t y_2 = y_1 + 1;
 
+        std::auto_ptr<typename view_t::iter_t> iter(image_view_.get_iter(x_1, y_1));
+
         // edge values
-        interp_channel_t val_11 = image_view_.get_px_val_b(x_1, y_1);
-        interp_channel_t val_12 = image_view_.get_px_val_b(x_1, y_2);
-        interp_channel_t val_21 = image_view_.get_px_val_b(x_2, y_1);
-        interp_channel_t val_22 = image_view_.get_px_val_b(x_2, y_2);
+        interp_channel_t val_11 = iter->get_px_val_b();
+        iter->inc_x();
+        interp_channel_t val_12 = iter->get_px_val_b();
+        iter->inc_y();
+        iter->dec_x();
+        interp_channel_t val_21 = iter->get_px_val_b();
+        iter->inc_x();
+        interp_channel_t val_22 = iter->get_px_val_b();
 
         // interpolate in x direction
         interp_channel_t tmp_val_1 = (x_2 - x_scaled) * val_11 + (x_scaled - x_1) * val_21;

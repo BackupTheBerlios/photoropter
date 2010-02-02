@@ -24,8 +24,6 @@ THE SOFTWARE.
 
 */
 
-#include <memory>
-
 namespace phtr
 {
 

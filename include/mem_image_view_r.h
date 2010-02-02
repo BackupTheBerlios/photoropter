@@ -120,7 +120,7 @@ namespace phtr
             * objects 'by value').
             * \return The iterator.
             */
-            iter_t* get_iter(coord_t x, coord_t y);
+            iter_t* get_iter(coord_t x, coord_t y) const;
 
     }; // template class MemImageViewR<>
 
