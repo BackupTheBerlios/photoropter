@@ -115,7 +115,7 @@ namespace phtr
             * \param y The y coordinate.
             * \return The channel value.
             */
-            channel_t get_px_val_r(interp_coord_t x, interp_coord_t y);
+            interp_channel_t get_px_val_r(interp_coord_t x, interp_coord_t y);
 
         public:
             /**
@@ -124,7 +124,7 @@ namespace phtr
             * \param y The y coordinate.
             * \return The channel value.
             */
-            channel_t get_px_val_g(interp_coord_t x, interp_coord_t y);
+            interp_channel_t get_px_val_g(interp_coord_t x, interp_coord_t y);
 
         public:
             /**
@@ -133,7 +133,7 @@ namespace phtr
             * \param y The y coordinate.
             * \return The channel value.
             */
-            channel_t get_px_val_b(interp_coord_t x, interp_coord_t y);
+            interp_channel_t get_px_val_b(interp_coord_t x, interp_coord_t y);
 
         private:
             /**
@@ -149,13 +149,13 @@ namespace phtr
             /**
             * \brief Interal scaling factor for the horizontal axis.
             */
-            channel_t scale_x_;
+            interp_channel_t scale_x_;
 
         private:
             /**
             * \brief Interal scaling factor for the vertical axis.
             */
-            channel_t scale_y_;
+            interp_channel_t scale_y_;
 
     }; // class ImageInterpolator
 

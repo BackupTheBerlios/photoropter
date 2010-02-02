@@ -63,20 +63,34 @@ namespace phtr
 
             for (coord_t i = 0; i < width; ++i)
             {
+
                 interp_coord_t dst_x = (i * scale_x) - 0.5;
                 interp_coord_t dst_y = (j * scale_y) - 0.5;
 
-                // get transformed coordinates in source image
-                interp_coord_t src_x = -dst_x;
-                interp_coord_t src_y = -dst_y;
+                // FIXME: get transformed coordinates in source image
+                interp_coord_t src_x_r = dst_x;
+                interp_coord_t src_y_r = dst_y;
 
-                iter->write_px_val_r(interpolator_.get_px_val_r(src_x, src_y));
-                iter->write_px_val_g(interpolator_.get_px_val_g(src_x, src_y));
-                iter->write_px_val_b(interpolator_.get_px_val_b(src_x, src_y));
+                interp_coord_t src_x_g = dst_x;
+                interp_coord_t src_y_g = dst_y;
+
+                interp_coord_t src_x_b = dst_x;
+                interp_coord_t src_y_b = dst_y;
+
+                typename image_view_w_t::iter_t::channel_storage_t val_r(interpolator_.get_px_val_r(src_x_r, src_y_r));
+                typename image_view_w_t::iter_t::channel_storage_t val_g(interpolator_.get_px_val_g(src_x_g, src_y_g));
+                typename image_view_w_t::iter_t::channel_storage_t val_b(interpolator_.get_px_val_b(src_x_b, src_y_b));
+
+                iter->write_px_val_r(val_r);
+                iter->write_px_val_g(val_g);
+                iter->write_px_val_b(val_b);
 
                 iter->inc_pos();
-            }
-        }
-    }
+
+            } // column loop
+
+        } // line loop
+
+    } //  ImageTransform<...>::do_transform()
 
 } // namespace phtr

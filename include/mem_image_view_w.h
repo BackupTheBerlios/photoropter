@@ -50,6 +50,18 @@ namespace phtr
 
         public:
             /**
+            * \brief The type of the internal storage info object.
+            */
+            typedef typename MemImageViewBase<T>::storage_info_t storage_info_t;
+
+        public:
+            /**
+            * \brief The channel storage type for this image (e.g., uint8_t).
+            */
+            typedef typename MemImageViewBase<T>::channel_storage_t channel_storage_t;
+
+        public:
+            /**
             * \brief The type of the internal iterator.
             */
             typedef typename phtr::MemImageViewIterW<T> iter_t;
@@ -78,7 +90,7 @@ namespace phtr
             * \param y   The y coordinate.
             * \param val The channel value.
             */
-            void write_px_val_r(coord_t x, coord_t y, channel_t val);
+            void write_px_val_r(coord_t x, coord_t y, channel_storage_t val);
 
         public:
             /**
@@ -87,7 +99,7 @@ namespace phtr
             * \param y   The y coordinate.
             * \param val The channel value.
             */
-            void write_px_val_g(coord_t x, coord_t y, channel_t val);
+            void write_px_val_g(coord_t x, coord_t y, channel_storage_t val);
 
         public:
             /**
@@ -96,7 +108,7 @@ namespace phtr
             * \param y   The y coordinate.
             * \param val The channel value.
             */
-            void write_px_val_b(coord_t x, coord_t y, channel_t val);
+            void write_px_val_b(coord_t x, coord_t y, channel_storage_t val);
 
         public:
             /**
@@ -131,14 +143,6 @@ namespace phtr
             /* ****************************************
              * internals
              * **************************************** */
-
-        private:
-            /**
-            * \brief Scale a pixel value from to the [0:1] interval to the raw interval.
-            * \param scaled_val The scaled value.
-            * \return The raw (i.e., stored) value.
-            */
-            typename MemImageViewBase<T>::channel_storage_t scale_px(channel_t scaled_val) const;
 
         private:
             /**

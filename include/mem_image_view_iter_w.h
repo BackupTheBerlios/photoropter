@@ -74,21 +74,21 @@ namespace phtr
             * \brief Write the 'red' channel value to the current pixel.
             * \param val  The value.
             */
-            void write_px_val_r(channel_t val);
+            void write_px_val_r(channel_storage_t val);
 
         public:
             /**
             * \brief Write the 'green' channel value to the current pixel.
             * \param val  The value.
             */
-            void write_px_val_g(channel_t val);
+            void write_px_val_g(channel_storage_t val);
 
         public:
             /**
             * \brief Write the 'blue' channel value to the current pixel.
             * \param val  The value.
             */
-            void write_px_val_b(channel_t val);
+            void write_px_val_b(channel_storage_t val);
 
         public:
             /**
@@ -100,14 +100,6 @@ namespace phtr
             /* ****************************************
              * internals
              * **************************************** */
-
-        private:
-            /**
-            * \brief Scale a pixel value from to the [0:1] interval to the raw interval.
-            * \param scaled_val The scaled value.
-            * \return The raw (i.e., stored) value.
-            */
-            channel_storage_t scale_px(channel_t scaled_val) const;
 
         private:
             /**

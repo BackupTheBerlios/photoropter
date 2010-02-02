@@ -35,7 +35,7 @@ namespace phtr
     /**
     * \brief Channel value type.
     */
-    typedef double channel_t;
+    typedef double interp_channel_t;
 
     /**
     * \brief Coordinate type.

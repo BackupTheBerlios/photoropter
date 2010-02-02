@@ -49,37 +49,25 @@ namespace phtr
     template <Storage::type T>
     void
     MemImageViewW<T>::write_px_val_r
-    (coord_t x, coord_t y, channel_t val)
+    (coord_t x, coord_t y, channel_storage_t val)
     {
-        this->base_addr_[this->get_px_offs(x, y) + this->r_offs_] = scale_px(val);
+        this->base_addr_[this->get_px_offs(x, y) + this->r_offs_] = val;
     }
 
     template <Storage::type T>
     void
     MemImageViewW<T>::write_px_val_g
-    (coord_t x, coord_t y, channel_t val)
+    (coord_t x, coord_t y, channel_storage_t val)
     {
-        this->base_addr_[this->get_px_offs(x, y) + this->g_offs_] = scale_px(val);
+        this->base_addr_[this->get_px_offs(x, y) + this->g_offs_] = val;
     }
 
     template <Storage::type T>
     void
     MemImageViewW<T>::write_px_val_b
-    (coord_t x, coord_t y, channel_t val)
+    (coord_t x, coord_t y, channel_storage_t val)
     {
-        this->base_addr_[this->get_px_offs(x, y) + this->b_offs_] = scale_px(val);
-    }
-
-    template <Storage::type T>
-    typename MemImageViewBase<T>::channel_storage_t
-    MemImageViewW<T>::scale_px
-    (channel_t scaled_val) const
-    {
-        return static_cast<typename MemImageViewBase<T>::channel_storage_t>(
-                   ((static_cast<phtr::channel_t>(this->max_chan_val_)
-                     - static_cast<phtr::channel_t>(this->min_chan_val_)) * scaled_val)
-                   + static_cast<phtr::channel_t>(this->min_chan_val_)
-               );
+        this->base_addr_[this->get_px_offs(x, y) + this->b_offs_] = val;
     }
 
     template <Storage::type T>

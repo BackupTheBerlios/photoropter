@@ -45,16 +45,16 @@ void simple_test()
 
     view_w_t phtr_mem_view_w(buf, 100, 100);
 
-    phtr_mem_view_w.write_px_val_r(50, 50, 1.0);
-    phtr_mem_view_w.write_px_val_g(50, 50, 0.7);
-    phtr_mem_view_w.write_px_val_b(50, 50, 0.5);
+    phtr_mem_view_w.write_px_val_r(50, 50, 10);
+    phtr_mem_view_w.write_px_val_g(50, 50, 7);
+    phtr_mem_view_w.write_px_val_b(50, 50, 5);
 
     std::auto_ptr<iter_t> phtr_iter(phtr_mem_view_w.get_iter(50, 50));
 
     phtr_iter->inc_pos();
-    phtr_iter->write_px_val_r(0.1);
-    phtr_iter->write_px_val_g(0.2);
-    phtr_iter->write_px_val_b(0.3);
+    phtr_iter->write_px_val_r(10);
+    phtr_iter->write_px_val_g(20);
+    phtr_iter->write_px_val_b(30);
 
     view_r_t phtr_mem_view(buf, 100, 100);
 
@@ -85,7 +85,7 @@ void vil_test()
     using namespace phtr;
 
     // typedefs and constants
-    const Storage::type storage_type(Storage::rgb_16_planar);
+    const Storage::type storage_type(Storage::rgb_16_inter);
 
     typedef ImageBuffer<storage_type> buffer_t;
     typedef MemImageViewR<storage_type> view_r_t;
@@ -99,8 +99,14 @@ void vil_test()
 
     // create image resource for the input image
     vcl_cout << "Loading test image."  << vcl_endl;
-    vil_image_view<vil_channel_t> loaded_img =
-        vil_convert_to_n_planes(3, vil_convert_stretch_range(vil_channel_t(), vil_load("test.jpg")));
+    vil_image_view<vil_rgb<vil_channel_t> > loaded_img =
+        vil_convert_to_component_order(
+            vil_convert_to_n_planes(
+                3, vil_convert_stretch_range(
+                    vil_channel_t(), vil_load("test.jpg")
+                )
+            )
+        );
 
     // set image size
     size_t img_width = loaded_img.ni();
@@ -121,10 +127,10 @@ void vil_test()
     view_w_t dst_img_view(dst_img_buf.data(), dst_width, dst_height);
 
     // VIL views for I/O
-    vil_image_view<vil_channel_t> vil_src_view
-    (static_cast<vil_channel_t*>(src_img_buf.data()), img_width, img_height, 3, 1, img_width, img_width * img_height);
-    vil_image_view<vil_channel_t> vil_dst_view
-    (static_cast<vil_channel_t*>(dst_img_buf.data()), dst_width, dst_height, 3, 1, dst_width, dst_width * dst_height);
+    vil_image_view<vil_rgb<vil_channel_t> > vil_src_view
+    (static_cast<vil_rgb<vil_channel_t>*>(src_img_buf.data()), img_width, img_height, 1, 1, img_width, 1);
+    vil_image_view<vil_rgb<vil_channel_t> > vil_dst_view
+    (static_cast<vil_rgb<vil_channel_t>*>(dst_img_buf.data()), dst_width, dst_height, 1, 1, dst_width, 1);
 
     // load image, convert and copy data
     vcl_cout << "Copying image to buffer." << vcl_endl;

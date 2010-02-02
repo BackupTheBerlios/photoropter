@@ -48,6 +48,18 @@ namespace phtr
 
         public:
             /**
+            * \brief The type of the internal storage info object.
+            */
+            typedef typename MemImageViewBase<T>::storage_info_t storage_info_t;
+
+        public:
+            /**
+            * \brief The channel storage type for this image (e.g., uint8_t).
+            */
+            typedef typename MemImageViewBase<T>::channel_storage_t channel_storage_t;
+
+        public:
+            /**
             * \brief Constructor.
             * \param base_addr The base address of the image data in memory.
             * \param width The image width.
@@ -70,7 +82,8 @@ namespace phtr
             * \param y The y coordinate.
             * \return The channel value.
             */
-            channel_t get_px_val_r(coord_t x, coord_t y) const;
+            channel_storage_t
+             get_px_val_r(coord_t x, coord_t y) const;
 
         public:
             /**
@@ -79,7 +92,8 @@ namespace phtr
             * \param y The y coordinate.
             * \return The channel value.
             */
-            channel_t get_px_val_g(coord_t x, coord_t y) const;
+            channel_storage_t
+             get_px_val_g(coord_t x, coord_t y) const;
 
         public:
             /**
@@ -88,18 +102,12 @@ namespace phtr
             * \param y The y coordinate.
             * \return The channel value.
             */
-            channel_t get_px_val_b(coord_t x, coord_t y) const;
+            channel_storage_t
+             get_px_val_b(coord_t x, coord_t y) const;
 
             /* ****************************************
              * internals
              * **************************************** */
-
-        private:
-            /**
-            * \brief Scale a pixel value to the [0:1] interval.
-            * \param raw_val The raw (i.e., stored) value.
-            */
-            channel_t scale_px(typename MemImageViewBase<T>::channel_storage_t raw_val) const;
 
     }; // template class MemImageViewR
 
