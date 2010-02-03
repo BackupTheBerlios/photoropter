@@ -140,7 +140,7 @@ namespace phtr
         interp_coord_t x_2 = x_1 + 1;
         interp_coord_t y_2 = y_1 + 1;
 
-        std::auto_ptr<typename view_t::iter_t> iter(image_view_.get_iter(x_1, y_1));
+        typename view_t::iter_t iter(image_view_.get_iter(x_1, y_1));
 
         /* edge values
         val_11 == val(x1, y1) -> upper left
@@ -148,7 +148,7 @@ namespace phtr
         val_12 == val(x1, y2) -> lower left
         val_22 == val(x2, y2) -> lower right
         */
-        interp_channel_t val_11(iter->get_px_val(chan));
+        interp_channel_t val_11(iter.get_px_val(chan));
         interp_channel_t val_21(0);
         interp_channel_t val_12(0);
         interp_channel_t val_22(0);
@@ -159,9 +159,9 @@ namespace phtr
         }
         else
         {
-            iter->inc_x();
-            val_21 = iter->get_px_val(chan);
-            iter->dec_x();
+            iter.inc_x();
+            val_21 = iter.get_px_val(chan);
+            iter.dec_x();
         }
 
         if (y_2 >= height_) // lower edge
@@ -171,13 +171,13 @@ namespace phtr
         }
         else
         {
-            iter->inc_y();
-            val_12 = iter->get_px_val(chan);
+            iter.inc_y();
+            val_12 = iter.get_px_val(chan);
 
             if (x_2 < width_)
             {
-                iter->inc_x();
-                val_22 = iter->get_px_val(chan);
+                iter.inc_x();
+                val_22 = iter.get_px_val(chan);
             }
             else
             {

@@ -93,11 +93,11 @@ namespace phtr
     }
 
     template <Storage::type T>
-    typename MemImageViewW<T>::iter_t*
+    typename MemImageViewW<T>::iter_t
     MemImageViewW<T>::get_iter
     (coord_t x, coord_t y)
     {
-        return new MemImageIterW<T>(this->width_,
+        return MemImageIterW<T>(this->width_,
                                     this->height_,
                                     this->base_addr_ + this->get_px_offs(x, y));
     }

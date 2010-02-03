@@ -48,12 +48,12 @@ void simple_test()
     phtr_mem_view_w.write_px_val_g(50, 50, 7);
     phtr_mem_view_w.write_px_val_b(50, 50, 5);
 
-    std::auto_ptr<iter_t> phtr_iter(phtr_mem_view_w.get_iter(50, 50));
+    iter_t phtr_iter(phtr_mem_view_w.get_iter(50, 50));
 
-    phtr_iter->inc_x();
-    phtr_iter->write_px_val_r(10);
-    phtr_iter->write_px_val_g(20);
-    phtr_iter->write_px_val_b(30);
+    phtr_iter.inc_x();
+    phtr_iter.write_px_val_r(10);
+    phtr_iter.write_px_val_g(20);
+    phtr_iter.write_px_val_b(30);
 
     view_r_t phtr_mem_view(buf, 100, 100);
 

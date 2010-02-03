@@ -60,7 +60,7 @@ namespace phtr
         for (coord_t j = 0; j < height; ++j)
         {
 
-            std::auto_ptr<typename image_view_w_t::iter_t> iter(image_view_w_.get_iter(0, j));
+            typename image_view_w_t::iter_t iter(image_view_w_.get_iter(0, j));
 
             for (coord_t i = 0; i < width; ++i)
             {
@@ -90,12 +90,12 @@ namespace phtr
                 val_b(interpolator_.get_px_val(Channel::blue, src_x_b, src_y_b));
 
                 // write channel values
-                iter->write_px_val(Channel::red, val_r);
-                iter->write_px_val(Channel::green, val_g);
-                iter->write_px_val(Channel::blue, val_b);
+                iter.write_px_val(Channel::red, val_r);
+                iter.write_px_val(Channel::green, val_g);
+                iter.write_px_val(Channel::blue, val_b);
 
                 // increment iterator position
-                iter->inc_x();
+                iter.inc_x();
 
             } // column loop
 
