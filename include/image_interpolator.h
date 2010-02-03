@@ -309,12 +309,6 @@ namespace phtr
             */
             interp_channel_t null_val_;
 
-        private:
-            /**
-            * \brief Internal iterator.
-            */
-            typename view_t::iter_t iter_;
-
     }; // class ImageInterpolator<Interpolation::bilinear, ...>
 
 } // namespace phtr
