@@ -61,20 +61,24 @@ namespace phtr
 
             for (coord_t i = 0; i < width; ++i)
             {
-
+                /* scale coordinates to get corresponding coordinates for
+                the interpolator */
                 interp_coord_t dst_x = (i * scale_x) - 0.5;
                 interp_coord_t dst_y = (j * scale_y) - 0.5;
 
-                // FIXME: get transformed coordinates in source image
-                interp_coord_t src_x_r = dst_x;
-                interp_coord_t src_y_r = dst_y;
+                // get coordinates transformed to source image
+                interp_coord_t src_x_r(0);
+                interp_coord_t src_y_r(0);
+                interp_coord_t src_x_g(0);
+                interp_coord_t src_y_g(0);
+                interp_coord_t src_x_b(0);
+                interp_coord_t src_y_b(0);
+                get_source_coords(dst_x, dst_y,
+                                  src_x_r, src_y_r,
+                                  src_x_g, src_y_g,
+                                  src_x_b, src_y_b);
 
-                interp_coord_t src_x_g = dst_x;
-                interp_coord_t src_y_g = dst_y;
-
-                interp_coord_t src_x_b = dst_x;
-                interp_coord_t src_y_b = dst_y;
-
+                // get channel values
                 typename image_view_w_t::iter_t::channel_storage_t
                 val_r(interpolator_.get_px_val(Channel::red, src_x_r, src_y_r));
                 typename image_view_w_t::iter_t::channel_storage_t
@@ -82,10 +86,12 @@ namespace phtr
                 typename image_view_w_t::iter_t::channel_storage_t
                 val_b(interpolator_.get_px_val(Channel::blue, src_x_b, src_y_b));
 
+                // write channel values
                 iter->write_px_val(Channel::red, val_r);
                 iter->write_px_val(Channel::green, val_g);
                 iter->write_px_val(Channel::blue, val_b);
 
+                // increment iterator position
                 iter->inc_x();
 
             } // column loop
@@ -93,5 +99,22 @@ namespace phtr
         } // line loop
 
     } //  ImageTransform<...>::do_transform()
+
+    template <typename interpolator_t, typename image_view_w_t>
+    void
+    ImageTransform<interpolator_t, image_view_w_t>::get_source_coords(interp_coord_t dst_x, interp_coord_t dst_y,
+            interp_coord_t& src_x_r, interp_coord_t& src_y_r,
+            interp_coord_t& src_x_g, interp_coord_t& src_y_g,
+            interp_coord_t& src_x_b, interp_coord_t& src_y_b)
+    {
+        src_x_r = dst_x;
+        src_y_r = dst_y;
+
+        src_x_g = dst_x;
+        src_y_g = dst_y;
+
+        src_x_b = dst_x;
+        src_y_b = dst_y;
+    }
 
 } // namespace phtr

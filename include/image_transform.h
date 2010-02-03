@@ -32,26 +32,63 @@ THE SOFTWARE.
 namespace phtr
 {
 
+    /**
+    * \brief Image transformation class template.
+    * \details Inside this class, the actual image transformation is performed.
+    */
     template <typename interpolator_t, typename image_view_w_t>
     class ImageTransform
     {
 
         public:
+            /**
+            * \brief The type of the input image view.
+            */
             typedef typename interpolator_t::image_view_t image_view_t;
 
         public:
+            /**
+            * \brief Constructor.
+            * \param image_view_r Input image view.
+            * \param image_view_w Output image view.
+            */
             ImageTransform(const image_view_t& image_view_r, image_view_w_t& image_view_w);
 
         public:
+            /**
+            * \brief Destructor.
+            */
             ~ImageTransform();
 
         public:
+            /**
+            * \brief Transform the image.
+            * \details The image data is read from the input image view and
+            * written to the output view, while applying selected transformations.
+            */
             void do_transform();
 
         private:
+            /**
+            * \brief Internal function to fetch the transformed coordinates
+            * for the current position.
+            */
+            inline void get_source_coords(interp_coord_t dst_x, interp_coord_t dst_y,
+                                          interp_coord_t& src_x_r, interp_coord_t& src_y_r,
+                                          interp_coord_t& src_x_g, interp_coord_t& src_y_g,
+                                          interp_coord_t& src_x_b, interp_coord_t& src_y_b);
+
+        private:
+            /**
+            * \brief Internal interpolator object.
+            * \details The interpolator uses the input view given in the constructor.
+            */
             interpolator_t interpolator_;
 
         private:
+            /**
+            * \brief Internal output image view object.
+            */
             image_view_w_t& image_view_w_;
 
     }; // class ImageTransform

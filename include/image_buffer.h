@@ -99,9 +99,15 @@ namespace phtr
              * **************************************** */
 
         private:
+            /**
+            * \brief Constructor.
+            */
             ImageBuffer(const ImageBuffer<T>& orig);
 
         private:
+            /**
+            * \brief Assignment operator.
+            */
             ImageBuffer<T>& operator=(const ImageBuffer<T>& orig);
 
         private:
