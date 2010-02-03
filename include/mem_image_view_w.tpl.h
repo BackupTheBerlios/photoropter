@@ -71,6 +71,28 @@ namespace phtr
     }
 
     template <Storage::type T>
+    void
+    MemImageViewW<T>::write_px_val
+    (Channel::type chan, coord_t x, coord_t y, channel_storage_t val)
+    {
+        switch (chan)
+        {
+            case Channel::red:
+                write_px_val_r(x, y, val);
+                break;
+
+            case Channel::green:
+                write_px_val_g(x, y, val);
+                break;
+
+            case Channel::blue:
+            default:
+                write_px_val_b(x, y, val);
+                break;
+        }
+    }
+
+    template <Storage::type T>
     typename MemImageViewW<T>::iter_t*
     MemImageViewW<T>::get_iter
     (coord_t x, coord_t y)

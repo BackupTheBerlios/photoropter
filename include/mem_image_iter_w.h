@@ -28,6 +28,7 @@ THE SOFTWARE.
 #define __MEM_IMAGE_ITER_W_H__
 
 #include "mem_image_iter_base.h"
+#include "channel_type.h"
 
 namespace phtr
 {
@@ -82,6 +83,14 @@ namespace phtr
             * \param val  The value.
             */
             void write_px_val_b(channel_storage_t val);
+
+        public:
+            /**
+            * \brief Write the given channel value to the current pixel.
+            * \param chan The channel.
+            * \param val  The value.
+            */
+            inline void write_px_val(Channel::type chan, channel_storage_t val);
 
     }; // template class MemImageIterW<>
 

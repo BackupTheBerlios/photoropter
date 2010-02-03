@@ -148,14 +148,46 @@ namespace phtr
         val_12 == val(x1, y2) -> lower left
         val_22 == val(x2, y2) -> lower right
         */
-        interp_channel_t val_11 = iter->get_px_val(chan);
-        iter->inc_x();
-        interp_channel_t val_21 = iter->get_px_val(chan);
-        iter->inc_y();
-        iter->dec_x();
-        interp_channel_t val_12 = iter->get_px_val(chan);
-        iter->inc_x();
-        interp_channel_t val_22 = iter->get_px_val(chan);
+        interp_channel_t val_11(iter->get_px_val(chan));
+        interp_channel_t val_21(0);
+        interp_channel_t val_12(0);
+        interp_channel_t val_22(0);
+
+        if (x_2 >= width_) // right image edge
+        {
+            val_21 = val_11;
+        }
+        else
+        {
+            iter->inc_x();
+            val_21 = iter->get_px_val(chan);
+            iter->dec_x();
+        }
+
+        if (y_2 >= height_) // lower edge
+        {
+            val_12 = val_11;
+            val_22 = val_21;
+        }
+        else
+        {
+            iter->inc_y();
+            val_12 = iter->get_px_val(chan);
+
+            if (x_2 >= width_)
+            {
+                val_22 = val_12;
+            }
+        }
+
+//        interp_channel_t val_11 = iter->get_px_val(chan);
+//        iter->inc_x();
+//        interp_channel_t val_21 = iter->get_px_val(chan);
+//        iter->inc_y();
+//        iter->dec_x();
+//        interp_channel_t val_12 = iter->get_px_val(chan);
+//        iter->inc_x();
+//        interp_channel_t val_22 = iter->get_px_val(chan);
 
         // interpolate in x direction
         interp_channel_t tmp_val_1 = (x_2 - x_scaled) * val_11 + (x_scaled - x_1) * val_21;

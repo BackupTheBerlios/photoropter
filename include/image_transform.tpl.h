@@ -75,13 +75,16 @@ namespace phtr
                 interp_coord_t src_x_b = dst_x;
                 interp_coord_t src_y_b = dst_y;
 
-                typename image_view_w_t::iter_t::channel_storage_t val_r(interpolator_.get_px_val_r(src_x_r, src_y_r));
-                typename image_view_w_t::iter_t::channel_storage_t val_g(interpolator_.get_px_val_g(src_x_g, src_y_g));
-                typename image_view_w_t::iter_t::channel_storage_t val_b(interpolator_.get_px_val_b(src_x_b, src_y_b));
+                typename image_view_w_t::iter_t::channel_storage_t
+                val_r(interpolator_.get_px_val(Channel::red, src_x_r, src_y_r));
+                typename image_view_w_t::iter_t::channel_storage_t
+                val_g(interpolator_.get_px_val(Channel::green, src_x_g, src_y_g));
+                typename image_view_w_t::iter_t::channel_storage_t
+                val_b(interpolator_.get_px_val(Channel::blue, src_x_b, src_y_b));
 
-                iter->write_px_val_r(val_r);
-                iter->write_px_val_g(val_g);
-                iter->write_px_val_b(val_b);
+                iter->write_px_val(Channel::red, val_r);
+                iter->write_px_val(Channel::green, val_g);
+                iter->write_px_val(Channel::blue, val_b);
 
                 iter->inc_x();
 

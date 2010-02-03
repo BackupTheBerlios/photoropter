@@ -59,4 +59,26 @@ namespace phtr
         this->addr_[this->b_offs_] = val;
     }
 
+    template <Storage::type T>
+    void
+    MemImageIterW<T>::write_px_val
+    (Channel::type chan, channel_storage_t val)
+    {
+        switch (chan)
+        {
+            case Channel::red:
+                write_px_val_r(val);
+                break;
+
+            case Channel::green:
+                write_px_val_g(val);
+                break;
+
+            case Channel::blue:
+            default:
+                write_px_val_b(val);
+                break;
+        }
+    }
+
 } // namespace phtr
