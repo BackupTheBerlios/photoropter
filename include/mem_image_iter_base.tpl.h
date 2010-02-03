@@ -29,16 +29,17 @@ namespace phtr
 
     template <Storage::type T>
     MemImageIterBase<T>::MemImageIterBase
-    (coord_t width, coord_t height, channel_storage_t* addr)
-            : addr_(addr),
+    (channel_storage_t* base_addr, size_t px_offs,
+     size_t step, size_t line_step,
+     size_t r_offs, size_t g_offs, size_t b_offs)
+            : base_addr_(base_addr),
+            px_offs_(px_offs),
             storage_type_(T),
-            step_(mem_layout_t::step(width, height)),
-            line_step_(mem_layout_t::line_step(width, height)),
-            r_offs_(mem_layout_t::r_offs(width, height)),
-            g_offs_(mem_layout_t::g_offs(width, height)),
-            b_offs_(mem_layout_t::b_offs(width, height)),
-            min_chan_val_(ChannelRange<T>::min()),
-            max_chan_val_(ChannelRange<T>::max())
+            step_(step),
+            line_step_(line_step),
+            r_offs_(r_offs),
+            g_offs_(g_offs),
+            b_offs_(b_offs)
     {
         //NIL
     }
@@ -55,7 +56,7 @@ namespace phtr
     MemImageIterBase<T>::inc_x
     ()
     {
-        addr_ += step_;
+        px_offs_ += step_;
     }
 
     template <Storage::type T>
@@ -63,7 +64,7 @@ namespace phtr
     MemImageIterBase<T>::dec_x
     ()
     {
-        addr_ -= step_;
+        px_offs_ -= step_;
     }
 
     template <Storage::type T>
@@ -71,7 +72,7 @@ namespace phtr
     MemImageIterBase<T>::inc_y
     ()
     {
-        addr_ += line_step_;
+        px_offs_ += line_step_;
     }
 
     template <Storage::type T>
@@ -79,7 +80,14 @@ namespace phtr
     MemImageIterBase<T>::dec_y
     ()
     {
-        addr_ -= line_step_;
+        px_offs_ -= line_step_;
+    }
+
+    template <Storage::type T>
+    void
+    MemImageIterBase<T>::set_px_offs(size_t px_offs)
+    {
+        px_offs_ = px_offs;
     }
 
 } // namespace phtr

@@ -65,6 +65,7 @@ namespace phtr
                 min_val(ChannelRange<T>::min()),
                 max_val(ChannelRange<T>::max()),
                 step(mem_layout_t::step(width, height)),
+                line_step(mem_layout_t::line_step(width, height)),
                 num_channels(mem_layout_t::num_channels()),
                 r_offs(mem_layout_t::r_offs(width, height)),
                 g_offs(mem_layout_t::g_offs(width, height)),
@@ -97,6 +98,12 @@ namespace phtr
         * storage unit (e.g., 1 for planar images, 3 for interleaved).
         */
         const size_t step;
+
+        /**
+        * \brief The step between lines, in multiples of the channel
+        * storage unit (e.g., width for planar images, 3*width for interleaved).
+        */
+        const size_t line_step;
 
         /**
         * \brief The number of channels (e.g., 3).

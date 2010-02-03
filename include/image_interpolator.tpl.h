@@ -79,7 +79,8 @@ namespace phtr
             : image_view_(image_view),
             width_(image_view_.width()),
             height_(image_view_.height()),
-            null_val_(0)
+            null_val_(0),
+            iter_(image_view_.get_iter(0, 0))
     {
         scale_x_ = static_cast<interp_coord_t>(image_view_.width()) - 1;
         scale_y_ = static_cast<interp_coord_t>(image_view_.height() - 1);

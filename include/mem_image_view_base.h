@@ -91,11 +91,7 @@ namespace phtr
             */
             coord_t height() const;
 
-            /* ****************************************
-             * internals
-             * **************************************** */
-
-        protected:
+        public:
             /**
             * \brief Determine the 'pixel offset' to a given set of coordinates.
             * \param x The x coordinate.
@@ -103,6 +99,10 @@ namespace phtr
             * \return The offset
             */
             size_t get_px_offs(coord_t x, coord_t y) const;
+
+            /* ****************************************
+             * internals
+             * **************************************** */
 
         protected:
             /**
@@ -153,6 +153,13 @@ namespace phtr
             * of the channel storage unit.
             */
             const size_t step_;
+
+        protected:
+            /**
+            * \brief The distance between two adjacent lines, in multiples
+            * of the channel storage unit.
+            */
+            const size_t line_step_;
 
         protected:
             /**

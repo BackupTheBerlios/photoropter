@@ -61,8 +61,17 @@ namespace phtr
         public:
             /**
             * \brief Constructor.
+            * \param base_addr The base address (i.e., top left corner).
+            * \param px_offs   The current pixel offset.
+            * \param step      The pixel step.
+            * \param line_step The line step.
+            * \param r_offs    The 'red' channel offset.
+            * \param g_offs    The 'green' channel offset.
+            * \param b_offs    The 'blue' channel offset.
             */
-            MemImageIterBase(coord_t width, coord_t height, channel_storage_t* addr);
+            MemImageIterBase(channel_storage_t* base_addr, size_t px_offs,
+                             size_t step, size_t line_step,
+                             size_t r_offs, size_t g_offs, size_t b_offs);
 
         public:
             /**
@@ -98,6 +107,12 @@ namespace phtr
             */
             void dec_y();
 
+        public:
+            /**
+            * \brief Set the current pixel offset.
+            */
+            void set_px_offs(size_t px_offs);
+
             /* ****************************************
              * internals
              * **************************************** */
@@ -106,7 +121,13 @@ namespace phtr
             /**
             * \brief The current address.
             */
-            channel_storage_t* addr_;
+            channel_storage_t* base_addr_;
+
+        protected:
+            /**
+            * \brief The current pixel offset.
+            */
+            size_t px_offs_;
 
         protected:
             /**
@@ -143,19 +164,6 @@ namespace phtr
             * \brief The offset of the 'blue' channel.
             */
             const size_t b_offs_;
-
-        protected:
-            /**
-            * \brief The minimal value a channel can hold.
-            */
-            const channel_storage_t min_chan_val_;
-
-        protected:
-            /**
-            * \brief The maximal value a channel can hold.
-            */
-            const channel_storage_t max_chan_val_;
-
 
     }; // template class MemImageIterBase<>
 

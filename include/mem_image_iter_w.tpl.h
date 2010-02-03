@@ -29,8 +29,9 @@ namespace phtr
 
     template <Storage::type T>
     MemImageIterW<T>::MemImageIterW
-    (coord_t width, coord_t height, channel_storage_t* addr)
-            : MemImageIterBase<T>(width, height, addr)
+    (channel_storage_t* base_addr, size_t px_offs, size_t step, size_t line_step,
+     size_t r_offs, size_t g_offs, size_t b_offs)
+            : MemImageIterBase<T>(base_addr, px_offs, step, line_step, r_offs, g_offs, b_offs)
     {
         //NIL
     }
@@ -40,7 +41,7 @@ namespace phtr
     MemImageIterW<T>::write_px_val_r
     (channel_storage_t val)
     {
-        this->addr_[this->r_offs_] = val;
+        this->base_addr_[this->px_offs_ + this->r_offs_] = val;
     }
 
     template <Storage::type T>
@@ -48,7 +49,7 @@ namespace phtr
     MemImageIterW<T>::write_px_val_g
     (channel_storage_t val)
     {
-        this->addr_[this->g_offs_] = val;
+        this->base_addr_[this->px_offs_ + this->g_offs_] = val;
     }
 
     template <Storage::type T>
@@ -56,7 +57,7 @@ namespace phtr
     MemImageIterW<T>::write_px_val_b
     (channel_storage_t val)
     {
-        this->addr_[this->b_offs_] = val;
+        this->base_addr_[this->px_offs_ + this->b_offs_] = val;
     }
 
     template <Storage::type T>

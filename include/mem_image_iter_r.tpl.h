@@ -29,8 +29,10 @@ namespace phtr
 
     template <Storage::type T>
     MemImageIterR<T>::MemImageIterR
-    (coord_t width, coord_t height, const channel_storage_t* addr)
-            : MemImageIterBase<T>(width, height, const_cast<channel_storage_t*>(addr))
+    (channel_storage_t* base_addr, size_t px_offs, size_t step, size_t line_step,
+     size_t r_offs, size_t g_offs, size_t b_offs)
+            : MemImageIterBase<T>(const_cast<channel_storage_t*>(base_addr), px_offs,
+                                  step, line_step, r_offs, g_offs, b_offs)
     {
         //NIL
     }
@@ -40,7 +42,7 @@ namespace phtr
     MemImageIterR<T>::get_px_val_r
     ()
     {
-        return this->addr_[this->r_offs_];
+        return this->base_addr_[this->px_offs_ + this->r_offs_];
     }
 
     template <Storage::type T>
@@ -48,7 +50,7 @@ namespace phtr
     MemImageIterR<T>::get_px_val_g
     ()
     {
-        return this->addr_[this->g_offs_];
+        return this->base_addr_[this->px_offs_ + this->g_offs_];
     }
 
     template <Storage::type T>
@@ -56,7 +58,7 @@ namespace phtr
     MemImageIterR<T>::get_px_val_b
     ()
     {
-        return this->addr_[this->b_offs_];
+        return this->base_addr_[this->px_offs_ + this->b_offs_];
     }
 
     template <Storage::type T>

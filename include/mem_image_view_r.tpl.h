@@ -93,9 +93,8 @@ namespace phtr
     MemImageViewR<T>::get_iter
     (coord_t x, coord_t y) const
     {
-        return MemImageIterR<T>(this->width_,
-                                    this->height_,
-                                    this->base_addr_ + this->get_px_offs(x, y));
+        return MemImageIterR<T>(this->base_addr_, this->get_px_offs(x, y), this->step_, this->line_step_,
+                                this->r_offs_, this->g_offs_, this->b_offs_);
     }
 
 } // namespace phtr

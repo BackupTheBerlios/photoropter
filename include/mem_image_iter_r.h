@@ -60,8 +60,17 @@ namespace phtr
         public:
             /**
             * \brief Constructor.
+            * \param base_addr The base address (i.e., top left corner).
+            * \param px_offs   The current pixel offset.
+            * \param step      The pixel step.
+            * \param line_step The line step.
+            * \param r_offs    The 'red' channel offset.
+            * \param g_offs    The 'green' channel offset.
+            * \param b_offs    The 'blue' channel offset.
             */
-            MemImageIterR(coord_t width, coord_t height, const channel_storage_t* addr);
+            MemImageIterR(channel_storage_t* base_addr, size_t px_offs,
+                          size_t step, size_t line_step,
+                          size_t r_offs, size_t g_offs, size_t b_offs);
 
         public:
             /**
