@@ -29,6 +29,7 @@ THE SOFTWARE.
 
 #include "mem_image_view_base.h"
 #include "mem_image_iter_r.h"
+#include "channel_type.h"
 
 namespace phtr
 {
@@ -111,6 +112,17 @@ namespace phtr
             */
             channel_storage_t
             get_px_val_b(coord_t x, coord_t y) const;
+
+        public:
+            /**
+            * \brief Read the given channel value.
+            * \param chan The channel.
+            * \param x The x coordinate.
+            * \param y The y coordinate.
+            * \return The channel value.
+            */
+            inline channel_storage_t
+            get_px_val(Channel::type chan, coord_t x, coord_t y) const;
 
         public:
             /**

@@ -142,6 +142,16 @@ namespace phtr
             */
             interp_channel_t get_px_val_b(interp_coord_t x, interp_coord_t y);
 
+        public:
+            /**
+            * \brief Get the value of the  given channel at the given coordinates.
+            * \param chan The channel.
+            * \param x The x coordinate.
+            * \param y The y coordinate.
+            * \return The channel value.
+            */
+            inline interp_channel_t get_px_val(Channel::type chan, interp_coord_t x, interp_coord_t y);
+
             /* ****************************************
              * internals
              * **************************************** */
@@ -245,6 +255,16 @@ namespace phtr
             * \return The channel value.
             */
             interp_channel_t get_px_val_b(interp_coord_t x, interp_coord_t y);
+
+        public:
+            /**
+            * \brief Get the value of the  given channel at the given coordinates.
+            * \param chan The channel.
+            * \param x The x coordinate.
+            * \param y The y coordinate.
+            * \return The channel value.
+            */
+            inline interp_channel_t get_px_val(Channel::type chan, interp_coord_t x, interp_coord_t y);
 
             /* ****************************************
              * internals
