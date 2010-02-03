@@ -28,6 +28,7 @@ THE SOFTWARE.
 #define __MEM_IMAGE_ITER_R_H__
 
 #include "mem_image_iter_base.h"
+#include "channel_type.h"
 
 namespace phtr
 {
@@ -65,23 +66,31 @@ namespace phtr
         public:
             /**
             * \brief Read the 'red' channel value.
-            * \param val  The value.
+            * \return The value.
             */
             channel_storage_t get_px_val_r();
 
         public:
             /**
             * \brief Read the 'green' channel value.
-            * \param val  The value.
+            * \return The value.
             */
             channel_storage_t get_px_val_g();
 
         public:
             /**
             * \brief Read the 'blue' channel value.
-            * \param val  The value.
+            * \return The value.
             */
             channel_storage_t get_px_val_b();
+
+        public:
+            /**
+            * \brief Read the value for the given channel.
+            * \param channel The channel.
+            * \return The value.
+            */
+            inline channel_storage_t get_px_val(Channel::type channel);
 
     }; // template class MemImageIterR<>
 

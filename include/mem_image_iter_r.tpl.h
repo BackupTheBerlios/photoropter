@@ -59,4 +59,28 @@ namespace phtr
         return this->addr_[this->b_offs_];
     }
 
+    template <Storage::type T>
+    typename MemImageIterR<T>::channel_storage_t
+    MemImageIterR<T>::get_px_val(Channel::type channel)
+    {
+        // the compiler should hopefully be able to
+        // 'dissolve' the switch during optimisation
+        switch (channel)
+        {
+            case Channel::red:
+                return get_px_val_r();
+                break;
+
+            case Channel::green:
+                return get_px_val_g();
+                break;
+
+            case Channel::blue:
+            default:
+                return get_px_val_b();
+                break;
+        }
+    }
+
+
 } // namespace phtr

@@ -30,8 +30,8 @@ namespace phtr
     get_px_val_r
     (interp_coord_t x, interp_coord_t y)
     {
-        interp_coord_t x_scaled = (x + 0.5) * scale_x_ + 0.5;
-        interp_coord_t y_scaled = (y + 0.5) * scale_y_ + 0.5;
+        interp_coord_t x_scaled = (x + 0.5) * scale_x_;
+        interp_coord_t y_scaled = (y + 0.5) * scale_y_;
 
         if ((x_scaled < 0) || (x_scaled > width_)
                 || (y_scaled < 0) || (y_scaled > height_))
@@ -39,7 +39,7 @@ namespace phtr
             return null_val_;
         }
 
-        return image_view_.get_px_val_r(x_scaled, y_scaled);
+        return image_view_.get_px_val_r(x_scaled + 0.5, y_scaled + 0.5);
     }
 
     template <typename view_t>
@@ -48,8 +48,8 @@ namespace phtr
     get_px_val_g
     (interp_coord_t x, interp_coord_t y)
     {
-        interp_coord_t x_scaled = (x + 0.5) * scale_x_ + 0.5;
-        interp_coord_t y_scaled = (y + 0.5) * scale_y_ + 0.5;
+        interp_coord_t x_scaled = (x + 0.5) * scale_x_;
+        interp_coord_t y_scaled = (y + 0.5) * scale_y_;
 
         if ((x_scaled < 0) || (x_scaled > width_)
                 || (y_scaled < 0) || (y_scaled > height_))
@@ -57,7 +57,7 @@ namespace phtr
             return null_val_;
         }
 
-        return image_view_.get_px_val_g(x_scaled, y_scaled);
+        return image_view_.get_px_val_g(x_scaled + 0.5, y_scaled + 0.5);
     }
 
     template <typename view_t>
@@ -66,8 +66,8 @@ namespace phtr
     get_px_val_b
     (interp_coord_t x, interp_coord_t y)
     {
-        interp_coord_t x_scaled = (x + 0.5) * scale_x_ + 0.5;
-        interp_coord_t y_scaled = (y + 0.5) * scale_y_ + 0.5;
+        interp_coord_t x_scaled = (x + 0.5) * scale_x_;
+        interp_coord_t y_scaled = (y + 0.5) * scale_y_;
 
         if ((x_scaled < 0) || (x_scaled > width_)
                 || (y_scaled < 0) || (y_scaled > height_))
@@ -75,7 +75,7 @@ namespace phtr
             return null_val_;
         }
 
-        return image_view_.get_px_val_b(x_scaled, y_scaled);
+        return image_view_.get_px_val_b(x_scaled + 0.5, y_scaled + 0.5);
     }
 
     /* ****************************************
@@ -107,8 +107,8 @@ namespace phtr
     get_px_val_r
     (interp_coord_t x, interp_coord_t y)
     {
-        interp_coord_t x_scaled = (x + 0.5) * scale_x_ + 0.5;
-        interp_coord_t y_scaled = (y + 0.5) * scale_y_ + 0.5;
+        interp_coord_t x_scaled = (x + 0.5) * scale_x_;
+        interp_coord_t y_scaled = (y + 0.5) * scale_y_;
 
         if ((x_scaled < 0) || (x_scaled > width_)
                 || (y_scaled < 0) || (y_scaled > height_))
@@ -124,13 +124,18 @@ namespace phtr
 
         std::auto_ptr<typename view_t::iter_t> iter(image_view_.get_iter(x_1, y_1));
 
-        // edge values
+        /* edge values
+        val_11 == val(x1, y1) -> upper left
+        val_21 == val(x2, y1) -> upper right
+        val_12 == val(x1, y2) -> lower left
+        val_22 == val(x2, y2) -> lower right
+        */
         interp_channel_t val_11 = iter->get_px_val_r();
         iter->inc_x();
-        interp_channel_t val_12 = iter->get_px_val_r();
+        interp_channel_t val_21 = iter->get_px_val_r();
         iter->inc_y();
         iter->dec_x();
-        interp_channel_t val_21 = iter->get_px_val_r();
+        interp_channel_t val_12 = iter->get_px_val_r();
         iter->inc_x();
         interp_channel_t val_22 = iter->get_px_val_r();
 
@@ -150,8 +155,8 @@ namespace phtr
     get_px_val_g
     (interp_coord_t x, interp_coord_t y)
     {
-        interp_coord_t x_scaled = (x + 0.5) * scale_x_ + 0.5;
-        interp_coord_t y_scaled = (y + 0.5) * scale_y_ + 0.5;
+        interp_coord_t x_scaled = (x + 0.5) * scale_x_;
+        interp_coord_t y_scaled = (y + 0.5) * scale_y_;
 
         if ((x_scaled < 0) || (x_scaled > width_)
                 || (y_scaled < 0) || (y_scaled > height_))
@@ -167,13 +172,18 @@ namespace phtr
 
         std::auto_ptr<typename view_t::iter_t> iter(image_view_.get_iter(x_1, y_1));
 
-        // edge values
+        /* edge values
+        val_11 == val(x1, y1) -> upper left
+        val_21 == val(x2, y1) -> upper right
+        val_12 == val(x1, y2) -> lower left
+        val_22 == val(x2, y2) -> lower right
+        */
         interp_channel_t val_11 = iter->get_px_val_g();
         iter->inc_x();
-        interp_channel_t val_12 = iter->get_px_val_g();
+        interp_channel_t val_21 = iter->get_px_val_g();
         iter->inc_y();
         iter->dec_x();
-        interp_channel_t val_21 = iter->get_px_val_g();
+        interp_channel_t val_12 = iter->get_px_val_g();
         iter->inc_x();
         interp_channel_t val_22 = iter->get_px_val_g();
 
@@ -193,8 +203,8 @@ namespace phtr
     get_px_val_b
     (interp_coord_t x, interp_coord_t y)
     {
-        interp_coord_t x_scaled = (x + 0.5) * scale_x_ + 0.5;
-        interp_coord_t y_scaled = (y + 0.5) * scale_y_ + 0.5;
+        interp_coord_t x_scaled = (x + 0.5) * scale_x_;
+        interp_coord_t y_scaled = (y + 0.5) * scale_y_;
 
         if ((x_scaled < 0) || (x_scaled > width_)
                 || (y_scaled < 0) || (y_scaled > height_))
@@ -210,13 +220,18 @@ namespace phtr
 
         std::auto_ptr<typename view_t::iter_t> iter(image_view_.get_iter(x_1, y_1));
 
-        // edge values
+        /* edge values
+        val_11 == val(x1, y1) -> upper left
+        val_21 == val(x2, y1) -> upper right
+        val_12 == val(x1, y2) -> lower left
+        val_22 == val(x2, y2) -> lower right
+        */
         interp_channel_t val_11 = iter->get_px_val_b();
         iter->inc_x();
-        interp_channel_t val_12 = iter->get_px_val_b();
+        interp_channel_t val_21 = iter->get_px_val_b();
         iter->inc_y();
         iter->dec_x();
-        interp_channel_t val_21 = iter->get_px_val_b();
+        interp_channel_t val_12 = iter->get_px_val_b();
         iter->inc_x();
         interp_channel_t val_22 = iter->get_px_val_b();
 
