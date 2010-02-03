@@ -18,7 +18,7 @@ if(NOT CMAKE_BUILD_TYPE)
   # set default compiler options
   if(CMAKE_COMPILER_IS_GNUCXX)
     set(CMAKE_CXX_FLAGS_DEBUG "-O0 -g -ansi -pedantic -Wall -Wextra -Werror -Wno-long-long -DDEBUG")
-    set(CMAKE_CXX_FLAGS_RELEASE "-O3 -ffast-math -ansi -DNDEBUG -Wno-long-long")
+    set(CMAKE_CXX_FLAGS_RELEASE "-O3 -ffast-math -fomit-frame-pointer -ansi -Wno-long-long -DNDEBUG")
   endif(CMAKE_COMPILER_IS_GNUCXX)
 
   # override default cache values set by CMake
@@ -46,8 +46,7 @@ set(PHTR_PARALLELISE true CACHE BOOL "Use parallelised code if possible (OpenMP)
 find_package(OpenMP)
 
 if(OPENMP_FOUND AND PHTR_PARALLELISE)
-  message(STATUS "OpenMP found: parallel code will be used.")
-  set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} ${OpenMP_CXX_FLAGS} -DHAVE_OPENMP")
+  message(STATUS "OpenMP found: parallel code will be used for release build.")
   set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} ${OpenMP_CXX_FLAGS} -DHAVE_OPENMP")
 endif()
 
