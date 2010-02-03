@@ -174,20 +174,16 @@ namespace phtr
             iter->inc_y();
             val_12 = iter->get_px_val(chan);
 
-            if (x_2 >= width_)
+            if (x_2 < width_)
+            {
+                iter->inc_x();
+                val_22 = iter->get_px_val(chan);
+            }
+            else
             {
                 val_22 = val_12;
             }
         }
-
-//        interp_channel_t val_11 = iter->get_px_val(chan);
-//        iter->inc_x();
-//        interp_channel_t val_21 = iter->get_px_val(chan);
-//        iter->inc_y();
-//        iter->dec_x();
-//        interp_channel_t val_12 = iter->get_px_val(chan);
-//        iter->inc_x();
-//        interp_channel_t val_22 = iter->get_px_val(chan);
 
         // interpolate in x direction
         interp_channel_t tmp_val_1 = (x_2 - x_scaled) * val_11 + (x_scaled - x_1) * val_21;

@@ -18,8 +18,7 @@
 #include "image_transform.h"
 
 #include <memory>
-#include <typeinfo>
-#include <limits>
+#include <ctime>
 
 void simple_test()
 {
@@ -111,8 +110,8 @@ void vil_test()
     // set image size
     size_t img_width = loaded_img.ni();
     size_t img_height = loaded_img.nj();
-    size_t dst_width = 1 * img_width;
-    size_t dst_height = 1 * img_height;
+    size_t dst_width = 2 * img_width;
+    size_t dst_height = 2 * img_height;
     //size_t dst_width = 150;
     //size_t dst_height = 100;
 
@@ -136,9 +135,13 @@ void vil_test()
     vcl_cout << "Copying image to buffer." << vcl_endl;
     vil_src_view.deep_copy(loaded_img);
 
+    time_t t0 = time(0);
     vcl_cout << "Transforming." << vcl_endl;
     transform_t transform(src_img_view, dst_img_view);
     transform.do_transform();
+    time_t t1 = time(0);
+
+    vcl_cout << "Time taken: " << difftime(t1, t0) << " seconds." << vcl_endl;
 
     vcl_cout << "Saving output image."  << vcl_endl;
     vil_save(vil_dst_view, "out.png");

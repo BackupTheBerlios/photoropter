@@ -54,6 +54,9 @@ namespace phtr
         interp_coord_t scale_x = 1.0 / static_cast<interp_coord_t>(width - 1);
         interp_coord_t scale_y = 1.0 / static_cast<interp_coord_t>(height - 1);
 
+#ifdef HAVE_OPENMP
+#pragma omp parallel for
+#endif
         for (coord_t j = 0; j < height; ++j)
         {
 

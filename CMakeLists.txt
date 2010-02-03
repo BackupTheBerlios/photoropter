@@ -15,7 +15,7 @@ if(NOT CMAKE_BUILD_TYPE)
     "Debug"
     CACHE STRING "Build type (Debug|Release)" FORCE)
 
-  # set compiler options
+  # set default compiler options
   if(CMAKE_COMPILER_IS_GNUCXX)
     set(CMAKE_CXX_FLAGS_DEBUG "-O0 -g -ansi -pedantic -Wall -Wextra -Werror -Wno-long-long -DDEBUG")
     set(CMAKE_CXX_FLAGS_RELEASE "-O3 -ffast-math -ansi -DNDEBUG -Wno-long-long")
@@ -28,46 +28,28 @@ if(NOT CMAKE_BUILD_TYPE)
     CACHE STRING "Compiler options for release builds" FORCE)
 endif(NOT CMAKE_BUILD_TYPE)
 
-# set usage of boost::scoped_ptr over std::auto_ptr (nice for debugging,
-# but unnecessary build dependency afterwards)
-set(PHTR_USE_SCOPED_PTR false CACHE BOOL
-  "Use boost::scoped_ptr instead of std::auto_ptr where applicable")
-
 # build documentation?
-set(PHTR_BUILD_DOCUMENTATION true CACHE BOOL "Build Doxygen documentation")
+set(PHTR_BUILD_DOCUMENTATION false CACHE BOOL "Build Doxygen documentation")
 set(PHTR_DOCUMENT_ALL false CACHE BOOL "Build documentation for all library files")
 set(PHTR_DOCUMENT_PRIVATE false CACHE BOOL "Include private members in documentation")
 
 # build shared?
-set(PHTR_SHARED false CACHE BOOL "Additionally build as a shared library")
+set(PHTR_SHARED true CACHE BOOL "Additionally build as a shared library")
+
+set(PHTR_PARALLELISE true CACHE BOOL "Use parallelised code if possible (OpenMP)")
 
 ########################################
 # configure libraries
 ########################################
 
-# search for Boost
-find_package(Boost 1.38.0 REQUIRED)
+# OpenMP
+find_package(OpenMP)
 
-# check for GCC 4.4 and older Boost versions to avoid ADL problems in GIL
-if(CMAKE_COMPILER_IS_GNUCXX)
-  execute_process(COMMAND
-    "${CMAKE_CXX_COMPILER}" "-dumpversion"
-    OUTPUT_VARIABLE GNU_CPP_VERSION
-    OUTPUT_STRIP_TRAILING_WHITESPACE)
-  if(NOT ${GNU_CPP_VERSION} VERSION_LESS 4.4
-      AND ${Boost_MAJOR_VERSION}.${Boost_MINOR_VERSION} VERSION_LESS 1.41)
-    message(FATAL_ERROR
-      "Detected GCC ${GNU_CPP_VERSION} together with Boost "
-      "${Boost_MAJOR_VERSION}.${Boost_MINOR_VERSION}.\n"
-      "For GCC 4.4 support, at least Boost 1.41 is needed.")
-  endif(NOT ${GNU_CPP_VERSION} VERSION_LESS 4.4
-    AND ${Boost_MAJOR_VERSION}.${Boost_MINOR_VERSION} VERSION_LESS 1.41)
-endif(CMAKE_COMPILER_IS_GNUCXX)
-
-if(PHTR_USE_SCOPED_PTR)
-  set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DUSE_BOOST_SCOPED_PTR")
-  set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DUSE_BOOST_SCOPED_PTR")
-endif(PHTR_USE_SCOPED_PTR)
+if(OPENMP_FOUND AND PHTR_PARALLELISE)
+  message(STATUS "OpenMP found: parallel code will be used.")
+  set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} ${OpenMP_CXX_FLAGS} -DHAVE_OPENMP")
+  set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} ${OpenMP_CXX_FLAGS} -DHAVE_OPENMP")
+endif()
 
 ########################################
 # doxygen documentation
