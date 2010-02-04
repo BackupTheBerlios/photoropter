@@ -91,7 +91,7 @@ void vil_test()
     typedef MemImageViewW<storage_type> view_w_t;
     typedef view_w_t::iter_t iter_t;
     typedef ImageInterpolator<Interpolation::bilinear, view_r_t> interp_t;
-    typedef ImageTransform<interp_t, view_w_t> transform_t;
+    typedef ImageTransform<interp_t, view_w_t, 2> transform_t;
 
     // the equivalent vil type
     typedef vxl_uint_16 vil_channel_t;
@@ -110,8 +110,8 @@ void vil_test()
     // set image size
     size_t img_width = loaded_img.ni();
     size_t img_height = loaded_img.nj();
-    size_t dst_width = 2 * img_width;
-    size_t dst_height = 2 * img_height;
+    size_t dst_width = 1.41 * img_width;
+    size_t dst_height = 1.41 * img_height;
     //size_t dst_width = 150;
     //size_t dst_height = 100;
 

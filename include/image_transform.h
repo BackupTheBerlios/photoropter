@@ -34,7 +34,7 @@ namespace phtr
     * \brief Image transformation class template.
     * \details Inside this class, the actual image transformation is performed.
     */
-    template <typename interpolator_t, typename image_view_w_t>
+    template <typename interpolator_t, typename image_view_w_t, unsigned int oversampling = 1>
     class ImageTransform
     {
 
