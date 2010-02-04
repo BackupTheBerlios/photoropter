@@ -37,25 +37,32 @@ namespace phtr
             : image_view_(image_view),
             width_(image_view_.width()),
             height_(image_view_.height()),
-            null_val_(0)
+            null_val_(0),
+            aspect_ratio_(static_cast<interp_coord_t>(width_) / static_cast<interp_coord_t>(height_)),
+            scale_x_((static_cast<interp_coord_t>(image_view_.width()) - 1.0) / (2.0 * aspect_ratio_)),
+            scale_y_((static_cast<interp_coord_t>(image_view_.height()) - 1.0) / 2.0)
     {
-        scale_x_ = static_cast<interp_coord_t>(image_view_.width()) - 1;
-        scale_y_ = static_cast<interp_coord_t>(image_view_.height() - 1);
-
-        aspect_ratio_ = static_cast<interp_coord_t>(width_) / static_cast<interp_coord_t>(height_);
+        //NIL
     }
 
     template <typename view_t>
     ImageInterpolatorBase<view_t>::ImageInterpolatorBase
     (const view_t& image_view, interp_coord_t aspect_ratio)
             : image_view_(image_view),
-            aspect_ratio_(aspect_ratio),
             width_(image_view_.width()),
             height_(image_view_.height()),
-            null_val_(0)
+            null_val_(0),
+            aspect_ratio_(aspect_ratio),
+            scale_x_((static_cast<interp_coord_t>(image_view_.width()) - 1.0) / (2.0 * aspect_ratio_)),
+            scale_y_((static_cast<interp_coord_t>(image_view_.height()) - 1.0) / 2.0)
     {
-        scale_x_ = static_cast<interp_coord_t>(image_view_.width()) - 1;
-        scale_y_ = static_cast<interp_coord_t>(image_view_.height() - 1);
+        //NIL
+    }
+
+    template <typename view_t>
+    interp_coord_t ImageInterpolatorBase<view_t>::aspect_ratio() const
+    {
+        return aspect_ratio_;
     }
 
     /* ****************************************
@@ -66,6 +73,14 @@ namespace phtr
     ImageInterpolator<Interpolation::nearest_neighbour, view_t>::ImageInterpolator
     (const view_t& image_view)
             : ImageInterpolatorBase<view_t>(image_view)
+    {
+        //NIL
+    }
+
+    template <typename view_t>
+    ImageInterpolator<Interpolation::nearest_neighbour, view_t>::ImageInterpolator
+    (const view_t& image_view, interp_coord_t aspect_ratio)
+            : ImageInterpolatorBase<view_t>(image_view, aspect_ratio)
     {
         //NIL
     }
@@ -103,8 +118,8 @@ namespace phtr
     get_px_val
     (Channel::type chan, interp_coord_t x, interp_coord_t y)
     {
-        interp_coord_t x_scaled = (x + 0.5) * this->scale_x_;
-        interp_coord_t y_scaled = (y + 0.5) * this->scale_y_;
+        interp_coord_t x_scaled = (x + this->aspect_ratio_) * this->scale_x_;
+        interp_coord_t y_scaled = (y + 1.0) * this->scale_y_;
 
         if ((x_scaled < 0) || (x_scaled > this->width_)
                 || (y_scaled < 0) || (y_scaled > this->height_))
@@ -123,6 +138,13 @@ namespace phtr
     ImageInterpolator<Interpolation::bilinear, view_t>::ImageInterpolator
     (const view_t& image_view)
             : ImageInterpolatorBase<view_t>(image_view)
+    {
+    }
+
+    template <typename view_t>
+    ImageInterpolator<Interpolation::bilinear, view_t>::ImageInterpolator
+    (const view_t& image_view, interp_coord_t aspect_ratio)
+            : ImageInterpolatorBase<view_t>(image_view, aspect_ratio)
     {
     }
 
@@ -159,8 +181,8 @@ namespace phtr
     get_px_val
     (Channel::type chan, interp_coord_t x, interp_coord_t y)
     {
-        interp_coord_t x_scaled = (x + 0.5) * this->scale_x_;
-        interp_coord_t y_scaled = (y + 0.5) * this->scale_y_;
+        interp_coord_t x_scaled = (x + this->aspect_ratio_) * this->scale_x_;
+        interp_coord_t y_scaled = (y + 1.0) * this->scale_y_;
 
         if ((x_scaled < 0) || (x_scaled > this->width_)
                 || (y_scaled < 0) || (y_scaled > this->height_))

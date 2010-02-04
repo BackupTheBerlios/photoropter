@@ -36,13 +36,6 @@ namespace phtr
     }
 
     template <Storage::type T>
-    MemImageViewR<T>::~MemImageViewR
-    ()
-    {
-        //NIL
-    }
-
-    template <Storage::type T>
     typename MemImageViewR<T>::channel_storage_t
     MemImageViewR<T>::get_px_val_r
     (coord_t x, coord_t y) const

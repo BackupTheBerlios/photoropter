@@ -103,6 +103,13 @@ namespace phtr
             */
             ImageInterpolatorBase(const view_t& image_view, interp_coord_t aspect_ratio);
 
+        public:
+            /**
+            * \brief Return the aspect ratio of the image.
+            * \return The aspect ratio.
+            */
+            interp_coord_t aspect_ratio() const;
+
             /* ****************************************
              * internals
              * **************************************** */
@@ -119,39 +126,39 @@ namespace phtr
 
         protected:
             /**
-            * \brief The aspect ratio of the image.
-            */
-            interp_coord_t aspect_ratio_;
-
-        protected:
-            /**
-            * \brief Interal scaling factor for the horizontal axis.
-            */
-            interp_channel_t scale_x_;
-
-        protected:
-            /**
-            * \brief Interal scaling factor for the vertical axis.
-            */
-            interp_channel_t scale_y_;
-
-        protected:
-            /**
             * \brief The image width.
             */
-            coord_t width_;
+            const coord_t width_;
 
         protected:
             /**
             * \brief The image height.
             */
-            coord_t height_;
+            const coord_t height_;
 
         protected:
             /**
             * \brief The value to return for areas outside the image.
             */
-            interp_channel_t null_val_;
+            const interp_channel_t null_val_;
+
+        protected:
+            /**
+            * \brief The aspect ratio of the image.
+            */
+            const interp_coord_t aspect_ratio_;
+
+        protected:
+            /**
+            * \brief Interal scaling factor for the horizontal axis.
+            */
+            const interp_channel_t scale_x_;
+
+        protected:
+            /**
+            * \brief Interal scaling factor for the vertical axis.
+            */
+            const interp_channel_t scale_y_;
     };
 
     /**
@@ -189,8 +196,19 @@ namespace phtr
         public:
             /**
             * \brief Constructor.
+            * \note The aspect ratio will be calculated from width and height of the input
+            * image, i.e. square pixels are assumed.
+            * \param image_view The image view which will be used for reading image data.
             */
             ImageInterpolator(const view_t& image_view);
+
+        public:
+            /**
+            * \brief Constructor.
+            * \param image_view The image view which will be used for reading image data.
+            * \param aspect_ratio The aspect ratio of the image.
+            */
+            ImageInterpolator(const view_t& image_view, interp_coord_t aspect_ratio);
 
         public:
             /**
@@ -248,8 +266,19 @@ namespace phtr
         public:
             /**
             * \brief Constructor.
+            * \note The aspect ratio will be calculated from width and height of the input
+            * image, i.e. square pixels are assumed.
+            * \param image_view The image view which will be used for reading image data.
             */
             ImageInterpolator(const view_t& image_view);
+
+        public:
+            /**
+            * \brief Constructor.
+            * \param image_view The image view which will be used for reading image data.
+            * \param aspect_ratio The aspect ratio of the image.
+            */
+            ImageInterpolator(const view_t& image_view, interp_coord_t aspect_ratio);
 
         public:
             /**

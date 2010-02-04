@@ -45,13 +45,6 @@ namespace phtr
     }
 
     template <Storage::type T>
-    MemImageIterBase<T>::~MemImageIterBase
-    ()
-    {
-        //NIL
-    }
-
-    template <Storage::type T>
     void
     MemImageIterBase<T>::inc_x
     ()

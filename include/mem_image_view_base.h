@@ -74,12 +74,6 @@ namespace phtr
 
         public:
             /**
-            * \brief Desctructor.
-            */
-            ~MemImageViewBase();
-
-        public:
-            /**
             * \brief Get the image width.
             * \return The width.
             */

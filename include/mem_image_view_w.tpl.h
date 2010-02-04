@@ -40,13 +40,6 @@ namespace phtr
     }
 
     template <Storage::type T>
-    MemImageViewW<T>::~MemImageViewW
-    ()
-    {
-        //NIL
-    }
-
-    template <Storage::type T>
     void
     MemImageViewW<T>::write_px_val_r
     (coord_t x, coord_t y, channel_storage_t val)

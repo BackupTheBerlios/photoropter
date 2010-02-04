@@ -80,12 +80,6 @@ namespace phtr
 
         public:
             /**
-            * \brief Desctructor.
-            */
-            ~MemImageViewR();
-
-        public:
-            /**
             * \brief Read the 'red' channel value.
             * \param x The x coordinate.
             * \param y The y coordinate.

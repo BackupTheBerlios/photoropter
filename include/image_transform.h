@@ -57,12 +57,6 @@ namespace phtr
 
         public:
             /**
-            * \brief Destructor.
-            */
-            ~ImageTransform();
-
-        public:
-            /**
             * \brief Transform the image.
             * \details The image data is read from the input image view and
             * written to the output view, while applying selected transformations.

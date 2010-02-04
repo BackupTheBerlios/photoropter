@@ -76,12 +76,6 @@ namespace phtr
 
         public:
             /**
-            * \brief Destructor.
-            */
-            ~MemImageIterBase();
-
-        public:
-            /**
             * \brief Increment the current position (horizontally).
             * \attention Boundary checks are currently not implemented.
             */

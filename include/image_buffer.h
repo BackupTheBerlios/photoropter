@@ -101,13 +101,13 @@ namespace phtr
 
         private:
             /**
-            * \brief Constructor.
+            * \brief Copy constructor (disabled).
             */
             ImageBuffer(const ImageBuffer<T>& orig);
 
         private:
             /**
-            * \brief Assignment operator.
+            * \brief Assignment operator (disabled).
             */
             ImageBuffer<T>& operator=(const ImageBuffer<T>& orig);
 

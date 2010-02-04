@@ -38,14 +38,6 @@ namespace phtr
     }
 
     template <typename interpolator_t, typename image_view_w_t, unsigned int oversampling>
-    ImageTransform<interpolator_t, image_view_w_t, oversampling>::
-    ~ImageTransform
-    ()
-    {
-        //NIL
-    }
-
-    template <typename interpolator_t, typename image_view_w_t, unsigned int oversampling>
     void
     ImageTransform<interpolator_t, image_view_w_t, oversampling>::
     do_transform
@@ -60,8 +52,9 @@ namespace phtr
         coord_t width = image_view_w_.width();
         coord_t height = image_view_w_.height();
 
-        interp_coord_t scale_x = 1.0 / static_cast<interp_coord_t>(width - 1);
-        interp_coord_t scale_y = 1.0 / static_cast<interp_coord_t>(height - 1);
+        interp_coord_t aspect_ratio = interpolator_.aspect_ratio();
+        interp_coord_t scale_x = 2.0 * aspect_ratio / static_cast<interp_coord_t>(width - 1);
+        interp_coord_t scale_y = 2.0 / static_cast<interp_coord_t>(height - 1);
 
         // main transformation loop
         coord_t i(0);
@@ -111,8 +104,8 @@ namespace phtr
                     for (u = 0; u < oversampling; ++u)
                     {
                         /* get scaled coordinates (in the interpolator coordinates system) */
-                        dst_x = (cur_samp_x * scale_x) - 0.5;
-                        dst_y = (cur_samp_y * scale_y) - 0.5;
+                        dst_x = (cur_samp_x * scale_x) - aspect_ratio;
+                        dst_y = (cur_samp_y * scale_y) - 1.0;
 
                         // get coordinates transformed to source image
                         get_source_coords(dst_x, dst_y,
@@ -135,17 +128,6 @@ namespace phtr
                 val_r *= channel_scaling;
                 val_g *= channel_scaling;
                 val_b *= channel_scaling;
-
-//                // get coordinates transformed to source image
-//                get_source_coords(dst_x, dst_y,
-//                                  src_x_r, src_y_r,
-//                                  src_x_g, src_y_g,
-//                                  src_x_b, src_y_b);
-//
-//                // get channel values
-//                val_r = interpolator_.get_px_val(Channel::red, src_x_r, src_y_r);
-//                val_g = interpolator_.get_px_val(Channel::green, src_x_g, src_y_g);
-//                val_b = interpolator_.get_px_val(Channel::blue, src_x_b, src_y_b);
 
                 // write channel values
                 iter.write_px_val(Channel::red, val_r);

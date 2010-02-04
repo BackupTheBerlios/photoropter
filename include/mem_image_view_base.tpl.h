@@ -47,13 +47,6 @@ namespace phtr
     }
 
     template <Storage::type T>
-    MemImageViewBase<T>::~MemImageViewBase
-    ()
-    {
-        //NIL
-    }
-
-    template <Storage::type T>
     coord_t
     MemImageViewBase<T>::width
     () const
