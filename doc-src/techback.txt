@@ -4,13 +4,13 @@
 
 @section techback_sizes Image and Sensor Sizes
 
-In the past, one of the most popular image formats was the '135' film (35mm), which
-allowed for image sizes of 36x24mm. Considering analog film, this format is actually quite small,
-and due to its limitations (noticeable grain and noise, limited dynamics), several larger formats were
-in use as well (medium format etc.).
+In the past, one of the most popular image formats was the '135' film (also known as 35mm film),
+which allowed for image sizes of 36x24mm. Considering analog film, this format was actually quite small
+(known e.g. as "Kleinbild" or "small image" in Germany), and due to its limitations (noticeable grain
+and noise, limited dynamics), several larger formats were in use as well (medium format etc.).
 
 On the other hand, when considering the case of digital sensors, 36x24mm is rather large, and
-only in use in digital single-lens reflexion cameras (DSLRs). Mainly due to cost considerations
+only in use in digital single-lens reflex cameras (DSLRs). Mainly due to cost considerations
 manufacturers reduced the size of the sensor for their initial camera models, leading to a
 variety of sensor sizes even in the (rather small) field of DSLRs.
 
@@ -30,8 +30,30 @@ the user can select the active sensor area freely.
 
 All this does not even include the myriad of different sensor sizes that are used in compact cameras.
 Fortunately in the case of most compacts, the camera's lens is fixed, meaning that it is usually
-impossible to find the same optical lens used with different sensor sizes. However, this is a big
-problem with DSLRs, since most third-party lenses (e.g. by Sigma, Tamron, Tokina and others) are
-available for several different camera systems.
+impossible to find the same optical lens used with different sensor sizes. However, this is an
+important issue with DSLRs, since most third-party lenses (e.g. by Sigma, Tamron, Tokina and others)
+are available for several different camera systems.
+
+@section techback_phtrcoord Image coordinates in Photoropter
+
+Since there are several sensor sizes in widespread use, and since most of the time the physical size
+of the sensor is not overly interesting, the
+<a href="http://panotools.sourceforge.net/">Panorama Tools</a> and
+<a href="http://hugin.sourceforge.net/">Hugin</a> have adopted the following image coordinate
+system, which Photoropter also uses. It makes no sense to use a system that differs from PanoTools
+since the advantages would be slim at best, not outweighing the obvious disadvantage of incompatibility.
+@image html coord.png "Coordinate system used by Photoropter"
+
+The height of the image is always 2, with 0 marking the image center. The width is identical to twice
+the aspect ratio R. So a 3:2 image has a width of 3 (ranging from -1.5 to 1.5), and a 4:3 image has
+a width of 2.67 (-1.33 to 1.33). This convention makes use of the fact that usually one does not have
+to know the exact physical dimensions of the image sensor.
+
+When a lens is calibrated, the diagonal crop factor of the sensor is usually stored alongside
+the calibration data. Together with the crop factor of the currently used sensor, this allows for
+adaption of the calibration data. That way, if a lens is calibrated using e.g. a Nikon D90 (crop
+factor 1.5), the calibration data can still be used on a Canon EOS 500 (crop factor 1.6). That way
+(at least in theory) the software can also warn the user before using calibration data that has
+been determined using a smaller sensor than the current one.
 
 */ 
