@@ -110,9 +110,9 @@ namespace phtr
 
                     for (u = 0; u < oversampling; ++u)
                     {
-                /* get scaled coordinates (in the interpolator coordinates system) */
-                 dst_x = (cur_samp_x * scale_x) - 0.5;
-                 dst_y = (cur_samp_y * scale_y) - 0.5;
+                        /* get scaled coordinates (in the interpolator coordinates system) */
+                        dst_x = (cur_samp_x * scale_x) - 0.5;
+                        dst_y = (cur_samp_y * scale_y) - 0.5;
 
                         // get coordinates transformed to source image
                         get_source_coords(dst_x, dst_y,
@@ -165,9 +165,9 @@ namespace phtr
     void
     ImageTransform<interpolator_t, image_view_w_t, oversampling>::
     get_source_coords(interp_coord_t dst_x, interp_coord_t dst_y,
-            interp_coord_t& src_x_r, interp_coord_t& src_y_r,
-            interp_coord_t& src_x_g, interp_coord_t& src_y_g,
-            interp_coord_t& src_x_b, interp_coord_t& src_y_b)
+                      interp_coord_t& src_x_r, interp_coord_t& src_y_r,
+                      interp_coord_t& src_x_g, interp_coord_t& src_y_g,
+                      interp_coord_t& src_x_b, interp_coord_t& src_y_b)
     {
         src_x_r = dst_x;
         src_y_r = dst_y;

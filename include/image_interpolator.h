@@ -69,7 +69,9 @@ namespace phtr
 
     /**
     * \brief Image interpolation base class.
-    * \details This stub mainly deals with the image's aspect ratio.
+    * \details This stub (among other things) deals with the image's aspect ratio and
+    * contains the image view reference.
+    * \param view_t  The image view that is used for reading data.
     */
     template <typename view_t>
     class ImageInterpolatorBase
@@ -85,21 +87,21 @@ namespace phtr
             typedef view_t image_view_t;
 
         public:
-        /**
-        * \brief Constructor.
-        * \note The aspect ratio will be calculated from width and height of the input
-        * image, i.e. square pixels are assumed.
-        * \param image_view The image view which will be used for reading image data.
-        */
-        ImageInterpolatorBase(const view_t& image_view);
+            /**
+            * \brief Constructor.
+            * \note The aspect ratio will be calculated from width and height of the input
+            * image, i.e. square pixels are assumed.
+            * \param image_view The image view which will be used for reading image data.
+            */
+            ImageInterpolatorBase(const view_t& image_view);
 
         public:
-        /**
-        * \brief Constructor.
-        * \param image_view The image view which will be used for reading image data.
-        * \param aspect_ratio The aspect ratio of the image.
-        */
-        ImageInterpolatorBase(const view_t& image_view, interp_coord_t aspect_ratio);
+            /**
+            * \brief Constructor.
+            * \param image_view The image view which will be used for reading image data.
+            * \param aspect_ratio The aspect ratio of the image.
+            */
+            ImageInterpolatorBase(const view_t& image_view, interp_coord_t aspect_ratio);
 
             /* ****************************************
              * internals
@@ -116,10 +118,10 @@ namespace phtr
             const view_t& image_view_;
 
         protected:
-        /**
-        * \brief The aspect ratio of the image.
-        */
-        interp_coord_t aspect_ratio_;
+            /**
+            * \brief The aspect ratio of the image.
+            */
+            interp_coord_t aspect_ratio_;
 
         protected:
             /**

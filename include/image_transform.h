@@ -37,7 +37,7 @@ namespace phtr
     * \param image_view_w_t The writing image view class to be used.
     * \param oversampling   The (over-)sampling factor.
     */
-    template <typename interpolator_t, typename image_view_w_t, unsigned int oversampling = 1>
+    template < typename interpolator_t, typename image_view_w_t, unsigned int oversampling = 1 >
     class ImageTransform
     {
 
