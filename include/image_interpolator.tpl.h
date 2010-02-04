@@ -28,11 +28,11 @@ namespace phtr
 {
 
     /* ****************************************
-     * nearest neighbour
+     * base
      * **************************************** */
 
     template <typename view_t>
-    ImageInterpolator<Interpolation::nearest_neighbour, view_t>::ImageInterpolator
+    ImageInterpolatorBase<view_t>::ImageInterpolatorBase
     (const view_t& image_view)
             : image_view_(image_view),
             width_(image_view_.width()),
@@ -41,11 +41,31 @@ namespace phtr
     {
         scale_x_ = static_cast<interp_coord_t>(image_view_.width()) - 1;
         scale_y_ = static_cast<interp_coord_t>(image_view_.height() - 1);
+
+        aspect_ratio_ = static_cast<interp_coord_t>(width_) / static_cast<interp_coord_t>(height_);
     }
 
     template <typename view_t>
-    ImageInterpolator<Interpolation::nearest_neighbour, view_t>::~ImageInterpolator
-    ()
+    ImageInterpolatorBase<view_t>::ImageInterpolatorBase
+    (const view_t& image_view, interp_coord_t aspect_ratio)
+            : image_view_(image_view),
+            aspect_ratio_(aspect_ratio),
+            width_(image_view_.width()),
+            height_(image_view_.height()),
+            null_val_(0)
+    {
+        scale_x_ = static_cast<interp_coord_t>(image_view_.width()) - 1;
+        scale_y_ = static_cast<interp_coord_t>(image_view_.height() - 1);
+    }
+
+    /* ****************************************
+     * nearest neighbour
+     * **************************************** */
+
+    template <typename view_t>
+    ImageInterpolator<Interpolation::nearest_neighbour, view_t>::ImageInterpolator
+    (const view_t& image_view)
+            : ImageInterpolatorBase<view_t>(image_view)
     {
         //NIL
     }
@@ -83,16 +103,16 @@ namespace phtr
     get_px_val
     (Channel::type chan, interp_coord_t x, interp_coord_t y)
     {
-        interp_coord_t x_scaled = (x + 0.5) * scale_x_;
-        interp_coord_t y_scaled = (y + 0.5) * scale_y_;
+        interp_coord_t x_scaled = (x + 0.5) * this->scale_x_;
+        interp_coord_t y_scaled = (y + 0.5) * this->scale_y_;
 
-        if ((x_scaled < 0) || (x_scaled > width_)
-                || (y_scaled < 0) || (y_scaled > height_))
+        if ((x_scaled < 0) || (x_scaled > this->width_)
+                || (y_scaled < 0) || (y_scaled > this->height_))
         {
-            return null_val_;
+            return this->null_val_;
         }
 
-        return image_view_.get_px_val(chan, x_scaled + 0.5, y_scaled + 0.5);
+        return this->image_view_.get_px_val(chan, x_scaled + 0.5, y_scaled + 0.5);
     }
 
     /* ****************************************
@@ -102,20 +122,8 @@ namespace phtr
     template <typename view_t>
     ImageInterpolator<Interpolation::bilinear, view_t>::ImageInterpolator
     (const view_t& image_view)
-            : image_view_(image_view),
-            width_(image_view_.width()),
-            height_(image_view_.height()),
-            null_val_(0)
+            : ImageInterpolatorBase<view_t>(image_view)
     {
-        scale_x_ = static_cast<interp_coord_t>(image_view_.width()) - 1;
-        scale_y_ = static_cast<interp_coord_t>(image_view_.height() - 1);
-    }
-
-    template <typename view_t>
-    ImageInterpolator<Interpolation::bilinear, view_t>::~ImageInterpolator
-    ()
-    {
-        //NIL
     }
 
     template <typename view_t>
@@ -151,13 +159,13 @@ namespace phtr
     get_px_val
     (Channel::type chan, interp_coord_t x, interp_coord_t y)
     {
-        interp_coord_t x_scaled = (x + 0.5) * scale_x_;
-        interp_coord_t y_scaled = (y + 0.5) * scale_y_;
+        interp_coord_t x_scaled = (x + 0.5) * this->scale_x_;
+        interp_coord_t y_scaled = (y + 0.5) * this->scale_y_;
 
-        if ((x_scaled < 0) || (x_scaled > width_)
-                || (y_scaled < 0) || (y_scaled > height_))
+        if ((x_scaled < 0) || (x_scaled > this->width_)
+                || (y_scaled < 0) || (y_scaled > this->height_))
         {
-            return null_val_;
+            return this->null_val_;
         }
 
         // determine the edges of the 'square' in which we interpolate
@@ -166,7 +174,7 @@ namespace phtr
         interp_coord_t x_2 = x_1 + 1;
         interp_coord_t y_2 = y_1 + 1;
 
-        typename view_t::iter_t iter(image_view_.get_iter(x_1, y_1));
+        typename view_t::iter_t iter(this->image_view_.get_iter(x_1, y_1));
 
         /* edge values
         val_11 == val(x1, y1) -> upper left
@@ -179,7 +187,7 @@ namespace phtr
         interp_channel_t val_12(0);
         interp_channel_t val_22(0);
 
-        if (x_2 >= width_) // right image edge
+        if (x_2 >= this->width_) // right image edge
         {
             val_21 = val_11;
         }
@@ -190,7 +198,7 @@ namespace phtr
             iter.dec_x();
         }
 
-        if (y_2 >= height_) // lower edge
+        if (y_2 >= this->height_) // lower edge
         {
             val_12 = val_11;
             val_22 = val_21;
@@ -200,7 +208,7 @@ namespace phtr
             iter.inc_y();
             val_12 = iter.get_px_val(chan);
 
-            if (x_2 < width_)
+            if (x_2 < this->width_)
             {
                 iter.inc_x();
                 val_22 = iter.get_px_val(chan);

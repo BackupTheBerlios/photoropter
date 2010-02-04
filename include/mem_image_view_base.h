@@ -39,6 +39,7 @@ namespace phtr
     /**
     * \brief Base class template for image views. See \ref MemImageViewR and
     * \ref MemImageViewW for details.
+    * \param T The storage type (e.g. \ref Storage::rgb_8_inter).
     */
     template <Storage::type T>
     class MemImageViewBase

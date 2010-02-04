@@ -166,6 +166,7 @@ namespace phtr
     * specialised for every supported type. In each specialisation, the following
     * static member functions have to be provided: step, r_offs, g_offs, b_offs.
     * See the existing specialisations for example code.
+    * \param T The storage type (e.g. \ref Storage::rgb_8_inter).
     */
     template <Storage::type T>
     struct MemLayout

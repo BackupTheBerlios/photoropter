@@ -40,6 +40,7 @@ namespace phtr
     /**
     * \brief Template providing details on the memory storage of a given
     * image type.
+    * \param T The storage type (e.g. \ref Storage::rgb_8_inter).
     */
     template <Storage::type T>
     struct MemStorageInfo

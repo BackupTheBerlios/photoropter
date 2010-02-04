@@ -37,6 +37,7 @@ namespace phtr
     /**
     * \brief Base class template for iterator classes. See \ref MemImageIterR
     * and \ref MemImageIterW for details.
+    * \param T The storage type (e.g. \ref Storage::rgb_8_inter).
     */
     template <Storage::type T>
     class MemImageIterBase

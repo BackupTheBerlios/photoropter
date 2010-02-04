@@ -38,6 +38,7 @@ namespace phtr
 
     /**
     * \brief Class template for managing an image buffer.
+    * \param T The storage type (e.g. \ref Storage::rgb_8_inter).
     */
     template <phtr::Storage::type T>
     class ImageBuffer

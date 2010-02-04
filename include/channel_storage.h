@@ -39,6 +39,7 @@ namespace phtr
      * \details This template \em has to be
      * specialised for every supported type. In each specialisation,
      * a member typedef 'type' has to be provided.
+     * \param T The storage type (e.g. \ref Storage::rgb_8_inter).
      */
     template <Storage::type T>
     struct ChannelStorage
