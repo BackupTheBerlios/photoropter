@@ -70,9 +70,9 @@ namespace phtr
         public:
             /**
             * \brief Constructor.
-            * \param base_addr The base address of the image data in memory.
-            * \param width The image width.
-            * \param height The image height.
+            * \param[in] base_addr The base address of the image data in memory.
+            * \param[in] width The image width.
+            * \param[in] height The image height.
             */
             MemImageViewR(const void* base_addr,
                           coord_t width,
@@ -81,8 +81,8 @@ namespace phtr
         public:
             /**
             * \brief Read the 'red' channel value.
-            * \param x The x coordinate.
-            * \param y The y coordinate.
+            * \param[in] x The x coordinate.
+            * \param[in] y The y coordinate.
             * \return The channel value.
             */
             channel_storage_t
@@ -91,8 +91,8 @@ namespace phtr
         public:
             /**
             * \brief Read the 'green' channel value.
-            * \param x The x coordinate.
-            * \param y The y coordinate.
+            * \param[in] x The x coordinate.
+            * \param[in] y The y coordinate.
             * \return The channel value.
             */
             channel_storage_t
@@ -101,8 +101,8 @@ namespace phtr
         public:
             /**
             * \brief Read the 'blue' channel value.
-            * \param x The x coordinate.
-            * \param y The y coordinate.
+            * \param[in] x The x coordinate.
+            * \param[in] y The y coordinate.
             * \return The channel value.
             */
             channel_storage_t
@@ -111,9 +111,9 @@ namespace phtr
         public:
             /**
             * \brief Read the given channel value.
-            * \param chan The channel.
-            * \param x The x coordinate.
-            * \param y The y coordinate.
+            * \param[in] chan The channel.
+            * \param[in] x The x coordinate.
+            * \param[in] y The y coordinate.
             * \return The channel value.
             */
             inline channel_storage_t
@@ -122,9 +122,8 @@ namespace phtr
         public:
             /**
             * \brief Get a pixel iterator.
-            * A new iterator is instatiated and a pointer to it is returned
-            * (this is necessary since C++ does not support to return polymorphic
-            * objects 'by value').
+            * \param[in] x The x coordinate.
+            * \param[in] y The y coordinate.
             * \return The iterator.
             */
             iter_t get_iter(coord_t x, coord_t y) const;

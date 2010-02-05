@@ -64,9 +64,9 @@ namespace phtr
         public:
             /**
             * \brief Constructor.
-            * \param base_addr The base address of the image data in memory.
-            * \param width The image width.
-            * \param height The image height.
+            * \param[in] base_addr The base address of the image data in memory.
+            * \param[in] width The image width.
+            * \param[in] height The image height.
             */
             MemImageViewBase(void* base_addr,
                              coord_t width,
@@ -89,8 +89,8 @@ namespace phtr
         public:
             /**
             * \brief Determine the 'pixel offset' to a given set of coordinates.
-            * \param x The x coordinate.
-            * \param y The y coordinate.
+            * \param[in] x The x coordinate.
+            * \param[in] y The y coordinate.
             * \return The offset
             */
             size_t get_px_offs(coord_t x, coord_t y) const;

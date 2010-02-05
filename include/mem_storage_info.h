@@ -57,8 +57,8 @@ namespace phtr
 
         /**
         * \brief Constructor.
-        * \param width The image width.
-        * \param height The image height.
+        * \param[in] width  The image width.
+        * \param[in] height The image height.
         */
         MemStorageInfo(coord_t width, coord_t height)
                 : width(width),

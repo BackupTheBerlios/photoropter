@@ -91,15 +91,15 @@ namespace phtr
             * \brief Constructor.
             * \note The aspect ratio will be calculated from width and height of the input
             * image, i.e. square pixels are assumed.
-            * \param image_view The image view which will be used for reading image data.
+            * \param[in] image_view The image view which will be used for reading image data.
             */
             ImageInterpolatorBase(const view_t& image_view);
 
         public:
             /**
             * \brief Constructor.
-            * \param image_view The image view which will be used for reading image data.
-            * \param aspect_ratio The aspect ratio of the image.
+            * \param[in] image_view   The image view which will be used for reading image data.
+            * \param[in] aspect_ratio The aspect ratio of the image.
             */
             ImageInterpolatorBase(const view_t& image_view, interp_coord_t aspect_ratio);
 
@@ -118,9 +118,6 @@ namespace phtr
             /**
             * \brief Pointer to the internal image view instance that is used
             * for image access.
-            * \param x The x coordinate.
-            * \param y The y coordinate.
-            * \return The channel value.
             */
             const view_t& image_view_;
 
@@ -198,23 +195,23 @@ namespace phtr
             * \brief Constructor.
             * \note The aspect ratio will be calculated from width and height of the input
             * image, i.e. square pixels are assumed.
-            * \param image_view The image view which will be used for reading image data.
+            * \param[in] image_view The image view which will be used for reading image data.
             */
             ImageInterpolator(const view_t& image_view);
 
         public:
             /**
             * \brief Constructor.
-            * \param image_view The image view which will be used for reading image data.
-            * \param aspect_ratio The aspect ratio of the image.
+            * \param[in] image_view   The image view which will be used for reading image data.
+            * \param[in] aspect_ratio The aspect ratio of the image.
             */
             ImageInterpolator(const view_t& image_view, interp_coord_t aspect_ratio);
 
         public:
             /**
             * \brief Get the value of the 'red' channel at the given coordinates.
-            * \param x The x coordinate.
-            * \param y The y coordinate.
+            * \param[in] x The x coordinate.
+            * \param[in] y The y coordinate.
             * \return The channel value.
             */
             interp_channel_t get_px_val_r(interp_coord_t x, interp_coord_t y);
@@ -222,8 +219,8 @@ namespace phtr
         public:
             /**
             * \brief Get the value of the 'green' channel at the given coordinates.
-            * \param x The x coordinate.
-            * \param y The y coordinate.
+            * \param[in] x The x coordinate.
+            * \param[in] y The y coordinate.
             * \return The channel value.
             */
             interp_channel_t get_px_val_g(interp_coord_t x, interp_coord_t y);
@@ -231,8 +228,8 @@ namespace phtr
         public:
             /**
             * \brief Get the value of the 'blue' channel at the given coordinates.
-            * \param x The x coordinate.
-            * \param y The y coordinate.
+            * \param[in] x The x coordinate.
+            * \param[in] y The y coordinate.
             * \return The channel value.
             */
             interp_channel_t get_px_val_b(interp_coord_t x, interp_coord_t y);
@@ -241,8 +238,8 @@ namespace phtr
             /**
             * \brief Get the value of the  given channel at the given coordinates.
             * \param chan The channel.
-            * \param x The x coordinate.
-            * \param y The y coordinate.
+            * \param[in] x The x coordinate.
+            * \param[in] y The y coordinate.
             * \return The channel value.
             */
             inline interp_channel_t get_px_val(Channel::type chan, interp_coord_t x, interp_coord_t y);
@@ -268,23 +265,23 @@ namespace phtr
             * \brief Constructor.
             * \note The aspect ratio will be calculated from width and height of the input
             * image, i.e. square pixels are assumed.
-            * \param image_view The image view which will be used for reading image data.
+            * \param[in] image_view The image view which will be used for reading image data.
             */
             ImageInterpolator(const view_t& image_view);
 
         public:
             /**
             * \brief Constructor.
-            * \param image_view The image view which will be used for reading image data.
-            * \param aspect_ratio The aspect ratio of the image.
+            * \param[in] image_view   The image view which will be used for reading image data.
+            * \param[in] aspect_ratio The aspect ratio of the image.
             */
             ImageInterpolator(const view_t& image_view, interp_coord_t aspect_ratio);
 
         public:
             /**
             * \brief Get the value of the 'red' channel at the given coordinates.
-            * \param x The x coordinate.
-            * \param y The y coordinate.
+            * \param[in] x The x coordinate.
+            * \param[in] y The y coordinate.
             * \return The channel value.
             */
             interp_channel_t get_px_val_r(interp_coord_t x, interp_coord_t y);
@@ -292,8 +289,8 @@ namespace phtr
         public:
             /**
             * \brief Get the value of the 'green' channel at the given coordinates.
-            * \param x The x coordinate.
-            * \param y The y coordinate.
+            * \param[in] x The x coordinate.
+            * \param[in] y The y coordinate.
             * \return The channel value.
             */
             interp_channel_t get_px_val_g(interp_coord_t x, interp_coord_t y);
@@ -301,8 +298,8 @@ namespace phtr
         public:
             /**
             * \brief Get the value of the 'blue' channel at the given coordinates.
-            * \param x The x coordinate.
-            * \param y The y coordinate.
+            * \param[in] x The x coordinate.
+            * \param[in] y The y coordinate.
             * \return The channel value.
             */
             interp_channel_t get_px_val_b(interp_coord_t x, interp_coord_t y);
@@ -310,9 +307,9 @@ namespace phtr
         public:
             /**
             * \brief Get the value of the  given channel at the given coordinates.
-            * \param chan The channel.
-            * \param x The x coordinate.
-            * \param y The y coordinate.
+            * \param[in] chan The channel.
+            * \param[in] x The x coordinate.
+            * \param[in] y The y coordinate.
             * \return The channel value.
             */
             inline interp_channel_t get_px_val(Channel::type chan, interp_coord_t x, interp_coord_t y);

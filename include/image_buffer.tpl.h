@@ -24,12 +24,14 @@ THE SOFTWARE.
 
 */
 
+#include <cstring>
+
 namespace phtr
 {
 
     template <phtr::Storage::type T>
     ImageBuffer<T>::ImageBuffer
-    (coord_t width, coord_t height)
+    (coord_t width, coord_t height, bool zero)
             : storage_info_(width, height),
             data_(0),
             width_(width),
@@ -40,6 +42,11 @@ namespace phtr
         num_bytes_ = num_pixels_ * num_channels_ * sizeof(channel_storage_t);
 
         data_ = new channel_storage_t[num_pixels_ * num_channels_];
+
+        if (zero)
+        {
+            memset(static_cast<void*>(data_), 0, num_bytes_);
+        }
     }
 
     template <phtr::Storage::type T>

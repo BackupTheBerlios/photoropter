@@ -63,10 +63,11 @@ namespace phtr
         public:
             /**
             * \brief Constructor.
-            * \param width Image width.
-            * \param height Image height.
+            * \param[in] width  Image width.
+            * \param[in] height Image height.
+            * \param[in] zero   If 'true', the memory will be filled with zeroes.
             */
-            ImageBuffer(coord_t width, coord_t height);
+            ImageBuffer(coord_t width, coord_t height, bool zero = false);
 
         public:
             /**

@@ -52,9 +52,22 @@ namespace phtr
         coord_t width = image_view_w_.width();
         coord_t height = image_view_w_.height();
 
+        const interp_coord_t img_x_max = static_cast<interp_coord_t>(width - 1);
+        const interp_coord_t img_y_max = static_cast<interp_coord_t>(height - 1);
+
         interp_coord_t aspect_ratio = interpolator_.aspect_ratio();
-        interp_coord_t scale_x = 2.0 * aspect_ratio / static_cast<interp_coord_t>(width - 1);
-        interp_coord_t scale_y = 2.0 / static_cast<interp_coord_t>(height - 1);
+        interp_coord_t scale_x = 2.0 * aspect_ratio / img_x_max;
+        interp_coord_t scale_y = 2.0 / img_y_max;
+
+        // running index variables are i (x direction) and j (y direction)
+        // limits are: i0 <= i < i_limit and j0 <= j < j_limit
+        coord_t i0(0);
+        coord_t j0(0);
+        coord_t i_limit(0);
+        coord_t j_limit(0);
+
+        // determine limits from image's region of interest
+        image_view_w_.get_roi(i0, j0, i_limit, j_limit);
 
         // main transformation loop
         coord_t i(0);
@@ -62,13 +75,13 @@ namespace phtr
 #ifdef HAVE_OPENMP
 #pragma omp parallel for
 #endif
-        for (j = 0; j < height; ++j) // line loop
+        for (j = j0; j < j_limit; ++j) // line loop
         {
 
             // write-access iterator for this line
-            typename image_view_w_t::iter_t iter(image_view_w_.get_iter(0, j));
+            typename image_view_w_t::iter_t iter(image_view_w_.get_iter(i0, j));
 
-            for (i = 0; i < width; ++i) // pixel loop
+            for (i = i0; i < i_limit; ++i) // pixel loop
             {
                 // current pixel position
                 interp_coord_t cur_pixel_x(i);
@@ -91,19 +104,20 @@ namespace phtr
                 interp_channel_t val_g(0);
                 interp_channel_t val_b(0);
 
-                // (over-)sampling loop
+                // prepare (over-)sampling loop
                 interp_coord_t cur_samp_x(0);
                 interp_coord_t ini_samp_x(cur_pixel_x - 0.5 + (1.0 / (2 * sampling_fact)));
                 interp_coord_t cur_samp_y(cur_pixel_y - 0.5 + (1.0 / (2 * sampling_fact)));
                 unsigned int u(0);
                 unsigned int v(0);
+
                 for (v = 0; v < oversampling; ++v)
                 {
                     cur_samp_x = ini_samp_x;
 
                     for (u = 0; u < oversampling; ++u)
                     {
-                        /* get scaled coordinates (in the interpolator coordinates system) */
+                        // get scaled coordinates (in the interpolator coordinates system)
                         dst_x = (cur_samp_x * scale_x) - aspect_ratio;
                         dst_y = (cur_samp_y * scale_y) - 1.0;
 

@@ -70,9 +70,9 @@ namespace phtr
         public:
             /**
             * \brief Constructor.
-            * \param base_addr The base address of the image data in memory.
-            * \param width The image width.
-            * \param height The image height.
+            * \param[in] base_addr The base address of the image data in memory.
+            * \param[in] width The image width.
+            * \param[in] height The image height.
             */
             MemImageViewW(void* base_addr,
                           coord_t width,
@@ -81,46 +81,45 @@ namespace phtr
         public:
             /**
             * \brief Write the 'red' channel value.
-            * \param x   The x coordinate.
-            * \param y   The y coordinate.
-            * \param val The channel value.
+            * \param[in] x   The x coordinate.
+            * \param[in] y   The y coordinate.
+            * \param[in] val The channel value.
             */
             void write_px_val_r(coord_t x, coord_t y, channel_storage_t val);
 
         public:
             /**
             * \brief Write the 'green' channel value.
-            * \param x   The x coordinate.
-            * \param y   The y coordinate.
-            * \param val The channel value.
+            * \param[in] x   The x coordinate.
+            * \param[in] y   The y coordinate.
+            * \param[in] val The channel value.
             */
             void write_px_val_g(coord_t x, coord_t y, channel_storage_t val);
 
         public:
             /**
             * \brief Write the 'blue' channel value.
-            * \param x   The x coordinate.
-            * \param y   The y coordinate.
-            * \param val The channel value.
+            * \param[in] x   The x coordinate.
+            * \param[in] y   The y coordinate.
+            * \param[in] val The channel value.
             */
             void write_px_val_b(coord_t x, coord_t y, channel_storage_t val);
 
         public:
             /**
             * \brief Write the given channel value.
-            * \param chan The channel.
-            * \param x    The x coordinate.
-            * \param y    The y coordinate.
-            * \param val  The channel value.
+            * \param[in] chan The channel.
+            * \param[in] x    The x coordinate.
+            * \param[in] y    The y coordinate.
+            * \param[in] val  The channel value.
             */
             inline void write_px_val(Channel::type chan, coord_t x, coord_t y, channel_storage_t val);
 
         public:
             /**
             * \brief Get a pixel iterator.
-            * A new iterator is instatiated and a pointer to it is returned
-            * (this is necessary since C++ does not support to return polymorphic
-            * objects 'by value').
+            * \param[in] x    The x coordinate.
+            * \param[in] y    The y coordinate.
             * \return The iterator.
             */
             iter_t get_iter(coord_t x, coord_t y);
@@ -128,22 +127,24 @@ namespace phtr
         public:
             /**
             * \brief Set the region of interest.
-            * \param x_min The minimal x coordinate.
-            * \param y_min The minimal y coordinate.
-            * \param x_max The maximal x coordinate.
-            * \param y_max The maximal y coordinate.
+            * \details A ROI of (0, 0, width, height) corresponds to the entire image.
+            * \param[in] x_min The minimal x coordinate.
+            * \param[in] y_min The minimal y coordinate.
+            * \param[in] x_limit The x coordinate limit (maximal value + 1).
+            * \param[in] y_limit The y coordinate limit (maximal value + 1).
             */
-            void set_roi(coord_t x_min, coord_t y_min, coord_t x_max, coord_t y_max);
+            void set_roi(coord_t x_min, coord_t y_min, coord_t x_limit, coord_t y_limit);
 
         public:
             /**
             * \brief Get the current region of interest.
-            * \param x_min The minimal x coordinate.
-            * \param y_min The minimal y coordinate.
-            * \param x_max The maximal x coordinate.
-            * \param y_max The maximal y coordinate.
+            * \details A ROI of (0, 0, width, height) corresponds to the entire image.
+            * \param[out] x_min The minimal x coordinate.
+            * \param[out] y_min The minimal y coordinate.
+            * \param[out] x_limit The x coordinate limit (maximal value + 1).
+            * \param[out] y_limit The y coordinate limit (maximal value + 1).
             */
-            void get_roi(coord_t& x_min, coord_t& y_min, coord_t& x_max, coord_t& y_max);
+            void get_roi(coord_t& x_min, coord_t& y_min, coord_t& x_limit, coord_t& y_limit);
 
             /* ****************************************
              * internals
@@ -159,7 +160,7 @@ namespace phtr
             /**
             * \brief The position of the right edge of the region of interest.
             */
-            coord_t roi_x_max_;
+            coord_t roi_x_limit_;
 
         private:
             /**
@@ -171,7 +172,7 @@ namespace phtr
             /**
             * \brief The position of the top edge of the region of interest.
             */
-            coord_t roi_y_max_;
+            coord_t roi_y_limit_;
 
 
     }; // template class MemImageViewW<>

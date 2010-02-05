@@ -50,7 +50,7 @@ namespace phtr
             public:
                 /**
                 * \brief Construction with a specific message.
-                * \param msg The message.
+                * \param[in] msg The message.
                 */
                 base_exception(const std::string& msg);
 
@@ -65,6 +65,7 @@ namespace phtr
                 * \brief The message associated with the exception.
                 * \details This message contains the general type of exception,
                 * and possibly a further explanation of the cause.
+                * \return The message.
                 */
                 virtual const char* what() const throw();
 
@@ -97,7 +98,7 @@ namespace phtr
             public:
                 /**
                 * \brief Construction with a specific message.
-                * \param msg The message.
+                * \param[in] msg The message.
                 */
                 not_implemented(const std::string& msg);
 
@@ -119,7 +120,7 @@ namespace phtr
             public:
                 /**
                 * \brief Construction with a specific message.
-                * \param msg The message.
+                * \param[in] msg The message.
                 */
                 illegal_argument(const std::string& msg);
 
