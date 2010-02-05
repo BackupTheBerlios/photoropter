@@ -36,6 +36,8 @@ are available for several different camera systems.
 
 @section techback_phtrcoord Image coordinates in Photoropter
 
+@subsection techback_panotools The coordinate system of the Panorama Tools
+
 Since there are several sensor sizes in widespread use, and since most of the time the physical size
 of the sensor is not overly interesting, the
 <a href="http://panotools.sourceforge.net/">Panorama Tools</a> and
@@ -44,10 +46,11 @@ system, which Photoropter also uses. It makes no sense to use a system that diff
 since the advantages would be slim at best, not outweighing the obvious disadvantage of incompatibility.
 @image html coord.png "Coordinate system used by Photoropter"
 
-The height of the image is always 2, with 0 marking the image center. The width is identical to twice
-the aspect ratio R. So a 3:2 image has a width of 3 (ranging from -1.5 to 1.5), and a 4:3 image has
-a width of 2.67 (-1.33 to 1.33). This convention makes use of the fact that usually one does not have
-to know the exact physical dimensions of the image sensor.
+The length of the small side of the image is always 2, with 0 marking the image center. The length
+of the other side is identical to twice the aspect ratio R. So a 3:2 image has a e.g. width of 3
+(ranging from -1.5 to 1.5), and a 4:3 image has a width of 2.67 (-1.33 to 1.33). This convention
+makes use of the fact that usually one does not have to know the exact physical dimensions of
+the image sensor.
 
 When a lens is calibrated, the diagonal crop factor of the sensor is usually stored alongside
 the calibration data. Together with the crop factor of the currently used sensor, this allows for
@@ -56,4 +59,59 @@ factor 1.5), the calibration data can still be used on a Canon EOS 500 (crop fac
 (at least in theory) the software can also warn the user before using calibration data that has
 been determined using a smaller sensor than the current one.
 
-*/ 
+@subsection techback_aspectsizes Extensions: dealing with different sensor sizes and aspect ratios
+
+While the PanoTools coordinate system has some advantages, it does not deal well with different
+sensor sizes and/or aspect ratios. This is fine as long as one only considers fixed combinations of
+camera and lens. However, when one wishes to use the same lens calibration data with different
+camera types (as can be the case with DLSRs), the unmodified PanoTools coordinates become
+insufficient. Because of this, Photoropter uses a somewhat extended model.
+
+Let's consider the case that a lens has been calibrated on a full-frame 35mm digital single-lens reflex
+camera, e.g. a Canon EOS 5. In this case, a PanoTools coordinate value of 1.0 corresponds to a distance
+of 12mm on the sensor. When the same lens is used e.g. with an APS-C model, this length has to be
+corrected (or rather, the coefficients in the correction model have to be scaled accordingly). Let the
+width of the sensor be X<sub>1</sub> and its height be Y<sub>1</sub>, the diagonal D and the aspect ratio
+X<sub>1</sub>/Y<sub>1</sub>=R<sub>1</sub>. Then the
+following holds true: X<sub>1</sub><sup>2</sup>+Y<sub>1</sub><sup>2</sup>=D<sup>2</sup>, yielding Y<sub>1</sub>*sqrt(1+R<sub>1</sub><sup>2</sup>)=D.
+
+In case of the second camera, the sensor's diagonal length is D/c ('c' denoting the crop factor), and one
+gets Y<sub>2</sub>*sqrt(1+R<sub>2</sub><sup>2</sup>)=D/c. So, a coordinate y<sub>2</sub> on the crop sensor
+can be translated (in the normalised system) to the full-frame case as
+
+y<sub>1</sub>=y<sub>2</sub>*sqrt(1+R<sub>1</sub><sup>2</sup>)/sqrt(1+R<sub>2</sub><sup>2</sup>)/c.
+
+In the special case of R<sub>1</sub>=R<sub>2</sub>, this reduces to y<sub>1</sub>=y<sub>2</sub>/c, meaning
+that in the example above, a normalised y coordinate of 1.0 on the cropped sensor corresponds to 0.625 on
+full-frame. In general, one always needs the ratio of the crop factors of the sensors, so if a lens has been
+calibrated on a camera with diagonal crop factor of 1.5, its parameters can be translated to 1.6 or even 2.0
+as needed.
+
+One should note that while parameters can be translated to a smaller image circle (i.e., higher crop factor),
+the opposite does usually not hold true. A correction function that has been calibrated for a DX image
+circle is useless in areas outside of it, so it should absolutely not be translated to full-frame (though
+it is of course no problem to do this mathematically).
+
+Since we have also included the aspect ratio in our considerations, the original PanoTools definition
+that the shorter side of the image always be the normalised one (meaning that the normalised axis is
+either X \em or Y on a case-by-case basis) can essentially be dropped and replaced by the specification
+that the Y axis is always the normalised one.
+
+It is possible to translate between landscape and portrait images just by choosing R<sub>2</sub>=1/R<sub>1</sub>
+and one gets y<sub>1</sub>=y<sub>2</sub>*R<sub>1</sub>, which means that a coordinate of 1.0 in a portrait
+image (e.g. R<sub>2</sub>=2/3) corresponds to 1.0*3/2=1.5 in the calibrated coordinate system.
+These considerations also show that it is essential to store the aspect ratio as well as the diagonal crop
+factor alongside any lens calibration data.
+
+@subsection techback_notes Notes
+
+It is actually quite convenient to store the diagonal crop factor and aspect together with the calibration
+data rather than the alternatives, e.g. the sensor dimensions or separate crop factors for X and Y. First
+of all both values are rather easy to understand, and the diagonal crop factor is a quantity already
+known to many photographers. The aspect ratio can be determined automatically from the calibration image data
+(assuming square pixels).
+
+Another point worth noting is that the diagonal crop factor is directly connected to the image circle,
+allowing to decide directly if the desired conversion is sensible.
+
+*/
