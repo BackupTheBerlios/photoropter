@@ -32,26 +32,16 @@ namespace phtr
     ImageTransform
     (const ImageTransform::image_view_t& image_view_r, image_view_w_t& image_view_w)
             : interpolator_(image_view_r),
-            image_view_w_(image_view_w),
-            n_models_(0)
+            image_view_w_(image_view_w)
     {
-        //FIXME
-        correction_model_.push_back(new PTLensGeomModel(0, 0.00987, -0.05127, 1, 0, 0));
-        ++n_models_;
-        correction_model_.push_back(new PTLensGeomModel(0, 0.00987, -0.05127, 1, 0, 0));
-        ++n_models_;
-        correction_model_.push_back(new PTLensGeomModel(0, 0.00987, -0.05127, 1, 0, 0));
-        ++n_models_;
+        //NIL
     }
 
     template <typename interpolator_t, typename image_view_w_t, unsigned int oversampling>
     ImageTransform<interpolator_t, image_view_w_t, oversampling>::
     ~ImageTransform()
     {
-        for (size_t i = 0; i < n_models_; ++i)
-        {
-            delete correction_model_[i];
-        }
+
     }
 
     template <typename interpolator_t, typename image_view_w_t, unsigned int oversampling>
@@ -90,7 +80,7 @@ namespace phtr
         coord_t i(0);
         coord_t j(0);
 #ifdef HAVE_OPENMP
-#pragma omp parallel for
+#pragma omp parallel for private (i)
 #endif
         for (j = j0; j < j_limit; ++j) // line loop
         {
@@ -139,10 +129,10 @@ namespace phtr
                         dst_y = (cur_samp_y * scale_y) - 1.0;
 
                         // get coordinates transformed to source image
-                        get_source_coords(dst_x, dst_y,
-                                          src_x_r, src_y_r,
-                                          src_x_g, src_y_g,
-                                          src_x_b, src_y_b);
+                        queue_.get_source_coords(dst_x, dst_y,
+                                                 src_x_r, src_y_r,
+                                                 src_x_g, src_y_g,
+                                                 src_x_b, src_y_b);
 
                         // get channel values
                         val_r += interpolator_.get_px_val(Channel::red, src_x_r, src_y_r);
@@ -173,29 +163,5 @@ namespace phtr
         } // line loop
 
     } //  ImageTransform<...>::do_transform()
-
-    template <typename interpolator_t, typename image_view_w_t, unsigned int oversampling>
-    void
-    ImageTransform<interpolator_t, image_view_w_t, oversampling>::
-    get_source_coords(interp_coord_t dst_x, interp_coord_t dst_y,
-                      interp_coord_t& src_x_r, interp_coord_t& src_y_r,
-                      interp_coord_t& src_x_g, interp_coord_t& src_y_g,
-                      interp_coord_t& src_x_b, interp_coord_t& src_y_b)
-    {
-        src_x_r = dst_x;
-        src_y_r = dst_y;
-
-        src_x_g = dst_x;
-        src_y_g = dst_y;
-
-        src_x_b = dst_x;
-        src_y_b = dst_y;
-
-        for (size_t i = 0; i < n_models_; ++i)
-        {
-            correction_model_[i]->get_src_coords(src_x_r, src_y_r, src_x_g, src_y_g, src_x_b, src_y_b);
-        }
-
-    }
 
 } // namespace phtr

@@ -29,7 +29,7 @@ THE SOFTWARE.
 
 #include <vector>
 
-#include "lens_correction_model.h"
+#include "correction_model_queue.h"
 
 namespace phtr
 {
@@ -83,30 +83,6 @@ namespace phtr
 
         private:
             /**
-            * \brief Internal function to fetch the transformed coordinates
-            * for the current position.
-            * \param[in]  dst_x   The x coordinate "seen from" the destination image.
-            * \param[in]  dst_y   The y coordinate "seen from" the destination image.
-            * \param[out] src_x_r The corresponding x coordinate for the 'red' channel
-            *                     in the source image
-            * \param[out] src_y_r The corresponding y coordinate for the 'red' channel
-            *                     in the source image
-            * \param[out] src_x_g The corresponding x coordinate for the 'green' channel
-            *                     in the source image
-            * \param[out] src_y_g The corresponding y coordinate for the 'green' channel
-            *                     in the source image
-            * \param[out] src_x_b The corresponding x coordinate for the 'blue' channel
-            *                     in the source image
-            * \param[out] src_y_b The corresponding y coordinate for the 'blue' channel
-            *                     in the source image
-            */
-            inline void get_source_coords(interp_coord_t dst_x, interp_coord_t dst_y,
-                                          interp_coord_t& src_x_r, interp_coord_t& src_y_r,
-                                          interp_coord_t& src_x_g, interp_coord_t& src_y_g,
-                                          interp_coord_t& src_x_b, interp_coord_t& src_y_b);
-
-        private:
-            /**
             * \brief Internal interpolator object.
             * \details The interpolator uses the input view given in the constructor.
             */
@@ -119,8 +95,10 @@ namespace phtr
             image_view_w_t& image_view_w_;
 
         private:
-            std::vector<ILensCorrectionModel*> correction_model_;
-            unsigned short n_models_;
+            /**
+            * \brief The internal queue of correction models to be applied.
+            */
+            CorrectionModelQueue queue_;
 
     }; // class ImageTransform
 

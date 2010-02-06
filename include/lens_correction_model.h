@@ -59,6 +59,13 @@ namespace phtr
                                         interp_coord_t& x_g, interp_coord_t& y_g,
                                         interp_coord_t& x_b, interp_coord_t& y_b) = 0;
 
+        public:
+            /**
+            * \brief Create a clone of the correction model functionoid.
+            * \return The clone.
+            */
+            virtual ILensCorrectionModel* clone() = 0;
+
     };
 
     /**
@@ -74,6 +81,10 @@ namespace phtr
     */
     class PTLensGeomModel : public ILensCorrectionModel
     {
+
+            /* ****************************************
+             * public interface
+             * **************************************** */
 
         public:
             /**
@@ -107,12 +118,51 @@ namespace phtr
                                         interp_coord_t& x_g, interp_coord_t& y_g,
                                         interp_coord_t& x_b, interp_coord_t& y_b);
 
+        public:
+            /**
+            * \brief Create a clone of the correction model functionoid.
+            * \return The clone.
+            */
+            ILensCorrectionModel* clone();
+
+            /* ****************************************
+             * internals
+             * **************************************** */
+
         private:
+            /**
+            * \brief The parameter 'a'.
+            */
             double a_;
+
+        private:
+            /**
+            * \brief The parameter 'b'.
+            */
             double b_;
+
+        private:
+            /**
+            * \brief The parameter 'c'.
+            */
             double c_;
+
+        private:
+            /**
+            * \brief The parameter 'd'.
+            */
             double d_;
+
+        private:
+            /**
+            * \brief The parameter 'x0'.
+            */
             double x0_;
+
+        private:
+            /**
+            * \brief The parameter 'y0'.
+            */
             double y0_;
 
     };

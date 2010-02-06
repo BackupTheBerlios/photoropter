@@ -110,8 +110,8 @@ void vil_test()
     // set image size
     size_t img_width = loaded_img.ni();
     size_t img_height = loaded_img.nj();
-    size_t dst_width = 1.41 * img_width;
-    size_t dst_height = 1.41 * img_height;
+    size_t dst_width = 1.00 * img_width;
+    size_t dst_height = 1.00 * img_height;
     //size_t dst_width = 150;
     //size_t dst_height = 100;
 

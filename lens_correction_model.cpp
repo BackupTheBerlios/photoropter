@@ -79,4 +79,9 @@ namespace phtr
         y_b = sin_phi_b * r_b + y0_;
     }
 
+    ILensCorrectionModel* PTLensGeomModel::clone()
+    {
+        return new PTLensGeomModel(*this);
+    }
+
 } // namespace phtr

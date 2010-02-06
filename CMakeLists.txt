@@ -145,7 +145,10 @@ set(PHTR_SOURCES
   include/image_transform.h
   include/image_transform.tpl.h
   include/lens_correction_model.h
+  include/correction_model_queue.h
+  include/correction_model_queue.inl.h
   lens_correction_model.cpp
+  correction_model_queue.cpp
   exception.cpp
   )
 
