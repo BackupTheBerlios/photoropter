@@ -48,9 +48,9 @@ namespace phtr
             *                     in the source image.
             * \param[in,out] x_g The corresponding x coordinate for the 'green' channel
             *                     in the source image.
-            * \param[in.out] y_g The corresponding y coordinate for the 'green' channel
+            * \param[in,out] y_g The corresponding y coordinate for the 'green' channel
             *                     in the source image.
-            * \param[in.out] x_b The corresponding x coordinate for the 'blue' channel
+            * \param[in,out] x_b The corresponding x coordinate for the 'blue' channel
             *                     in the source image.
             * \param[in,out] y_b The corresponding y coordinate for the 'blue' channel
             *                     in the source image.
@@ -63,11 +63,11 @@ namespace phtr
 
     /**
     * \brief The PTLens geometric correction model.
-    * \details The PTLens correction model implements the following formular: \[
+    * \details The PTLens correction model implements the following formula: \f[
     * r_{src} = (a r_{dst}^3 + b r_{dst}^2 + c r_{dst} + d)  r_{dst}
-    * \]
+    * \f]
     * Usually, 'd' is left at a fixed value of 1. Additionally, coordinates
-    * describing a shift of the center are often used. Hugin and PanoTools often
+    * describing a shift of the center are often used. Hugin and PanoTools usually
     * call these 'd' and 'e', thus creating a bit of a confusion concerning the 'd'
     * parameter in the formula above. Because of that, we will use the format
     * (x0,y0) to designate the center shift.
@@ -96,9 +96,9 @@ namespace phtr
             *                     in the source image.
             * \param[in,out] x_g The corresponding x coordinate for the 'green' channel
             *                     in the source image.
-            * \param[in.out] y_g The corresponding y coordinate for the 'green' channel
+            * \param[in,out] y_g The corresponding y coordinate for the 'green' channel
             *                     in the source image.
-            * \param[in.out] x_b The corresponding x coordinate for the 'blue' channel
+            * \param[in,out] x_b The corresponding x coordinate for the 'blue' channel
             *                     in the source image.
             * \param[in,out] y_b The corresponding y coordinate for the 'blue' channel
             *                     in the source image.
