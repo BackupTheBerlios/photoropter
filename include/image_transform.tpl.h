@@ -32,9 +32,26 @@ namespace phtr
     ImageTransform
     (const ImageTransform::image_view_t& image_view_r, image_view_w_t& image_view_w)
             : interpolator_(image_view_r),
-            image_view_w_(image_view_w)
+            image_view_w_(image_view_w),
+            n_models_(0)
     {
-        //NIL
+        //FIXME
+        correction_model_.push_back(new PTLensGeomModel(0, 0.00987, -0.05127, 1, 0, 0));
+        ++n_models_;
+        correction_model_.push_back(new PTLensGeomModel(0, 0.00987, -0.05127, 1, 0, 0));
+        ++n_models_;
+        correction_model_.push_back(new PTLensGeomModel(0, 0.00987, -0.05127, 1, 0, 0));
+        ++n_models_;
+    }
+
+    template <typename interpolator_t, typename image_view_w_t, unsigned int oversampling>
+    ImageTransform<interpolator_t, image_view_w_t, oversampling>::
+    ~ImageTransform()
+    {
+        for (size_t i = 0; i < n_models_; ++i)
+        {
+            delete correction_model_[i];
+        }
     }
 
     template <typename interpolator_t, typename image_view_w_t, unsigned int oversampling>
@@ -173,6 +190,12 @@ namespace phtr
 
         src_x_b = dst_x;
         src_y_b = dst_y;
+
+        for (size_t i = 0; i < n_models_; ++i)
+        {
+            correction_model_[i]->get_src_coords(src_x_r, src_y_r, src_x_g, src_y_g, src_x_b, src_y_b);
+        }
+
     }
 
 } // namespace phtr

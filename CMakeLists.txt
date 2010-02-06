@@ -144,6 +144,8 @@ set(PHTR_SOURCES
   include/mem_storage_info.h
   include/image_transform.h
   include/image_transform.tpl.h
+  include/lens_correction_model.h
+  lens_correction_model.cpp
   exception.cpp
   )
 

@@ -55,17 +55,18 @@ the image sensor.
 When a lens is calibrated, the diagonal crop factor of the sensor is usually stored alongside
 the calibration data. Together with the crop factor of the currently used sensor, this allows for
 adaption of the calibration data. That way, if a lens is calibrated using e.g. a Nikon D90 (crop
-factor 1.5), the calibration data can still be used on a Canon EOS 500 (crop factor 1.6). That way
-(at least in theory) the software can also warn the user before using calibration data that has
-been determined using a smaller sensor than the current one.
+factor 1.5), the calibration data can still be used on a Canon EOS 500 (crop factor 1.6). It
+is also possible (at least in theory) for the software to warn the user before using
+calibration data that has been determined using a smaller sensor than the current one.
 
 @subsection techback_aspectsizes Extensions: dealing with different sensor sizes and aspect ratios
 
-While the PanoTools coordinate system has some advantages, it does not deal well with different
-sensor sizes and/or aspect ratios. This is fine as long as one only considers fixed combinations of
-camera and lens. However, when one wishes to use the same lens calibration data with different
-camera types (as can be the case with DLSRs), the unmodified PanoTools coordinates become
-insufficient. Because of this, Photoropter uses a somewhat extended model.
+While the PanoTools coordinate system has some advantages, it does actually not deal too well
+with different sensor sizes and/or aspect ratios. Everything is fine as long as one only considers
+fixed combinations of camera and lens. However, when one wishes to use the same lens calibration
+data with different camera types (as can be the case with DLSRs), the unmodified PanoTools
+coordinates quickly become insufficient (especially when the aspect ratio is variable as well).
+Because of these limitations, Photoropter uses a somewhat extended model.
 
 Let's consider the case that a lens has been calibrated on a full-frame 35mm digital single-lens reflex
 camera, e.g. a Canon EOS 5. In this case, a PanoTools coordinate value of 1.0 corresponds to a distance

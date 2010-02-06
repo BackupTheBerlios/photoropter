@@ -27,6 +27,10 @@ THE SOFTWARE.
 #ifndef __IMAGE_TRANSFORM_H__
 #define __IMAGE_TRANSFORM_H__
 
+#include <vector>
+
+#include "lens_correction_model.h"
+
 namespace phtr
 {
 
@@ -40,6 +44,10 @@ namespace phtr
     template < typename interpolator_t, typename image_view_w_t, unsigned int oversampling = 1 >
     class ImageTransform
     {
+
+            /* ****************************************
+             * public interface
+             * **************************************** */
 
         public:
             /**
@@ -57,11 +65,21 @@ namespace phtr
 
         public:
             /**
+            * \brief Destructor.
+            */
+            virtual ~ImageTransform();
+
+        public:
+            /**
             * \brief Transform the image.
             * \details The image data is read from the input image view and
             * written to the output view, while applying selected transformations.
             */
             void do_transform();
+
+            /* ****************************************
+             * internals
+             * **************************************** */
 
         private:
             /**
@@ -99,6 +117,10 @@ namespace phtr
             * \brief Internal output image view object.
             */
             image_view_w_t& image_view_w_;
+
+        private:
+            std::vector<ILensCorrectionModel*> correction_model_;
+            unsigned short n_models_;
 
     }; // class ImageTransform
 
