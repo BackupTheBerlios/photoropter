@@ -26,7 +26,7 @@ THE SOFTWARE.
 
 #include <cmath>
 
-#include "lens_correction_model.h"
+#include "geom_correction_model.h"
 
 namespace phtr
 {
@@ -79,7 +79,7 @@ namespace phtr
         y_b = sin_phi_b * r_b + y0_;
     }
 
-    ILensCorrectionModel* PTLensGeomModel::clone()
+    IGeomCorrectionModel* PTLensGeomModel::clone()
     {
         return new PTLensGeomModel(*this);
     }

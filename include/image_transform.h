@@ -29,7 +29,8 @@ THE SOFTWARE.
 
 #include <vector>
 
-#include "correction_model_queue.h"
+#include "geom_correction_queue.h"
+#include "colour_correction_queue.h"
 
 namespace phtr
 {
@@ -96,9 +97,15 @@ namespace phtr
 
         private:
             /**
-            * \brief The internal queue of correction models to be applied.
+            * \brief The internal queue of geometrical correction models to be applied.
             */
-            CorrectionModelQueue queue_;
+            GeomCorrectionQueue geom_queue_;
+
+        private:
+            /**
+            * \brief The internal queue of colour correction models to be applied.
+            */
+            ColourCorrectionQueue colour_queue_;
 
     }; // class ImageTransform
 

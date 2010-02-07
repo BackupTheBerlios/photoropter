@@ -24,8 +24,8 @@ THE SOFTWARE.
 
 */
 
-#ifndef __LENS_CORRECTION_MODEL_H__
-#define __LENS_CORRECTION_MODEL_H__
+#ifndef __GEOM_CORRECTION_MODEL_H__
+#define __GEOM_CORRECTION_MODEL_H__
 
 #include "types.h"
 
@@ -33,27 +33,27 @@ namespace phtr
 {
 
     /**
-    * \brief Interface base class for lens correction models.
+    * \brief Interface base class for geometrical lens correction models.
     * \details The corrections models are implemented using a 'functionid' pattern.
     */
-    class ILensCorrectionModel
+    class IGeomCorrectionModel
     {
 
         public:
             /**
             * \brief Get the corrected source image coordinates for the current position.
             * \param[in,out] x_r The corresponding x coordinate for the 'red' channel
-            *                     in the source image.
+            *                    in the source image.
             * \param[in,out] y_r The corresponding y coordinate for the 'red' channel
-            *                     in the source image.
+            *                    in the source image.
             * \param[in,out] x_g The corresponding x coordinate for the 'green' channel
-            *                     in the source image.
+            *                    in the source image.
             * \param[in,out] y_g The corresponding y coordinate for the 'green' channel
-            *                     in the source image.
+            *                    in the source image.
             * \param[in,out] x_b The corresponding x coordinate for the 'blue' channel
-            *                     in the source image.
+            *                    in the source image.
             * \param[in,out] y_b The corresponding y coordinate for the 'blue' channel
-            *                     in the source image.
+            *                    in the source image.
             */
             virtual void get_src_coords(interp_coord_t& x_r, interp_coord_t& y_r,
                                         interp_coord_t& x_g, interp_coord_t& y_g,
@@ -64,9 +64,9 @@ namespace phtr
             * \brief Create a clone of the correction model functionoid.
             * \return The clone.
             */
-            virtual ILensCorrectionModel* clone() = 0;
+            virtual IGeomCorrectionModel* clone() = 0;
 
-    };
+    }; // class IGeomCorrectionModel
 
     /**
     * \brief The PTLens geometric correction model.
@@ -79,7 +79,7 @@ namespace phtr
     * parameter in the formula above. Because of that, we will use the format
     * (x0,y0) to designate the center shift.
     */
-    class PTLensGeomModel : public ILensCorrectionModel
+    class PTLensGeomModel : public IGeomCorrectionModel
     {
 
             /* ****************************************
@@ -123,7 +123,7 @@ namespace phtr
             * \brief Create a clone of the correction model functionoid.
             * \return The clone.
             */
-            ILensCorrectionModel* clone();
+            IGeomCorrectionModel* clone();
 
             /* ****************************************
              * internals
@@ -165,8 +165,8 @@ namespace phtr
             */
             double y0_;
 
-    };
+    }; // class PTLensGeomModel
 
 } // namespace phtr
 
-#endif // __LENS_CORRECTION_MODEL_H__
+#endif // __GEOM_CORRECTION_MODEL_H__

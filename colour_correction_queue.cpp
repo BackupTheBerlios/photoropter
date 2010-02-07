@@ -24,25 +24,19 @@ THE SOFTWARE.
 
 */
 
-#include "correction_model_queue.h"
-#include "lens_correction_model.h"
+#include "colour_correction_queue.h"
+#include "geom_correction_model.h"
 
 namespace phtr
 {
 
-    CorrectionModelQueue::CorrectionModelQueue()
+    ColourCorrectionQueue::ColourCorrectionQueue()
             : n_models_(0)
     {
         //FIXME
-        correction_model_.push_back(new PTLensGeomModel(0, 0.00987, -0.05127, 1, 0, 0));
-        ++n_models_;
-        correction_model_.push_back(new PTLensGeomModel(0, 0.00987, -0.05127, 1, 0, 0));
-        ++n_models_;
-        correction_model_.push_back(new PTLensGeomModel(0, 0.00987, -0.05127, 1, 0, 0));
-        ++n_models_;
     }
 
-    CorrectionModelQueue::CorrectionModelQueue(const CorrectionModelQueue& orig)
+    ColourCorrectionQueue::ColourCorrectionQueue(const ColourCorrectionQueue& orig)
             : n_models_(0)
     {
         n_models_ = orig.correction_model_.size();
@@ -54,12 +48,12 @@ namespace phtr
         }
     }
 
-    CorrectionModelQueue::~CorrectionModelQueue()
+    ColourCorrectionQueue::~ColourCorrectionQueue()
     {
         this->clear();
     }
 
-    CorrectionModelQueue& CorrectionModelQueue::operator=(const CorrectionModelQueue& orig)
+    ColourCorrectionQueue& ColourCorrectionQueue::operator=(const ColourCorrectionQueue& orig)
     {
         this->clear();
 
@@ -74,7 +68,7 @@ namespace phtr
         return *this;
     }
 
-    void CorrectionModelQueue::clear()
+    void ColourCorrectionQueue::clear()
     {
         n_models_ = correction_model_.size();
 

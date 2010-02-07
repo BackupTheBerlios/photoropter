@@ -27,7 +27,7 @@ THE SOFTWARE.
 namespace phtr
 {
 
-    void CorrectionModelQueue::get_source_coords(interp_coord_t dst_x, interp_coord_t dst_y,
+    void GeomCorrectionQueue::get_source_coords(interp_coord_t dst_x, interp_coord_t dst_y,
             interp_coord_t& src_x_r, interp_coord_t& src_y_r,
             interp_coord_t& src_x_g, interp_coord_t& src_y_g,
             interp_coord_t& src_x_b, interp_coord_t& src_y_b) const

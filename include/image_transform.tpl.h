@@ -129,15 +129,18 @@ namespace phtr
                         dst_y = (cur_samp_y * scale_y) - 1.0;
 
                         // get coordinates transformed to source image
-                        queue_.get_source_coords(dst_x, dst_y,
-                                                 src_x_r, src_y_r,
-                                                 src_x_g, src_y_g,
-                                                 src_x_b, src_y_b);
+                        geom_queue_.get_source_coords(dst_x, dst_y,
+                                                      src_x_r, src_y_r,
+                                                      src_x_g, src_y_g,
+                                                      src_x_b, src_y_b);
 
                         // get channel values
-                        val_r += interpolator_.get_px_val(Channel::red, src_x_r, src_y_r);
-                        val_g += interpolator_.get_px_val(Channel::green, src_x_g, src_y_g);
-                        val_b += interpolator_.get_px_val(Channel::blue, src_x_b, src_y_b);
+                        val_r += interpolator_.get_px_val(Channel::red, src_x_r, src_y_r)
+                                 * colour_queue_.get_correction_factor(Channel::red, src_x_r, src_y_r);
+                        val_g += interpolator_.get_px_val(Channel::green, src_x_g, src_y_g)
+                                 * colour_queue_.get_correction_factor(Channel::green, src_x_g, src_y_g);
+                        val_b += interpolator_.get_px_val(Channel::blue, src_x_b, src_y_b)
+                                 * colour_queue_.get_correction_factor(Channel::blue, src_x_b, src_y_b);
 
                         cur_samp_x += sampling_step_x;
                     }
