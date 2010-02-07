@@ -28,39 +28,8 @@ THE SOFTWARE.
 #define __IMAGE_INTERPOLATOR_H__
 
 #include "mem_image_view_r.h"
+#include "interpolation_type.h"
 #include "types.h"
-
-namespace phtr
-{
-
-    /**
-    * \brief Struct describing interpolation types.
-    */
-    struct Interpolation
-    {
-
-        /**
-        * \brief The enum holding the actual values.
-        */
-        enum type
-        {
-            /**
-            * \brief 'Nearest neighbour' interpolation.
-            */
-            nearest_neighbour = 0,
-            /**
-            * \brief Bilinear interpolation.
-            */
-            bilinear,
-            /**
-            * \brief Lanczos interpolation.
-            */
-            lanczos
-        };
-
-    }; // struct Interpolation
-
-} // namespace phtr
 
 namespace phtr
 {
@@ -74,6 +43,7 @@ namespace phtr
     template <typename view_t>
     class ImageInterpolatorBase
     {
+
             /* ****************************************
              * public interface
              * **************************************** */

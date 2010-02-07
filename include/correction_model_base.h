@@ -73,7 +73,8 @@ namespace phtr
             /**
             * \brief Reset the coordinate system parameters.
             * \note Calling this function does not reset the current model parameters. Call
-            * \ref set_model_params() afterwards to ensure a correct parameter set.
+            * the appropriate set_model_params() function (or similar) afterwards to ensure a
+            * correct parameter set.
             * \param[in] param_aspect The aspect ratio that was used when determining the model parameters.
             * \param[in] input_aspect The aspect ratio of the input image.
             * \param[in] param_crop The crop factor that was used when determining the model parameters.

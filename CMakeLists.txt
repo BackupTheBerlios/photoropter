@@ -121,6 +121,7 @@ set(PHTR_SOURCES
   include/types.h
   include/storage_type.h
   include/channel_type.h
+  include/interpolation_type.h
   include/image_buffer.h
   include/image_buffer.tpl.h
   include/image_interpolator.h
