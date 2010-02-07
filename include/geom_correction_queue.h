@@ -36,7 +36,7 @@ namespace phtr
 {
 
     /**
-    * Class holding a queue of geometrical correction model functions.
+    * \brief Class holding a queue of geometrical correction model functions.
     */
     class GeomCorrectionQueue
     {

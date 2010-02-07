@@ -28,6 +28,7 @@ THE SOFTWARE.
 #define __GEOM_CORRECTION_MODEL_H__
 
 #include "types.h"
+#include "correction_model_base.h"
 
 namespace phtr
 {
@@ -57,7 +58,7 @@ namespace phtr
             */
             virtual void get_src_coords(interp_coord_t& x_r, interp_coord_t& y_r,
                                         interp_coord_t& x_g, interp_coord_t& y_g,
-                                        interp_coord_t& x_b, interp_coord_t& y_b) = 0;
+                                        interp_coord_t& x_b, interp_coord_t& y_b) const = 0;
 
         public:
             /**
@@ -79,7 +80,7 @@ namespace phtr
     * parameter in the formula above. Because of that, we will use the format
     * (x0,y0) to designate the center shift.
     */
-    class PTLensGeomModel : public IGeomCorrectionModel
+    class PTLensGeomModel : public IGeomCorrectionModel, private CorrectionModelBase
     {
 
             /* ****************************************
@@ -89,14 +90,42 @@ namespace phtr
         public:
             /**
             * \brief Constructor.
+            * \details In this variant, the complete information describing both the coordinate system used
+            * when determining the model parameters and the coordinate system of the input image are used.
+            * \param[in] param_aspect The aspect ratio that was used when determining the model parameters.
+            * \param[in] input_aspect The aspect ratio of the input image.
+            * \param[in] param_crop The crop factor that was used when determining the model parameters.
+            * \param[in] input_crop The crop factor of the input image.
+            */
+            PTLensGeomModel(double param_aspect, double input_aspect,
+                            double param_crop, double input_crop);
+
+        public:
+            /**
+            * \brief Constructor.
+            * \details When construction the model using this constructor, the following things are
+            * assumed:
+            * <ol><li>The parameters were determined on an image of the same aspect ratio in landscape
+            * orientation (i.e., if the input aspect is <1.0, then 1/input_aspect is assumed for the
+            * parameter aspect ratio.</li>
+            * <li>The image and the parameter set use the same crop factor (i.e., both factors are
+            * set to 1.0).</li></ol>
+            * \param[in] input_aspect The aspect ratio of the input image.
+            */
+            explicit PTLensGeomModel(double input_aspect);
+
+        public:
+            /**
+            * \brief Set the model parameters.
             * \param[in] a The 'a' parameter.
             * \param[in] b The 'b' parameter.
             * \param[in] c The 'c' parameter.
             * \param[in] d The 'd' parameter.
-            * \param[in] x0 The 'x0' parameter.
-            * \param[in] y0 The 'y0' parameter.
+            * \param[in] x0 The 'x0' parameter (horizontal center shift).
+            * \param[in] y0 The 'y0' parameter (vertical center shift).
             */
-            PTLensGeomModel(double a, double b, double c, double d = 1.0, double x0 = 0.0, double y0 = 0.0);
+            void set_model_params(double a, double b, double c, double d,
+                                  interp_coord_t x0 = 0, interp_coord_t y0 = 0);
 
         public:
             /**
@@ -114,9 +143,9 @@ namespace phtr
             * \param[in,out] y_b The corresponding y coordinate for the 'blue' channel
             *                     in the source image.
             */
-            virtual void get_src_coords(interp_coord_t& x_r, interp_coord_t& y_r,
-                                        interp_coord_t& x_g, interp_coord_t& y_g,
-                                        interp_coord_t& x_b, interp_coord_t& y_b);
+            void get_src_coords(interp_coord_t& x_r, interp_coord_t& y_r,
+                                interp_coord_t& x_g, interp_coord_t& y_g,
+                                interp_coord_t& x_b, interp_coord_t& y_b) const;
 
         public:
             /**

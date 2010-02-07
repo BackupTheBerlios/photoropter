@@ -30,20 +30,50 @@ THE SOFTWARE.
 
 namespace phtr
 {
-    PTLensGeomModel::PTLensGeomModel(double a, double b, double c, double d, double x0, double y0)
-            : a_(a),
-            b_(b),
-            c_(c),
-            d_(d),
-            x0_(x0),
-            y0_(y0)
+    PTLensGeomModel::
+    PTLensGeomModel(double param_aspect, double input_aspect,
+                    double param_crop, double input_crop)
+            : CorrectionModelBase(param_aspect, input_aspect, param_crop, input_crop),
+            a_(0),
+            b_(0),
+            c_(0),
+            d_(0),
+            x0_(0),
+            y0_(0)
     {
         //NIL
     }
 
-    void PTLensGeomModel::get_src_coords(interp_coord_t& x_r, interp_coord_t& y_r,
-                                         interp_coord_t& x_g, interp_coord_t& y_g,
-                                         interp_coord_t& x_b, interp_coord_t& y_b)
+    PTLensGeomModel::
+    PTLensGeomModel(double input_aspect)
+            : CorrectionModelBase(input_aspect),
+            a_(0),
+            b_(0),
+            c_(0),
+            d_(0),
+            x0_(0),
+            y0_(0)
+    {
+    }
+
+    void
+    PTLensGeomModel::
+    set_model_params(double a, double b, double c, double d,
+                     interp_coord_t x0, interp_coord_t y0)
+    {
+        a_ = a * std::pow(coord_fact_, 3);
+        b_ = b * std::pow(coord_fact_, 2);
+        c_ = c * coord_fact_;
+        d_ = d;
+        x0_ = x0;
+        y0_ = y0;
+    }
+
+    void
+    PTLensGeomModel::
+    get_src_coords(interp_coord_t& x_r, interp_coord_t& y_r,
+                   interp_coord_t& x_g, interp_coord_t& y_g,
+                   interp_coord_t& x_b, interp_coord_t& y_b) const
     {
         // calculate the 'red' channel
         x_r -= x0_;

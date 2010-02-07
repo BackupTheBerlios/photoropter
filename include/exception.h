@@ -41,24 +41,9 @@ namespace phtr
         class base_exception : public std::exception
         {
 
-            public:
-                /**
-                * \brief Standard constructor.
-                */
-                base_exception();
-
-            public:
-                /**
-                * \brief Construction with a specific message.
-                * \param[in] msg The message.
-                */
-                base_exception(const std::string& msg);
-
-            public:
-                /**
-                * \brief Destructor.
-                */
-                virtual ~base_exception() throw();
+                /* ****************************************
+                 * public interface
+                 * **************************************** */
 
             public:
                 /**
@@ -68,6 +53,29 @@ namespace phtr
                 * \return The message.
                 */
                 virtual const char* what() const throw();
+
+            public:
+                /**
+                * \brief Destructor.
+                */
+                virtual ~base_exception() throw();
+
+                /* ****************************************
+                 * internals
+                 * **************************************** */
+
+            protected:
+                /**
+                * \brief Standard constructor.
+                */
+                base_exception();
+
+            protected:
+                /**
+                * \brief Construction with a specific message.
+                * \param[in] msg The message.
+                */
+                base_exception(const std::string& msg);
 
             protected:
                 /**
@@ -80,6 +88,7 @@ namespace phtr
                 * \brief Internal string containing the exception message.
                 */
                 std::string msg_;
+
         }; // class base_exception
 
         /**

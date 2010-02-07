@@ -84,7 +84,10 @@ void vil_test()
     using namespace phtr;
 
     // typedefs and constants
-    const Storage::type storage_type(Storage::rgb_16_inter);
+    // the Photoropter storage type
+    const Storage::type storage_type(Storage::rgb_8_inter);
+    // the equivalent vil type
+    typedef vxl_uint_8 vil_channel_t;
 
     typedef ImageBuffer<storage_type> buffer_t;
     typedef MemImageViewR<storage_type> view_r_t;
@@ -92,9 +95,6 @@ void vil_test()
     typedef view_w_t::iter_t iter_t;
     typedef ImageInterpolator<Interpolation::bilinear, view_r_t> interp_t;
     typedef ImageTransform<interp_t, view_w_t, 2> transform_t;
-
-    // the equivalent vil type
-    typedef vxl_uint_16 vil_channel_t;
 
     // create image resource for the input image
     vcl_cout << "Loading test image."  << vcl_endl;
@@ -144,7 +144,7 @@ void vil_test()
     vcl_cout << "Time taken: " << difftime(t1, t0) << " seconds." << vcl_endl;
 
     vcl_cout << "Saving output image."  << vcl_endl;
-    vil_save(vil_dst_view, "out.png");
+    vil_save(vil_dst_view, "out.jpg");
 }
 
 int main()

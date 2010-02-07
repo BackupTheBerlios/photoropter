@@ -63,17 +63,6 @@ namespace phtr
 
         public:
             /**
-            * \brief Constructor.
-            * \param[in] base_addr The base address of the image data in memory.
-            * \param[in] width The image width.
-            * \param[in] height The image height.
-            */
-            MemImageViewBase(void* base_addr,
-                             coord_t width,
-                             coord_t height);
-
-        public:
-            /**
             * \brief Get the image width.
             * \return The width.
             */
@@ -98,6 +87,17 @@ namespace phtr
             /* ****************************************
              * internals
              * **************************************** */
+
+        protected:
+            /**
+            * \brief Constructor.
+            * \param[in] base_addr The base address of the image data in memory.
+            * \param[in] width The image width.
+            * \param[in] height The image height.
+            */
+            MemImageViewBase(void* base_addr,
+                             coord_t width,
+                             coord_t height);
 
         protected:
             /**

@@ -56,8 +56,12 @@ namespace phtr
         const interp_coord_t sampling_step_y = 1.0 / sampling_fact;
         const interp_channel_t channel_scaling = sampling_step_x * sampling_step_y;
 
+        // coordinates transformations
         coord_t width = image_view_w_.width();
         coord_t height = image_view_w_.height();
+
+        // meta-information on the image storage (needed for e.g. the maximal channel values)
+        typename image_view_w_t::storage_info_t storage_info(width, height);
 
         const interp_coord_t img_x_max = static_cast<interp_coord_t>(width - 1);
         const interp_coord_t img_y_max = static_cast<interp_coord_t>(height - 1);
@@ -111,6 +115,11 @@ namespace phtr
                 interp_channel_t val_g(0);
                 interp_channel_t val_b(0);
 
+                // channel factors
+                double fact_r(1.0);
+                double fact_g(1.0);
+                double fact_b(1.0);
+
                 // prepare (over-)sampling loop
                 interp_coord_t cur_samp_x(0);
                 interp_coord_t ini_samp_x(cur_pixel_x - 0.5 + (1.0 / (2 * sampling_fact)));
@@ -134,24 +143,42 @@ namespace phtr
                                                       src_x_g, src_y_g,
                                                       src_x_b, src_y_b);
 
-                        // get channel values
-                        val_r += interpolator_.get_px_val(Channel::red, src_x_r, src_y_r)
-                                 * colour_queue_.get_correction_factor(Channel::red, src_x_r, src_y_r);
-                        val_g += interpolator_.get_px_val(Channel::green, src_x_g, src_y_g)
-                                 * colour_queue_.get_correction_factor(Channel::green, src_x_g, src_y_g);
-                        val_b += interpolator_.get_px_val(Channel::blue, src_x_b, src_y_b)
-                                 * colour_queue_.get_correction_factor(Channel::blue, src_x_b, src_y_b);
+                        // get channel values and correction factors
+                        colour_queue_.get_correction_factors(src_x_r, src_y_r,
+                                                             src_x_g, src_y_g,
+                                                             src_x_b, src_y_b,
+                                                             fact_r, fact_g, fact_b);
+
+                        val_r += interpolator_.get_px_val(Channel::red, src_x_r, src_y_r)   * fact_r;
+                        val_g += interpolator_.get_px_val(Channel::green, src_x_g, src_y_g) * fact_g;
+                        val_b += interpolator_.get_px_val(Channel::blue, src_x_b, src_y_b)  * fact_b;
 
                         cur_samp_x += sampling_step_x;
-                    }
+                    } // (inner) oversampling loop
 
                     cur_samp_y += sampling_step_y;
-                }
+                } // (outer) oversampling loop
 
                 // scale channel values (due to oversampling)
                 val_r *= channel_scaling;
                 val_g *= channel_scaling;
                 val_b *= channel_scaling;
+
+                // deal with clipping
+                if (val_r > storage_info.max_val)
+                {
+                    val_r = storage_info.max_val;
+                }
+
+                if (val_g > storage_info.max_val)
+                {
+                    val_g = storage_info.max_val;
+                }
+
+                if (val_b > storage_info.max_val)
+                {
+                    val_b = storage_info.max_val;
+                }
 
                 // write channel values
                 iter.write_px_val(Channel::red, val_r);

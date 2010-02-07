@@ -30,8 +30,6 @@ THE SOFTWARE.
 #include "mem_image_view_r.h"
 #include "types.h"
 
-#include <cmath>
-
 namespace phtr
 {
 
@@ -70,7 +68,7 @@ namespace phtr
     /**
     * \brief Image interpolation base class.
     * \details This stub (among other things) deals with the image's aspect ratio and
-    * contains the image view reference.
+    * contains the image view reference. It is not supposed to be used directly.
     * \param view_t  The image view that is used for reading data.
     */
     template <typename view_t>
@@ -88,23 +86,6 @@ namespace phtr
 
         public:
             /**
-            * \brief Constructor.
-            * \note The aspect ratio will be calculated from width and height of the input
-            * image, i.e. square pixels are assumed.
-            * \param[in] image_view The image view which will be used for reading image data.
-            */
-            ImageInterpolatorBase(const view_t& image_view);
-
-        public:
-            /**
-            * \brief Constructor.
-            * \param[in] image_view   The image view which will be used for reading image data.
-            * \param[in] aspect_ratio The aspect ratio of the image.
-            */
-            ImageInterpolatorBase(const view_t& image_view, interp_coord_t aspect_ratio);
-
-        public:
-            /**
             * \brief Return the aspect ratio of the image.
             * \return The aspect ratio.
             */
@@ -113,6 +94,23 @@ namespace phtr
             /* ****************************************
              * internals
              * **************************************** */
+
+        protected:
+            /**
+            * \brief Constructor.
+            * \note The aspect ratio will be calculated from width and height of the input
+            * image, i.e. square pixels are assumed.
+            * \param[in] image_view The image view which will be used for reading image data.
+            */
+            ImageInterpolatorBase(const view_t& image_view);
+
+        protected:
+            /**
+            * \brief Constructor.
+            * \param[in] image_view   The image view which will be used for reading image data.
+            * \param[in] aspect_ratio The aspect ratio of the image.
+            */
+            ImageInterpolatorBase(const view_t& image_view, interp_coord_t aspect_ratio);
 
         protected:
             /**

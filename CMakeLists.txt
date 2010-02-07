@@ -144,14 +144,17 @@ set(PHTR_SOURCES
   include/mem_storage_info.h
   include/image_transform.h
   include/image_transform.tpl.h
+  include/correction_model_base.h
   include/geom_correction_model.h
   include/geom_correction_queue.h
   include/geom_correction_queue.inl.h
   include/colour_correction_model.h
   include/colour_correction_queue.h
   include/colour_correction_queue.inl.h
+  correction_model_base.cpp
   geom_correction_model.cpp
   geom_correction_queue.cpp
+  colour_correction_model.cpp
   colour_correction_queue.cpp
   exception.cpp
   )
