@@ -91,6 +91,12 @@ namespace phtr
             */
             void add_model(const IColourCorrectionModel& model);
 
+        public:
+            /**
+            * \brief Clear the current queue contents.
+            */
+            void clear();
+
             /* ****************************************
              * internals
              * **************************************** */
@@ -112,12 +118,6 @@ namespace phtr
             * \return Reference to the current instance.
             */
             ColourCorrectionQueue& operator=(const ColourCorrectionQueue& orig);
-
-        private:
-            /**
-            * \brief Clear the current queue contents.
-            */
-            void clear();
 
         private:
             /**

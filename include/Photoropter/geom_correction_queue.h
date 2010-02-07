@@ -88,6 +88,12 @@ namespace phtr
             */
             void add_model(const IGeomCorrectionModel& model);
 
+        public:
+            /**
+            * \brief Clear the current queue contents.
+            */
+            void clear();
+
             /* ****************************************
              * internals
              * **************************************** */
@@ -109,12 +115,6 @@ namespace phtr
             * \return Reference to the current instance.
             */
             GeomCorrectionQueue& operator=(const GeomCorrectionQueue& orig);
-
-        private:
-            /**
-            * \brief Clear the current queue contents.
-            */
-            void clear();
 
         private:
             /**
