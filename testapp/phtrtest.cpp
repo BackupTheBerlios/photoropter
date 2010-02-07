@@ -9,13 +9,13 @@
 #include <vil/vil_copy.h>
 #include <vil/vil_image_view.h>
 
-#include "types.h"
-#include "mem_image_view_r.h"
-#include "mem_image_view_w.h"
-#include "image_buffer.h"
-#include "channel_storage.h"
-#include "image_interpolator.h"
-#include "image_transform.h"
+#include "Photoropter/types.h"
+#include "Photoropter/mem_image_view_r.h"
+#include "Photoropter/mem_image_view_w.h"
+#include "Photoropter/image_buffer.h"
+#include "Photoropter/channel_storage.h"
+#include "Photoropter/image_interpolator.h"
+#include "Photoropter/image_transform.h"
 
 #include <memory>
 #include <ctime>

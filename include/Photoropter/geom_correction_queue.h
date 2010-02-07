@@ -24,22 +24,21 @@ THE SOFTWARE.
 
 */
 
-#ifndef __COLOUR_CORRECTION_QUEUE_H__
-#define __COLOUR_CORRECTION_QUEUE_H__
+#ifndef __GEOM_CORRECTION_QUEUE_H__
+#define __GEOM_CORRECTION_QUEUE_H__
 
 #include <vector>
 
-#include "types.h"
-#include "channel_type.h"
-#include "colour_correction_model.h"
+#include "Photoropter/types.h"
+#include "Photoropter/geom_correction_model.h"
 
 namespace phtr
 {
 
     /**
-    * \brief Class holding a queue of colour correction model functions.
+    * \brief Class holding a queue of geometrical correction model functions.
     */
-    class ColourCorrectionQueue
+    class GeomCorrectionQueue
     {
             /* ****************************************
              * public interface
@@ -50,38 +49,36 @@ namespace phtr
             * \brief Standard constructor.
             * \details This will construct an empty queue.
             */
-            ColourCorrectionQueue();
+            GeomCorrectionQueue();
 
         public:
             /**
             * \brief Destructor.
             */
-            virtual ~ColourCorrectionQueue();
+            virtual ~GeomCorrectionQueue();
 
         public:
             /**
-            * \brief Get the correction factors for the given position.
-            * \param[in] src_x_r The corresponding x coordinate for the 'red' channel
-            *                    in the source image.
-            * \param[in] src_y_r The corresponding y coordinate for the 'red' channel
-            *                    in the source image.
-            * \param[in] src_x_g The corresponding x coordinate for the 'green' channel
-            *                    in the source image.
-            * \param[in] src_y_g The corresponding y coordinate for the 'green' channel
-            *                    in the source image.
-            * \param[in] src_x_b The corresponding x coordinate for the 'blue' channel
-            *                    in the source image.
-            * \param[in] src_y_b The corresponding y coordinate for the 'blue' channel
-            *                    in the source image.
-            * \param[out] fact_r The correction factor for the 'red' channel.
-            * \param[out] fact_g The correction factor for the 'green' channel.
-            * \param[out] fact_b The correction factor for the 'blue' channel.
-            * \return The correction factor.
+            * \brief Fetch the transformed coordinates for the given position.
+            * \param[in]  dst_x   The x coordinate "seen from" the destination image.
+            * \param[in]  dst_y   The y coordinate "seen from" the destination image.
+            * \param[out] src_x_r The corresponding x coordinate for the 'red' channel
+            *                     in the source image
+            * \param[out] src_y_r The corresponding y coordinate for the 'red' channel
+            *                     in the source image
+            * \param[out] src_x_g The corresponding x coordinate for the 'green' channel
+            *                     in the source image
+            * \param[out] src_y_g The corresponding y coordinate for the 'green' channel
+            *                     in the source image
+            * \param[out] src_x_b The corresponding x coordinate for the 'blue' channel
+            *                     in the source image
+            * \param[out] src_y_b The corresponding y coordinate for the 'blue' channel
+            *                     in the source image
             */
-            inline void get_correction_factors(interp_coord_t src_x_r, interp_coord_t src_y_r,
-                                               interp_coord_t src_x_g, interp_coord_t src_y_g,
-                                               interp_coord_t src_x_b, interp_coord_t src_y_b,
-                                               double& fact_r, double& fact_g, double& fact_b) const;
+            inline void get_source_coords(interp_coord_t dst_x, interp_coord_t dst_y,
+                                          interp_coord_t& src_x_r, interp_coord_t& src_y_r,
+                                          interp_coord_t& src_x_g, interp_coord_t& src_y_g,
+                                          interp_coord_t& src_x_b, interp_coord_t& src_y_b) const;
 
             /* ****************************************
              * internals
@@ -94,7 +91,7 @@ namespace phtr
             * \param orig The original queue.
             * \details This will copy the given queue, duplicating the functionid objects.
             */
-            ColourCorrectionQueue(const ColourCorrectionQueue& orig);
+            GeomCorrectionQueue(const GeomCorrectionQueue& orig);
 
         private:
             /**
@@ -103,7 +100,7 @@ namespace phtr
             * \param orig The original queue.
             * \return Reference to the current instance.
             */
-            ColourCorrectionQueue& operator=(const ColourCorrectionQueue& orig);
+            GeomCorrectionQueue& operator=(const GeomCorrectionQueue& orig);
 
         private:
             /**
@@ -115,7 +112,7 @@ namespace phtr
             /**
             * \brief The internal list of correction models.
             */
-            std::vector<IColourCorrectionModel*> correction_model_;
+            std::vector<IGeomCorrectionModel*> correction_model_;
 
         private:
             /**
@@ -127,6 +124,6 @@ namespace phtr
 
 } // namespace phtr
 
-#include "colour_correction_queue.inl.h"
+#include "Photoropter/geom_correction_queue.inl.h"
 
-#endif // __COLOUR_CORRECTION_QUEUE_H__
+#endif // __GEOM_CORRECTION_QUEUE_H__

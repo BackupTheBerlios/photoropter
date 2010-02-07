@@ -1,4 +1,4 @@
-#include "exception.h"
+#include "Photoropter/exception.h"
 
 namespace phtr
 {

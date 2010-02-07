@@ -29,10 +29,10 @@ THE SOFTWARE.
 
 #include <limits>
 
-#include "storage_type.h"
-#include "channel_range.h"
-#include "channel_storage.h"
-#include "mem_layout.h"
+#include "Photoropter/storage_type.h"
+#include "Photoropter/channel_range.h"
+#include "Photoropter/channel_storage.h"
+#include "Photoropter/mem_layout.h"
 
 namespace phtr
 {

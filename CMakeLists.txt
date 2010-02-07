@@ -117,56 +117,59 @@ endif(DOXYGEN_FOUND)
 # configure library components
 ########################################
 
+set(PHTR_INCLUDE_DIR "include/${CMAKE_PROJECT_NAME}")
+set(PHTR_SRC_DIR "src")
+
 set(PHTR_SOURCES
-  include/types.h
-  include/storage_type.h
-  include/channel_type.h
-  include/interpolation_type.h
-  include/image_buffer.h
-  include/image_buffer.tpl.h
-  include/image_interpolator.h
-  include/channel_storage.h
-  include/exception.h
-  include/channel_range.h
-  include/mem_image_view_base.h
-  include/mem_image_view_base.tpl.h
-  include/mem_image_view_r.h
-  include/mem_image_view_r.tpl.h
-  include/mem_image_view_w.h
-  include/mem_image_view_w.tpl.h
-  include/mem_image_iter_base.h
-  include/mem_image_iter_base.tpl.h
-  include/mem_image_iter_r.h
-  include/mem_image_iter_r.tpl.h
-  include/mem_image_iter_w.h
-  include/mem_image_iter_w.tpl.h
-  include/image_interpolator.tpl.h
-  include/mem_layout.h
-  include/mem_storage_info.h
-  include/image_transform.h
-  include/image_transform.tpl.h
-  include/correction_model_base.h
-  include/geom_correction_model.h
-  include/geom_correction_queue.h
-  include/geom_correction_queue.inl.h
-  include/colour_correction_model.h
-  include/colour_correction_queue.h
-  include/colour_correction_queue.inl.h
-  correction_model_base.cpp
-  geom_correction_model.cpp
-  geom_correction_queue.cpp
-  colour_correction_model.cpp
-  colour_correction_queue.cpp
-  exception.cpp
+  ${PHTR_INCLUDE_DIR}/types.h
+  ${PHTR_INCLUDE_DIR}/storage_type.h
+  ${PHTR_INCLUDE_DIR}/channel_type.h
+  ${PHTR_INCLUDE_DIR}/interpolation_type.h
+  ${PHTR_INCLUDE_DIR}/image_buffer.h
+  ${PHTR_INCLUDE_DIR}/image_buffer.tpl.h
+  ${PHTR_INCLUDE_DIR}/image_interpolator.h
+  ${PHTR_INCLUDE_DIR}/channel_storage.h
+  ${PHTR_INCLUDE_DIR}/exception.h
+  ${PHTR_INCLUDE_DIR}/channel_range.h
+  ${PHTR_INCLUDE_DIR}/mem_image_view_base.h
+  ${PHTR_INCLUDE_DIR}/mem_image_view_base.tpl.h
+  ${PHTR_INCLUDE_DIR}/mem_image_view_r.h
+  ${PHTR_INCLUDE_DIR}/mem_image_view_r.tpl.h
+  ${PHTR_INCLUDE_DIR}/mem_image_view_w.h
+  ${PHTR_INCLUDE_DIR}/mem_image_view_w.tpl.h
+  ${PHTR_INCLUDE_DIR}/mem_image_iter_base.h
+  ${PHTR_INCLUDE_DIR}/mem_image_iter_base.tpl.h
+  ${PHTR_INCLUDE_DIR}/mem_image_iter_r.h
+  ${PHTR_INCLUDE_DIR}/mem_image_iter_r.tpl.h
+  ${PHTR_INCLUDE_DIR}/mem_image_iter_w.h
+  ${PHTR_INCLUDE_DIR}/mem_image_iter_w.tpl.h
+  ${PHTR_INCLUDE_DIR}/image_interpolator.tpl.h
+  ${PHTR_INCLUDE_DIR}/mem_layout.h
+  ${PHTR_INCLUDE_DIR}/mem_storage_info.h
+  ${PHTR_INCLUDE_DIR}/image_transform.h
+  ${PHTR_INCLUDE_DIR}/image_transform.tpl.h
+  ${PHTR_INCLUDE_DIR}/correction_model_base.h
+  ${PHTR_INCLUDE_DIR}/geom_correction_model.h
+  ${PHTR_INCLUDE_DIR}/geom_correction_queue.h
+  ${PHTR_INCLUDE_DIR}/geom_correction_queue.inl.h
+  ${PHTR_INCLUDE_DIR}/colour_correction_model.h
+  ${PHTR_INCLUDE_DIR}/colour_correction_queue.h
+  ${PHTR_INCLUDE_DIR}/colour_correction_queue.inl.h
+  ${PHTR_SRC_DIR}/correction_model_base.cpp
+  ${PHTR_SRC_DIR}/geom_correction_model.cpp
+  ${PHTR_SRC_DIR}/geom_correction_queue.cpp
+  ${PHTR_SRC_DIR}/colour_correction_model.cpp
+  ${PHTR_SRC_DIR}/colour_correction_queue.cpp
+  ${PHTR_SRC_DIR}/exception.cpp
   )
 
 include_directories(include ${Boost_INCLUDE_DIR})
 
-add_library(phtr STATIC ${PHTR_SOURCES})
+add_library(${CMAKE_PROJECT_NAME} STATIC ${PHTR_SOURCES})
 
 if(PHTR_SHARED)
   add_library(phtr-shared SHARED ${PHTR_SOURCES})
-  set_target_properties(phtr-shared PROPERTIES OUTPUT_NAME "pthr")
+  set_target_properties(phtr-shared PROPERTIES OUTPUT_NAME "${CMAKE_PROJECT_NAME}")
 endif(PHTR_SHARED)
 
 # test application is in a subdirectory

@@ -26,7 +26,7 @@ THE SOFTWARE.
 
 #include <cmath>
 
-#include "geom_correction_model.h"
+#include "Photoropter/geom_correction_model.h"
 
 namespace phtr
 {

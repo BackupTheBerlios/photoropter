@@ -27,9 +27,9 @@ THE SOFTWARE.
 #ifndef __IMAGE_INTERPOLATOR_H__
 #define __IMAGE_INTERPOLATOR_H__
 
-#include "mem_image_view_r.h"
-#include "interpolation_type.h"
-#include "types.h"
+#include "Photoropter/mem_image_view_r.h"
+#include "Photoropter/interpolation_type.h"
+#include "Photoropter/types.h"
 
 namespace phtr
 {
@@ -287,6 +287,6 @@ namespace phtr
 
 } // namespace phtr
 
-#include "image_interpolator.tpl.h"
+#include "Photoropter/image_interpolator.tpl.h"
 
 #endif // __IMAGE_INTERPOLATOR_H__

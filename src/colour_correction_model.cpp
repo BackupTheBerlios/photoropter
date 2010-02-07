@@ -26,7 +26,7 @@ THE SOFTWARE.
 
 #include <cmath>
 
-#include "colour_correction_model.h"
+#include "Photoropter/colour_correction_model.h"
 
 namespace phtr
 {

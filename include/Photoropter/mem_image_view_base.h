@@ -27,8 +27,8 @@ THE SOFTWARE.
 #ifndef __MEM_IMAGE_VIEW_BASE_H__
 #define __MEM_IMAGE_VIEW_BASE_H__
 
-#include "storage_type.h"
-#include "mem_storage_info.h"
+#include "Photoropter/storage_type.h"
+#include "Photoropter/mem_storage_info.h"
 
 /**
 * \brief Main namespace of the Photoropter library.
@@ -178,6 +178,6 @@ namespace phtr
 
 } // namespace phtr
 
-#include "mem_image_view_base.tpl.h"
+#include "Photoropter/mem_image_view_base.tpl.h"
 
 #endif // __MEM_IMAGE_VIEW_BASE_H__

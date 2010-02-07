@@ -26,7 +26,7 @@ THE SOFTWARE.
 
 #include <cmath>
 
-#include "correction_model_base.h"
+#include "Photoropter/correction_model_base.h"
 
 namespace phtr
 {

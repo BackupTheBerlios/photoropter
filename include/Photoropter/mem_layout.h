@@ -27,8 +27,8 @@ THE SOFTWARE.
 #ifndef __MEM_LAYOUT_H__
 #define __MEM_LAYOUT_H__
 
-#include "types.h"
-#include "storage_type.h"
+#include "Photoropter/types.h"
+#include "Photoropter/storage_type.h"
 
 namespace phtr
 {
