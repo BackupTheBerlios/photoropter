@@ -71,7 +71,7 @@ namespace phtr
             * \brief Create a clone of the correction model functionoid.
             * \return The clone.
             */
-            virtual IColourCorrectionModel* clone() = 0;
+            virtual IColourCorrectionModel* clone() const = 0;
 
     }; // class IColourCorrectionModel
 
@@ -161,7 +161,7 @@ namespace phtr
             * \brief Create a clone of the correction model functionoid.
             * \return The clone.
             */
-            IColourCorrectionModel* clone();
+            IColourCorrectionModel* clone() const;
 
             /* ****************************************
              * internals

@@ -65,7 +65,7 @@ namespace phtr
             * \brief Create a clone of the correction model functionoid.
             * \return The clone.
             */
-            virtual IGeomCorrectionModel* clone() = 0;
+            virtual IGeomCorrectionModel* clone() const = 0;
 
     }; // class IGeomCorrectionModel
 
@@ -152,7 +152,7 @@ namespace phtr
             * \brief Create a clone of the correction model functionoid.
             * \return The clone.
             */
-            IGeomCorrectionModel* clone();
+            IGeomCorrectionModel* clone() const;
 
             /* ****************************************
              * internals

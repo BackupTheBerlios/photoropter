@@ -109,7 +109,7 @@ namespace phtr
         y_b = sin_phi_b * r_b + y0_;
     }
 
-    IGeomCorrectionModel* PTLensGeomModel::clone()
+    IGeomCorrectionModel* PTLensGeomModel::clone() const
     {
         return new PTLensGeomModel(*this);
     }

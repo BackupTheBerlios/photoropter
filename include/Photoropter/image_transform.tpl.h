@@ -194,4 +194,20 @@ namespace phtr
 
     } //  ImageTransform<...>::do_transform()
 
+    template <typename interpolator_t, typename image_view_w_t, unsigned int oversampling>
+    GeomCorrectionQueue&
+    ImageTransform<interpolator_t, image_view_w_t, oversampling>::
+    geom_queue()
+    {
+        return geom_queue_;
+    }
+
+    template <typename interpolator_t, typename image_view_w_t, unsigned int oversampling>
+    ColourCorrectionQueue&
+    ImageTransform<interpolator_t, image_view_w_t, oversampling>::
+    colour_queue()
+    {
+        return colour_queue_;
+    }
+
 } // namespace phtr

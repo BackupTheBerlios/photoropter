@@ -83,6 +83,14 @@ namespace phtr
                                                interp_coord_t src_x_b, interp_coord_t src_y_b,
                                                double& fact_r, double& fact_g, double& fact_b) const;
 
+        public:
+            /**
+            * \brief Add the given model to the queue.
+            * \note The object will be copied.
+            * \param model The colour correction model to be added.
+            */
+            void add_model(const IColourCorrectionModel& model);
+
             /* ****************************************
              * internals
              * **************************************** */

@@ -33,11 +33,7 @@ namespace phtr
     GeomCorrectionQueue::GeomCorrectionQueue()
             : n_models_(0)
     {
-        //FIXME
-        PTLensGeomModel* mod = new PTLensGeomModel(4.0 / 3.0, 4.0 / 3.0, 2.0, 2.0);
-        mod->set_model_params(0, 0.00987, -0.05127, 1, 0, 0);
-        correction_model_.push_back(mod);
-        ++n_models_;
+        //NIL
     }
 
     GeomCorrectionQueue::GeomCorrectionQueue(const GeomCorrectionQueue& orig)
@@ -83,6 +79,12 @@ namespace phtr
         correction_model_.clear();
 
         n_models_ = 0;
+    }
+
+    void GeomCorrectionQueue::add_model(const IGeomCorrectionModel& model)
+    {
+        correction_model_.push_back(model.clone());
+        ++n_models_;
     }
 
 } // namespace phtr

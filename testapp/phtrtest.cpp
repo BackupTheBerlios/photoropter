@@ -16,6 +16,8 @@
 #include "Photoropter/channel_storage.h"
 #include "Photoropter/image_interpolator.h"
 #include "Photoropter/image_transform.h"
+#include "Photoropter/colour_correction_model.h"
+#include "Photoropter/geom_correction_model.h"
 
 #include <memory>
 #include <ctime>
@@ -94,7 +96,7 @@ void vil_test()
     typedef MemImageViewW<storage_type> view_w_t;
     typedef view_w_t::iter_t iter_t;
     typedef ImageInterpolator<Interpolation::bilinear, view_r_t> interp_t;
-    typedef ImageTransform<interp_t, view_w_t, 2> transform_t;
+    typedef ImageTransform<interp_t, view_w_t, 1> transform_t;
 
     // create image resource for the input image
     vcl_cout << "Loading test image."  << vcl_endl;
@@ -110,8 +112,8 @@ void vil_test()
     // set image size
     size_t img_width = loaded_img.ni();
     size_t img_height = loaded_img.nj();
-    size_t dst_width = 1.41 * img_width;
-    size_t dst_height = 1.41 * img_height;
+    size_t dst_width = 1.00 * img_width;
+    size_t dst_height = 1.00 * img_height;
     //size_t dst_width = 150;
     //size_t dst_height = 100;
 
@@ -135,9 +137,21 @@ void vil_test()
     vcl_cout << "Copying image to buffer." << vcl_endl;
     vil_src_view.deep_copy(loaded_img);
 
+    // image transformation object
+    transform_t transform(src_img_view, dst_img_view);
+
+    // add correction models
+    VignettingColourModel vign_mod(4.0 / 3.0, 4.0 / 3.0, 2.0, 2.0);
+    vign_mod.set_model_params(0.0, 0.0, -0.1, 0.0, 0.0);
+    transform.colour_queue().add_model(vign_mod);
+
+    PTLensGeomModel ptlens_mod(4.0 / 3.0, 4.0 / 3.0, 2.0, 2.0);
+    ptlens_mod.set_model_params(0, 0.00987, -0.05127, 1, 0, 0);
+    transform.geom_queue().add_model(ptlens_mod);
+
+    // perform transformation
     time_t t0 = time(0);
     vcl_cout << "Transforming." << vcl_endl;
-    transform_t transform(src_img_view, dst_img_view);
     transform.do_transform();
     time_t t1 = time(0);
 

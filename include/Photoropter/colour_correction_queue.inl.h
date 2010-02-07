@@ -33,6 +33,10 @@ namespace phtr
             double& fact_r, double& fact_g, double& fact_b) const
     {
 
+        fact_r = 1.0;
+        fact_g = 1.0;
+        fact_b = 1.0;
+
         double tmp_fact_r(1.0);
         double tmp_fact_g(1.0);
         double tmp_fact_b(1.0);

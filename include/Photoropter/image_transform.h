@@ -78,6 +78,20 @@ namespace phtr
             */
             void do_transform();
 
+        public:
+            /**
+            * \brief Access the geometry correction queue.
+            * \return Reference to the queue object.
+            */
+            GeomCorrectionQueue& geom_queue();
+
+        public:
+            /**
+            * \brief Access the colour correction queue.
+            * \return Reference to the queue object.
+            */
+            ColourCorrectionQueue& colour_queue();
+
             /* ****************************************
              * internals
              * **************************************** */

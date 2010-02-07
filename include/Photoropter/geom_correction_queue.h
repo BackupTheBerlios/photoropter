@@ -80,6 +80,14 @@ namespace phtr
                                           interp_coord_t& src_x_g, interp_coord_t& src_y_g,
                                           interp_coord_t& src_x_b, interp_coord_t& src_y_b) const;
 
+        public:
+            /**
+            * \brief Add the given model to the queue.
+            * \note The object will be copied.
+            * \param model The geometry correction model to be added.
+            */
+            void add_model(const IGeomCorrectionModel& model);
+
             /* ****************************************
              * internals
              * **************************************** */

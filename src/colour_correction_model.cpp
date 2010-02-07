@@ -93,7 +93,7 @@ namespace phtr
 
     }
 
-    IColourCorrectionModel* VignettingColourModel::clone()
+    IColourCorrectionModel* VignettingColourModel::clone() const
     {
         return new VignettingColourModel(*this);
     }
