@@ -96,7 +96,7 @@ void vil_test()
     typedef MemImageViewW<storage_type> view_w_t;
     typedef view_w_t::iter_t iter_t;
     typedef ImageInterpolator<Interpolation::bilinear, view_r_t> interp_t;
-    typedef ImageTransform<interp_t, view_w_t, 1> transform_t;
+    typedef ImageTransform<interp_t, view_w_t, 2> transform_t;
 
     // create image resource for the input image
     vcl_cout << "Loading test image."  << vcl_endl;
