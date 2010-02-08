@@ -1,4 +1,3 @@
-// Include standard C++ input/output library
 #include <vcl_iostream.h>
 #include <vxl_config.h>
 #include <vil/vil_rgb.h>
@@ -19,7 +18,6 @@
 #include <photoropter/colour_correction_model.h>
 #include <photoropter/geom_correction_model.h>
 
-#include <memory>
 #include <ctime>
 
 void simple_test()
