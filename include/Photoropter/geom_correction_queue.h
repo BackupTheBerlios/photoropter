@@ -29,8 +29,8 @@ THE SOFTWARE.
 
 #include <vector>
 
-#include "Photoropter/types.h"
-#include "Photoropter/geom_correction_model.h"
+#include <Photoropter/types.h>
+#include <Photoropter/geom_correction_model.h>
 
 namespace phtr
 {
@@ -132,6 +132,6 @@ namespace phtr
 
 } // namespace phtr
 
-#include "Photoropter/geom_correction_queue.inl.h"
+#include <Photoropter/geom_correction_queue.inl.h>
 
 #endif // __GEOM_CORRECTION_QUEUE_H__

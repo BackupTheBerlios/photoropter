@@ -27,7 +27,7 @@ THE SOFTWARE.
 #ifndef __CHANNEL_STORAGE_H__
 #define __CHANNEL_STORAGE_H__
 
-#include "Photoropter/storage_type.h"
+#include <Photoropter/storage_type.h>
 #include <cstddef>
 
 namespace phtr
