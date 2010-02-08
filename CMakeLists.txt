@@ -59,7 +59,9 @@ find_package(Doxygen)
 if(DOXYGEN_FOUND)
   message(STATUS "Doxygen found: HTML documentation can be generated.")
 
-  set(DOXYGEN_SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
+  # set directories
+  set(DOXYGEN_SRC_DIR1 ${CMAKE_CURRENT_SOURCE_DIR}/include/${CMAKE_PROJECT_NAME})
+  set(DOXYGEN_SRC_DIR2 ${CMAKE_CURRENT_SOURCE_DIR}/src)
   set(DOXYGEN_DOCSRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/doc-src)
   set(DOXYGEN_DOC_DIR ${CMAKE_CURRENT_BINARY_DIR}/doc)
 
@@ -73,7 +75,8 @@ if(DOXYGEN_FOUND)
   set(DOXY_CSS "\"${DOXYGEN_DOCSRC_DIR}/customdoxy.css\"")
   set(DOXY_PROJECT "\"${CMAKE_PROJECT_NAME}\"")
 
-  set(DOXY_INPUT "\"${DOXYGEN_SRC_DIR}\"")
+  set(DOXY_INPUT "\"${DOXYGEN_SRC_DIR1}\"")
+  set(DOXY_INPUT "${DOXY_INPUT} \"${DOXYGEN_SRC_DIR2}\"")
   set(DOXY_INPUT "${DOXY_INPUT} \"${DOXYGEN_DOCSRC_DIR}\"")
   set(DOXY_INPUT "${DOXY_INPUT} \"${DOXYGEN_DOCSRC_DIR}/main.txt\"")
   set(DOXY_INPUT "${DOXY_INPUT} \"${DOXYGEN_DOCSRC_DIR}/overview.txt\"")
