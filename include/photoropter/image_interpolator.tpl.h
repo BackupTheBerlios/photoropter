@@ -38,7 +38,7 @@ namespace phtr
             width_(image_view_.width()),
             height_(image_view_.height()),
             null_val_(0),
-            aspect_ratio_(static_cast<interp_coord_t>(width_) / static_cast<interp_coord_t>(height_)),
+            aspect_ratio_(image_view_.aspect_ratio()),
             scale_x_((static_cast<interp_coord_t>(image_view_.width()) - 1.0) / (2.0 * aspect_ratio_)),
             scale_y_((static_cast<interp_coord_t>(image_view_.height()) - 1.0) / 2.0)
     {

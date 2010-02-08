@@ -86,7 +86,7 @@ namespace phtr
     * \attention This model is incompatible with vignetting parameters used by Hugin.
     * Use \ref HuginVignettingModel for that purpose.
     */
-    class VignettingColourModel : public IColourCorrectionModel, private CorrectionModelBase
+    class VignettingColourModel : public IColourCorrectionModel, protected CorrectionModelBase
     {
 
             /* ****************************************
@@ -128,7 +128,7 @@ namespace phtr
             * \param[in] x0 The 'x0' parameter (horizontal center shift).
             * \param[in] y0 The 'y0' parameter (vertical center shift).
             */
-            void set_model_params(double a, double b, double c,
+            virtual void set_model_params(double a, double b, double c,
                                   interp_coord_t x0 = 0, interp_coord_t y0 = 0);
 
         public:
@@ -169,30 +169,6 @@ namespace phtr
 
         protected:
             /**
-            * \brief The aspect ratio that was used when determining the model parameters.
-            */
-            double param_aspect_;
-
-        protected:
-            /**
-            * \brief The aspect ratio of the input image.
-            */
-            double input_aspect_;
-
-        protected:
-            /**
-            * \brief The crop factor that was used when determining the model parameters.
-            */
-            double param_crop_;
-
-        protected:
-            /**
-            * \brief The crop factor of the input image.
-            */
-            double input_crop_;
-
-        protected:
-            /**
             * \brief The parameter 'a'.
             */
             double a_;
@@ -221,6 +197,64 @@ namespace phtr
             */
             double y0_;
     }; // class VignettingColourModel
+
+    /**
+    * \brief Colour correction model implementing vignetting correction.
+    * \details This model is compatible with vignetting parameters used by Hugin.
+    */
+    class HuginVignettingModel : public VignettingColourModel
+    {
+
+            /* ****************************************
+             * public interface
+             * **************************************** */
+
+        public:
+            /**
+            * \brief Constructor.
+            * \details In this variant, the complete information describing both the coordinate system used
+            * when determining the model parameters and the coordinate system of the input image are used.
+            * \param[in] param_aspect The aspect ratio that was used when determining the model parameters.
+            * \param[in] input_aspect The aspect ratio of the input image.
+            * \param[in] param_crop The crop factor that was used when determining the model parameters.
+            * \param[in] input_crop The crop factor of the input image.
+            */
+            HuginVignettingModel(double param_aspect, double input_aspect,
+                                  double param_crop, double input_crop);
+
+            /**
+            * \brief Constructor.
+            * \details When construction the model using this constructor, the following things are
+            * assumed:
+            * <ol><li>The parameters were determined on an image of the same aspect ratio in landscape
+            * orientation (i.e., if the input aspect is <1.0, then 1/input_aspect is assumed for the
+            * parameter aspect ratio.</li>
+            * <li>The image and the parameter set use the same crop factor (i.e., both factors are
+            * set to 1.0).</li></ol>
+            * \param[in] input_aspect The aspect ratio of the input image.
+            */
+            explicit HuginVignettingModel(double input_aspect);
+
+        public:
+            /**
+            * \brief Set the model parameters.
+            * \param[in] a The 'a' parameter.
+            * \param[in] b The 'b' parameter.
+            * \param[in] c The 'c' parameter.
+            * \param[in] x0 The 'x0' parameter (horizontal center shift).
+            * \param[in] y0 The 'y0' parameter (vertical center shift).
+            */
+            virtual void set_model_params(double a, double b, double c,
+                                  interp_coord_t x0 = 0, interp_coord_t y0 = 0);
+
+        public:
+            /**
+            * \brief Create a clone of the correction model functionoid.
+            * \return The clone.
+            */
+            IColourCorrectionModel* clone() const;
+
+    }; // class HuginVignettingModel
 
 } // namespace phtr
 

@@ -87,11 +87,11 @@ namespace phtr
              * internals
              * **************************************** */
 
-        private:
+        protected:
             /**
-            * \brief The internal coordinate system compensation factor.
+            * \brief Calculate the internal coordinate system compensation factor.
             */
-            void calc_coord_fact();
+            virtual void calc_coord_fact();
 
         protected:
             /**

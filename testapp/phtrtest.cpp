@@ -141,11 +141,12 @@ void vil_test()
     transform_t transform(src_img_view, dst_img_view);
 
     // add correction models
-    VignettingColourModel vign_mod(4.0 / 3.0, 4.0 / 3.0, 2.0, 2.0);
+    double aspect = src_img_view.aspect_ratio();
+    HuginVignettingModel vign_mod(aspect);
     vign_mod.set_model_params(0.0, 0.0, -0.1, 0.0, 0.0);
     transform.colour_queue().add_model(vign_mod);
 
-    PTLensGeomModel ptlens_mod(4.0 / 3.0, 4.0 / 3.0, 2.0, 2.0);
+    PTLensGeomModel ptlens_mod(aspect);
     ptlens_mod.set_model_params(0, 0.00987, -0.05127, 1, 0, 0);
     transform.geom_queue().add_model(ptlens_mod);
 

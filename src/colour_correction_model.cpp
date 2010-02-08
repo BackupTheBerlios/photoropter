@@ -98,4 +98,36 @@ namespace phtr
         return new VignettingColourModel(*this);
     }
 
+    HuginVignettingModel::
+    HuginVignettingModel(double param_aspect, double input_aspect,
+                          double param_crop, double input_crop)
+            : VignettingColourModel(param_aspect, input_aspect, param_crop, input_crop)
+    {
+        //NIL
+    }
+
+    HuginVignettingModel::
+    HuginVignettingModel(double input_aspect)
+            : VignettingColourModel(input_aspect)
+    {
+        //NIL
+    }
+
+    void HuginVignettingModel::
+    set_model_params(double a, double b, double c,
+                     interp_coord_t x0, interp_coord_t y0)
+    {
+        double hugin_fact = 1.0 / std::sqrt(1 + param_aspect_ * param_aspect_);
+        a_ = a * std::pow(coord_fact_ * hugin_fact, 6);
+        b_ = b * std::pow(coord_fact_ * hugin_fact, 4);
+        c_ = c * std::pow(coord_fact_ * hugin_fact, 2);
+        x0_ = x0;
+        y0_ = y0;
+    }
+
+    IColourCorrectionModel* HuginVignettingModel::clone() const
+    {
+        return new HuginVignettingModel(*this);
+    }
+
 } // namespace phtr
