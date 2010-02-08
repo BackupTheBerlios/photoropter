@@ -4,7 +4,7 @@ project(phtrtest)
 find_package(VXL QUIET)
 
 #search for Boost
-find_package(Boost 1.38 QUIET)
+find_package(Boost 1.38 QUIET COMPONENTS program_options)
 
 set(PHTR_BUILD_TESTAPP true)
 
