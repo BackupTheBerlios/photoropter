@@ -128,14 +128,14 @@ namespace phtr
             */
             iter_t get_iter(coord_t x, coord_t y) const;
 
-            public:
+        public:
             /**
             * \brief Set the aspect ratio of the image.
             * \param aspect_ratio The new aspect ratio.
             */
             void set_aspect_ratio(interp_coord_t aspect_ratio);
 
-            public:
+        public:
             /**
             * \brief Get the aspect ratio of the image.
             * \note The ratio is automatically calculated when the image is created,
@@ -148,11 +148,11 @@ namespace phtr
              * internals
              * **************************************** */
 
-    private:
-    /**
-    * \brief The image's aspect ratio.
-    */
-    interp_coord_t aspect_ratio_;
+        private:
+            /**
+            * \brief The image's aspect ratio.
+            */
+            interp_coord_t aspect_ratio_;
 
     }; // template class MemImageViewR<>
 

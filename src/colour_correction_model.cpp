@@ -100,7 +100,7 @@ namespace phtr
 
     HuginVignettingModel::
     HuginVignettingModel(double param_aspect, double input_aspect,
-                          double param_crop, double input_crop)
+                         double param_crop, double input_crop)
             : VignettingColourModel(param_aspect, input_aspect, param_crop, input_crop)
     {
         //NIL

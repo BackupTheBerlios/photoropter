@@ -34,7 +34,7 @@ namespace phtr
             : MemImageViewBase<T>(const_cast<void*>(base_addr), width, height)
     {
         aspect_ratio_ = static_cast<interp_coord_t>(this->width()) /
-         static_cast<interp_coord_t>(this->height());
+                        static_cast<interp_coord_t>(this->height());
     }
 
     template <Storage::type T>

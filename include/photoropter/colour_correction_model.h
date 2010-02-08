@@ -82,9 +82,11 @@ namespace phtr
     * Pablo d'Angelo: \f[
     * C_{src} = \frac{C_{dst}}{ar^6+br^4+cr^2+1}
     * \f]
-    * This model is also used by Hugin, but with slighter different coordinates.
-    * \attention This model is incompatible with vignetting parameters used by Hugin.
-    * Use \ref HuginVignettingModel for that purpose.
+    * This model is also used by Hugin, but with slightly different coordinates.
+    * \attention This model is incompatible with vignetting parameters produced by Hugin,
+    * since Hugin uses different coordinate systems for geometric correction and for
+    * vignetting. Please use \ref HuginVignettingModel to deal with parameters
+    * produced by Hugin.
     */
     class VignettingColourModel : public IColourCorrectionModel, protected CorrectionModelBase
     {
@@ -129,7 +131,7 @@ namespace phtr
             * \param[in] y0 The 'y0' parameter (vertical center shift).
             */
             virtual void set_model_params(double a, double b, double c,
-                                  interp_coord_t x0 = 0, interp_coord_t y0 = 0);
+                                          interp_coord_t x0 = 0, interp_coord_t y0 = 0);
 
         public:
             /**
@@ -201,6 +203,8 @@ namespace phtr
     /**
     * \brief Colour correction model implementing vignetting correction.
     * \details This model is compatible with vignetting parameters used by Hugin.
+    * It is the same as \ref VignettingColourModel, but compensates for the different
+    * coordinate systems when parameters are set.
     */
     class HuginVignettingModel : public VignettingColourModel
     {
@@ -220,7 +224,7 @@ namespace phtr
             * \param[in] input_crop The crop factor of the input image.
             */
             HuginVignettingModel(double param_aspect, double input_aspect,
-                                  double param_crop, double input_crop);
+                                 double param_crop, double input_crop);
 
             /**
             * \brief Constructor.
@@ -245,7 +249,7 @@ namespace phtr
             * \param[in] y0 The 'y0' parameter (vertical center shift).
             */
             virtual void set_model_params(double a, double b, double c,
-                                  interp_coord_t x0 = 0, interp_coord_t y0 = 0);
+                                          interp_coord_t x0 = 0, interp_coord_t y0 = 0);
 
         public:
             /**
