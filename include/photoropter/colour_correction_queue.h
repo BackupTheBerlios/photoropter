@@ -29,9 +29,9 @@ THE SOFTWARE.
 
 #include <vector>
 
-#include <Photoropter/types.h>
-#include <Photoropter/channel_type.h>
-#include <Photoropter/colour_correction_model.h>
+#include <photoropter/types.h>
+#include <photoropter/channel_type.h>
+#include <photoropter/colour_correction_model.h>
 
 namespace phtr
 {
@@ -135,6 +135,6 @@ namespace phtr
 
 } // namespace phtr
 
-#include <Photoropter/colour_correction_queue.inl.h>
+#include <photoropter/colour_correction_queue.inl.h>
 
 #endif // __COLOUR_CORRECTION_QUEUE_H__

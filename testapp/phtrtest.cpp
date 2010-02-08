@@ -9,15 +9,15 @@
 #include <vil/vil_copy.h>
 #include <vil/vil_image_view.h>
 
-#include "Photoropter/types.h"
-#include "Photoropter/mem_image_view_r.h"
-#include "Photoropter/mem_image_view_w.h"
-#include "Photoropter/image_buffer.h"
-#include "Photoropter/channel_storage.h"
-#include "Photoropter/image_interpolator.h"
-#include "Photoropter/image_transform.h"
-#include "Photoropter/colour_correction_model.h"
-#include "Photoropter/geom_correction_model.h"
+#include <photoropter/types.h>
+#include <photoropter/mem_image_view_r.h>
+#include <photoropter/mem_image_view_w.h>
+#include <photoropter/image_buffer.h>
+#include <photoropter/channel_storage.h>
+#include <photoropter/image_interpolator.h>
+#include <photoropter/image_transform.h>
+#include <photoropter/colour_correction_model.h>
+#include <photoropter/geom_correction_model.h>
 
 #include <memory>
 #include <ctime>

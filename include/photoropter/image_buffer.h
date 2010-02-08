@@ -27,11 +27,11 @@ THE SOFTWARE.
 #ifndef __IMAGE_BUFFER_IMPL_H__
 #define __IMAGE_BUFFER_IMPL_H__
 
-#include <Photoropter/image_buffer.h>
-#include <Photoropter/types.h>
-#include <Photoropter/storage_type.h>
-#include <Photoropter/channel_storage.h>
-#include <Photoropter/mem_storage_info.h>
+#include <photoropter/image_buffer.h>
+#include <photoropter/types.h>
+#include <photoropter/storage_type.h>
+#include <photoropter/channel_storage.h>
+#include <photoropter/mem_storage_info.h>
 
 namespace phtr
 {
@@ -158,6 +158,6 @@ namespace phtr
 
 } // namespace phtr
 
-#include <Photoropter/image_buffer.tpl.h>
+#include <photoropter/image_buffer.tpl.h>
 
 #endif // __IMAGE_BUFFER_IMPL_H__

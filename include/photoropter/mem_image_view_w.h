@@ -27,9 +27,9 @@ THE SOFTWARE.
 #ifndef __MEM_IMAGE_VIEW_W_H__
 #define __MEM_IMAGE_VIEW_W_H__
 
-#include <Photoropter/mem_image_view_base.h>
-#include <Photoropter/mem_image_iter_w.h>
-#include <Photoropter/channel_type.h>
+#include <photoropter/mem_image_view_base.h>
+#include <photoropter/mem_image_iter_w.h>
+#include <photoropter/channel_type.h>
 
 namespace phtr
 {
@@ -179,6 +179,6 @@ namespace phtr
 
 } // namespace phtr
 
-#include <Photoropter/mem_image_view_w.tpl.h>
+#include <photoropter/mem_image_view_w.tpl.h>
 
 #endif // __MEM_IMAGE_VIEW_W_H__

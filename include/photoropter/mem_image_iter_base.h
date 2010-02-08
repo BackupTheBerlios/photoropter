@@ -27,9 +27,9 @@ THE SOFTWARE.
 #ifndef __MEM_IMAGE_ITER_BASE_H__
 #define __MEM_IMAGE_ITER_BASE_H__
 
-#include <Photoropter/storage_type.h>
-#include <Photoropter/channel_range.h>
-#include <Photoropter/mem_layout.h>
+#include <photoropter/storage_type.h>
+#include <photoropter/channel_range.h>
+#include <photoropter/mem_layout.h>
 
 namespace phtr
 {
@@ -165,6 +165,6 @@ namespace phtr
 
 } // namespace phtr
 
-#include <Photoropter/mem_image_iter_base.tpl.h>
+#include <photoropter/mem_image_iter_base.tpl.h>
 
 #endif // __MEM_IMAGE_ITER_BASE_H__

@@ -24,8 +24,8 @@ THE SOFTWARE.
 
 */
 
-#include <Photoropter/colour_correction_queue.h>
-#include <Photoropter/geom_correction_model.h>
+#include <photoropter/colour_correction_queue.h>
+#include <photoropter/geom_correction_model.h>
 
 namespace phtr
 {

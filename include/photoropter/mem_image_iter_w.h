@@ -24,22 +24,22 @@ THE SOFTWARE.
 
 */
 
-#ifndef __MEM_IMAGE_ITER_R_H__
-#define __MEM_IMAGE_ITER_R_H__
+#ifndef __MEM_IMAGE_ITER_W_H__
+#define __MEM_IMAGE_ITER_W_H__
 
-#include <Photoropter/mem_image_iter_base.h>
-#include <Photoropter/channel_type.h>
+#include <photoropter/mem_image_iter_base.h>
+#include <photoropter/channel_type.h>
 
 namespace phtr
 {
 
     /**
-    * \brief Iterator class for read access to an image in memory.
-    * \details Instances of this class are usually created by \ref MemImageViewR.
+    * \brief Iterator class for write access to an image in memory.
+    * \details Instances of this class are usually created by \ref MemImageViewW.
     * \param T The storage type (e.g. \ref Storage::rgb_8_inter).
     */
     template <Storage::type T>
-    class MemImageIterR : public MemImageIterBase<T>
+    class MemImageIterW : public MemImageIterBase<T>
     {
 
             /* ****************************************
@@ -69,43 +69,43 @@ namespace phtr
             * \param[in] g_offs    The 'green' channel offset.
             * \param[in] b_offs    The 'blue' channel offset.
             */
-            MemImageIterR(channel_storage_t* base_addr, size_t px_offs,
+            MemImageIterW(channel_storage_t* base_addr, size_t px_offs,
                           size_t step, size_t line_step,
                           size_t r_offs, size_t g_offs, size_t b_offs);
 
         public:
             /**
-            * \brief Read the 'red' channel value.
-            * \return The value.
+            * \brief Write the 'red' channel value to the current pixel.
+            * \param val The value.
             */
-            channel_storage_t get_px_val_r();
+            void write_px_val_r(channel_storage_t val);
 
         public:
             /**
-            * \brief Read the 'green' channel value.
-            * \return The value.
+            * \brief Write the 'green' channel value to the current pixel.
+            * \param val The value.
             */
-            channel_storage_t get_px_val_g();
+            void write_px_val_g(channel_storage_t val);
 
         public:
             /**
-            * \brief Read the 'blue' channel value.
-            * \return The value.
+            * \brief Write the 'blue' channel value to the current pixel.
+            * \param val The value.
             */
-            channel_storage_t get_px_val_b();
+            void write_px_val_b(channel_storage_t val);
 
         public:
             /**
-            * \brief Read the value for the given channel.
-            * \param channel The channel.
-            * \return The value.
+            * \brief Write the given channel value to the current pixel.
+            * \param chan The channel.
+            * \param val  The value.
             */
-            inline channel_storage_t get_px_val(Channel::type channel);
+            inline void write_px_val(Channel::type chan, channel_storage_t val);
 
-    }; // template class MemImageIterR<>
+    }; // template class MemImageIterW<>
 
 } // namespace phtr
 
-#include <Photoropter/mem_image_iter_r.tpl.h>
+#include <photoropter/mem_image_iter_w.tpl.h>
 
-#endif // __MEM_IMAGE_ITER_R_H__
+#endif // __MEM_IMAGE_ITER_W_H__

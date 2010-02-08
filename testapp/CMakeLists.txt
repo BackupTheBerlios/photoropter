@@ -12,7 +12,7 @@ if(VXL_FOUND)
     )
 
   target_link_libraries(phtrtest
-    Photoropter
+    photoropter
     vil
     vil_io
     vil_algo
