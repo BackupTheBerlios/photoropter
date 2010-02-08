@@ -166,7 +166,7 @@ set(PHTR_SOURCES
   ${PHTR_SRC_DIR}/exception.cpp
   )
 
-include_directories(include ${Boost_INCLUDE_DIR})
+include_directories(include)
 
 add_library(${CMAKE_PROJECT_NAME} STATIC ${PHTR_SOURCES})
 

@@ -1,3 +1,17 @@
+/*
+*
+* Sample program to demonstrate basic usage of Photoropter.
+*
+* (c) 2010 by Robert Fendt
+*
+*/
+
+// Boost is used for parsing of program options.
+#include <boost/program_options.hpp>
+#include <boost/tokenizer.hpp>
+namespace po = boost::program_options;
+
+// VIL is needed for image file I/O
 #include <vcl_iostream.h>
 #include <vxl_config.h>
 #include <vil/vil_rgb.h>
@@ -8,6 +22,7 @@
 #include <vil/vil_copy.h>
 #include <vil/vil_image_view.h>
 
+// Now the Photoropter stuff
 #include <photoropter/types.h>
 #include <photoropter/mem_image_view_r.h>
 #include <photoropter/mem_image_view_w.h>
@@ -17,153 +32,313 @@
 #include <photoropter/image_transform.h>
 #include <photoropter/colour_correction_model.h>
 #include <photoropter/geom_correction_model.h>
+#include <photoropter/colour_correction_model.h>
 
 #include <ctime>
+#include <string>
+#include <vector>
+#include <sstream>
 
-void simple_test()
+struct Settings
 {
-    using namespace phtr;
+    Settings()
+            : ptlens_corr(false),
+            ptlens_params(5, 0),
+            vignetting_corr(false),
+            vignetting_params(5, 0),
+            param_aspect(0),
+            param_crop(1.0),
+            image_crop(1.0)
+    {}
 
-    const Storage::type storage_type(Storage::rgb_16_planar);
-    typedef ChannelStorage<storage_type>::type channel_storage_t;
+    bool ptlens_corr;
+    std::vector<double> ptlens_params;
+    bool vignetting_corr;
+    std::vector<double> vignetting_params;
+    double param_aspect;
+    double param_crop;
+    double image_crop;
+    std::string inp_file;
+    std::string outp_file;
+};
 
-    typedef ImageBuffer<storage_type> buffer_t;
-    typedef MemImageViewR<storage_type> view_r_t;
-    typedef MemImageViewW<storage_type> view_w_t;
-    typedef view_w_t::iter_t iter_t;
-    typedef ImageInterpolator<Interpolation::nearest_neighbour, view_r_t> interp_t;
-    typedef ImageTransform<interp_t, view_w_t> transform_t;
+bool parse_command_line(int argc, char* argv[], Settings& settings)
+{
 
-    // simple tests
-    buffer_t img_buf(100, 100);
+    try
+    {
 
-    channel_storage_t* buf = static_cast<channel_storage_t*>(img_buf.data());
-    buf[0] = 65535;
-    buf[10000] = 32767;
-    buf[20000] = 16383;
+        po::options_description opt_desc("Allowed options");
+        opt_desc.add_options()
+        ("help", "show options")
+        ("ptlens", po::value<std::string>(), "Set PTLens correction model parameters: a;b;c;x0;y0")
+        ("vignetting", po::value<std::string>(), "Set vignetting correction parameters: a;b;c;x0;y0")
+        ("param-aspect", po::value<double>(), "Aspect ratio used for parameter calibration")
+        ("param-crop", po::value<double>(), "Crop factor used for parameter calibration")
+        ("image-crop", po::value<double>(), "Diagonal image crop factor")
+        ("input-file", po::value<std::string>(), "Input file")
+        ("output-file", po::value<std::string>(), "Output file");
 
-    view_w_t phtr_mem_view_w(buf, 100, 100);
+        po::positional_options_description pos_opts;
+        pos_opts.add("input-file", 1);
+        pos_opts.add("output-file", 1);
 
-    phtr_mem_view_w.write_px_val_r(50, 50, 10);
-    phtr_mem_view_w.write_px_val_g(50, 50, 7);
-    phtr_mem_view_w.write_px_val_b(50, 50, 5);
+        po::variables_map options_map;
+        po::store(po::command_line_parser(argc, argv).
+                  options(opt_desc).positional(pos_opts).run(), options_map);
+        po::notify(options_map);
 
-    iter_t phtr_iter(phtr_mem_view_w.get_iter(50, 50));
+        if (options_map.count("help"))
+        {
+            std::cerr << opt_desc << "\n";
+            return false;
+        }
 
-    phtr_iter.inc_x();
-    phtr_iter.write_px_val_r(10);
-    phtr_iter.write_px_val_g(20);
-    phtr_iter.write_px_val_b(30);
+        if (options_map.count("param-crop"))
+        {
+            settings.param_crop = options_map["param-crop"].as<double>();
+        }
 
-    view_r_t phtr_mem_view(buf, 100, 100);
+        if (options_map.count("param-aspect"))
+        {
+            settings.param_aspect = options_map["param-aspect"].as<double>();
+        }
 
-    vcl_cerr << phtr_mem_view.get_px_val_r(0, 0)
-    << " " << phtr_mem_view.get_px_val_g(0, 0)
-    << " " << phtr_mem_view.get_px_val_b(0, 0) << vcl_endl;
+        if (options_map.count("image-crop"))
+        {
+            settings.image_crop = options_map["image-crop"].as<double>();
+        }
 
-    vcl_cerr << phtr_mem_view.get_px_val_r(50, 50)
-    << " " << phtr_mem_view.get_px_val_g(50, 50)
-    << " " << phtr_mem_view.get_px_val_b(50, 50) << vcl_endl;
+        if (options_map.count("input-file"))
+        {
+            settings.inp_file = options_map["input-file"].as<std::string>();
+        }
+        else
+        {
+            std::cerr << "Error: no input file given" << std::endl;
+            return false;
+        }
 
-    vcl_cerr << phtr_mem_view.get_px_val_r(51, 50)
-    << " " << phtr_mem_view.get_px_val_g(51, 50)
-    << " " << phtr_mem_view.get_px_val_b(51, 50) << vcl_endl;
+        if (options_map.count("output-file"))
+        {
+            settings.outp_file = options_map["output-file"].as<std::string>();
+        }
+        else
+        {
+            std::cerr << "Error: no output file given" << std::endl;
+            return false;
+        }
 
-    interp_t interpolator(phtr_mem_view);
-    vcl_cerr << interpolator.get_px_val_r(0.0051, 0.0051)
-    << " " << interpolator.get_px_val_g(0.0051, 0.0051)
-    << " " << interpolator.get_px_val_b(0.0051, 0.0051) << vcl_endl;
+        if (options_map.count("ptlens"))
+        {
+            settings.ptlens_corr = true;
 
-    transform_t img_transform(phtr_mem_view, phtr_mem_view_w);
-    img_transform.do_transform();
+            typedef boost::tokenizer<boost::char_separator<char> > tokenizer_t;
+            typedef boost::char_separator<char> separator_t;
 
+            std::string param_string = options_map["ptlens"].as<std::string>();
+
+            separator_t sep(":;");
+            tokenizer_t tokens(param_string, sep);
+
+            size_t param_idx(0);
+            for (tokenizer_t::const_iterator it = tokens.begin(); it != tokens.end(); ++it)
+            {
+                std::stringstream sstr(*it);
+                sstr >> settings.ptlens_params[param_idx++];
+            }
+
+            if (not(param_idx == 3 or param_idx == 5))
+            {
+                std::cerr << "Error: incorrent number of parameters for PTLens correction" << std::endl;
+                return false;
+            }
+
+            std::cerr << "Performing PTLens correction: "
+                      << settings.ptlens_params[0] << ":"
+                      << settings.ptlens_params[1] << ":"
+                      << settings.ptlens_params[2] << ":"
+                      << settings.ptlens_params[3] << ":"
+                      << settings.ptlens_params[4] << std::endl;
+        }
+
+        if (options_map.count("vignetting"))
+        {
+            settings.vignetting_corr = true;
+
+            typedef boost::tokenizer<boost::char_separator<char> > tokenizer_t;
+            typedef boost::char_separator<char> separator_t;
+
+            std::string param_string = options_map["vignetting"].as<std::string>();
+
+            separator_t sep(":;");
+            tokenizer_t tokens(param_string, sep);
+
+            size_t param_idx(0);
+            for (tokenizer_t::const_iterator it = tokens.begin(); it != tokens.end(); ++it)
+            {
+                std::stringstream sstr(*it);
+                sstr >> settings.vignetting_params[param_idx++];
+            }
+
+            if (not(param_idx == 3 or param_idx == 5))
+            {
+                std::cerr << "Error: incorrent number of parameters for Vignetting correction" << std::endl;
+                return false;
+            }
+
+            std::cerr << "Performing Vignetting correction: "
+                      << settings.vignetting_params[0] << ":"
+                      << settings.vignetting_params[1] << ":"
+                      << settings.vignetting_params[2] << ":"
+                      << settings.vignetting_params[3] << ":"
+                      << settings.vignetting_params[4] << std::endl;
+        }
+
+    }
+    catch (po::invalid_command_line_syntax& e)
+    {
+        std::cerr << "Error: " << e.what() << std::endl;
+        return false;
+    }
+
+    return true;
 }
 
-void vil_test()
+template <phtr::Storage::type storage_type, typename vil_channel_t>
+void convert(const Settings& settings)
 {
     using namespace phtr;
 
     // typedefs and constants
-    // the Photoropter storage type
-    const Storage::type storage_type(Storage::rgb_8_inter);
-    // the equivalent vil type
-    typedef vxl_uint_8 vil_channel_t;
-
     typedef ImageBuffer<storage_type> buffer_t;
     typedef MemImageViewR<storage_type> view_r_t;
     typedef MemImageViewW<storage_type> view_w_t;
-    typedef view_w_t::iter_t iter_t;
+    typedef typename view_w_t::iter_t iter_t;
     typedef ImageInterpolator<Interpolation::bilinear, view_r_t> interp_t;
     typedef ImageTransform<interp_t, view_w_t, 2> transform_t;
 
-    // create image resource for the input image
-    vcl_cout << "Loading test image."  << vcl_endl;
+    // load the input image
+    std::cerr << "Loading test image." << std::endl;
     vil_image_view<vil_rgb<vil_channel_t> > loaded_img =
         vil_convert_to_component_order(
             vil_convert_to_n_planes(
                 3, vil_convert_stretch_range(
-                    vil_channel_t(), vil_load("test.jpg")
+                    vil_channel_t(), vil_load(settings.inp_file.c_str())
                 )
             )
         );
 
-    // set image size
+    // image size
     size_t img_width = loaded_img.ni();
     size_t img_height = loaded_img.nj();
-    size_t dst_width = 1.00 * img_width;
-    size_t dst_height = 1.00 * img_height;
-    //size_t dst_width = 150;
-    //size_t dst_height = 100;
 
     // create image buffers
-    vcl_cout << "Creating buffers for Photoropter."  << vcl_endl;
-
+    std::cerr << "Creating buffers for Photoropter." << std::endl;
     // input buffer
     buffer_t src_img_buf(img_width, img_height);
     view_r_t src_img_view(src_img_buf.data(), img_width, img_height);
     // output buffer
-    buffer_t dst_img_buf(dst_width, dst_height, true);
-    view_w_t dst_img_view(dst_img_buf.data(), dst_width, dst_height);
+    buffer_t dst_img_buf(img_width, img_height, true);
+    view_w_t dst_img_view(dst_img_buf.data(), img_width, img_height);
 
-    // VIL views for I/O
+    // attach VIL views for I/O
     vil_image_view<vil_rgb<vil_channel_t> > vil_src_view
     (static_cast<vil_rgb<vil_channel_t>*>(src_img_buf.data()), img_width, img_height, 1, 1, img_width, 1);
     vil_image_view<vil_rgb<vil_channel_t> > vil_dst_view
-    (static_cast<vil_rgb<vil_channel_t>*>(dst_img_buf.data()), dst_width, dst_height, 1, 1, dst_width, 1);
+    (static_cast<vil_rgb<vil_channel_t>*>(dst_img_buf.data()), img_width, img_height, 1, 1, img_width, 1);
 
-    // load image, convert and copy data
-    vcl_cout << "Copying image to buffer." << vcl_endl;
+    // copy data to input buffer
+    std::cerr << "Copying image to buffer." << std::endl;
     vil_src_view.deep_copy(loaded_img);
 
     // image transformation object
     transform_t transform(src_img_view, dst_img_view);
 
     // add correction models
-    double aspect = src_img_view.aspect_ratio();
-    HuginVignettingModel vign_mod(aspect);
-    vign_mod.set_model_params(0.0, 0.0, -0.1, 0.0, 0.0);
-    transform.colour_queue().add_model(vign_mod);
+    double image_aspect = src_img_view.aspect_ratio();
+    double param_aspect(0);
+    if (settings.param_aspect)
+    {
+        param_aspect = settings.param_aspect;
+    }
+    else
+    {
+        param_aspect = image_aspect;
+    }
 
-    PTLensGeomModel ptlens_mod(aspect);
-    ptlens_mod.set_model_params(0, 0.00987, -0.05127, 1, 0, 0);
-    transform.geom_queue().add_model(ptlens_mod);
+    if (settings.ptlens_corr)
+    {
+        PTLensGeomModel ptlens_mod(param_aspect,
+                                   image_aspect,
+                                   settings.param_crop,
+                                   settings.image_crop);
+        ptlens_mod.set_model_params(settings.ptlens_params[0],
+                                    settings.ptlens_params[1],
+                                    settings.ptlens_params[2],
+                                    1.0,
+                                    settings.ptlens_params[3],
+                                    settings.ptlens_params[4]);
+
+        transform.geom_queue().add_model(ptlens_mod);
+    }
+
+    if (settings.vignetting_corr)
+    {
+        HuginVignettingModel vign_mod(param_aspect,
+                                      image_aspect,
+                                      settings.param_crop,
+                                      settings.image_crop);
+        vign_mod.set_model_params(settings.vignetting_params[0],
+                                  settings.vignetting_params[1],
+                                  settings.vignetting_params[2],
+                                  settings.vignetting_params[3],
+                                  settings.vignetting_params[4]);
+
+        transform.colour_queue().add_model(vign_mod);
+    }
 
     // perform transformation
     time_t t0 = time(0);
-    vcl_cout << "Transforming." << vcl_endl;
+    std::cerr << "Transforming." << std::endl;
     transform.do_transform();
     time_t t1 = time(0);
 
-    vcl_cout << "Time taken: " << difftime(t1, t0) << " seconds." << vcl_endl;
+    std::cerr << "Time taken: " << difftime(t1, t0) << " seconds." << std::endl;
 
-    vcl_cout << "Saving output image."  << vcl_endl;
-    vil_save(vil_dst_view, "out.jpg");
+    std::cerr << "Saving output image." << std::endl;
+    vil_save(vil_dst_view, settings.outp_file.c_str());
 }
 
-int main()
+int main(int argc, char* argv[])
 {
-    simple_test();
-    vil_test();
+    Settings settings;
+
+    if (!parse_command_line(argc, argv, settings))
+    {
+        return 1;
+    }
+    else
+    {
+        vil_pixel_format img_format;
+
+        {
+            vil_image_resource_sptr img_res = vil_load_image_resource(settings.inp_file.c_str());
+            img_format = img_res->pixel_format();
+        }
+
+        if (img_format == VIL_PIXEL_FORMAT_BYTE)
+        {
+            std::cerr << "Performing 8bit conversion." << std::endl;
+            convert<phtr::Storage::rgb_8_inter, vxl_uint_8>(settings);
+        }
+        else
+        {
+            std::cerr << "Performing 16bit conversion." << std::endl;
+            convert<phtr::Storage::rgb_16_inter, vxl_uint_16>(settings);
+        }
+
+    }
 
     return 0;
 }

@@ -26,18 +26,8 @@ if(PHTR_BUILD_TESTAPP)
   add_executable(phtrtest
     phtrtest.cpp
     )
-  add_executable(phtrtest2
-    phtrtest2.cpp
-    )
 
   target_link_libraries(phtrtest
-    photoropter
-    vil
-    vil_io
-    ${Boost_LIBRARIES}
-    )
-
-  target_link_libraries(phtrtest2
     photoropter
     vil
     vil_io

@@ -27,6 +27,8 @@ THE SOFTWARE.
 #ifndef __IMAGE_INTERPOLATOR_H__
 #define __IMAGE_INTERPOLATOR_H__
 
+#include <cmath>
+
 #include <photoropter/mem_image_view_r.h>
 #include <photoropter/interpolation_type.h>
 #include <photoropter/types.h>
