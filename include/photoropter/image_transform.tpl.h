@@ -60,15 +60,22 @@ namespace phtr
         coord_t width = image_view_w_.width();
         coord_t height = image_view_w_.height();
 
+        // parent window size and offset
+        coord_t p_offs_x(0);
+        coord_t p_offs_y(0);
+        coord_t p_width(0);
+        coord_t p_height(0);
+        image_view_w_.get_parent_window(p_offs_x, p_offs_y, p_width, p_height);
+
         // meta-information on the image storage (needed for e.g. the maximal channel values)
         typename image_view_w_t::storage_info_t storage_info(width, height);
 
-        const interp_coord_t img_x_max = static_cast<interp_coord_t>(width - 1);
-        const interp_coord_t img_y_max = static_cast<interp_coord_t>(height - 1);
+        const interp_coord_t parent_x_max = static_cast<interp_coord_t>(p_width - 1);
+        const interp_coord_t parent_y_max = static_cast<interp_coord_t>(p_height - 1);
 
         interp_coord_t aspect_ratio = interpolator_.aspect_ratio();
-        interp_coord_t scale_x = 2.0 * aspect_ratio / img_x_max;
-        interp_coord_t scale_y = 2.0 / img_y_max;
+        interp_coord_t scale_x = 2.0 * aspect_ratio / parent_x_max;
+        interp_coord_t scale_y = 2.0 / parent_y_max;
 
         // running index variables are i (x direction) and j (y direction)
         // limits are: i0 <= i < i_limit and j0 <= j < j_limit
@@ -136,8 +143,8 @@ namespace phtr
                     for (u = 0; u < oversampling; ++u)
                     {
                         // get scaled coordinates (in the interpolator coordinates system)
-                        dst_x = (cur_samp_x * scale_x) - aspect_ratio;
-                        dst_y = (cur_samp_y * scale_y) - 1.0;
+                        dst_x = ((cur_samp_x + p_offs_x) * scale_x) - aspect_ratio;
+                        dst_y = ((cur_samp_y + p_offs_y) * scale_y) - 1.0;
 
                         // get coordinates transformed to source image
                         geom_queue_.get_source_coords(dst_x, dst_y,

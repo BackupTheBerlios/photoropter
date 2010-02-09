@@ -146,6 +146,36 @@ namespace phtr
             */
             void get_roi(coord_t& x_min, coord_t& y_min, coord_t& x_limit, coord_t& y_limit);
 
+        public:
+            /**
+            * \brief Set the parent window position.
+            * \details Set the offset and size of this view's "parent" window. The view is interpreted
+            * as a part of a larger, "virtual" frame. Its offset is given relative to the parent's upper
+            * left edge, ad well as the parent window size. By default, the offset is set to (0,0) and
+            * the parent window size is set to the current view size.
+            * \param[in] parent_offs_x The horizontal offset relative to the parent's upper left edge.
+            * \param[in] parent_offs_y The vertical offset relative to the parent's upper left edge.
+            * \param[in] parent_width The parent window's width.
+            * \param[in] parent_height The parent window's height.
+            */
+            void set_parent_window(coord_t offs_x, coord_t offs_y,
+                                   coord_t width, coord_t height);
+
+        public:
+            /**
+            * \brief Set the parent window position.
+            * \details Set the offset and size of this view's "parent" window. The view is interpreted
+            * as a part of a larger, "virtual" frame. Its offset is given relative to the parent's upper
+            * left edge, ad well as the parent window size. By default, the offset is set to (0,0) and
+            * the parent window size is set to the current view size.
+            * \param[out] parent_offs_x The horizontal offset relative to the parent's upper left edge.
+            * \param[out] parent_offs_y The vertical offset relative to the parent's upper left edge.
+            * \param[out] parent_width The parent window's width.
+            * \param[out] parent_height The parent window's height.
+            */
+            void get_parent_window(coord_t& offs_x, coord_t& offs_y,
+                                   coord_t& width, coord_t& height);
+
             /* ****************************************
              * internals
              * **************************************** */
@@ -173,6 +203,30 @@ namespace phtr
             * \brief The position of the top edge of the region of interest.
             */
             coord_t roi_y_limit_;
+
+        private:
+            /**
+            * \brief The horizontal offset relative to the parent's upper left edge.
+            */
+            coord_t parent_offs_x_;
+
+        private:
+            /**
+            * \brief The vertical offset relative to the parent's upper left edge.
+            */
+            coord_t parent_offs_y_;
+
+        private:
+            /**
+            * \brief The parent window's width.
+            */
+            coord_t parent_width_;
+
+        private:
+            /**
+            * \brief The parent window's height.
+            */
+            coord_t parent_height_;
 
 
     }; // template class MemImageViewW<>

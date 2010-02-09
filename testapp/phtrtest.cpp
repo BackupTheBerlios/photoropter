@@ -52,7 +52,13 @@ struct Settings
             vignetting_params(5, 0),
             param_aspect(0),
             param_crop(1.0),
-            image_crop(1.0)
+            image_crop(1.0),
+            sub_rect(false),
+            sub_rect_x0(0),
+            sub_rect_y0(0),
+            sub_rect_w(0),
+            sub_rect_h(0)
+
     {}
 
     bool ptlens_corr;
@@ -62,6 +68,11 @@ struct Settings
     double param_aspect;
     double param_crop;
     double image_crop;
+    bool sub_rect;
+    size_t sub_rect_x0;
+    size_t sub_rect_y0;
+    size_t sub_rect_w;
+    size_t sub_rect_h;
     std::string inp_file;
     std::string outp_file;
 };
@@ -80,6 +91,7 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
         ("param-aspect", po::value<double>(), "Aspect ratio used for parameter calibration")
         ("param-crop", po::value<double>(), "Crop factor used for parameter calibration")
         ("image-crop", po::value<double>(), "Diagonal image crop factor")
+        ("sub-rect", po::value<std::string>(), "Clip a sub-rectangle from the image: x0:y0:width:height")
         ("input-file", po::value<std::string>(), "Input file")
         ("output-file", po::value<std::string>(), "Output file");
 
@@ -199,6 +211,38 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
                       << settings.vignetting_params[4] << std::endl;
         }
 
+        if (options_map.count("sub-rect"))
+        {
+            typedef boost::tokenizer<boost::char_separator<char> > tokenizer_t;
+            typedef boost::char_separator<char> separator_t;
+
+            std::string param_string = options_map["sub-rect"].as<std::string>();
+
+            separator_t sep(":;");
+            tokenizer_t tokens(param_string, sep);
+
+            std::vector<size_t> rect_params(4, 0);
+
+            size_t param_idx(0);
+            for (tokenizer_t::const_iterator it = tokens.begin(); it != tokens.end(); ++it)
+            {
+                std::stringstream sstr(*it);
+                sstr >> rect_params[param_idx++];
+            }
+
+            if (!(param_idx == 4))
+            {
+                std::cerr << "Error: incorrent number of parameters for sub rectangle" << std::endl;
+                return false;
+            }
+
+            settings.sub_rect_x0 = rect_params[0];
+            settings.sub_rect_y0 = rect_params[1];
+            settings.sub_rect_w = rect_params[2];
+            settings.sub_rect_h = rect_params[3];
+            settings.sub_rect = true;
+        }
+
     }
     catch (po::invalid_command_line_syntax& e)
     {
@@ -236,6 +280,20 @@ void convert(const Settings& settings)
     // image size
     size_t img_width = loaded_img.ni();
     size_t img_height = loaded_img.nj();
+    size_t dst_width = img_width;
+    size_t dst_height = img_height;
+    size_t sub_rect_x0 = settings.sub_rect_x0;
+    size_t sub_rect_y0 = settings.sub_rect_y0;
+    if (settings.sub_rect && settings.sub_rect_w <= img_width && settings.sub_rect_h <= img_height)
+    {
+        dst_width = settings.sub_rect_w;
+        dst_height = settings.sub_rect_h;
+    }
+    if (sub_rect_x0 > img_width - dst_width || sub_rect_y0 > img_height - dst_height)
+    {
+        sub_rect_x0 = 0;
+        sub_rect_y0 = 0;
+    }
 
     // create image buffers
     std::cerr << "Creating buffers for Photoropter." << std::endl;
@@ -243,14 +301,15 @@ void convert(const Settings& settings)
     buffer_t src_img_buf(img_width, img_height);
     view_r_t src_img_view(src_img_buf.data(), img_width, img_height);
     // output buffer
-    buffer_t dst_img_buf(img_width, img_height, true);
-    view_w_t dst_img_view(dst_img_buf.data(), img_width, img_height);
+    buffer_t dst_img_buf(dst_width, dst_height, true);
+    view_w_t dst_img_view(dst_img_buf.data(), dst_width, dst_height);
+    dst_img_view.set_parent_window(settings.sub_rect_x0, settings.sub_rect_y0, img_width, img_height);
 
     // attach VIL views for I/O
     vil_image_view<vil_rgb<vil_channel_t> > vil_src_view
     (static_cast<vil_rgb<vil_channel_t>*>(src_img_buf.data()), img_width, img_height, 1, 1, img_width, 1);
     vil_image_view<vil_rgb<vil_channel_t> > vil_dst_view
-    (static_cast<vil_rgb<vil_channel_t>*>(dst_img_buf.data()), img_width, img_height, 1, 1, img_width, 1);
+    (static_cast<vil_rgb<vil_channel_t>*>(dst_img_buf.data()), dst_width, dst_height, 1, 1, dst_width, 1);
 
     // copy data to input buffer
     std::cerr << "Copying image to buffer." << std::endl;

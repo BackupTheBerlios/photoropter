@@ -28,20 +28,26 @@ namespace phtr
 {
 
     template <Storage::type T>
-    MemImageViewW<T>::MemImageViewW
+    MemImageViewW<T>::
+    MemImageViewW
     (void* base_addr, coord_t width, coord_t height)
             : MemImageViewBase<T>(base_addr, width, height),
             roi_x_min_(0),
             roi_x_limit_(width),
             roi_y_min_(0),
-            roi_y_limit_(height)
+            roi_y_limit_(height),
+            parent_offs_x_(0),
+            parent_offs_y_(0),
+            parent_width_(width),
+            parent_height_(height)
     {
         //NIL
     }
 
     template <Storage::type T>
     void
-    MemImageViewW<T>::write_px_val_r
+    MemImageViewW<T>::
+    write_px_val_r
     (coord_t x, coord_t y, channel_storage_t val)
     {
         this->base_addr_[this->get_px_offs(x, y) + this->r_offs_] = val;
@@ -49,7 +55,8 @@ namespace phtr
 
     template <Storage::type T>
     void
-    MemImageViewW<T>::write_px_val_g
+    MemImageViewW<T>::
+    write_px_val_g
     (coord_t x, coord_t y, channel_storage_t val)
     {
         this->base_addr_[this->get_px_offs(x, y) + this->g_offs_] = val;
@@ -57,7 +64,8 @@ namespace phtr
 
     template <Storage::type T>
     void
-    MemImageViewW<T>::write_px_val_b
+    MemImageViewW<T>::
+    write_px_val_b
     (coord_t x, coord_t y, channel_storage_t val)
     {
         this->base_addr_[this->get_px_offs(x, y) + this->b_offs_] = val;
@@ -65,7 +73,8 @@ namespace phtr
 
     template <Storage::type T>
     void
-    MemImageViewW<T>::write_px_val
+    MemImageViewW<T>::
+    write_px_val
     (Channel::type chan, coord_t x, coord_t y, channel_storage_t val)
     {
         switch (chan)
@@ -87,7 +96,8 @@ namespace phtr
 
     template <Storage::type T>
     typename MemImageViewW<T>::iter_t
-    MemImageViewW<T>::get_iter
+    MemImageViewW<T>::
+    get_iter
     (coord_t x, coord_t y)
     {
         return MemImageIterW<T>(this->base_addr_, this->get_px_offs(x, y), this->step_, this->line_step_,
@@ -96,7 +106,8 @@ namespace phtr
 
     template <Storage::type T>
     void
-    MemImageViewW<T>::set_roi
+    MemImageViewW<T>::
+    set_roi
     (coord_t x_min, coord_t y_min, coord_t x_limit, coord_t y_limit)
     {
         roi_x_min_ = x_min;
@@ -107,7 +118,8 @@ namespace phtr
 
     template <Storage::type T>
     void
-    MemImageViewW<T>::get_roi
+    MemImageViewW<T>::
+    get_roi
     (coord_t& x_min, coord_t& y_min, coord_t& x_limit, coord_t& y_limit)
     {
         x_min = roi_x_min_;
@@ -116,5 +128,28 @@ namespace phtr
         y_limit = roi_y_limit_;
     }
 
+    template <Storage::type T>
+    void
+    MemImageViewW<T>::
+    set_parent_window(coord_t offs_x, coord_t offs_y,
+                      coord_t width, coord_t height)
+    {
+        parent_offs_x_ = offs_x;
+        parent_offs_y_ = offs_y;
+        parent_width_ = width;
+        parent_height_ = height;
+    }
+
+    template <Storage::type T>
+    void
+    MemImageViewW<T>::
+    get_parent_window(coord_t& offs_x, coord_t& offs_y,
+                      coord_t& width, coord_t& height)
+    {
+        offs_x = parent_offs_x_;
+        offs_y = parent_offs_y_;
+        width = parent_width_;
+        height = parent_height_;
+    }
 
 } // namespace phtr
