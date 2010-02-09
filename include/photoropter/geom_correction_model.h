@@ -123,9 +123,38 @@ namespace phtr
             * \param[in] d The 'd' parameter.
             * \param[in] x0 The 'x0' parameter (horizontal center shift).
             * \param[in] y0 The 'y0' parameter (vertical center shift).
+            * \note Both x0 and y0 are not considered 'lens parameters' but rather camera/sensor
+            * parameters. They are therefore \em not transformed in any way, but always interpeted
+            * normalised Photoropter coordinate system.
             */
             void set_model_params(double a, double b, double c, double d,
                                   interp_coord_t x0 = 0, interp_coord_t y0 = 0);
+
+        public:
+            /**
+            * \brief Set the model parameters.
+            * \param[in] a The 'a' parameter.
+            * \param[in] b The 'b' parameter.
+            * \param[in] c The 'c' parameter.
+            * \param[in] d The 'd' parameter.
+            * \param[in] x0 The 'x0' parameter (horizontal center shift).
+            * \param[in] y0 The 'y0' parameter (vertical center shift).
+            * \note Both x0 and y0 are not considered 'lens parameters' but rather camera/sensor
+            * parameters. They are therefore \em not transformed in any way, but always interpeted
+            * normalised Photoropter coordinate system.
+            */
+            void get_model_params(double& a, double& b, double& c, double& d,
+                                  interp_coord_t& x0, interp_coord_t& y0) const;
+
+        public:
+            /**
+            * \brief Set the model parameters.
+            * \param[in] a The 'a' parameter.
+            * \param[in] b The 'b' parameter.
+            * \param[in] c The 'c' parameter.
+            * \param[in] d The 'd' parameter.
+            */
+            void get_model_params(double& a, double& b, double& c, double& d) const;
 
         public:
             /**

@@ -86,10 +86,11 @@ namespace phtr
         public:
             /**
             * \brief Add the given model to the queue.
-            * \note The object will be copied.
+            * \note The object will be copied; a reference to the copy is returned.
             * \param model The colour correction model to be added.
+            * \return Reference to the new correction model copy.
             */
-            void add_model(const IColourCorrectionModel& model);
+            IColourCorrectionModel& add_model(const IColourCorrectionModel& model);
 
         public:
             /**

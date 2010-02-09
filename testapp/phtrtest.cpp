@@ -2,6 +2,10 @@
 *
 * Sample program to demonstrate basic usage of Photoropter.
 *
+* Usage example :
+*
+* phtrtest --param-aspect 1.5333 --vignetting 0:0:0.3 --ptlens 0:0.00987:-0.05127 in.jpg out.jpg
+*
 * (c) 2010 by Robert Fendt
 *
 */
@@ -281,21 +285,34 @@ void convert(const Settings& settings)
                                     settings.ptlens_params[4]);
 
         transform.geom_queue().add_model(ptlens_mod);
+
+        double a, b, c, d;
+        ptlens_mod.get_model_params(a, b, c, d);
+        std::cerr << "PTLens parameters: " << a << ":" << b << ":" << c << std::endl;
     }
 
     if (settings.vignetting_corr)
     {
+        // this time, the other way round. first add the model, then modify settings
         HuginVignettingModel vign_mod(param_aspect,
                                       image_aspect,
                                       settings.param_crop,
                                       settings.image_crop);
-        vign_mod.set_model_params(settings.vignetting_params[0],
-                                  settings.vignetting_params[1],
-                                  settings.vignetting_params[2],
-                                  settings.vignetting_params[3],
-                                  settings.vignetting_params[4]);
 
-        transform.colour_queue().add_model(vign_mod);
+        // add model to queue and get reference to the internal object
+        HuginVignettingModel& int_vign_mod = dynamic_cast<HuginVignettingModel&>(
+                                                 transform.colour_queue().add_model(vign_mod));
+
+        int_vign_mod.set_model_params(settings.vignetting_params[0],
+                                      settings.vignetting_params[1],
+                                      settings.vignetting_params[2],
+                                      settings.vignetting_params[3],
+                                      settings.vignetting_params[4]);
+        // read the parameters back
+        double a, b, c;
+        int_vign_mod.get_model_params(a, b, c);
+        std::cerr << "Vignetting parameters: " << a << ":" << b << ":" << c << std::endl;
+
     }
 
     // perform transformation

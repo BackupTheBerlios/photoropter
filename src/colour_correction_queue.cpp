@@ -81,10 +81,14 @@ namespace phtr
         n_models_ = 0;
     }
 
-    void ColourCorrectionQueue::add_model(const IColourCorrectionModel& model)
+    IColourCorrectionModel& ColourCorrectionQueue::add_model(const IColourCorrectionModel& model)
     {
-        correction_model_.push_back(model.clone());
+        IColourCorrectionModel* new_mod = model.clone();
+
+        correction_model_.push_back(new_mod);
         ++n_models_;
+
+        return *new_mod;
     }
 
 } // namespace phtr

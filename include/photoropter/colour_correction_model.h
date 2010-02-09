@@ -130,8 +130,32 @@ namespace phtr
             * \param[in] x0 The 'x0' parameter (horizontal center shift).
             * \param[in] y0 The 'y0' parameter (vertical center shift).
             */
-            virtual void set_model_params(double a, double b, double c,
-                                          interp_coord_t x0 = 0, interp_coord_t y0 = 0);
+            void set_model_params(double a, double b, double c,
+                                  interp_coord_t x0 = 0, interp_coord_t y0 = 0);
+
+        public:
+            /**
+            * \brief Get the current model parameters.
+            * \param[out] a The 'a' parameter.
+            * \param[out] b The 'b' parameter.
+            * \param[out] c The 'c' parameter.
+            * \param[out] x0 The 'x0' parameter (horizontal center shift).
+            * \param[out] y0 The 'y0' parameter (vertical center shift).
+            * \note Both x0 and y0 are not considered 'lens parameters' but rather camera/sensor
+            * parameters. They are therefore \em not transformed in any way, but always interpeted
+            * normalised Photoropter coordinate system.
+            */
+            void get_model_params(double& a, double& b, double& c,
+                                  interp_coord_t& x0, interp_coord_t& y0) const;
+
+        public:
+            /**
+            * \brief Get the current model parameters.
+            * \param[out] a The 'a' parameter.
+            * \param[out] b The 'b' parameter.
+            * \param[out] c The 'c' parameter.
+            */
+            void get_model_params(double& a, double& b, double& c) const;
 
         public:
             /**
@@ -198,6 +222,7 @@ namespace phtr
             * \brief The parameter 'y0'.
             */
             double y0_;
+
     }; // class VignettingColourModel
 
     /**
@@ -247,9 +272,36 @@ namespace phtr
             * \param[in] c The 'c' parameter.
             * \param[in] x0 The 'x0' parameter (horizontal center shift).
             * \param[in] y0 The 'y0' parameter (vertical center shift).
+            * \note Both x0 and y0 are not considered 'lens parameters' but rather camera/sensor
+            * parameters. They are therefore \em not transformed in any way, but always interpeted
+            * normalised Photoropter coordinate system.
             */
-            virtual void set_model_params(double a, double b, double c,
-                                          interp_coord_t x0 = 0, interp_coord_t y0 = 0);
+            void set_model_params(double a, double b, double c,
+                                  interp_coord_t x0 = 0, interp_coord_t y0 = 0);
+
+        public:
+            /**
+            * \brief Get the current model parameters.
+            * \param[out] a The 'a' parameter.
+            * \param[out] b The 'b' parameter.
+            * \param[out] c The 'c' parameter.
+            * \param[out] x0 The 'x0' parameter (horizontal center shift).
+            * \param[out] y0 The 'y0' parameter (vertical center shift).
+            * \note Both x0 and y0 are not considered 'lens parameters' but rather camera/sensor
+            * parameters. They are therefore \em not transformed in any way, but always interpeted
+            * normalised Photoropter coordinate system.
+            */
+            void get_model_params(double& a, double& b, double& c,
+                                  interp_coord_t& x0, interp_coord_t& y0) const;
+
+        public:
+            /**
+            * \brief Get the current model parameters.
+            * \param[out] a The 'a' parameter.
+            * \param[out] b The 'b' parameter.
+            * \param[out] c The 'c' parameter.
+            */
+            void get_model_params(double& a, double& b, double& c) const;
 
         public:
             /**

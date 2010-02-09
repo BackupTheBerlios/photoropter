@@ -28,10 +28,44 @@ THE SOFTWARE.
 #define __MEM_LAYOUT_H__
 
 #include <photoropter/types.h>
+#include <photoropter/channel_type.h>
 #include <photoropter/storage_type.h>
 
 namespace phtr
 {
+
+    /**
+    * \brief Struct describing the order of channels. Used as base by
+    * specialisations of \ref MemLayout.
+    */
+    struct ChannelOrderRGB
+    {
+
+        /**
+        * \brief Return the channel order for this layout type.
+        * \param index The channel index (ranging from 0 to 2).
+        * \return The channel.
+        */
+        Channel::type get_channel(size_t index)
+        {
+            switch (index)
+            {
+                case 0:
+                    return Channel::red;
+                    break;
+
+                case 1:
+                    return Channel::green;
+                    break;
+
+                case 2:
+                default:
+                    return Channel::blue;
+                    break;
+            }
+        }
+
+    };
 
     /**
     * \brief Struct describing a generic interleaved memory storage type. Used as base by
@@ -42,6 +76,9 @@ namespace phtr
 
         /**
         * \brief Return the number of channels (e.g., 3).
+        * \details The number has to be at least 3 in order for RGB data to fit,
+        * but can be larger (e.g. 4 for RGBA).
+        * \note Additional channels are ignored by Photoropter.
         * \return The number of channels.
         */
         static size_t num_channels()
@@ -105,6 +142,9 @@ namespace phtr
 
         /**
         * \brief Return the number of channels (e.g., 3).
+        * \details The number has to be at least 3 in order for RGB data to fit,
+        * but can be larger (e.g. 4 for RGBA).
+        * \note Additional channels are ignored by Photoropter.
         * \return The number of channels.
         */
         static size_t num_channels()
@@ -181,7 +221,7 @@ namespace phtr
     * \brief Specialisation of \ref MemLayout for \ref Storage::rgb_8_inter.
     */
     template <>
-    struct MemLayout<Storage::rgb_8_inter> : public GenericInterleavedLayout
+    struct MemLayout<Storage::rgb_8_inter> : public GenericInterleavedLayout, public ChannelOrderRGB
     {
     }; // template struct MemLayout<Storage::rgb_8_inter>
 
@@ -189,7 +229,7 @@ namespace phtr
     * \brief Specialisation of \ref MemLayout for \ref Storage::rgb_16_inter.
     */
     template <>
-    struct MemLayout<Storage::rgb_16_inter> : public GenericInterleavedLayout
+    struct MemLayout<Storage::rgb_16_inter> : public GenericInterleavedLayout, public ChannelOrderRGB
     {
     }; // template struct MemLayout<Storage::rgb_16_inter>
 
@@ -197,7 +237,7 @@ namespace phtr
     * \brief Specialisation of \ref MemLayout for \ref Storage::rgb_32_inter.
     */
     template <>
-    struct MemLayout<Storage::rgb_32_inter> : public GenericInterleavedLayout
+    struct MemLayout<Storage::rgb_32_inter> : public GenericInterleavedLayout, public ChannelOrderRGB
     {
     }; // template struct MemLayout<Storage::rgb_32_inter>
 
@@ -205,7 +245,7 @@ namespace phtr
     * \brief Specialisation of \ref MemLayout for \ref Storage::rgb_8_planar.
     */
     template <>
-    struct MemLayout<Storage::rgb_8_planar> : public GenericPlanarLayout
+    struct MemLayout<Storage::rgb_8_planar> : public GenericPlanarLayout, public ChannelOrderRGB
     {
     }; // template struct MemLayout<Storage::rgb_8_planar>
 
@@ -213,7 +253,7 @@ namespace phtr
     * \brief Specialisation of \ref MemLayout for \ref Storage::rgb_16_planar.
     */
     template <>
-    struct MemLayout<Storage::rgb_16_planar> : public GenericPlanarLayout
+    struct MemLayout<Storage::rgb_16_planar> : public GenericPlanarLayout, public ChannelOrderRGB
     {
     }; // template struct MemLayout<Storage::rgb_16_planar>
 
@@ -221,7 +261,7 @@ namespace phtr
     * \brief Specialisation of \ref MemLayout for \ref Storage::rgb_32_planar.
     */
     template <>
-    struct MemLayout<Storage::rgb_32_planar> : public GenericPlanarLayout
+    struct MemLayout<Storage::rgb_32_planar> : public GenericPlanarLayout, public ChannelOrderRGB
     {
     }; // template struct MemLayout<Storage::rgb_32_planar>
 

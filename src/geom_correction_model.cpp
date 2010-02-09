@@ -71,6 +71,28 @@ namespace phtr
 
     void
     PTLensGeomModel::
+    get_model_params(double& a, double& b, double& c, double& d,
+                     interp_coord_t& x0, interp_coord_t& y0) const
+    {
+        a = a_ / std::pow(coord_fact_, 3);
+        b = b_ / std::pow(coord_fact_, 2);
+        c = c_ / coord_fact_;
+        d = d_;
+        x0 = x0_;
+        y0 = y0_;
+    }
+
+    void
+    PTLensGeomModel::
+    get_model_params(double& a, double& b, double& c, double& d) const
+    {
+        interp_coord_t dummy_x0;
+        interp_coord_t dummy_y0;
+        get_model_params(a, b, c, d, dummy_x0, dummy_y0);
+    }
+
+    void
+    PTLensGeomModel::
     get_src_coords(interp_coord_t& x_r, interp_coord_t& y_r,
                    interp_coord_t& x_g, interp_coord_t& y_g,
                    interp_coord_t& x_b, interp_coord_t& y_b) const

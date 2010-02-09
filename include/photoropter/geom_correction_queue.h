@@ -83,10 +83,11 @@ namespace phtr
         public:
             /**
             * \brief Add the given model to the queue.
-            * \note The object will be copied.
+            * \note The object will be copied; a reference to the copy is returned.
             * \param model The geometry correction model to be added.
+            * \return Reference to the new correction model copy.
             */
-            void add_model(const IGeomCorrectionModel& model);
+            IGeomCorrectionModel& add_model(const IGeomCorrectionModel& model);
 
         public:
             /**

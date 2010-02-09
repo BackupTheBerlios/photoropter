@@ -81,10 +81,14 @@ namespace phtr
         n_models_ = 0;
     }
 
-    void GeomCorrectionQueue::add_model(const IGeomCorrectionModel& model)
+    IGeomCorrectionModel& GeomCorrectionQueue::add_model(const IGeomCorrectionModel& model)
     {
-        correction_model_.push_back(model.clone());
+        IGeomCorrectionModel* new_mod = model.clone();
+
+        correction_model_.push_back(new_mod);
         ++n_models_;
+
+        return *new_mod;
     }
 
 } // namespace phtr
