@@ -82,13 +82,13 @@ namespace phtr
 
         // main transformation loop
         // this variable has to be signed for OpenMP 2.0, which is the only
-        // version supported by MSVC (no problem, 'long' should be big enough anyway).
-        long j(0);
+        // version supported by MSVC (no real problem, e.g. 'long' should be big enough anyway).
+        omp_coord_t j(0);
         coord_t i(0);
 #ifdef HAVE_OPENMP
 #pragma omp parallel for private (i)
 #endif
-        for (j = static_cast<long>(j0); j < static_cast<long>(j_limit); ++j) // line loop
+        for (j = static_cast<omp_coord_t>(j0); j < static_cast<omp_coord_t>(j_limit); ++j) // line loop
         {
 
             // write-access iterator for this line

@@ -43,6 +43,11 @@ namespace phtr
     typedef size_t coord_t;
 
     /**
+    * \brief Type used for the image transformation 'lines' loop. Needs to be signed for OpenMP 2.0
+    */
+    typedef size_t omp_coord_t;
+
+    /**
     * \brief Type for interpolated coordinates.
     */
     typedef double interp_coord_t;
