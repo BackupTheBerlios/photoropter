@@ -38,7 +38,8 @@ namespace phtr
     * \brief Class template implementing a (writing) 'image view' of a given
     *  memory position.
     * \details The template uses internal templates to deal efficiently with
-    * different storage types.
+    * different storage types. Both a region of interest (ROI) and a 'parent window'
+    * size/offset can be specified to deal with different cases of sub-picture rendering.
     * \param T The storage type (e.g. \ref Storage::rgb_8_inter).
     */
     template <Storage::type T>
@@ -127,7 +128,9 @@ namespace phtr
         public:
             /**
             * \brief Set the region of interest.
-            * \details A ROI of (0, 0, width, height) corresponds to the entire image.
+            * \details The region of interest describes a rectangle to which all image operations
+            * should be limited. This is mainly a performance help. A ROI of (0, 0, width, height)
+            * corresponds to the entire image.
             * \param[in] x_min The minimal x coordinate.
             * \param[in] y_min The minimal y coordinate.
             * \param[in] x_limit The x coordinate limit (maximal value + 1).
@@ -138,7 +141,9 @@ namespace phtr
         public:
             /**
             * \brief Get the current region of interest.
-            * \details A ROI of (0, 0, width, height) corresponds to the entire image.
+            * \details The region of interest describes a rectangle to which all image operations
+            * should be limited. This is mainly a performance help. A ROI of (0, 0, width, height)
+            * corresponds to the entire image.
             * \param[out] x_min The minimal x coordinate.
             * \param[out] y_min The minimal y coordinate.
             * \param[out] x_limit The x coordinate limit (maximal value + 1).
@@ -151,8 +156,10 @@ namespace phtr
             * \brief Set the parent window position.
             * \details Set the offset and size of this view's "parent" window. The view is interpreted
             * as a part of a larger, "virtual" frame. Its offset is given relative to the parent's upper
-            * left edge, ad well as the parent window size. By default, the offset is set to (0,0) and
-            * the parent window size is set to the current view size.
+            * left edge, as well as the parent window size. By using this mechanism, the current
+            * view sort itself is interpreted like a region of interest: the complete image can be
+            * rendered by processing multiple smaller sub-buffers. By default, the offset is set to
+            * (0,0) and the parent window size is set to the current view size.
             * \param[in] offs_x The horizontal offset relative to the parent's upper left edge.
             * \param[in] offs_y The vertical offset relative to the parent's upper left edge.
             * \param[in] width The parent window's width.
@@ -166,8 +173,10 @@ namespace phtr
             * \brief Set the parent window position.
             * \details Set the offset and size of this view's "parent" window. The view is interpreted
             * as a part of a larger, "virtual" frame. Its offset is given relative to the parent's upper
-            * left edge, ad well as the parent window size. By default, the offset is set to (0,0) and
-            * the parent window size is set to the current view size.
+            * left edge, as well as the parent window size. By using this mechanism, the current
+            * view sort itself is interpreted like a region of interest: the complete image can be
+            * rendered by processing multiple smaller sub-buffers. By default, the offset is set to
+            * (0,0) and the parent window size is set to the current view size.
             * \param[out] offs_x The horizontal offset relative to the parent's upper left edge.
             * \param[out] offs_y The vertical offset relative to the parent's upper left edge.
             * \param[out] width The parent window's width.
