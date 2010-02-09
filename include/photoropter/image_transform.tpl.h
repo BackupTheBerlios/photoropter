@@ -28,7 +28,7 @@ namespace phtr
 {
 
     template <typename interpolator_t, typename image_view_w_t, unsigned int oversampling>
-    ImageTransform<interpolator_t, typename image_view_w_t, oversampling>::
+    ImageTransform<interpolator_t, image_view_w_t, oversampling>::
     ImageTransform
     (const typename ImageTransform::image_view_t& image_view_r, image_view_w_t& image_view_w)
             : interpolator_(image_view_r),
@@ -81,14 +81,14 @@ namespace phtr
         image_view_w_.get_roi(i0, j0, i_limit, j_limit);
 
         // main transformation loop
-        // these variables have to be signed for OpenMP 2.0, which is the only
+        // this variable has to be signed for OpenMP 2.0, which is the only
         // version supported by MSVC (no problem, 'long' should be big enough anyway).
-        long i(0);
         long j(0);
+        coord_t i(0);
 #ifdef HAVE_OPENMP
 #pragma omp parallel for private (i)
 #endif
-        for (j = j0; j < j_limit; ++j) // line loop
+        for (j = static_cast<long>(j0); j < static_cast<long>(j_limit); ++j) // line loop
         {
 
             // write-access iterator for this line
