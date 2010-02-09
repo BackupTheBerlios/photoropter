@@ -153,10 +153,10 @@ namespace phtr
             * as a part of a larger, "virtual" frame. Its offset is given relative to the parent's upper
             * left edge, ad well as the parent window size. By default, the offset is set to (0,0) and
             * the parent window size is set to the current view size.
-            * \param[in] parent_offs_x The horizontal offset relative to the parent's upper left edge.
-            * \param[in] parent_offs_y The vertical offset relative to the parent's upper left edge.
-            * \param[in] parent_width The parent window's width.
-            * \param[in] parent_height The parent window's height.
+            * \param[in] offs_x The horizontal offset relative to the parent's upper left edge.
+            * \param[in] offs_y The vertical offset relative to the parent's upper left edge.
+            * \param[in] width The parent window's width.
+            * \param[in] height The parent window's height.
             */
             void set_parent_window(coord_t offs_x, coord_t offs_y,
                                    coord_t width, coord_t height);
@@ -168,10 +168,10 @@ namespace phtr
             * as a part of a larger, "virtual" frame. Its offset is given relative to the parent's upper
             * left edge, ad well as the parent window size. By default, the offset is set to (0,0) and
             * the parent window size is set to the current view size.
-            * \param[out] parent_offs_x The horizontal offset relative to the parent's upper left edge.
-            * \param[out] parent_offs_y The vertical offset relative to the parent's upper left edge.
-            * \param[out] parent_width The parent window's width.
-            * \param[out] parent_height The parent window's height.
+            * \param[out] offs_x The horizontal offset relative to the parent's upper left edge.
+            * \param[out] offs_y The vertical offset relative to the parent's upper left edge.
+            * \param[out] width The parent window's width.
+            * \param[out] height The parent window's height.
             */
             void get_parent_window(coord_t& offs_x, coord_t& offs_y,
                                    coord_t& width, coord_t& height);
