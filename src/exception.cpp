@@ -13,6 +13,11 @@ namespace phtr
         {
         }
 
+        base_exception::base_exception()
+        {
+            //NIL
+        }
+
         base_exception::~base_exception() throw()
         {
             //NIL
@@ -21,7 +26,7 @@ namespace phtr
         const char* base_exception::what() const throw()
         {
             std::string tmp = prefix_;
-            if (not msg_.empty())
+            if (!msg_.empty())
             {
                 tmp += ": " + msg_;
             }

@@ -184,8 +184,8 @@ namespace phtr
         interp_coord_t x_scaled = (x + this->aspect_ratio_) * this->scale_x_;
         interp_coord_t y_scaled = (y + 1.0) * this->scale_y_;
 
-        if ((x_scaled < 0) or(x_scaled > this->width_)
-                or(y_scaled < 0) or(y_scaled > this->height_))
+        if ((x_scaled < 0) || (x_scaled > this->width_)
+                || (y_scaled < 0) || (y_scaled > this->height_))
         {
             return this->null_val_;
         }

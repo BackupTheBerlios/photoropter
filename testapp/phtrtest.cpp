@@ -152,7 +152,7 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
                 sstr >> settings.ptlens_params[param_idx++];
             }
 
-            if (not(param_idx == 3 or param_idx == 5))
+            if (!(param_idx == 3 || param_idx == 5))
             {
                 std::cerr << "Error: incorrent number of parameters for PTLens correction" << std::endl;
                 return false;
@@ -185,7 +185,7 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
                 sstr >> settings.vignetting_params[param_idx++];
             }
 
-            if (not(param_idx == 3 or param_idx == 5))
+            if (!(param_idx == 3 || param_idx == 5))
             {
                 std::cerr << "Error: incorrent number of parameters for Vignetting correction" << std::endl;
                 return false;
