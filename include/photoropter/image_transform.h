@@ -58,17 +58,17 @@ namespace phtr
 
         public:
             /**
+            * \brief The channel storage type.
+            */
+            typedef typename image_view_w_t::storage_info_t::channel_storage_t channel_storage_t;
+
+        public:
+            /**
             * \brief Constructor.
             * \param[in] image_view_r Input image view.
             * \param[in] image_view_w Output image view.
             */
             ImageTransform(const typename ImageTransform::image_view_t& image_view_r, image_view_w_t& image_view_w);
-
-        public:
-            /**
-            * \brief Destructor.
-            */
-            virtual ~ImageTransform();
 
         public:
             /**
@@ -99,17 +99,47 @@ namespace phtr
         private:
             /**
             * \brief Apply channel clipping.
-            * \param[in]  min_val  Minimal channel value.
-            * \param[in]  max_val  Maximal channel value.
-            * \param[out] val_r    'red' channel value.
-            * \param[out] val_g    'green' channel value.
-            * \param[out] val_b    'blue' channel value.
+            * \param[in,out] val_r    'red' channel value.
+            * \param[in,out] val_g    'green' channel value.
+            * \param[in,out] val_b    'blue' channel value.
             */
-            inline void clip_vals(interp_channel_t min_val,
-                                  interp_channel_t max_val,
-                                  interp_channel_t& val_r,
+            inline void clip_vals(interp_channel_t& val_r,
                                   interp_channel_t& val_g,
                                   interp_channel_t& val_b);
+
+        private:
+            /**
+            * \brief Normalise a channel value to [0:1.0]
+            * \param[in] value The unnormalised value.
+            * \return The normalised value.
+            */
+            inline interp_channel_t normalise(interp_channel_t value);
+
+        private:
+            /**
+            * \brief Scale a normalised value to the full channel range.
+            * \param[in] value The normalised value.
+            * \return The scaled value.
+            */
+            inline interp_channel_t unnormalise(interp_channel_t value);
+
+        private:
+            /**
+            * \brief Apply gamma transformation.
+            * \details \f[ x_{dst}=x_{src}^\gamma \f]
+            * \param[in] value The input value.
+            * \return The transformed value.
+            */
+            inline interp_channel_t gamma(interp_channel_t value);
+
+        private:
+            /**
+            * \brief Apply inverse gamma transformation.
+            * \details \f[ x_{dst}=x_{src}^{1/\gamma} \f]
+            * \param[in] value The input value.
+            * \return The transformed value.
+            */
+            inline interp_channel_t inv_gamma(interp_channel_t value);
 
         private:
             /**
@@ -135,6 +165,44 @@ namespace phtr
             * \brief The internal queue of colour correction models to be applied.
             */
             ColourCorrectionQueue colour_queue_;
+
+        private:
+            /**
+            * Width of the output image.
+            */
+            coord_t outp_img_width_;
+
+        private:
+            /**
+            * Height of the output image.
+            */
+            coord_t outp_img_height_;
+
+        private:
+            /**
+            * \brief Internal object holding information on storage details
+            * (needed for e.g. the maximal channel values).
+            */
+            typename image_view_w_t::storage_info_t storage_info_;
+
+        private:
+            /**
+            * \brief The minimal channel value (set correctly before the transformation)
+            */
+            interp_channel_t min_chan_val_;
+
+        private:
+            /**
+            * \brief The maximal channel value (set correctly before the transformation)
+            */
+            interp_channel_t max_chan_val_;
+
+        private:
+            /**
+            * \brief The gamma value.
+            */
+            double gamma_;
+
 
     }; // class ImageTransform
 

@@ -32,16 +32,15 @@ namespace phtr
     ImageTransform
     (const typename ImageTransform::image_view_t& image_view_r, image_view_w_t& image_view_w)
             : interpolator_(image_view_r),
-            image_view_w_(image_view_w)
+            image_view_w_(image_view_w),
+            outp_img_width_(image_view_w.width()),
+            outp_img_height_(image_view_w.height()),
+            storage_info_(outp_img_width_, outp_img_height_),
+            min_chan_val_(static_cast<interp_channel_t>(storage_info_.min_val)),
+            max_chan_val_(static_cast<interp_channel_t>(storage_info_.max_val)),
+            gamma_(1.8)
     {
         //NIL
-    }
-
-    template <typename interpolator_t, typename image_view_w_t, unsigned int oversampling>
-    ImageTransform<interpolator_t, image_view_w_t, oversampling>::
-    ~ImageTransform()
-    {
-
     }
 
     template <typename interpolator_t, typename image_view_w_t, unsigned int oversampling>
@@ -56,10 +55,6 @@ namespace phtr
         const interp_coord_t sampling_step_y = 1.0 / sampling_fact;
         const interp_channel_t channel_scaling = sampling_step_x * sampling_step_y;
 
-        // coordinates transformations
-        coord_t width = image_view_w_.width();
-        coord_t height = image_view_w_.height();
-
         // parent window size and offset
         coord_t p_offs_x(0);
         coord_t p_offs_y(0);
@@ -67,14 +62,10 @@ namespace phtr
         coord_t p_height(0);
         image_view_w_.get_parent_window(p_offs_x, p_offs_y, p_width, p_height);
 
-        // meta-information on the image storage (needed for e.g. the maximal channel values)
-        typename image_view_w_t::storage_info_t storage_info(width, height);
-        const interp_channel_t max_chan_val = static_cast<interp_channel_t>(storage_info.max_val);
-        const interp_channel_t min_chan_val = static_cast<interp_channel_t>(storage_info.min_val);
-
         const interp_coord_t parent_x_max = static_cast<interp_coord_t>(p_width - 1);
         const interp_coord_t parent_y_max = static_cast<interp_coord_t>(p_height - 1);
 
+        // coordinate transformation parameters
         interp_coord_t aspect_ratio = interpolator_.aspect_ratio();
         interp_coord_t scale_x = 2.0 * aspect_ratio / parent_x_max;
         interp_coord_t scale_y = 2.0 / parent_y_max;
@@ -160,9 +151,9 @@ namespace phtr
                                                              src_x_b, src_y_b,
                                                              fact_r, fact_g, fact_b);
 
-                        val_r += interpolator_.get_px_val(Channel::red, src_x_r, src_y_r)   * fact_r;
-                        val_g += interpolator_.get_px_val(Channel::green, src_x_g, src_y_g) * fact_g;
-                        val_b += interpolator_.get_px_val(Channel::blue, src_x_b, src_y_b)  * fact_b;
+                        val_r += normalise(interpolator_.get_px_val(Channel::red, src_x_r, src_y_r)) * fact_r;
+                        val_g += normalise(interpolator_.get_px_val(Channel::green, src_x_g, src_y_g)) * fact_g;
+                        val_b += normalise(interpolator_.get_px_val(Channel::blue, src_x_b, src_y_b)) * fact_b;
 
                         cur_samp_x += sampling_step_x;
                     } // (inner) oversampling loop
@@ -176,12 +167,12 @@ namespace phtr
                 val_b *= channel_scaling;
 
                 // deal with clipping
-                clip_vals(min_chan_val, max_chan_val, val_r, val_g, val_b);
+                clip_vals(val_r, val_g, val_b);
 
                 // write channel values
-                iter.write_px_val(Channel::red, val_r);
-                iter.write_px_val(Channel::green, val_g);
-                iter.write_px_val(Channel::blue, val_b);
+                iter.write_px_val(Channel::red, static_cast<channel_storage_t>(unnormalise(val_r)));
+                iter.write_px_val(Channel::green, static_cast<channel_storage_t>(unnormalise(val_g)));
+                iter.write_px_val(Channel::blue, static_cast<channel_storage_t>(unnormalise(val_b)));
 
                 // increment iterator position
                 iter.inc_x();
@@ -211,40 +202,84 @@ namespace phtr
     template <typename interpolator_t, typename image_view_w_t, unsigned int oversampling>
     void
     ImageTransform<interpolator_t, image_view_w_t, oversampling>::
-    clip_vals(interp_channel_t min_val,
-              interp_channel_t max_val,
-              interp_channel_t& val_r,
+    clip_vals(interp_channel_t& val_r,
               interp_channel_t& val_g,
               interp_channel_t& val_b)
     {
-        if (val_r > max_val)
+        if (val_r > 1.0)
         {
-            val_r = max_val;
+            val_r = 1.0;
         }
 
-        if (val_g > max_val)
+        if (val_g > 1.0)
         {
-            val_g = max_val;
+            val_g = 1.0;
         }
 
-        if (val_b > max_val)
+        if (val_b > 1.0)
         {
-            val_b = max_val;
+            val_b = 1.0;
         }
 
-        if (val_r < min_val)
+        if (val_r < 0.0)
         {
-            val_r = min_val;
+            val_r = 0.0;
         }
 
-        if (val_g < min_val)
+        if (val_g < 0.0)
         {
-            val_g = min_val;
+            val_g = 0.0;
         }
 
-        if (val_b < min_val)
+        if (val_b < 0.0)
         {
-            val_b = min_val;
+            val_b = 0.0;
+        }
+    }
+
+    template <typename interpolator_t, typename image_view_w_t, unsigned int oversampling>
+    interp_channel_t
+    ImageTransform<interpolator_t, image_view_w_t, oversampling>::
+    normalise(interp_channel_t value)
+    {
+        return gamma((value - min_chan_val_) / (max_chan_val_ - min_chan_val_));
+    }
+
+    template <typename interpolator_t, typename image_view_w_t, unsigned int oversampling>
+    interp_channel_t
+    ImageTransform<interpolator_t, image_view_w_t, oversampling>::
+    unnormalise(interp_channel_t value)
+    {
+        return inv_gamma(value) * (max_chan_val_ - min_chan_val_) + min_chan_val_;
+    }
+
+    template <typename interpolator_t, typename image_view_w_t, unsigned int oversampling>
+    interp_channel_t
+    ImageTransform<interpolator_t, image_view_w_t, oversampling>::
+    gamma(interp_channel_t value)
+    {
+        if (gamma_ == 1.0)
+        {
+            return value;
+        }
+        else
+        {
+            return std::pow(value, gamma_);
+        }
+    }
+
+    template <typename interpolator_t, typename image_view_w_t, unsigned int oversampling>
+    interp_channel_t
+    ImageTransform<interpolator_t, image_view_w_t, oversampling>::
+    inv_gamma(interp_channel_t value)
+    {
+        if (gamma_ == 1.0)
+        {
+            return value;
+        }
+        else
+        {
+            return std::pow(value, 1.0 / gamma_);
         }
     }
 
