@@ -130,7 +130,8 @@ namespace phtr
             * \param[in] value The input value.
             * \return The transformed value.
             */
-            inline interp_channel_t gamma(interp_channel_t value);
+            inline float gamma(float value);
+            inline float fast_gamma(float value);
 
         private:
             /**
@@ -139,7 +140,8 @@ namespace phtr
             * \param[in] value The input value.
             * \return The transformed value.
             */
-            inline interp_channel_t inv_gamma(interp_channel_t value);
+            inline float inv_gamma(float value);
+            inline float fast_inv_gamma(float value);
 
         private:
             /**
@@ -203,6 +205,10 @@ namespace phtr
             */
             double gamma_;
 
+            std::vector<float> gam_val_a_;
+            std::vector<float> gam_val_b_;
+            std::vector<float> inv_gam_val_a_;
+            std::vector<float> inv_gam_val_b_;
 
     }; // class ImageTransform
 
