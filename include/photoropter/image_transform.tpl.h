@@ -177,35 +177,6 @@ namespace phtr
 
                 // deal with clipping
                 clip_vals(min_chan_val, max_chan_val, val_r, val_g, val_b);
-//                if (val_r > max_chan_val)
-//                {
-//                    val_r = max_chan_val;
-//                }
-//
-//                if (val_g > max_chan_val)
-//                {
-//                    val_g = max_chan_val;
-//                }
-//
-//                if (val_b > max_chan_val)
-//                {
-//                    val_b = max_chan_val;
-//                }
-//
-//                if (val_r < min_chan_val)
-//                {
-//                    val_r = min_chan_val;
-//                }
-//
-//                if (val_g < min_chan_val)
-//                {
-//                    val_g = min_chan_val;
-//                }
-//
-//                if (val_b < min_chan_val)
-//                {
-//                    val_b = min_chan_val;
-//                }
 
                 // write channel values
                 iter.write_px_val(Channel::red, val_r);
