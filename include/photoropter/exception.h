@@ -24,8 +24,8 @@ THE SOFTWARE.
 
 */
 
-#ifndef __EXCEPTION_H__
-#define __EXCEPTION_H__
+#ifndef __PHTR_EXCEPTION_H__
+#define __PHTR_EXCEPTION_H__
 
 #include <string>
 
@@ -139,4 +139,4 @@ namespace phtr
 
 } // namespace phtr
 
-#endif // __EXCEPTION_H__
+#endif // __PHTR_EXCEPTION_H__

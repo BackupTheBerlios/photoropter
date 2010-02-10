@@ -24,8 +24,8 @@ THE SOFTWARE.
 
 */
 
-#ifndef __TYPES_H__
-#define __TYPES_H__
+#ifndef __PHTR_TYPES_H__
+#define __PHTR_TYPES_H__
 
 #include <cstddef>
 
@@ -45,7 +45,11 @@ namespace phtr
     /**
     * \brief Type used for the image transformation 'lines' loop. Needs to be signed for OpenMP 2.0
     */
+#if (defined HAVE_OPENMP) && (!defined OPENMP3)
+    typedef long omp_coord_t;
+#else
     typedef size_t omp_coord_t;
+#endif
 
     /**
     * \brief Type for interpolated coordinates.
@@ -54,4 +58,4 @@ namespace phtr
 
 } // namespace phtr
 
-#endif // __TYPES_H__
+#endif // __PHTR_TYPES_H__

@@ -37,6 +37,7 @@ namespace po = boost::program_options;
 #include <photoropter/colour_correction_model.h>
 #include <photoropter/geom_correction_model.h>
 #include <photoropter/colour_correction_model.h>
+#include <photoropter/version.h>
 
 #include <ctime>
 #include <string>
@@ -257,6 +258,8 @@ template <phtr::Storage::type storage_type, typename vil_channel_t>
 void convert(const Settings& settings)
 {
     using namespace phtr;
+
+    std::cerr << "Using Photoropter " << PHTR_VERSION << std::endl;
 
     // typedefs and constants
     typedef ImageBuffer<storage_type> buffer_t;

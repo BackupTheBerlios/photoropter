@@ -24,8 +24,8 @@ THE SOFTWARE.
 
 */
 
-#ifndef __INTERPOLATION_TYPE_H__
-#define __INTERPOLATION_TYPE_H__
+#ifndef __PHTR_INTERPOLATION_TYPE_H__
+#define __PHTR_INTERPOLATION_TYPE_H__
 
 namespace phtr
 {
@@ -59,4 +59,4 @@ namespace phtr
 
 } // namespace phtr
 
-#endif // __INTERPOLATION_TYPE_H__
+#endif // __PHTR_INTERPOLATION_TYPE_H__

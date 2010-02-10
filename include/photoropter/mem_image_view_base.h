@@ -24,8 +24,8 @@ THE SOFTWARE.
 
 */
 
-#ifndef __MEM_IMAGE_VIEW_BASE_H__
-#define __MEM_IMAGE_VIEW_BASE_H__
+#ifndef __PHTR_MEM_IMAGE_VIEW_BASE_H__
+#define __PHTR_MEM_IMAGE_VIEW_BASE_H__
 
 #include <photoropter/storage_type.h>
 #include <photoropter/mem_storage_info.h>
@@ -180,4 +180,4 @@ namespace phtr
 
 #include <photoropter/mem_image_view_base.tpl.h>
 
-#endif // __MEM_IMAGE_VIEW_BASE_H__
+#endif // __PHTR_MEM_IMAGE_VIEW_BASE_H__

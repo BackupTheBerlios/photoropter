@@ -24,8 +24,8 @@ THE SOFTWARE.
 
 */
 
-#ifndef __COLOUR_CORRECTION_MODEL_H__
-#define __COLOUR_CORRECTION_MODEL_H__
+#ifndef __PHTR_COLOUR_CORRECTION_MODEL_H__
+#define __PHTR_COLOUR_CORRECTION_MODEL_H__
 
 #include <photoropter/types.h>
 #include <photoropter/channel_type.h>
@@ -314,4 +314,4 @@ namespace phtr
 
 } // namespace phtr
 
-#endif // __COLOUR_CORRECTION_MODEL_H__
+#endif // __PHTR_COLOUR_CORRECTION_MODEL_H__

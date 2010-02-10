@@ -24,8 +24,8 @@ THE SOFTWARE.
 
 */
 
-#ifndef __IMAGE_TRANSFORM_H__
-#define __IMAGE_TRANSFORM_H__
+#ifndef __PHTR_IMAGE_TRANSFORM_H__
+#define __PHTR_IMAGE_TRANSFORM_H__
 
 #include <vector>
 
@@ -62,7 +62,7 @@ namespace phtr
             * \param[in] image_view_r Input image view.
             * \param[in] image_view_w Output image view.
             */
-            ImageTransform(const image_view_t& image_view_r, image_view_w_t& image_view_w);
+            ImageTransform(const typename ImageTransform::image_view_t& image_view_r, image_view_w_t& image_view_w);
 
         public:
             /**
@@ -127,4 +127,4 @@ namespace phtr
 
 #include <photoropter/image_transform.tpl.h>
 
-#endif // __IMAGE_TRANSFORM_H__
+#endif // __PHTR_IMAGE_TRANSFORM_H__

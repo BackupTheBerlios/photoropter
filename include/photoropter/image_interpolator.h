@@ -24,8 +24,8 @@ THE SOFTWARE.
 
 */
 
-#ifndef __IMAGE_INTERPOLATOR_H__
-#define __IMAGE_INTERPOLATOR_H__
+#ifndef __PHTR_IMAGE_INTERPOLATOR_H__
+#define __PHTR_IMAGE_INTERPOLATOR_H__
 
 #include <cmath>
 
@@ -291,4 +291,4 @@ namespace phtr
 
 #include <photoropter/image_interpolator.tpl.h>
 
-#endif // __IMAGE_INTERPOLATOR_H__
+#endif // __PHTR_IMAGE_INTERPOLATOR_H__

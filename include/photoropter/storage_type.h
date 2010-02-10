@@ -24,8 +24,8 @@ THE SOFTWARE.
 
 */
 
-#ifndef __STORAGE_TYPE_H__
-#define __STORAGE_TYPE_H__
+#ifndef __PHTR_STORAGE_TYPE_H__
+#define __PHTR_STORAGE_TYPE_H__
 
 namespace std
 {
@@ -84,4 +84,4 @@ namespace phtr
 
 } // namespace phtr
 
-#endif // __STORAGE_TYPE_H__
+#endif // __PHTR_STORAGE_TYPE_H__

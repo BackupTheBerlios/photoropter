@@ -30,7 +30,7 @@ namespace phtr
     template <typename interpolator_t, typename image_view_w_t, unsigned int oversampling>
     ImageTransform<interpolator_t, image_view_w_t, oversampling>::
     ImageTransform
-    (const ImageTransform::image_view_t& image_view_r, image_view_w_t& image_view_w)
+    (const typename ImageTransform::image_view_t& image_view_r, image_view_w_t& image_view_w)
             : interpolator_(image_view_r),
             image_view_w_(image_view_w)
     {

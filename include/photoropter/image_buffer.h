@@ -24,8 +24,8 @@ THE SOFTWARE.
 
 */
 
-#ifndef __IMAGE_BUFFER_IMPL_H__
-#define __IMAGE_BUFFER_IMPL_H__
+#ifndef __PHTR_IMAGE_BUFFER_IMPL_H__
+#define __PHTR_IMAGE_BUFFER_IMPL_H__
 
 #include <photoropter/image_buffer.h>
 #include <photoropter/types.h>
@@ -160,4 +160,4 @@ namespace phtr
 
 #include <photoropter/image_buffer.tpl.h>
 
-#endif // __IMAGE_BUFFER_IMPL_H__
+#endif // __PHTR_IMAGE_BUFFER_IMPL_H__

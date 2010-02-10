@@ -24,8 +24,8 @@ THE SOFTWARE.
 
 */
 
-#ifndef __GEOM_CORRECTION_MODEL_H__
-#define __GEOM_CORRECTION_MODEL_H__
+#ifndef __PHTR_GEOM_CORRECTION_MODEL_H__
+#define __PHTR_GEOM_CORRECTION_MODEL_H__
 
 #include <photoropter/types.h>
 #include <photoropter/correction_model_base.h>
@@ -227,4 +227,4 @@ namespace phtr
 
 } // namespace phtr
 
-#endif // __GEOM_CORRECTION_MODEL_H__
+#endif // __PHTR_GEOM_CORRECTION_MODEL_H__

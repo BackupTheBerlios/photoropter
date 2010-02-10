@@ -24,8 +24,8 @@ THE SOFTWARE.
 
 */
 
-#ifndef __GEOM_CORRECTION_QUEUE_H__
-#define __GEOM_CORRECTION_QUEUE_H__
+#ifndef __PHTR_GEOM_CORRECTION_QUEUE_H__
+#define __PHTR_GEOM_CORRECTION_QUEUE_H__
 
 #include <vector>
 
@@ -135,4 +135,4 @@ namespace phtr
 
 #include <photoropter/geom_correction_queue.inl.h>
 
-#endif // __GEOM_CORRECTION_QUEUE_H__
+#endif // __PHTR_GEOM_CORRECTION_QUEUE_H__

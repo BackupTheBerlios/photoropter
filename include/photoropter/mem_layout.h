@@ -24,8 +24,8 @@ THE SOFTWARE.
 
 */
 
-#ifndef __MEM_LAYOUT_H__
-#define __MEM_LAYOUT_H__
+#ifndef __PHTR_MEM_LAYOUT_H__
+#define __PHTR_MEM_LAYOUT_H__
 
 #include <photoropter/types.h>
 #include <photoropter/channel_type.h>
@@ -267,4 +267,4 @@ namespace phtr
 
 } // namespace phtr
 
-#endif // __MEM_LAYOUT_H__
+#endif // __PHTR_MEM_LAYOUT_H__

@@ -24,8 +24,8 @@ THE SOFTWARE.
 
 */
 
-#ifndef __MEM_IMAGE_VIEW_R_H__
-#define __MEM_IMAGE_VIEW_R_H__
+#ifndef __PHTR_MEM_IMAGE_VIEW_R_H__
+#define __PHTR_MEM_IMAGE_VIEW_R_H__
 
 #include <photoropter/mem_image_view_base.h>
 #include <photoropter/mem_image_iter_r.h>
@@ -139,7 +139,7 @@ namespace phtr
             /**
             * \brief Get the aspect ratio of the image.
             * \note The ratio is automatically calculated when the image is created,
-            * but can be overridden using \ref set_aspect().
+            * but can be overridden using \ref set_aspect_ratio().
             * \return The aspect ratio.
             */
             interp_coord_t aspect_ratio() const;
@@ -160,4 +160,4 @@ namespace phtr
 
 #include <photoropter/mem_image_view_r.tpl.h>
 
-#endif // __MEM_IMAGE_VIEW_R_H__
+#endif // __PHTR_MEM_IMAGE_VIEW_R_H__

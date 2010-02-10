@@ -48,6 +48,11 @@ find_package(OpenMP)
 if(OPENMP_FOUND AND PHTR_PARALLELISE)
   message(STATUS "OpenMP found: parallel code will be used for release build.")
   set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} ${OpenMP_CXX_FLAGS} -DHAVE_OPENMP")
+
+  # check compilers with known support for OpenMP3
+  if(CMAKE_COMPILER_IS_GNUCXX)
+    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DOPENMP3")
+  endif(CMAKE_COMPILER_IS_GNUCXX)
 endif()
 
 ########################################
@@ -124,6 +129,7 @@ set(PHTR_INCLUDE_DIR "include/${CMAKE_PROJECT_NAME}")
 set(PHTR_SRC_DIR "src")
 
 set(PHTR_SOURCES
+  ${PHTR_INCLUDE_DIR}/version.h
   ${PHTR_INCLUDE_DIR}/types.h
   ${PHTR_INCLUDE_DIR}/storage_type.h
   ${PHTR_INCLUDE_DIR}/channel_type.h
