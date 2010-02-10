@@ -98,6 +98,21 @@ namespace phtr
 
         private:
             /**
+            * \brief Apply channel clipping.
+            * \param[in]  min_val  Minimal channel value.
+            * \param[in]  max_val  Maximal channel value.
+            * \param[out] val_r    'red' channel value.
+            * \param[out] val_g    'green' channel value.
+            * \param[out] val_b    'blue' channel value.
+            */
+            inline void clip_vals(interp_channel_t min_val,
+                                  interp_channel_t max_val,
+                                  interp_channel_t& val_r,
+                                  interp_channel_t& val_g,
+                                  interp_channel_t& val_b);
+
+        private:
+            /**
             * \brief Internal interpolator object.
             * \details The interpolator uses the input view given in the constructor.
             */

@@ -69,6 +69,8 @@ namespace phtr
 
         // meta-information on the image storage (needed for e.g. the maximal channel values)
         typename image_view_w_t::storage_info_t storage_info(width, height);
+        const interp_channel_t max_chan_val = static_cast<interp_channel_t>(storage_info.max_val);
+        const interp_channel_t min_chan_val = static_cast<interp_channel_t>(storage_info.min_val);
 
         const interp_coord_t parent_x_max = static_cast<interp_coord_t>(p_width - 1);
         const interp_coord_t parent_y_max = static_cast<interp_coord_t>(p_height - 1);
@@ -174,20 +176,36 @@ namespace phtr
                 val_b *= channel_scaling;
 
                 // deal with clipping
-                if (val_r > storage_info.max_val)
-                {
-                    val_r = storage_info.max_val;
-                }
-
-                if (val_g > storage_info.max_val)
-                {
-                    val_g = storage_info.max_val;
-                }
-
-                if (val_b > storage_info.max_val)
-                {
-                    val_b = storage_info.max_val;
-                }
+                clip_vals(min_chan_val, max_chan_val, val_r, val_g, val_b);
+//                if (val_r > max_chan_val)
+//                {
+//                    val_r = max_chan_val;
+//                }
+//
+//                if (val_g > max_chan_val)
+//                {
+//                    val_g = max_chan_val;
+//                }
+//
+//                if (val_b > max_chan_val)
+//                {
+//                    val_b = max_chan_val;
+//                }
+//
+//                if (val_r < min_chan_val)
+//                {
+//                    val_r = min_chan_val;
+//                }
+//
+//                if (val_g < min_chan_val)
+//                {
+//                    val_g = min_chan_val;
+//                }
+//
+//                if (val_b < min_chan_val)
+//                {
+//                    val_b = min_chan_val;
+//                }
 
                 // write channel values
                 iter.write_px_val(Channel::red, val_r);
@@ -217,6 +235,46 @@ namespace phtr
     colour_queue()
     {
         return colour_queue_;
+    }
+
+    template <typename interpolator_t, typename image_view_w_t, unsigned int oversampling>
+    void
+    ImageTransform<interpolator_t, image_view_w_t, oversampling>::
+    clip_vals(interp_channel_t min_val,
+              interp_channel_t max_val,
+              interp_channel_t& val_r,
+              interp_channel_t& val_g,
+              interp_channel_t& val_b)
+    {
+        if (val_r > max_val)
+        {
+            val_r = max_val;
+        }
+
+        if (val_g > max_val)
+        {
+            val_g = max_val;
+        }
+
+        if (val_b > max_val)
+        {
+            val_b = max_val;
+        }
+
+        if (val_r < min_val)
+        {
+            val_r = min_val;
+        }
+
+        if (val_g < min_val)
+        {
+            val_g = min_val;
+        }
+
+        if (val_b < min_val)
+        {
+            val_b = min_val;
+        }
     }
 
 } // namespace phtr

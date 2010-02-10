@@ -94,21 +94,21 @@ namespace phtr
     {
         src_x_r -= x0_;
         src_y_r -= y0_;
-        double r_r = std::sqrt(src_x_r * src_x_r + src_y_r * src_y_r);
+        double r2_r = src_x_r * src_x_r + src_y_r * src_y_r;
 
-        fact_r = 1.0 / (((a_ * r_r * r_r + b_) * r_r * r_r + c_) * r_r * r_r + 1.0);
+        fact_r = 1.0 / (((a_ * r2_r + b_) * r2_r + c_) * r2_r + 1.0);
 
         src_x_g -= x0_;
         src_y_g -= y0_;
-        double r_g = std::sqrt(src_x_g * src_x_g + src_y_g * src_y_g);
+        double r2_g = src_x_g * src_x_g + src_y_g * src_y_g;
 
-        fact_g = 1.0 / (((a_ * r_g * r_g + b_) * r_g * r_g + c_) * r_g * r_g + 1.0);
+        fact_g = 1.0 / (((a_ * r2_g + b_) * r2_g + c_) * r2_g + 1.0);
 
         src_x_b -= x0_;
         src_y_b -= y0_;
-        double r_b = std::sqrt(src_x_b * src_x_b + src_y_b * src_y_b);
+        double r2_b = src_x_b * src_x_b + src_y_b * src_y_b;
 
-        fact_b = 1.0 / (((a_ * r_b * r_b + b_) * r_b * r_b + c_) * r_b * r_b + 1.0);
+        fact_b = 1.0 / (((a_ * r2_b + b_) * r2_b + c_) * r2_b + 1.0);
 
     }
 
@@ -136,7 +136,7 @@ namespace phtr
     set_model_params(double a, double b, double c,
                      interp_coord_t x0, interp_coord_t y0)
     {
-        double hugin_fact = 1.0 / std::sqrt(1 + param_aspect_ * param_aspect_);
+        double hugin_fact = 1.0 / std::sqrt(1.0 + param_aspect_ * param_aspect_);
         a_ = a * std::pow(coord_fact_ * hugin_fact, 6);
         b_ = b * std::pow(coord_fact_ * hugin_fact, 4);
         c_ = c * std::pow(coord_fact_ * hugin_fact, 2);
@@ -148,7 +148,7 @@ namespace phtr
     get_model_params(double& a, double& b, double& c,
                      interp_coord_t& x0, interp_coord_t& y0) const
     {
-        double hugin_fact = 1.0 / std::sqrt(1 + param_aspect_ * param_aspect_);
+        double hugin_fact = 1.0 / std::sqrt(1.0 + param_aspect_ * param_aspect_);
         a = a_ /  std::pow(coord_fact_ * hugin_fact, 6);
         b = b_ / std::pow(coord_fact_ * hugin_fact, 4);
         c = c_ / std::pow(coord_fact_ * hugin_fact, 2);
