@@ -88,7 +88,7 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
 
         po::options_description opt_desc("Allowed options");
         opt_desc.add_options()
-        ("help", "show options")
+        ("help,h", "show options")
         ("ptlens", po::value<std::string>(), "Set PTLens correction model parameters: a;b;c;x0;y0")
         ("vignetting", po::value<std::string>(), "Set vignetting correction parameters: a;b;c;x0;y0")
         ("param-aspect", po::value<double>(), "Aspect ratio used for parameter calibration")
@@ -110,7 +110,7 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
 
         if (options_map.count("help"))
         {
-            std::cerr << opt_desc << "\n";
+            std::cerr << opt_desc << std::endl;
             return false;
         }
 
@@ -253,6 +253,12 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
         }
 
     }
+    catch (po::unknown_option& e)
+    {
+        std::cerr << e.what() << std::endl;
+        std::cerr << "Try option '--help'" << std::endl;
+        return false;
+    }
     catch (po::invalid_command_line_syntax& e)
     {
         std::cerr << "Error: " << e.what() << std::endl;
@@ -281,11 +287,8 @@ void convert(const Settings& settings)
     std::cerr << "Loading test image." << std::endl;
     vil_image_view<vil_rgb<vil_channel_t> > loaded_img =
         vil_convert_to_component_order(
-            vil_convert_to_n_planes(
-                3, vil_convert_stretch_range(
-                    vil_channel_t(), vil_load(settings.inp_file.c_str())
-                )
-            )
+            vil_convert_to_n_planes(3, vil_load(settings.inp_file.c_str())
+                                   )
         );
 
     // image size
