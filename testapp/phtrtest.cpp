@@ -58,7 +58,8 @@ struct Settings
             sub_rect_x0(0),
             sub_rect_y0(0),
             sub_rect_w(0),
-            sub_rect_h(0)
+            sub_rect_h(0),
+            gamma(0)
 
     {}
 
@@ -74,6 +75,7 @@ struct Settings
     size_t sub_rect_y0;
     size_t sub_rect_w;
     size_t sub_rect_h;
+    double gamma;
     std::string inp_file;
     std::string outp_file;
 };
@@ -93,6 +95,7 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
         ("param-crop", po::value<double>(), "Crop factor used for parameter calibration")
         ("image-crop", po::value<double>(), "Diagonal image crop factor")
         ("sub-rect", po::value<std::string>(), "Clip a sub-rectangle from the image: x0:y0:width:height")
+        ("gamma", po::value<double>(), "Gamma value (default: assume sRGB gamma)")
         ("input-file", po::value<std::string>(), "Input file")
         ("output-file", po::value<std::string>(), "Output file");
 
@@ -244,6 +247,11 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
             settings.sub_rect = true;
         }
 
+        if (options_map.count("gamma"))
+        {
+            settings.gamma = options_map["gamma"].as<double>();
+        }
+
     }
     catch (po::invalid_command_line_syntax& e)
     {
@@ -320,6 +328,16 @@ void convert(const Settings& settings)
 
     // image transformation object
     transform_t transform(src_img_view, dst_img_view);
+
+    if (settings.gamma)
+    {
+        std::cerr << "Setting gamma to " << settings.gamma << std::endl;
+        transform.set_gamma(gamma::GammaGeneric(settings.gamma));
+    }
+    else
+    {
+        std::cerr << "Assuming sRGB gamma." << std::endl;
+    }
 
     // add correction models
     double image_aspect = src_img_view.aspect_ratio();
