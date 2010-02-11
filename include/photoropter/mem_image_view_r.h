@@ -39,9 +39,9 @@ namespace phtr
     *  memory position.
     * \details The template uses internal templates to deal efficiently with
     * different storage types.
-    * \param T The storage type (e.g. \ref Storage::rgb_8_inter).
+    * \param T The storage type (e.g. \ref mem::Storage::rgb_8_inter).
     */
-    template <Storage::type T>
+    template <mem::Storage::type T>
     class MemImageViewR : public MemImageViewBase<T>
     {
 

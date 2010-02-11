@@ -39,9 +39,9 @@ namespace phtr
     /**
     * \brief Base class template for image views. See \ref MemImageViewR and
     * \ref MemImageViewW for details.
-    * \param T The storage type (e.g. \ref Storage::rgb_8_inter).
+    * \param T The storage type (e.g. \ref mem::Storage::rgb_8_inter).
     */
-    template <Storage::type T>
+    template <mem::Storage::type T>
     class MemImageViewBase
     {
 
@@ -53,7 +53,7 @@ namespace phtr
             /**
             * \brief The type of the internal storage info object.
             */
-            typedef typename phtr::MemStorageInfo<T> storage_info_t;
+            typedef typename mem::MemStorageInfo<T> storage_info_t;
 
         public:
             /**
@@ -103,7 +103,7 @@ namespace phtr
             /**
             * \brief The storage type of the image.
             */
-            const Storage::type storage_type_;
+            const mem::Storage::type storage_type_;
 
         protected:
             /**

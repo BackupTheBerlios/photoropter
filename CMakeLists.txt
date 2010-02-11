@@ -129,47 +129,49 @@ set(PHTR_INCLUDE_DIR "include/${CMAKE_PROJECT_NAME}")
 set(PHTR_SRC_DIR "src")
 
 set(PHTR_SOURCES
-  ${PHTR_INCLUDE_DIR}/version.h
-  ${PHTR_INCLUDE_DIR}/types.h
-  ${PHTR_INCLUDE_DIR}/storage_type.h
   ${PHTR_INCLUDE_DIR}/channel_type.h
-  ${PHTR_INCLUDE_DIR}/interpolation_type.h
+  ${PHTR_INCLUDE_DIR}/channel_storage.h
+  ${PHTR_INCLUDE_DIR}/channel_range.h
+  ${PHTR_INCLUDE_DIR}/correction_model_base.h
+  ${PHTR_INCLUDE_DIR}/colour_correction_model.h
+  ${PHTR_INCLUDE_DIR}/colour_correction_queue.h
+  ${PHTR_INCLUDE_DIR}/colour_correction_queue.inl.h
+  ${PHTR_INCLUDE_DIR}/exception.h
+  ${PHTR_INCLUDE_DIR}/gamma_func.h
+  ${PHTR_INCLUDE_DIR}/geom_correction_model.h
+  ${PHTR_INCLUDE_DIR}/geom_correction_queue.h
+  ${PHTR_INCLUDE_DIR}/geom_correction_queue.inl.h
   ${PHTR_INCLUDE_DIR}/image_buffer.h
   ${PHTR_INCLUDE_DIR}/image_buffer.tpl.h
   ${PHTR_INCLUDE_DIR}/image_interpolator.h
-  ${PHTR_INCLUDE_DIR}/channel_storage.h
-  ${PHTR_INCLUDE_DIR}/exception.h
-  ${PHTR_INCLUDE_DIR}/channel_range.h
-  ${PHTR_INCLUDE_DIR}/mem_image_view_base.h
-  ${PHTR_INCLUDE_DIR}/mem_image_view_base.tpl.h
-  ${PHTR_INCLUDE_DIR}/mem_image_view_r.h
-  ${PHTR_INCLUDE_DIR}/mem_image_view_r.tpl.h
-  ${PHTR_INCLUDE_DIR}/mem_image_view_w.h
-  ${PHTR_INCLUDE_DIR}/mem_image_view_w.tpl.h
+  ${PHTR_INCLUDE_DIR}/image_interpolator.tpl.h
+  ${PHTR_INCLUDE_DIR}/image_transform.h
+  ${PHTR_INCLUDE_DIR}/image_transform.tpl.h
+  ${PHTR_INCLUDE_DIR}/interpolation_type.h
   ${PHTR_INCLUDE_DIR}/mem_image_iter_base.h
   ${PHTR_INCLUDE_DIR}/mem_image_iter_base.tpl.h
   ${PHTR_INCLUDE_DIR}/mem_image_iter_r.h
   ${PHTR_INCLUDE_DIR}/mem_image_iter_r.tpl.h
   ${PHTR_INCLUDE_DIR}/mem_image_iter_w.h
   ${PHTR_INCLUDE_DIR}/mem_image_iter_w.tpl.h
-  ${PHTR_INCLUDE_DIR}/image_interpolator.tpl.h
+  ${PHTR_INCLUDE_DIR}/mem_image_view_base.h
+  ${PHTR_INCLUDE_DIR}/mem_image_view_base.tpl.h
+  ${PHTR_INCLUDE_DIR}/mem_image_view_r.h
+  ${PHTR_INCLUDE_DIR}/mem_image_view_r.tpl.h
+  ${PHTR_INCLUDE_DIR}/mem_image_view_w.h
+  ${PHTR_INCLUDE_DIR}/mem_image_view_w.tpl.h
   ${PHTR_INCLUDE_DIR}/mem_layout.h
   ${PHTR_INCLUDE_DIR}/mem_storage_info.h
-  ${PHTR_INCLUDE_DIR}/image_transform.h
-  ${PHTR_INCLUDE_DIR}/image_transform.tpl.h
-  ${PHTR_INCLUDE_DIR}/correction_model_base.h
-  ${PHTR_INCLUDE_DIR}/geom_correction_model.h
-  ${PHTR_INCLUDE_DIR}/geom_correction_queue.h
-  ${PHTR_INCLUDE_DIR}/geom_correction_queue.inl.h
-  ${PHTR_INCLUDE_DIR}/colour_correction_model.h
-  ${PHTR_INCLUDE_DIR}/colour_correction_queue.h
-  ${PHTR_INCLUDE_DIR}/colour_correction_queue.inl.h
-  ${PHTR_SRC_DIR}/correction_model_base.cpp
-  ${PHTR_SRC_DIR}/geom_correction_model.cpp
-  ${PHTR_SRC_DIR}/geom_correction_queue.cpp
+  ${PHTR_INCLUDE_DIR}/storage_type.h
+  ${PHTR_INCLUDE_DIR}/types.h
+  ${PHTR_INCLUDE_DIR}/version.h
   ${PHTR_SRC_DIR}/colour_correction_model.cpp
   ${PHTR_SRC_DIR}/colour_correction_queue.cpp
+  ${PHTR_SRC_DIR}/correction_model_base.cpp
   ${PHTR_SRC_DIR}/exception.cpp
+  ${PHTR_SRC_DIR}/gamma_func.cpp
+  ${PHTR_SRC_DIR}/geom_correction_model.cpp
+  ${PHTR_SRC_DIR}/geom_correction_queue.cpp
   )
 
 include_directories(include)

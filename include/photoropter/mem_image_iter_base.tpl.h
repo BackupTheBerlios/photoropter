@@ -27,7 +27,7 @@ THE SOFTWARE.
 namespace phtr
 {
 
-    template <Storage::type T>
+    template <mem::Storage::type T>
     MemImageIterBase<T>::MemImageIterBase
     (channel_storage_t* base_addr, size_t px_offs,
      size_t step, size_t line_step,
@@ -44,7 +44,7 @@ namespace phtr
         //NIL
     }
 
-    template <Storage::type T>
+    template <mem::Storage::type T>
     void
     MemImageIterBase<T>::inc_x
     ()
@@ -52,7 +52,7 @@ namespace phtr
         px_offs_ += step_;
     }
 
-    template <Storage::type T>
+    template <mem::Storage::type T>
     void
     MemImageIterBase<T>::dec_x
     ()
@@ -60,7 +60,7 @@ namespace phtr
         px_offs_ -= step_;
     }
 
-    template <Storage::type T>
+    template <mem::Storage::type T>
     void
     MemImageIterBase<T>::inc_y
     ()
@@ -68,7 +68,7 @@ namespace phtr
         px_offs_ += line_step_;
     }
 
-    template <Storage::type T>
+    template <mem::Storage::type T>
     void
     MemImageIterBase<T>::dec_y
     ()
@@ -76,7 +76,7 @@ namespace phtr
         px_offs_ -= line_step_;
     }
 
-    template <Storage::type T>
+    template <mem::Storage::type T>
     void
     MemImageIterBase<T>::set_px_offs(size_t px_offs)
     {

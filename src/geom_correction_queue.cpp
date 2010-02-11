@@ -81,9 +81,9 @@ namespace phtr
         n_models_ = 0;
     }
 
-    IGeomCorrectionModel& GeomCorrectionQueue::add_model(const IGeomCorrectionModel& model)
+    model::IGeomCorrectionModel& GeomCorrectionQueue::add_model(const model::IGeomCorrectionModel& model)
     {
-        IGeomCorrectionModel* new_mod = model.clone();
+        model::IGeomCorrectionModel* new_mod = model.clone();
 
         correction_model_.push_back(new_mod);
         ++n_models_;

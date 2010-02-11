@@ -31,6 +31,7 @@ THE SOFTWARE.
 
 #include <photoropter/geom_correction_queue.h>
 #include <photoropter/colour_correction_queue.h>
+#include <photoropter/gamma_func.h>
 
 namespace phtr
 {
@@ -92,6 +93,45 @@ namespace phtr
             */
             ColourCorrectionQueue& colour_queue();
 
+        public:
+            /**
+            * \brief Set the %gamma correction.
+            * \details This function fills the internal %gamma correction tables
+            * using the given function.
+            * \param[in] gam_func The %gamma function to be used.
+            */
+            void set_gamma(const gamma::IGammaFunc& gam_func);
+
+        public:
+            /**
+            * \brief Set the %gamma correction.
+            * \details This function fills the internal %gamma correction tables
+            * using the given function.
+            * \param[in] gam_func The %gamma function to be used.
+            * \param[in] inv_gam_func The %gamma function to be used for inverse correction.
+            */
+            void set_gamma(const gamma::IGammaFunc& gam_func,
+                           const gamma::IGammaFunc& inv_gam_func);
+
+        public:
+            /**
+            * \brief Set the precision of the %gamma interpolation.
+            * \details The default is to use 1000 points for interpolation. Changing
+            * this will not have any effect until the next call to \ref set_gamma().
+            * \param[in] num The number of points (actually, one more will be allocated).
+            */
+            void set_gamma_precision(unsigned int num);
+
+        public:
+            /**
+            * \brief Enable/disable %gamma handling.
+            * \details If %gamma is disabled completely, things get a little bit
+            * faster; however, use it only on linear input or if performing no
+            * colour corrections, or you will get wrong output.
+            * \param[in] do_enable If 'true', enable %gamma correction, disable otherwise.
+            */
+            void enable_gamma(bool do_enable);
+
             /* ****************************************
              * internals
              * **************************************** */
@@ -125,23 +165,23 @@ namespace phtr
 
         private:
             /**
-            * \brief Apply gamma transformation.
-            * \details \f[ x_{dst}=x_{src}^\gamma \f]
+            * \brief Apply %gamma transformation.
+            * \details The actual transformation value is determined using a fast lookup
+            * table interpolation.
             * \param[in] value The input value.
             * \return The transformed value.
             */
             inline float gamma(float value);
-            inline float fast_gamma(float value);
 
         private:
             /**
-            * \brief Apply inverse gamma transformation.
-            * \details \f[ x_{dst}=x_{src}^{1/\gamma} \f]
+            * \brief Apply inverse %gamma transformation.
+            * \details The actual transformation value is determined using a fast lookup
+            * table interpolation.
             * \param[in] value The input value.
             * \return The transformed value.
             */
             inline float inv_gamma(float value);
-            inline float fast_inv_gamma(float value);
 
         private:
             /**
@@ -170,13 +210,13 @@ namespace phtr
 
         private:
             /**
-            * Width of the output image.
+            * \brief Width of the output image.
             */
             coord_t outp_img_width_;
 
         private:
             /**
-            * Height of the output image.
+            * \brief Height of the output image.
             */
             coord_t outp_img_height_;
 
@@ -201,13 +241,55 @@ namespace phtr
 
         private:
             /**
-            * \brief The gamma value.
+            * \brief Flag controlling %gamma correction.
             */
-            double gamma_;
+            bool do_gamma_;
 
+        private:
+            /**
+            * \brief Flag controlling %gamma correction.
+            */
+            bool do_inv_gamma_;
+
+        private:
+            /**
+            * \brief Number of points in the %gamma lookup tables after next call
+            * to \ref set_gamma().
+            * \details Actually, the number of points in the lookup table will be
+            * gam_point_new_max_ + 1.
+            */
+            int gam_point_new_max_;
+
+        private:
+            /**
+            * \brief Number of points in the %gamma lookup tables.
+            * \details Actually, the number of points in the lookup table is
+            * gam_point_cur_max_ + 1.
+            */
+            int gam_point_cur_max_;
+
+        private:
+            /**
+            * \brief Lookup table for %gamma correction (interpolation parameter 'a').
+            */
             std::vector<float> gam_val_a_;
+
+        private:
+            /**
+            * \brief Lookup table for %gamma correction (interpolation parameter 'b').
+            */
             std::vector<float> gam_val_b_;
+
+        private:
+            /**
+            * \brief Lookup table for inverse %gamma correction (interpolation parameter 'a').
+            */
             std::vector<float> inv_gam_val_a_;
+
+        private:
+            /**
+            * \brief Lookup table for inverse %gamma correction (interpolation parameter 'b').
+            */
             std::vector<float> inv_gam_val_b_;
 
     }; // class ImageTransform

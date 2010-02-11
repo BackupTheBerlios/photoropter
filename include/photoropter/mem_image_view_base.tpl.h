@@ -27,7 +27,7 @@ THE SOFTWARE.
 namespace phtr
 {
 
-    template <Storage::type T>
+    template <mem::Storage::type T>
     MemImageViewBase<T>::MemImageViewBase
     (void* base_addr, coord_t width, coord_t height)
             : storage_type_(T),
@@ -46,7 +46,7 @@ namespace phtr
         //NIL
     }
 
-    template <Storage::type T>
+    template <mem::Storage::type T>
     coord_t
     MemImageViewBase<T>::width
     () const
@@ -54,7 +54,7 @@ namespace phtr
         return width_;
     }
 
-    template <Storage::type T>
+    template <mem::Storage::type T>
     coord_t
     MemImageViewBase<T>::height()
     const
@@ -62,7 +62,7 @@ namespace phtr
         return height_;
     }
 
-    template <Storage::type T>
+    template <mem::Storage::type T>
     inline size_t
     MemImageViewBase<T>::get_px_offs
     (coord_t x, coord_t y) const

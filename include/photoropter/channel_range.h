@@ -32,41 +32,46 @@ THE SOFTWARE.
 namespace phtr
 {
 
-    /**
-    * \brief A struct template for accessing the minimal and maximal values of a
-    * channel storage type. Uses std::numeric_limits.
-    */
-    template <Storage::type T>
-    struct ChannelRange
+    namespace mem
     {
 
-    public:
         /**
-        * \brief The channel storage type (e.g., uint8_t).
+        * \brief A struct template for accessing the minimal and maximal values of a
+        * channel storage type. Uses std::numeric_limits.
         */
-        typedef typename ChannelStorage<T>::type channel_storage_t;
-
-    public:
-        /**
-        * \brief The minimal value a channel can store (e.g. 0 for unsigned types).
-        * \return The min value.
-        */
-        static channel_storage_t min()
+        template <Storage::type T>
+        struct ChannelRange
         {
-            return std::numeric_limits<channel_storage_t>::min();
-        }
 
-    public:
-        /**
-        * \brief The maximal value a channel can store (e.g. 255 for uint8_t).
-        * \return The max value.
-        */
-        static channel_storage_t max()
-        {
-            return std::numeric_limits<channel_storage_t>::max();
-        }
+        public:
+            /**
+            * \brief The channel storage type (e.g., uint8_t).
+            */
+            typedef typename ChannelStorage<T>::type channel_storage_t;
 
-    }; // namespace phtr
+        public:
+            /**
+            * \brief The minimal value a channel can store (e.g. 0 for unsigned types).
+            * \return The min value.
+            */
+            static channel_storage_t min()
+            {
+                return std::numeric_limits<channel_storage_t>::min();
+            }
+
+        public:
+            /**
+            * \brief The maximal value a channel can store (e.g. 255 for uint8_t).
+            * \return The max value.
+            */
+            static channel_storage_t max()
+            {
+                return std::numeric_limits<channel_storage_t>::max();
+            }
+
+        }; // namespace phtr
+
+    } // namespace phtr::mem
 
 } // namespace phtr
 

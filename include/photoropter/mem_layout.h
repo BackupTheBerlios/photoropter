@@ -35,235 +35,243 @@ namespace phtr
 {
 
     /**
-    * \brief Struct describing the order of channels. Used as base by
-    * specialisations of \ref MemLayout.
+    * \brief Memory layout and storage related stuff
     */
-    struct ChannelOrderRGB
+    namespace mem
     {
 
         /**
-        * \brief Return the channel order for this layout type.
-        * \param index The channel index (ranging from 0 to 2).
-        * \return The channel.
+        * \brief Struct describing the order of channels. Used as base by
+        * specialisations of \ref MemLayout.
         */
-        Channel::type get_channel(size_t index)
+        struct ChannelOrderRGB
         {
-            switch (index)
+
+            /**
+            * \brief Return the channel order for this layout type.
+            * \param index The channel index (ranging from 0 to 2).
+            * \return The channel.
+            */
+            Channel::type get_channel(size_t index)
             {
-                case 0:
-                    return Channel::red;
-                    break;
+                switch (index)
+                {
+                    case 0:
+                        return Channel::red;
+                        break;
 
-                case 1:
-                    return Channel::green;
-                    break;
+                    case 1:
+                        return Channel::green;
+                        break;
 
-                case 2:
-                default:
-                    return Channel::blue;
-                    break;
+                    case 2:
+                    default:
+                        return Channel::blue;
+                        break;
+                }
             }
-        }
 
-    };
-
-    /**
-    * \brief Struct describing a generic interleaved memory storage type. Used as base by
-    * some specialisations of \ref MemLayout.
-    */
-    struct GenericInterleavedLayout
-    {
+        };
 
         /**
-        * \brief Return the number of channels (e.g., 3).
-        * \details The number has to be at least 3 in order for RGB data to fit,
-        * but can be larger (e.g. 4 for RGBA).
-        * \note Additional channels are ignored by Photoropter.
-        * \return The number of channels.
+        * \brief Struct describing a generic interleaved memory storage type. Used as base by
+        * some specialisations of \ref MemLayout.
         */
-        static size_t num_channels()
+        struct GenericInterleavedLayout
         {
-            return 3;
-        }
+
+            /**
+            * \brief Return the number of channels (e.g., 3).
+            * \details The number has to be at least 3 in order for RGB data to fit,
+            * but can be larger (e.g. 4 for RGBA).
+            * \note Additional channels are ignored by Photoropter.
+            * \return The number of channels.
+            */
+            static size_t num_channels()
+            {
+                return 3;
+            }
+
+            /**
+            * \brief Return the 'step' between pixels (e.g., 3 for RGB interleaved)
+            * \return The step value.
+            */
+            static size_t step(coord_t, coord_t)
+            {
+                return 3;
+            }
+
+            /**
+            * \brief Return the 'step' between lines (e.g., 3 * width for RGB interleaved)
+            * \return The step value.
+            */
+            static size_t line_step(coord_t width, coord_t)
+            {
+                return 3 * width;
+            }
+
+            /**
+            * \brief Return the red channel offset (e.g., 0).
+            * \return The red offset.
+            */
+            static size_t r_offs(coord_t, coord_t)
+            {
+                return 0;
+            }
+
+            /**
+            * \brief Return the green channel offset (e.g., 0).
+            * \return The green offset.
+            */
+            static size_t g_offs(coord_t, coord_t)
+            {
+                return 1;
+            }
+
+            /**
+            * \brief Return the blue channel offset (e.g., 0).
+            * \return The blue offset.
+            */
+            static size_t b_offs(coord_t, coord_t)
+            {
+                return 2;
+            }
+
+        }; // struct GenericInterleavedLayout
 
         /**
-        * \brief Return the 'step' between pixels (e.g., 3 for RGB interleaved)
-        * \return The step value.
+        * \brief Struct describing a generic planar memory storage type. Used as base by
+        * some specialisations of \ref MemLayout.
         */
-        static size_t step(coord_t, coord_t)
+        struct GenericPlanarLayout
         {
-            return 3;
-        }
+
+            /**
+            * \brief Return the number of channels (e.g., 3).
+            * \details The number has to be at least 3 in order for RGB data to fit,
+            * but can be larger (e.g. 4 for RGBA).
+            * \note Additional channels are ignored by Photoropter.
+            * \return The number of channels.
+            */
+            static size_t num_channels()
+            {
+                return 3;
+            }
+
+            /**
+            * \brief Return the 'step' between pixels (e.g., 3 for RGB interleaved)
+            * \return The step value.
+            */
+            static size_t step(coord_t, coord_t)
+            {
+                return 1;
+            }
+
+            /**
+            * \brief Return the 'step' between lines (e.g., 3 * width for RGB interleaved)
+            * \return The step value.
+            */
+            static size_t line_step(coord_t width, coord_t)
+            {
+                return width;
+            }
+
+            /**
+            * \brief Return the red channel offset (e.g., 0).
+            * \return The red offset.
+            */
+            static size_t r_offs(coord_t, coord_t)
+            {
+                return 0;
+            }
+
+            /**
+            * \brief Return the green channel offset (e.g., 0).
+            * \return The green offset.
+            */
+            static size_t g_offs(coord_t width, coord_t height)
+            {
+                return width * height;
+            }
+
+            /**
+            * \brief Return the blue channel offset (e.g., 0).
+            * \return The blue offset.
+            */
+            static size_t b_offs(coord_t width, coord_t height)
+            {
+                return 2 * width * height;
+            }
+
+        }; // struct GenericPlanarLayout
 
         /**
-        * \brief Return the 'step' between lines (e.g., 3 * width for RGB interleaved)
-        * \return The step value.
+        * \brief Template to describe the memory layout of
+        * a given \ref Storage::type.
+        * \details This template \em has to be
+        * specialised for every supported type. In each specialisation, the following
+        * static member functions have to be provided: step, r_offs, g_offs, b_offs.
+        * See the existing specialisations for example code.
+        * \param T The storage type (e.g. \ref Storage::rgb_8_inter).
         */
-        static size_t line_step(coord_t width, coord_t)
+        template <Storage::type T>
+        struct MemLayout
         {
-            return 3 * width;
-        }
+            // provoke a compile-time error whenever this unspecialised version is used
+            struct must_be_specialised_t;
+            const size_t must_be_specialised;
+            MemLayout() : must_be_specialised(sizeof(must_be_specialised_t)) {}
+        }; // template struct MemLayout<>
 
         /**
-        * \brief Return the red channel offset (e.g., 0).
-        * \return The red offset.
+        * \brief Specialisation of \ref MemLayout for \ref Storage::rgb_8_inter.
         */
-        static size_t r_offs(coord_t, coord_t)
+        template <>
+        struct MemLayout<Storage::rgb_8_inter> : public GenericInterleavedLayout, public ChannelOrderRGB
         {
-            return 0;
-        }
+        }; // template struct MemLayout<Storage::rgb_8_inter>
 
         /**
-        * \brief Return the green channel offset (e.g., 0).
-        * \return The green offset.
+        * \brief Specialisation of \ref MemLayout for \ref Storage::rgb_16_inter.
         */
-        static size_t g_offs(coord_t, coord_t)
+        template <>
+        struct MemLayout<Storage::rgb_16_inter> : public GenericInterleavedLayout, public ChannelOrderRGB
         {
-            return 1;
-        }
+        }; // template struct MemLayout<Storage::rgb_16_inter>
 
         /**
-        * \brief Return the blue channel offset (e.g., 0).
-        * \return The blue offset.
+        * \brief Specialisation of \ref MemLayout for \ref Storage::rgb_32_inter.
         */
-        static size_t b_offs(coord_t, coord_t)
+        template <>
+        struct MemLayout<Storage::rgb_32_inter> : public GenericInterleavedLayout, public ChannelOrderRGB
         {
-            return 2;
-        }
-
-    }; // struct GenericInterleavedLayout
-
-    /**
-    * \brief Struct describing a generic planar memory storage type. Used as base by
-    * some specialisations of \ref MemLayout.
-    */
-    struct GenericPlanarLayout
-    {
+        }; // template struct MemLayout<Storage::rgb_32_inter>
 
         /**
-        * \brief Return the number of channels (e.g., 3).
-        * \details The number has to be at least 3 in order for RGB data to fit,
-        * but can be larger (e.g. 4 for RGBA).
-        * \note Additional channels are ignored by Photoropter.
-        * \return The number of channels.
+        * \brief Specialisation of \ref MemLayout for \ref Storage::rgb_8_planar.
         */
-        static size_t num_channels()
+        template <>
+        struct MemLayout<Storage::rgb_8_planar> : public GenericPlanarLayout, public ChannelOrderRGB
         {
-            return 3;
-        }
+        }; // template struct MemLayout<Storage::rgb_8_planar>
 
         /**
-        * \brief Return the 'step' between pixels (e.g., 3 for RGB interleaved)
-        * \return The step value.
+        * \brief Specialisation of \ref MemLayout for \ref Storage::rgb_16_planar.
         */
-        static size_t step(coord_t, coord_t)
+        template <>
+        struct MemLayout<Storage::rgb_16_planar> : public GenericPlanarLayout, public ChannelOrderRGB
         {
-            return 1;
-        }
+        }; // template struct MemLayout<Storage::rgb_16_planar>
 
         /**
-        * \brief Return the 'step' between lines (e.g., 3 * width for RGB interleaved)
-        * \return The step value.
+        * \brief Specialisation of \ref MemLayout for \ref Storage::rgb_32_planar.
         */
-        static size_t line_step(coord_t width, coord_t)
+        template <>
+        struct MemLayout<Storage::rgb_32_planar> : public GenericPlanarLayout, public ChannelOrderRGB
         {
-            return width;
-        }
+        }; // template struct MemLayout<Storage::rgb_32_planar>
 
-        /**
-        * \brief Return the red channel offset (e.g., 0).
-        * \return The red offset.
-        */
-        static size_t r_offs(coord_t, coord_t)
-        {
-            return 0;
-        }
-
-        /**
-        * \brief Return the green channel offset (e.g., 0).
-        * \return The green offset.
-        */
-        static size_t g_offs(coord_t width, coord_t height)
-        {
-            return width * height;
-        }
-
-        /**
-        * \brief Return the blue channel offset (e.g., 0).
-        * \return The blue offset.
-        */
-        static size_t b_offs(coord_t width, coord_t height)
-        {
-            return 2 * width * height;
-        }
-
-    }; // struct GenericPlanarLayout
-
-    /**
-    * \brief Template to describe the memory layout of
-    * a given \ref Storage::type.
-    * \details This template \em has to be
-    * specialised for every supported type. In each specialisation, the following
-    * static member functions have to be provided: step, r_offs, g_offs, b_offs.
-    * See the existing specialisations for example code.
-    * \param T The storage type (e.g. \ref Storage::rgb_8_inter).
-    */
-    template <Storage::type T>
-    struct MemLayout
-    {
-        // provoke a compile-time error whenever this unspecialised version is used
-        struct must_be_specialised_t;
-        const size_t must_be_specialised;
-        MemLayout() : must_be_specialised(sizeof(must_be_specialised_t)) {}
-    }; // template struct MemLayout<>
-
-    /**
-    * \brief Specialisation of \ref MemLayout for \ref Storage::rgb_8_inter.
-    */
-    template <>
-    struct MemLayout<Storage::rgb_8_inter> : public GenericInterleavedLayout, public ChannelOrderRGB
-    {
-    }; // template struct MemLayout<Storage::rgb_8_inter>
-
-    /**
-    * \brief Specialisation of \ref MemLayout for \ref Storage::rgb_16_inter.
-    */
-    template <>
-    struct MemLayout<Storage::rgb_16_inter> : public GenericInterleavedLayout, public ChannelOrderRGB
-    {
-    }; // template struct MemLayout<Storage::rgb_16_inter>
-
-    /**
-    * \brief Specialisation of \ref MemLayout for \ref Storage::rgb_32_inter.
-    */
-    template <>
-    struct MemLayout<Storage::rgb_32_inter> : public GenericInterleavedLayout, public ChannelOrderRGB
-    {
-    }; // template struct MemLayout<Storage::rgb_32_inter>
-
-    /**
-    * \brief Specialisation of \ref MemLayout for \ref Storage::rgb_8_planar.
-    */
-    template <>
-    struct MemLayout<Storage::rgb_8_planar> : public GenericPlanarLayout, public ChannelOrderRGB
-    {
-    }; // template struct MemLayout<Storage::rgb_8_planar>
-
-    /**
-    * \brief Specialisation of \ref MemLayout for \ref Storage::rgb_16_planar.
-    */
-    template <>
-    struct MemLayout<Storage::rgb_16_planar> : public GenericPlanarLayout, public ChannelOrderRGB
-    {
-    }; // template struct MemLayout<Storage::rgb_16_planar>
-
-    /**
-    * \brief Specialisation of \ref MemLayout for \ref Storage::rgb_32_planar.
-    */
-    template <>
-    struct MemLayout<Storage::rgb_32_planar> : public GenericPlanarLayout, public ChannelOrderRGB
-    {
-    }; // template struct MemLayout<Storage::rgb_32_planar>
+    } // namespace phtr::mem
 
 } // namespace phtr
 

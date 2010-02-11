@@ -27,7 +27,7 @@ THE SOFTWARE.
 namespace phtr
 {
 
-    template <Storage::type T>
+    template <mem::Storage::type T>
     MemImageViewW<T>::
     MemImageViewW
     (void* base_addr, coord_t width, coord_t height)
@@ -44,7 +44,7 @@ namespace phtr
         //NIL
     }
 
-    template <Storage::type T>
+    template <mem::Storage::type T>
     void
     MemImageViewW<T>::
     write_px_val_r
@@ -53,7 +53,7 @@ namespace phtr
         this->base_addr_[this->get_px_offs(x, y) + this->r_offs_] = val;
     }
 
-    template <Storage::type T>
+    template <mem::Storage::type T>
     void
     MemImageViewW<T>::
     write_px_val_g
@@ -62,7 +62,7 @@ namespace phtr
         this->base_addr_[this->get_px_offs(x, y) + this->g_offs_] = val;
     }
 
-    template <Storage::type T>
+    template <mem::Storage::type T>
     void
     MemImageViewW<T>::
     write_px_val_b
@@ -71,7 +71,7 @@ namespace phtr
         this->base_addr_[this->get_px_offs(x, y) + this->b_offs_] = val;
     }
 
-    template <Storage::type T>
+    template <mem::Storage::type T>
     void
     MemImageViewW<T>::
     write_px_val
@@ -94,7 +94,7 @@ namespace phtr
         }
     }
 
-    template <Storage::type T>
+    template <mem::Storage::type T>
     typename MemImageViewW<T>::iter_t
     MemImageViewW<T>::
     get_iter
@@ -104,7 +104,7 @@ namespace phtr
                                 this->r_offs_, this->g_offs_, this->b_offs_);
     }
 
-    template <Storage::type T>
+    template <mem::Storage::type T>
     void
     MemImageViewW<T>::
     set_roi
@@ -116,7 +116,7 @@ namespace phtr
         roi_y_limit_ = y_limit;
     }
 
-    template <Storage::type T>
+    template <mem::Storage::type T>
     void
     MemImageViewW<T>::
     get_roi
@@ -128,7 +128,7 @@ namespace phtr
         y_limit = roi_y_limit_;
     }
 
-    template <Storage::type T>
+    template <mem::Storage::type T>
     void
     MemImageViewW<T>::
     set_parent_window(coord_t offs_x, coord_t offs_y,
@@ -140,7 +140,7 @@ namespace phtr
         parent_height_ = height;
     }
 
-    template <Storage::type T>
+    template <mem::Storage::type T>
     void
     MemImageViewW<T>::
     get_parent_window(coord_t& offs_x, coord_t& offs_y,

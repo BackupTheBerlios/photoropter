@@ -254,7 +254,7 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
     return true;
 }
 
-template <phtr::Storage::type storage_type, typename vil_channel_t>
+template <phtr::mem::Storage::type storage_type, typename vil_channel_t>
 void convert(const Settings& settings)
 {
     using namespace phtr;
@@ -335,10 +335,10 @@ void convert(const Settings& settings)
 
     if (settings.ptlens_corr)
     {
-        PTLensGeomModel ptlens_mod(param_aspect,
-                                   image_aspect,
-                                   settings.param_crop,
-                                   settings.image_crop);
+        model::PTLensGeomModel ptlens_mod(param_aspect,
+                                          image_aspect,
+                                          settings.param_crop,
+                                          settings.image_crop);
         ptlens_mod.set_model_params(settings.ptlens_params[0],
                                     settings.ptlens_params[1],
                                     settings.ptlens_params[2],
@@ -355,6 +355,7 @@ void convert(const Settings& settings)
 
     if (settings.vignetting_corr)
     {
+        using model::HuginVignettingModel;
         // this time, the other way round. first add the model, then modify settings
         HuginVignettingModel vign_mod(param_aspect,
                                       image_aspect,
@@ -409,12 +410,12 @@ int main(int argc, char* argv[])
         if (img_format == VIL_PIXEL_FORMAT_BYTE)
         {
             std::cerr << "Performing 8bit conversion." << std::endl;
-            convert<phtr::Storage::rgb_8_inter, vxl_uint_8>(settings);
+            convert<phtr::mem::Storage::rgb_8_inter, vxl_uint_8>(settings);
         }
         else
         {
             std::cerr << "Performing 16bit conversion." << std::endl;
-            convert<phtr::Storage::rgb_16_inter, vxl_uint_16>(settings);
+            convert<phtr::mem::Storage::rgb_16_inter, vxl_uint_16>(settings);
         }
 
     }

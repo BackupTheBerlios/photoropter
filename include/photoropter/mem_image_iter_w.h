@@ -36,9 +36,9 @@ namespace phtr
     /**
     * \brief Iterator class for write access to an image in memory.
     * \details Instances of this class are usually created by \ref MemImageViewW.
-    * \param T The storage type (e.g. \ref Storage::rgb_8_inter).
+    * \param T The storage type (e.g. \ref mem::Storage::rgb_8_inter).
     */
-    template <Storage::type T>
+    template <mem::Storage::type T>
     class MemImageIterW : public MemImageIterBase<T>
     {
 

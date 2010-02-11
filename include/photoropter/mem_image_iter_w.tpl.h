@@ -27,7 +27,7 @@ THE SOFTWARE.
 namespace phtr
 {
 
-    template <Storage::type T>
+    template <mem::Storage::type T>
     MemImageIterW<T>::MemImageIterW
     (channel_storage_t* base_addr, size_t px_offs, size_t step, size_t line_step,
      size_t r_offs, size_t g_offs, size_t b_offs)
@@ -36,7 +36,7 @@ namespace phtr
         //NIL
     }
 
-    template <Storage::type T>
+    template <mem::Storage::type T>
     void
     MemImageIterW<T>::write_px_val_r
     (channel_storage_t val)
@@ -44,7 +44,7 @@ namespace phtr
         this->base_addr_[this->px_offs_ + this->r_offs_] = val;
     }
 
-    template <Storage::type T>
+    template <mem::Storage::type T>
     void
     MemImageIterW<T>::write_px_val_g
     (channel_storage_t val)
@@ -52,7 +52,7 @@ namespace phtr
         this->base_addr_[this->px_offs_ + this->g_offs_] = val;
     }
 
-    template <Storage::type T>
+    template <mem::Storage::type T>
     void
     MemImageIterW<T>::write_px_val_b
     (channel_storage_t val)
@@ -60,7 +60,7 @@ namespace phtr
         this->base_addr_[this->px_offs_ + this->b_offs_] = val;
     }
 
-    template <Storage::type T>
+    template <mem::Storage::type T>
     void
     MemImageIterW<T>::write_px_val
     (Channel::type chan, channel_storage_t val)

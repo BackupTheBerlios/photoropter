@@ -37,9 +37,9 @@ namespace phtr
     /**
     * \brief Base class template for iterator classes. Not supposed to be used directly.
     * See \ref MemImageIterR and \ref MemImageIterW for details.
-    * \param T The storage type (e.g. \ref Storage::rgb_8_inter).
+    * \param T The storage type (e.g. \ref mem::Storage::rgb_8_inter).
     */
-    template <Storage::type T>
+    template <mem::Storage::type T>
     class MemImageIterBase
     {
 
@@ -51,13 +51,13 @@ namespace phtr
             /**
             * \brief Struct describing the memory layout.
             */
-            typedef typename phtr::MemLayout<T> mem_layout_t;
+            typedef typename mem::MemLayout<T> mem_layout_t;
 
         public:
             /**
             * \brief The channel storage type for this image (e.g., uint8_t).
             */
-            typedef typename ChannelStorage<T>::type channel_storage_t;
+            typedef typename mem::ChannelStorage<T>::type channel_storage_t;
 
         public:
             /**
@@ -129,7 +129,7 @@ namespace phtr
             /**
             * \brief The storage type.
             */
-            const Storage::type storage_type_;
+            const mem::Storage::type storage_type_;
 
         protected:
             /**

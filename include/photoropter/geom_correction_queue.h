@@ -87,7 +87,7 @@ namespace phtr
             * \param model The geometry correction model to be added.
             * \return Reference to the new correction model copy.
             */
-            IGeomCorrectionModel& add_model(const IGeomCorrectionModel& model);
+            model::IGeomCorrectionModel& add_model(const model::IGeomCorrectionModel& model);
 
         public:
             /**
@@ -121,7 +121,7 @@ namespace phtr
             /**
             * \brief The internal list of correction models.
             */
-            std::vector<IGeomCorrectionModel*> correction_model_;
+            std::vector<model::IGeomCorrectionModel*> correction_model_;
 
         private:
             /**

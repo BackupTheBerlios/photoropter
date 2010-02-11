@@ -38,9 +38,9 @@ namespace phtr
 
     /**
     * \brief Class template for managing an image buffer.
-    * \param T The storage type (e.g. \ref Storage::rgb_8_inter).
+    * \param T The storage type (e.g. \ref mem::Storage::rgb_8_inter).
     */
-    template <phtr::Storage::type T>
+    template <mem::Storage::type T>
     class ImageBuffer
     {
 
@@ -52,13 +52,13 @@ namespace phtr
             /**
             * \brief The channel storage type.
             */
-            typedef typename phtr::ChannelStorage<T>::type channel_storage_t;
+            typedef typename mem::ChannelStorage<T>::type channel_storage_t;
 
         public:
             /**
             * \brief The type of the internal storage info object.
             */
-            typedef typename phtr::MemStorageInfo<T> storage_info_t;
+            typedef typename mem::MemStorageInfo<T> storage_info_t;
 
         public:
             /**

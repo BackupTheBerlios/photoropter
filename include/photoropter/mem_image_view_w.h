@@ -40,9 +40,9 @@ namespace phtr
     * \details The template uses internal templates to deal efficiently with
     * different storage types. Both a region of interest (ROI) and a 'parent window'
     * size/offset can be specified to deal with different cases of sub-picture rendering.
-    * \param T The storage type (e.g. \ref Storage::rgb_8_inter).
+    * \param T The storage type (e.g. \ref mem::Storage::rgb_8_inter).
     */
-    template <Storage::type T>
+    template <mem::Storage::type T>
     class MemImageViewW : public MemImageViewBase<T>
     {
 

@@ -27,7 +27,7 @@ THE SOFTWARE.
 namespace phtr
 {
 
-    template <Storage::type T>
+    template <mem::Storage::type T>
     MemImageIterR<T>::MemImageIterR
     (channel_storage_t* base_addr, size_t px_offs, size_t step, size_t line_step,
      size_t r_offs, size_t g_offs, size_t b_offs)
@@ -37,7 +37,7 @@ namespace phtr
         //NIL
     }
 
-    template <Storage::type T>
+    template <mem::Storage::type T>
     typename MemImageIterR<T>::channel_storage_t
     MemImageIterR<T>::get_px_val_r
     ()
@@ -45,7 +45,7 @@ namespace phtr
         return this->base_addr_[this->px_offs_ + this->r_offs_];
     }
 
-    template <Storage::type T>
+    template <mem::Storage::type T>
     typename MemImageIterR<T>::channel_storage_t
     MemImageIterR<T>::get_px_val_g
     ()
@@ -53,7 +53,7 @@ namespace phtr
         return this->base_addr_[this->px_offs_ + this->g_offs_];
     }
 
-    template <Storage::type T>
+    template <mem::Storage::type T>
     typename MemImageIterR<T>::channel_storage_t
     MemImageIterR<T>::get_px_val_b
     ()
@@ -61,7 +61,7 @@ namespace phtr
         return this->base_addr_[this->px_offs_ + this->b_offs_];
     }
 
-    template <Storage::type T>
+    template <mem::Storage::type T>
     typename MemImageIterR<T>::channel_storage_t
     MemImageIterR<T>::get_px_val(Channel::type channel)
     {

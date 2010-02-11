@@ -90,7 +90,7 @@ namespace phtr
             * \param model The colour correction model to be added.
             * \return Reference to the new correction model copy.
             */
-            IColourCorrectionModel& add_model(const IColourCorrectionModel& model);
+            model::IColourCorrectionModel& add_model(const model::IColourCorrectionModel& model);
 
         public:
             /**
@@ -124,7 +124,7 @@ namespace phtr
             /**
             * \brief The internal list of correction models.
             */
-            std::vector<IColourCorrectionModel*> correction_model_;
+            std::vector<model::IColourCorrectionModel*> correction_model_;
 
         private:
             /**

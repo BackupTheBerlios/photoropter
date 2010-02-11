@@ -24,60 +24,42 @@ THE SOFTWARE.
 
 */
 
-#include <cstring>
+#include <cmath>
+
+#include <photoropter/gamma_func.h>
 
 namespace phtr
 {
 
-    template <mem::Storage::type T>
-    ImageBuffer<T>::ImageBuffer
-    (coord_t width, coord_t height, bool zero)
-            : storage_info_(width, height),
-            data_(0),
-            width_(width),
-            height_(height),
-            num_channels_(storage_info_.num_channels)
+    namespace gamma
     {
-        num_pixels_ = width_ * height_;
-        num_bytes_ = num_pixels_ * num_channels_ * sizeof(channel_storage_t);
 
-        data_ = new channel_storage_t[num_pixels_ * num_channels_];
-
-        if (zero)
+        GammaGeneric::GammaGeneric(double gam)
+                : gamma_(gam)
         {
-            memset(static_cast<void*>(data_), 0, num_bytes_);
+            //NIL
         }
-    }
 
-    template <mem::Storage::type T>
-    ImageBuffer<T>::~ImageBuffer
-    ()
-    {
-        delete[] data_;
-    }
+        double GammaGeneric::gamma(double value) const
+        {
+            return std::pow(value, gamma_);
+        }
 
-    template <mem::Storage::type T>
-    void*
-    ImageBuffer<T>::data
-    ()
-    {
-        return data_;
-    }
+        double GammaGeneric::inv_gamma(double value) const
+        {
+            return std::pow(value, 1.0 / gamma_);
+        }
 
-    template <mem::Storage::type T>
-    size_t
-    ImageBuffer<T>::num_pixels
-    ()
-    {
-        return num_pixels_;
-    }
+        double GammaSRGB::gamma(double value) const
+        {
+            return (value <= 0.04045) ? value / 12.92 : std::pow((value + 0.055) / 1.055, 2.4);
+        }
 
-    template <mem::Storage::type T>
-    size_t
-    ImageBuffer<T>::num_bytes
-    ()
-    {
-        return num_bytes_;
-    }
+        double GammaSRGB::inv_gamma(double value) const
+        {
+            return (value <= 0.0031309) ? 12.92 * value : 1.055 * std::pow(value, 1.0 / 2.4) - 0.055;
+        }
+
+    } // namespace phtr::gamma
 
 } // namespace phtr

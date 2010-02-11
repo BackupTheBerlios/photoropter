@@ -30,7 +30,10 @@ THE SOFTWARE.
 namespace phtr
 {
 
-    static const char PHTR_VERSION[] = "0.0.1";
+    /**
+    * \brief The library version.
+    */
+    static const char PHTR_VERSION[] = "0.0.2";
 
 } // namespace phtr
 

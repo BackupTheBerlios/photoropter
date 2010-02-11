@@ -81,9 +81,9 @@ namespace phtr
         n_models_ = 0;
     }
 
-    IColourCorrectionModel& ColourCorrectionQueue::add_model(const IColourCorrectionModel& model)
+    model::IColourCorrectionModel& ColourCorrectionQueue::add_model(const model::IColourCorrectionModel& model)
     {
-        IColourCorrectionModel* new_mod = model.clone();
+        model::IColourCorrectionModel* new_mod = model.clone();
 
         correction_model_.push_back(new_mod);
         ++n_models_;

@@ -27,7 +27,7 @@ THE SOFTWARE.
 namespace phtr
 {
 
-    template <Storage::type T>
+    template <mem::Storage::type T>
     MemImageViewR<T>::
     MemImageViewR
     (const void* base_addr, coord_t width, coord_t height)
@@ -37,7 +37,7 @@ namespace phtr
                         static_cast<interp_coord_t>(this->height());
     }
 
-    template <Storage::type T>
+    template <mem::Storage::type T>
     typename MemImageViewR<T>::channel_storage_t
     MemImageViewR<T>::
     get_px_val_r
@@ -46,7 +46,7 @@ namespace phtr
         return this->base_addr_[this->get_px_offs(x, y) + this->r_offs_];
     }
 
-    template <Storage::type T>
+    template <mem::Storage::type T>
     typename MemImageViewR<T>::channel_storage_t
     MemImageViewR<T>::
     get_px_val_g
@@ -55,7 +55,7 @@ namespace phtr
         return this->base_addr_[this->get_px_offs(x, y) + this->g_offs_];
     }
 
-    template <Storage::type T>
+    template <mem::Storage::type T>
     typename MemImageViewR<T>::channel_storage_t
     MemImageViewR<T>::
     get_px_val_b
@@ -64,7 +64,7 @@ namespace phtr
         return this->base_addr_[this->get_px_offs(x, y) + this->b_offs_];
     }
 
-    template <Storage::type T>
+    template <mem::Storage::type T>
     typename MemImageViewR<T>::channel_storage_t
     MemImageViewR<T>::
     get_px_val
@@ -87,7 +87,7 @@ namespace phtr
         }
     }
 
-    template <Storage::type T>
+    template <mem::Storage::type T>
     typename MemImageViewR<T>::iter_t
     MemImageViewR<T>::
     get_iter
@@ -97,14 +97,14 @@ namespace phtr
                                 this->r_offs_, this->g_offs_, this->b_offs_);
     }
 
-    template <Storage::type T>
+    template <mem::Storage::type T>
     void
     MemImageViewR<T>::set_aspect_ratio(interp_coord_t aspect_ratio)
     {
         aspect_ratio_ = aspect_ratio;
     }
 
-    template <Storage::type T>
+    template <mem::Storage::type T>
     interp_coord_t
     MemImageViewR<T>::aspect_ratio() const
     {

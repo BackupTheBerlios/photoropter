@@ -38,31 +38,13 @@ namespace phtr
             storage_info_(outp_img_width_, outp_img_height_),
             min_chan_val_(static_cast<interp_channel_t>(storage_info_.min_val)),
             max_chan_val_(static_cast<interp_channel_t>(storage_info_.max_val)),
-            gamma_(2.2)
+            do_gamma_(true),
+            do_inv_gamma_(true),
+            gam_point_new_max_(1000),
+            gam_point_cur_max_(-1)
     {
-        //NIL
-
-        // gamma lookup table
-        gam_val_a_.resize(101);
-        gam_val_b_.resize(101);
-        inv_gam_val_a_.resize(101);
-        inv_gam_val_b_.resize(101);
-        for (int i = 0; i < 101; ++i)
-        {
-            float v1 = static_cast<float>(i) / 100;
-            float v2 = static_cast<float>(i + 1) / 100;
-            float g1 = gamma(v1);
-            float g2 = gamma(v2);
-            float a = (g2 - g1) / (v2 - v1);
-            gam_val_a_[i] = a;
-            gam_val_b_[i] = g1 - a * v1;
-
-            float ig1 = inv_gamma(v1);
-            float ig2 = inv_gamma(v2);
-            float ia = (ig2 - ig1) / (v2 - v1);
-            inv_gam_val_a_[i] = ia;
-            inv_gam_val_b_[i] = ig1 - ia * v1;
-        }
+        // set default gamma to sRGB
+        set_gamma(gamma::GammaSRGB());
     }
 
     template <typename interpolator_t, typename image_view_w_t, unsigned int oversampling>
@@ -224,6 +206,72 @@ namespace phtr
     template <typename interpolator_t, typename image_view_w_t, unsigned int oversampling>
     void
     ImageTransform<interpolator_t, image_view_w_t, oversampling>::
+    set_gamma(const gamma::IGammaFunc& gam_func)
+    {
+        set_gamma(gam_func, gam_func);
+    }
+
+    template <typename interpolator_t, typename image_view_w_t, unsigned int oversampling>
+    void
+    ImageTransform<interpolator_t, image_view_w_t, oversampling>::
+    set_gamma(const gamma::IGammaFunc& gam_func, const gamma::IGammaFunc& inv_gam_func)
+    {
+        // prepare gamma lookup tables
+        int num_points = gam_point_new_max_ + 1;
+
+        gam_val_a_.resize(num_points);
+        gam_val_b_.resize(num_points);
+        inv_gam_val_a_.resize(num_points);
+        inv_gam_val_b_.resize(num_points);
+
+        gam_point_cur_max_ = gam_point_new_max_;
+
+        // fill tables
+        for (int i = 0; i < num_points; ++i)
+        {
+            float v1 = static_cast<float>(i) / static_cast<float>(gam_point_new_max_);
+            float v2 = static_cast<float>(i + 1) / static_cast<float>(gam_point_new_max_);
+
+            float g1 = gam_func.gamma(v1);
+            float g2 = gam_func.gamma(v2);
+
+            // determine slope
+            float a = (g2 - g1) / (v2 - v1);
+
+            gam_val_a_[i] = a;
+            gam_val_b_[i] = g1 - a * v1;
+
+            float ig1 = inv_gam_func.inv_gamma(v1);
+            float ig2 = inv_gam_func.inv_gamma(v2);
+
+            // determine slope
+            float ia = (ig2 - ig1) / (v2 - v1);
+
+            inv_gam_val_a_[i] = ia;
+            inv_gam_val_b_[i] = ig1 - ia * v1;
+        }
+
+    }
+
+    template <typename interpolator_t, typename image_view_w_t, unsigned int oversampling>
+    void
+    ImageTransform<interpolator_t, image_view_w_t, oversampling>::
+    set_gamma_precision(unsigned int num)
+    {
+        gam_point_new_max_ = num;
+    }
+
+    template <typename interpolator_t, typename image_view_w_t, unsigned int oversampling>
+    void
+    ImageTransform<interpolator_t, image_view_w_t, oversampling>::
+    enable_gamma(bool do_enable)
+    {
+        do_gamma_ = do_inv_gamma_ = do_enable;
+    }
+
+    template <typename interpolator_t, typename image_view_w_t, unsigned int oversampling>
+    void
+    ImageTransform<interpolator_t, image_view_w_t, oversampling>::
     clip_vals(interp_channel_t& val_r,
               interp_channel_t& val_g,
               interp_channel_t& val_b)
@@ -264,7 +312,7 @@ namespace phtr
     ImageTransform<interpolator_t, image_view_w_t, oversampling>::
     normalise(interp_channel_t value)
     {
-        return fast_gamma((value - min_chan_val_) / (max_chan_val_ - min_chan_val_));
+        return gamma((value - min_chan_val_) / (max_chan_val_ - min_chan_val_));
     }
 
     template <typename interpolator_t, typename image_view_w_t, unsigned int oversampling>
@@ -272,7 +320,7 @@ namespace phtr
     ImageTransform<interpolator_t, image_view_w_t, oversampling>::
     unnormalise(interp_channel_t value)
     {
-        return fast_inv_gamma(value) * (max_chan_val_ - min_chan_val_) + min_chan_val_;
+        return inv_gamma(value) * (max_chan_val_ - min_chan_val_) + min_chan_val_;
     }
 
     template <typename interpolator_t, typename image_view_w_t, unsigned int oversampling>
@@ -280,15 +328,30 @@ namespace phtr
     ImageTransform<interpolator_t, image_view_w_t, oversampling>::
     gamma(float value)
     {
-        if (gamma_ == 1.0)
+
+        if (!do_gamma_)
         {
             return value;
         }
+
+        int idx = static_cast<int>(value * gam_point_cur_max_);
+
+        if (idx < 0)
+        {
+            return 0;
+        }
+        else if (idx > gam_point_cur_max_)
+        {
+            return 1.0;
+        }
         else
         {
-            return std::pow(value, gamma_);
-//            return (value <= 0.04045) ? value / 12.92 : std::pow((value + 0.055) / 1.055, 2.4);
+            float a = gam_val_a_[idx];
+            float b = gam_val_b_[idx];
+
+            return a * value + b;
         }
+
     }
 
     template <typename interpolator_t, typename image_view_w_t, unsigned int oversampling>
@@ -296,51 +359,30 @@ namespace phtr
     ImageTransform<interpolator_t, image_view_w_t, oversampling>::
     inv_gamma(float value)
     {
-        if (gamma_ == 1.0)
+
+        if (!do_inv_gamma_)
         {
             return value;
+        }
+
+        int idx = static_cast<int>(value * gam_point_cur_max_);
+
+        if (idx < 0)
+        {
+            return 0;
+        }
+        else if (idx > gam_point_cur_max_)
+        {
+            return 1.0;
         }
         else
         {
-            return std::pow(static_cast<float>(value), static_cast<float>(1.0 / gamma_));
-//            return (value <= 0.0031309) ? 12.92 * value : 1.055 * std::pow(value, 1.0 / 2.4) - 0.055;
-        }
-    }
+            float a = inv_gam_val_a_[idx];
+            float b = inv_gam_val_b_[idx];
 
-    template <typename interpolator_t, typename image_view_w_t, unsigned int oversampling>
-    float
-    ImageTransform<interpolator_t, image_view_w_t, oversampling>::
-    fast_gamma(float value)
-    {
-        if (gamma_ == 1.0)
-        {
-            return value;
+            return a * value + b;
         }
 
-        int idx = static_cast<int>(value * 100);
-        if (idx < 0) return 0;
-        if (idx > 100) return 1;
-        float a = gam_val_a_[idx];
-        float b = gam_val_b_[idx];
-        return a * value + b;
-    }
-
-    template <typename interpolator_t, typename image_view_w_t, unsigned int oversampling>
-    float
-    ImageTransform<interpolator_t, image_view_w_t, oversampling>::
-    fast_inv_gamma(float value)
-    {
-        if (gamma_ == 1.0)
-        {
-            return value;
-        }
-
-        int idx = static_cast<int>(value * 100);
-        if (idx < 0) return 0;
-        if (idx > 100) return 1;
-        float a = inv_gam_val_a_[idx];
-        float b = inv_gam_val_b_[idx];
-        return a * value + b;
     }
 
 } // namespace phtr
