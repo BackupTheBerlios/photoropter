@@ -60,6 +60,10 @@ namespace phtr
             return (value <= 0.0031309) ? 12.92 * value : 1.055 * std::pow(value, 1.0 / 2.4) - 0.055;
         }
 
+        /* Include EMoR curve definitions */
+#include "modpar_emor.h"
+#include "modpar_invemor.h"
+
     } // namespace phtr::gamma
 
 } // namespace phtr

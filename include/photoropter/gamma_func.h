@@ -153,6 +153,79 @@ namespace phtr
 
         }; // class GammaSRGB
 
+        /**
+        * \brief EMOR response curve.
+        * \note This class implements the 'Empirical Model of Response'
+        * (EMOR) for sensor response curves proposed and provided by
+        * M.D. Grossberg and S.K. Nayar from the University of
+        * Columbia (Computer Vision laboratory). For more information
+        * on EMoR please visit
+        * http://www.cs.columbia.edu/CAVE/software/softlib/dorf.php
+        */
+        class GammaEMOR : public IGammaFunc
+        {
+
+            private:
+                /* EMoR curves */
+                static const double E[];
+                static const double f0[];
+                static const double h01[];
+                static const double h02[];
+                static const double h03[];
+                static const double h04[];
+                static const double h05[];
+                static const double h06[];
+                static const double h07[];
+                static const double h08[];
+                static const double h09[];
+                static const double h10[];
+                static const double h11[];
+                static const double h12[];
+                static const double h13[];
+                static const double h14[];
+                static const double h15[];
+                static const double h16[];
+                static const double h17[];
+                static const double h18[];
+                static const double h19[];
+                static const double h20[];
+                static const double h21[];
+                static const double h22[];
+                static const double h23[];
+                static const double h24[];
+                static const double h25[];
+
+                /* Inverse EMoR curves */
+                static const double B[];
+                static const double g0[];
+                static const double hinv01[];
+                static const double hinv02[];
+                static const double hinv03[];
+                static const double hinv04[];
+                static const double hinv05[];
+                static const double hinv06[];
+                static const double hinv07[];
+                static const double hinv08[];
+                static const double hinv09[];
+                static const double hinv10[];
+                static const double hinv11[];
+                static const double hinv12[];
+                static const double hinv13[];
+                static const double hinv14[];
+                static const double hinv15[];
+                static const double hinv16[];
+                static const double hinv17[];
+                static const double hinv18[];
+                static const double hinv19[];
+                static const double hinv20[];
+                static const double hinv21[];
+                static const double hinv22[];
+                static const double hinv23[];
+                static const double hinv24[];
+                static const double hinv25[];
+
+        }; // class GammaEMoR
+
     } // namespace phtr::gamma
 
 } // namespace phtr

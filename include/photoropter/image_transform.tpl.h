@@ -40,7 +40,7 @@ namespace phtr
             max_chan_val_(static_cast<interp_channel_t>(storage_info_.max_val)),
             do_gamma_(true),
             do_inv_gamma_(true),
-            gam_point_new_max_(1000),
+            gam_point_new_max_(1023),
             gam_point_cur_max_(-1)
     {
         // set default gamma to sRGB
