@@ -243,6 +243,7 @@ namespace phtr
 
             float ig1 = inv_gam_func.inv_gamma(v1);
             float ig2 = inv_gam_func.inv_gamma(v2);
+            std::cout << g1 << "\t" << ig1 << std::endl;
 
             // determine slope
             float ia = (ig2 - ig1) / (v2 - v1);
@@ -258,7 +259,7 @@ namespace phtr
     ImageTransform<interpolator_t, image_view_w_t, oversampling>::
     set_gamma_precision(unsigned int num)
     {
-        gam_point_new_max_ = num;
+        gam_point_new_max_ = num - 1;
     }
 
     template <typename interpolator_t, typename image_view_w_t, unsigned int oversampling>

@@ -89,8 +89,8 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
         po::options_description opt_desc("Allowed options");
         opt_desc.add_options()
         ("help,h", "show options")
-        ("ptlens", po::value<std::string>(), "Set PTLens correction model parameters: a;b;c;x0;y0")
-        ("vignetting", po::value<std::string>(), "Set vignetting correction parameters: a;b;c;x0;y0")
+        ("ptlens", po::value<std::string>(), "Set PTLens correction model parameters: a:b:c[:x0:y0]")
+        ("vignetting", po::value<std::string>(), "Set vignetting correction parameters: a:b:c[:x0:y0]")
         ("param-aspect", po::value<double>(), "Aspect ratio used for parameter calibration")
         ("param-crop", po::value<double>(), "Crop factor used for parameter calibration")
         ("image-crop", po::value<double>(), "Diagonal image crop factor")
@@ -340,6 +340,9 @@ void convert(const Settings& settings)
     else
     {
         std::cerr << "Assuming sRGB gamma." << std::endl;
+        gamma::GammaEMOR emor_func;
+        emor_func.set_params(0)(0)(0)(0)(0);
+        transform.set_gamma(emor_func);
     }
 
     // add correction models

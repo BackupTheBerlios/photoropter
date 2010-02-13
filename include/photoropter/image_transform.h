@@ -116,9 +116,9 @@ namespace phtr
         public:
             /**
             * @brief Set the precision of the %gamma interpolation.
-            * @details The default is to use 1024 points for interpolation (num = 1023).
+            * @details The default is to use 1024 points for interpolation.
             * Changing this will not have any effect until the next call to @ref set_gamma().
-            * @param[in] num The number of points (actually, one more will be allocated).
+            * @param[in] num The number of points-
             */
             void set_gamma_precision(unsigned int num);
 
@@ -139,9 +139,9 @@ namespace phtr
         private:
             /**
             * @brief Apply channel clipping.
-            * @param[in,out] val_r    'red' channel value.
-            * @param[in,out] val_g    'green' channel value.
-            * @param[in,out] val_b    'blue' channel value.
+            * @param[in,out] val_r 'red' channel value.
+            * @param[in,out] val_g 'green' channel value.
+            * @param[in,out] val_b 'blue' channel value.
             */
             inline void clip_vals(interp_channel_t& val_r,
                                   interp_channel_t& val_g,

@@ -164,16 +164,17 @@ set(PHTR_SOURCES
   ${PHTR_INCLUDE_DIR}/mem_storage_info.h
   ${PHTR_INCLUDE_DIR}/storage_type.h
   ${PHTR_INCLUDE_DIR}/types.h
+  ${PHTR_INCLUDE_DIR}/util.h
   ${PHTR_INCLUDE_DIR}/version.h
   ${PHTR_SRC_DIR}/colour_correction_model.cpp
   ${PHTR_SRC_DIR}/colour_correction_queue.cpp
   ${PHTR_SRC_DIR}/correction_model_base.cpp
   ${PHTR_SRC_DIR}/exception.cpp
   ${PHTR_SRC_DIR}/gamma_func.cpp
-  ${PHTR_SRC_DIR}/modpar_emor.h
-  ${PHTR_SRC_DIR}/modpar_invemor.h
   ${PHTR_SRC_DIR}/geom_correction_model.cpp
   ${PHTR_SRC_DIR}/geom_correction_queue.cpp
+  ${PHTR_SRC_DIR}/modpar_emor.h
+  ${PHTR_SRC_DIR}/modpar_invemor.h
   )
 
 include_directories(include)

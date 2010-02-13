@@ -29,6 +29,7 @@ THE SOFTWARE.
 
 #include <cstddef>
 #include <vector>
+#include <photoropter/util.h>
 
 namespace phtr
 {
@@ -61,6 +62,10 @@ namespace phtr
                 virtual double inv_gamma(double value) const = 0;
 
         }; // class IGammaFunc
+
+
+
+
 
         /**
         * @brief Generic %gamma function.
@@ -118,6 +123,10 @@ namespace phtr
 
         }; // class GammaGeneric
 
+
+
+
+
         /**
         * @brief sRGB %gamma function.
         * @details This class models the 'sRGB' %gamma function, i.e.:
@@ -156,14 +165,20 @@ namespace phtr
 
         }; // class GammaSRGB
 
+
+
+
+
         /**
-        * @brief EMOR response curve.
-        * @note This class implements the 'Empirical Model of Response'
+        * @brief The EMOR response curve.
+        * @details This class implements the 'Empirical Model of Response'
         * (EMOR) for sensor response curves proposed and provided by
         * M.D. Grossberg and S.K. Nayar from the University of
         * Columbia (Computer Vision laboratory). For more information
         * on EMoR please visit
         * http://www.cs.columbia.edu/CAVE/software/softlib/dorf.php
+        * @note EMOR is not a %gamma function per se, but can rather be
+        * regarded as a concept for 'generalised' %gamma.
         */
         class GammaEMOR : public IGammaFunc
         {
@@ -172,78 +187,152 @@ namespace phtr
                  * public interface
                  * **************************************** */
 
+            public:
+                /**
+                * @brief The container type of the internal parameter representation.
+                */
+                typedef std::vector<double>coeff_vect_t;
+
+            public:
+                /**
+                * @brief The iterator type of the internal parameter representation.
+                */
+                typedef coeff_vect_t::iterator coeff_iter_t;
+
+            public:
+                /**
+                * @brief Standard constructor.
+                * @details This initialises the EMOR function to its 'generic' form (i.e., f0 or g0).
+                * All coefficients are set to 0.
+                */
+                GammaEMOR();
+
+            public:
+                /**
+                * @brief Set the coefficients.
+                * @details This method allows to set an arbitrary number of parameters by cascaded calls.
+                * Example: @code set_params(1.0)(0.0)(0.1)(0.2)(0.1); @endcode
+                * @note The coefficients vector is cleared first, so any remaining parameter not set will
+                * be zero.
+                * @param[in] param1 The first parameter.
+                * @return A SetParam instance pointing to the second parameter.
+                */
+                util::SetParam<coeff_iter_t> set_params(double param1);
+
+            public:
+                /**
+                * @brief Set the coefficients.
+                * @note The coefficients vector is cleared first, so any remaining parameter not set will
+                * be zero.
+                * @param[in] params An iterable object (vector, list) containing the new coefficients.
+                */
+                template <class iterable_t>
+                void set_param_list(const iterable_t& params);
+
+            public:
+                /**
+                * @brief Apply %gamma transformation.
+                * @note Actually, this calculates the 'inverse' EMOR curve, since this is the
+                * equivalent for the normal %gamma transformation.
+                * @param[in] value The input value.
+                * @return The transformed value.
+                */
+                double gamma(double value) const;
+
+            public:
+                /**
+                * @brief Apply inverse %gamma transformation.
+                * @note Actually, this calculates the 'normal' EMOR curve, since this is the
+                * equivalent for the inverse %gamma transformation.
+                * @param[in] value The input value.
+                * @return The transformed value.
+                */
+                double inv_gamma(double value) const;
+
                 /* ****************************************
                  * internals
                  * **************************************** */
+
             private:
                 /**
-                * The coefficients vector.
+                * @brief The current coefficients vector.
                 */
-                std::vector<double> coeff;
+                coeff_vect_t coeff_;
+
+            private:
+                /**
+                * @brief The number of coefficients in the model (i.e., 25).
+                */
+                static const size_t coeff_num_ = 25;
+
+            private:
+                /**
+                * @brief The number of samples in each individual model curve.
+                */
+                static const size_t sample_num_ = 1024;
 
                 /// @cond
             private:
-                static const size_t val_num_ = 1024;
-                static const double* h_[];
-                static const double* hinv_[];
+                static const float* h_[];
+                static const float* hinv_[];
 
                 /* EMoR curves */
-                static const double E_[];
-                static const double f0_[];
-                static const double h01_[];
-                static const double h02_[];
-                static const double h03_[];
-                static const double h04_[];
-                static const double h05_[];
-                static const double h06_[];
-                static const double h07_[];
-                static const double h08_[];
-                static const double h09_[];
-                static const double h10_[];
-                static const double h11_[];
-                static const double h12_[];
-                static const double h13_[];
-                static const double h14_[];
-                static const double h15_[];
-                static const double h16_[];
-                static const double h17_[];
-                static const double h18_[];
-                static const double h19_[];
-                static const double h20_[];
-                static const double h21_[];
-                static const double h22_[];
-                static const double h23_[];
-                static const double h24_[];
-                static const double h25_[];
+                static const float E_[];
+                static const float f0_[];
+                static const float h01_[];
+                static const float h02_[];
+                static const float h03_[];
+                static const float h04_[];
+                static const float h05_[];
+                static const float h06_[];
+                static const float h07_[];
+                static const float h08_[];
+                static const float h09_[];
+                static const float h10_[];
+                static const float h11_[];
+                static const float h12_[];
+                static const float h13_[];
+                static const float h14_[];
+                static const float h15_[];
+                static const float h16_[];
+                static const float h17_[];
+                static const float h18_[];
+                static const float h19_[];
+                static const float h20_[];
+                static const float h21_[];
+                static const float h22_[];
+                static const float h23_[];
+                static const float h24_[];
+                static const float h25_[];
 
                 /* Inverse EMoR curves */
-                static const double B_[];
-                static const double g0_[];
-                static const double hinv01_[];
-                static const double hinv02_[];
-                static const double hinv03_[];
-                static const double hinv04_[];
-                static const double hinv05_[];
-                static const double hinv06_[];
-                static const double hinv07_[];
-                static const double hinv08_[];
-                static const double hinv09_[];
-                static const double hinv10_[];
-                static const double hinv11_[];
-                static const double hinv12_[];
-                static const double hinv13_[];
-                static const double hinv14_[];
-                static const double hinv15_[];
-                static const double hinv16_[];
-                static const double hinv17_[];
-                static const double hinv18_[];
-                static const double hinv19_[];
-                static const double hinv20_[];
-                static const double hinv21_[];
-                static const double hinv22_[];
-                static const double hinv23_[];
-                static const double hinv24_[];
-                static const double hinv25_[];
+                static const float B_[];
+                static const float g0_[];
+                static const float hinv01_[];
+                static const float hinv02_[];
+                static const float hinv03_[];
+                static const float hinv04_[];
+                static const float hinv05_[];
+                static const float hinv06_[];
+                static const float hinv07_[];
+                static const float hinv08_[];
+                static const float hinv09_[];
+                static const float hinv10_[];
+                static const float hinv11_[];
+                static const float hinv12_[];
+                static const float hinv13_[];
+                static const float hinv14_[];
+                static const float hinv15_[];
+                static const float hinv16_[];
+                static const float hinv17_[];
+                static const float hinv18_[];
+                static const float hinv19_[];
+                static const float hinv20_[];
+                static const float hinv21_[];
+                static const float hinv22_[];
+                static const float hinv23_[];
+                static const float hinv24_[];
+                static const float hinv25_[];
                 /// @endcond
 
         }; // class GammaEMoR
