@@ -37,8 +37,8 @@ namespace phtr
 {
 
     /**
-    * \brief Class template for managing an image buffer.
-    * \param T The storage type (e.g. \ref mem::Storage::rgb_8_inter).
+    * @brief Class template for managing an image buffer.
+    * @param T The storage type (e.g. @ref mem::Storage::rgb_8_inter).
     */
     template <mem::Storage::type T>
     class ImageBuffer
@@ -50,49 +50,49 @@ namespace phtr
 
         public:
             /**
-            * \brief The channel storage type.
+            * @brief The channel storage type.
             */
             typedef typename mem::ChannelStorage<T>::type channel_storage_t;
 
         public:
             /**
-            * \brief The type of the internal storage info object.
+            * @brief The type of the internal storage info object.
             */
             typedef typename mem::MemStorageInfo<T> storage_info_t;
 
         public:
             /**
-            * \brief Constructor.
-            * \param[in] width  Image width.
-            * \param[in] height Image height.
-            * \param[in] zero   If 'true', the memory will be filled with zeroes.
+            * @brief Constructor.
+            * @param[in] width  Image width.
+            * @param[in] height Image height.
+            * @param[in] zero   If 'true', the memory will be filled with zeroes.
             */
             ImageBuffer(coord_t width, coord_t height, bool zero = false);
 
         public:
             /**
-            * \brief Destructor.
+            * @brief Destructor.
             */
             ~ImageBuffer();
 
         public:
             /**
-            * \brief Return a pointer to the data the buffer holds.
-            * \return Pointer to the data.
+            * @brief Return a pointer to the data the buffer holds.
+            * @return Pointer to the data.
             */
             void* data();
 
         public:
             /**
-            * \brief Return the number of pixels the buffer can hold.
-            * \return The number of pixels.
+            * @brief Return the number of pixels the buffer can hold.
+            * @return The number of pixels.
             */
             size_t num_pixels();
 
         public:
             /**
-            * \brief Return the number of bytes the buffer holds.
-            * \return The number of bytes.
+            * @brief Return the number of bytes the buffer holds.
+            * @return The number of bytes.
             */
             size_t num_bytes();
 
@@ -102,55 +102,55 @@ namespace phtr
 
         private:
             /**
-            * \brief Copy constructor (disabled).
+            * @brief Copy constructor (disabled).
             */
             ImageBuffer(const ImageBuffer<T>& orig);
 
         private:
             /**
-            * \brief Assignment operator (disabled).
+            * @brief Assignment operator (disabled).
             */
             ImageBuffer<T>& operator=(const ImageBuffer<T>& orig);
 
         private:
             /**
-            * \brief The internal storage info object.
+            * @brief The internal storage info object.
             */
             storage_info_t storage_info_;
 
         private:
             /**
-            * \brief Pointer to the image buffer.
+            * @brief Pointer to the image buffer.
             */
             channel_storage_t* data_;
 
         private:
             /**
-            * \brief The image width.
+            * @brief The image width.
             */
             coord_t width_;
 
         private:
             /**
-            * \brief The image height.
+            * @brief The image height.
             */
             coord_t height_;
 
         private:
             /**
-            * \brief The number of channels (e.g., 3).
+            * @brief The number of channels (e.g., 3).
             */
             size_t num_channels_;
 
         private:
             /**
-            * \brief The number of pixels in the buffer.
+            * @brief The number of pixels in the buffer.
             */
             size_t num_pixels_;
 
         private:
             /**
-            * \brief The number of bytes in the buffer.
+            * @brief The number of bytes in the buffer.
             */
             size_t num_bytes_;
 

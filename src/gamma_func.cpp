@@ -63,6 +63,25 @@ namespace phtr
         /* Include EMoR curve definitions */
 #include "modpar_emor.h"
 #include "modpar_invemor.h"
+        /// @cond
+        const double* GammaEMOR::h_[] =
+        {
+            GammaEMOR::h01_, GammaEMOR::h02_, GammaEMOR::h03_, GammaEMOR::h04_, GammaEMOR::h05_,
+            GammaEMOR::h06_, GammaEMOR::h07_, GammaEMOR::h08_, GammaEMOR::h09_, GammaEMOR::h10_,
+            GammaEMOR::h11_, GammaEMOR::h12_, GammaEMOR::h13_, GammaEMOR::h14_, GammaEMOR::h15_,
+            GammaEMOR::h16_, GammaEMOR::h17_, GammaEMOR::h18_, GammaEMOR::h19_, GammaEMOR::h20_,
+            GammaEMOR::h21_, GammaEMOR::h22_, GammaEMOR::h23_, GammaEMOR::h24_, GammaEMOR::h25_
+        };
+
+        const double* GammaEMOR::hinv_[] =
+        {
+            GammaEMOR::hinv01_, GammaEMOR::hinv02_, GammaEMOR::hinv03_, GammaEMOR::hinv04_, GammaEMOR::hinv05_,
+            GammaEMOR::hinv06_, GammaEMOR::hinv07_, GammaEMOR::hinv08_, GammaEMOR::hinv09_, GammaEMOR::hinv10_,
+            GammaEMOR::hinv11_, GammaEMOR::hinv12_, GammaEMOR::hinv13_, GammaEMOR::hinv14_, GammaEMOR::hinv15_,
+            GammaEMOR::hinv16_, GammaEMOR::hinv17_, GammaEMOR::hinv18_, GammaEMOR::hinv19_, GammaEMOR::hinv20_,
+            GammaEMOR::hinv21_, GammaEMOR::hinv22_, GammaEMOR::hinv23_, GammaEMOR::hinv24_, GammaEMOR::hinv25_
+        };
+        /// @endcond
 
     } // namespace phtr::gamma
 

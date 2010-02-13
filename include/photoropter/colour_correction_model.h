@@ -38,31 +38,31 @@ namespace phtr
     {
 
         /**
-        * \brief Interface base class for colour correction models.
-        * \details The corrections models are implemented using a 'functionid' pattern.
+        * @brief Interface base class for colour correction models.
+        * @details The corrections models are implemented using a 'functionid' pattern.
         */
         class IColourCorrectionModel
         {
 
             public:
                 /**
-                * \brief Get the correction factors for the given position.
-                * \param[in] src_x_r The corresponding x coordinate for the 'red' channel
+                * @brief Get the correction factors for the given position.
+                * @param[in] src_x_r The corresponding x coordinate for the 'red' channel
                 *                    in the source image.
-                * \param[in] src_y_r The corresponding y coordinate for the 'red' channel
+                * @param[in] src_y_r The corresponding y coordinate for the 'red' channel
                 *                    in the source image.
-                * \param[in] src_x_g The corresponding x coordinate for the 'green' channel
+                * @param[in] src_x_g The corresponding x coordinate for the 'green' channel
                 *                    in the source image.
-                * \param[in] src_y_g The corresponding y coordinate for the 'green' channel
+                * @param[in] src_y_g The corresponding y coordinate for the 'green' channel
                 *                    in the source image.
-                * \param[in] src_x_b The corresponding x coordinate for the 'blue' channel
+                * @param[in] src_x_b The corresponding x coordinate for the 'blue' channel
                 *                    in the source image.
-                * \param[in] src_y_b The corresponding y coordinate for the 'blue' channel
+                * @param[in] src_y_b The corresponding y coordinate for the 'blue' channel
                 *                    in the source image.
-                * \param[out] fact_r The correction factor for the 'red' channel.
-                * \param[out] fact_g The correction factor for the 'green' channel.
-                * \param[out] fact_b The correction factor for the 'blue' channel.
-                * \return The correction factor.
+                * @param[out] fact_r The correction factor for the 'red' channel.
+                * @param[out] fact_g The correction factor for the 'green' channel.
+                * @param[out] fact_b The correction factor for the 'blue' channel.
+                * @return The correction factor.
                 */
                 virtual void get_correction_factors(interp_coord_t src_x_r, interp_coord_t src_y_r,
                                                     interp_coord_t src_x_g, interp_coord_t src_y_g,
@@ -71,24 +71,24 @@ namespace phtr
 
             public:
                 /**
-                * \brief Create a clone of the correction model functionoid.
-                * \return The clone.
+                * @brief Create a clone of the correction model functionoid.
+                * @return The clone.
                 */
                 virtual IColourCorrectionModel* clone() const = 0;
 
         }; // class IColourCorrectionModel
 
         /**
-        * \brief Colour correction model implementing vignetting correction.
-        * \details This model compensates for vignetting using the following
+        * @brief Colour correction model implementing vignetting correction.
+        * @details This model compensates for vignetting using the following
         * formula <a href="http://hugin.sourceforge.net/tech/">proposed</a> by
-        * Pablo d'Angelo: \f[
+        * Pablo d'Angelo: @f[
         * C_{src} = \frac{C_{dst}}{ar^6+br^4+cr^2+1}
-        * \f]
+        * @f]
         * This model is also used by Hugin, but with slightly different coordinates.
-        * \attention This model is incompatible with vignetting parameters produced by Hugin,
+        * @attention This model is incompatible with vignetting parameters produced by Hugin,
         * since Hugin uses different coordinate systems for geometric correction and for
-        * vignetting. Please use \ref HuginVignettingModel to deal with parameters
+        * vignetting. Please use @ref HuginVignettingModel to deal with parameters
         * produced by Hugin.
         */
         class VignettingColourModel : public IColourCorrectionModel, protected CorrectionModelBase
@@ -100,52 +100,52 @@ namespace phtr
 
             public:
                 /**
-                * \brief Constructor.
-                * \details In this variant, the complete information describing both the coordinate system used
+                * @brief Constructor.
+                * @details In this variant, the complete information describing both the coordinate system used
                 * when determining the model parameters and the coordinate system of the input image are used.
-                * \param[in] param_aspect The aspect ratio that was used when determining the model parameters.
-                * \param[in] input_aspect The aspect ratio of the input image.
-                * \param[in] param_crop The crop factor that was used when determining the model parameters.
-                * \param[in] input_crop The crop factor of the input image.
+                * @param[in] param_aspect The aspect ratio that was used when determining the model parameters.
+                * @param[in] input_aspect The aspect ratio of the input image.
+                * @param[in] param_crop The crop factor that was used when determining the model parameters.
+                * @param[in] input_crop The crop factor of the input image.
                 */
                 VignettingColourModel(double param_aspect, double input_aspect,
                                       double param_crop, double input_crop);
 
                 /**
-                * \brief Constructor.
-                * \details When construction the model using this constructor, the following things are
+                * @brief Constructor.
+                * @details When construction the model using this constructor, the following things are
                 * assumed:
                 * <ol><li>The parameters were determined on an image of the same aspect ratio in landscape
                 * orientation (i.e., if the input aspect is <1.0, then 1/input_aspect is assumed for the
                 * parameter aspect ratio.</li>
                 * <li>The image and the parameter set use the same crop factor (i.e., both factors are
                 * set to 1.0).</li></ol>
-                * \param[in] input_aspect The aspect ratio of the input image.
+                * @param[in] input_aspect The aspect ratio of the input image.
                 */
                 explicit VignettingColourModel(double input_aspect);
 
             public:
                 /**
-                * \brief Set the model parameters.
-                * \param[in] a The 'a' parameter.
-                * \param[in] b The 'b' parameter.
-                * \param[in] c The 'c' parameter.
-                * \param[in] x0 The 'x0' parameter (horizontal center shift).
-                * \param[in] y0 The 'y0' parameter (vertical center shift).
+                * @brief Set the model parameters.
+                * @param[in] a The 'a' parameter.
+                * @param[in] b The 'b' parameter.
+                * @param[in] c The 'c' parameter.
+                * @param[in] x0 The 'x0' parameter (horizontal center shift).
+                * @param[in] y0 The 'y0' parameter (vertical center shift).
                 */
                 void set_model_params(double a, double b, double c,
                                       interp_coord_t x0 = 0, interp_coord_t y0 = 0);
 
             public:
                 /**
-                * \brief Get the current model parameters.
-                * \param[out] a The 'a' parameter.
-                * \param[out] b The 'b' parameter.
-                * \param[out] c The 'c' parameter.
-                * \param[out] x0 The 'x0' parameter (horizontal center shift).
-                * \param[out] y0 The 'y0' parameter (vertical center shift).
-                * \note Both x0 and y0 are not considered 'lens parameters' but rather camera/sensor
-                * parameters. They are therefore \em not transformed in any way, but always interpeted
+                * @brief Get the current model parameters.
+                * @param[out] a The 'a' parameter.
+                * @param[out] b The 'b' parameter.
+                * @param[out] c The 'c' parameter.
+                * @param[out] x0 The 'x0' parameter (horizontal center shift).
+                * @param[out] y0 The 'y0' parameter (vertical center shift).
+                * @note Both x0 and y0 are not considered 'lens parameters' but rather camera/sensor
+                * parameters. They are therefore @em not transformed in any way, but always interpeted
                 * normalised Photoropter coordinate system.
                 */
                 void get_model_params(double& a, double& b, double& c,
@@ -153,32 +153,32 @@ namespace phtr
 
             public:
                 /**
-                * \brief Get the current model parameters.
-                * \param[out] a The 'a' parameter.
-                * \param[out] b The 'b' parameter.
-                * \param[out] c The 'c' parameter.
+                * @brief Get the current model parameters.
+                * @param[out] a The 'a' parameter.
+                * @param[out] b The 'b' parameter.
+                * @param[out] c The 'c' parameter.
                 */
                 void get_model_params(double& a, double& b, double& c) const;
 
             public:
                 /**
-                * \brief Get the correction factors for the given position.
-                * \param[in] src_x_r The corresponding x coordinate for the 'red' channel
+                * @brief Get the correction factors for the given position.
+                * @param[in] src_x_r The corresponding x coordinate for the 'red' channel
                 *                    in the source image.
-                * \param[in] src_y_r The corresponding y coordinate for the 'red' channel
+                * @param[in] src_y_r The corresponding y coordinate for the 'red' channel
                 *                    in the source image.
-                * \param[in] src_x_g The corresponding x coordinate for the 'green' channel
+                * @param[in] src_x_g The corresponding x coordinate for the 'green' channel
                 *                    in the source image.
-                * \param[in] src_y_g The corresponding y coordinate for the 'green' channel
+                * @param[in] src_y_g The corresponding y coordinate for the 'green' channel
                 *                    in the source image.
-                * \param[in] src_x_b The corresponding x coordinate for the 'blue' channel
+                * @param[in] src_x_b The corresponding x coordinate for the 'blue' channel
                 *                    in the source image.
-                * \param[in] src_y_b The corresponding y coordinate for the 'blue' channel
+                * @param[in] src_y_b The corresponding y coordinate for the 'blue' channel
                 *                    in the source image.
-                * \param[out] fact_r The correction factor for the 'red' channel.
-                * \param[out] fact_g The correction factor for the 'green' channel.
-                * \param[out] fact_b The correction factor for the 'blue' channel.
-                * \return The correction factor.
+                * @param[out] fact_r The correction factor for the 'red' channel.
+                * @param[out] fact_g The correction factor for the 'green' channel.
+                * @param[out] fact_b The correction factor for the 'blue' channel.
+                * @return The correction factor.
                 */
                 void get_correction_factors(interp_coord_t src_x_r, interp_coord_t src_y_r,
                                             interp_coord_t src_x_g, interp_coord_t src_y_g,
@@ -187,8 +187,8 @@ namespace phtr
 
             public:
                 /**
-                * \brief Create a clone of the correction model functionoid.
-                * \return The clone.
+                * @brief Create a clone of the correction model functionoid.
+                * @return The clone.
                 */
                 IColourCorrectionModel* clone() const;
 
@@ -198,40 +198,40 @@ namespace phtr
 
             protected:
                 /**
-                * \brief The parameter 'a'.
+                * @brief The parameter 'a'.
                 */
                 double a_;
 
             protected:
                 /**
-                * \brief The parameter 'b'.
+                * @brief The parameter 'b'.
                 */
                 double b_;
 
             protected:
                 /**
-                * \brief The parameter 'c'.
+                * @brief The parameter 'c'.
                 */
                 double c_;
 
             protected:
                 /**
-                * \brief The parameter 'x0'.
+                * @brief The parameter 'x0'.
                 */
                 double x0_;
 
             protected:
                 /**
-                * \brief The parameter 'y0'.
+                * @brief The parameter 'y0'.
                 */
                 double y0_;
 
         }; // class VignettingColourModel
 
         /**
-        * \brief Colour correction model implementing vignetting correction.
-        * \details This model is compatible with vignetting parameters used by Hugin.
-        * It is the same as \ref VignettingColourModel, but compensates for the different
+        * @brief Colour correction model implementing vignetting correction.
+        * @details This model is compatible with vignetting parameters used by Hugin.
+        * It is the same as @ref VignettingColourModel, but compensates for the different
         * coordinate systems when parameters are set.
         */
         class HuginVignettingModel : public VignettingColourModel
@@ -243,40 +243,40 @@ namespace phtr
 
             public:
                 /**
-                * \brief Constructor.
-                * \details In this variant, the complete information describing both the coordinate system used
+                * @brief Constructor.
+                * @details In this variant, the complete information describing both the coordinate system used
                 * when determining the model parameters and the coordinate system of the input image are used.
-                * \param[in] param_aspect The aspect ratio that was used when determining the model parameters.
-                * \param[in] input_aspect The aspect ratio of the input image.
-                * \param[in] param_crop The crop factor that was used when determining the model parameters.
-                * \param[in] input_crop The crop factor of the input image.
+                * @param[in] param_aspect The aspect ratio that was used when determining the model parameters.
+                * @param[in] input_aspect The aspect ratio of the input image.
+                * @param[in] param_crop The crop factor that was used when determining the model parameters.
+                * @param[in] input_crop The crop factor of the input image.
                 */
                 HuginVignettingModel(double param_aspect, double input_aspect,
                                      double param_crop, double input_crop);
 
                 /**
-                * \brief Constructor.
-                * \details When construction the model using this constructor, the following things are
+                * @brief Constructor.
+                * @details When construction the model using this constructor, the following things are
                 * assumed:
                 * <ol><li>The parameters were determined on an image of the same aspect ratio in landscape
                 * orientation (i.e., if the input aspect is <1.0, then 1/input_aspect is assumed for the
                 * parameter aspect ratio.</li>
                 * <li>The image and the parameter set use the same crop factor (i.e., both factors are
                 * set to 1.0).</li></ol>
-                * \param[in] input_aspect The aspect ratio of the input image.
+                * @param[in] input_aspect The aspect ratio of the input image.
                 */
                 explicit HuginVignettingModel(double input_aspect);
 
             public:
                 /**
-                * \brief Set the model parameters.
-                * \param[in] a The 'a' parameter.
-                * \param[in] b The 'b' parameter.
-                * \param[in] c The 'c' parameter.
-                * \param[in] x0 The 'x0' parameter (horizontal center shift).
-                * \param[in] y0 The 'y0' parameter (vertical center shift).
-                * \note Both x0 and y0 are not considered 'lens parameters' but rather camera/sensor
-                * parameters. They are therefore \em not transformed in any way, but always interpeted
+                * @brief Set the model parameters.
+                * @param[in] a The 'a' parameter.
+                * @param[in] b The 'b' parameter.
+                * @param[in] c The 'c' parameter.
+                * @param[in] x0 The 'x0' parameter (horizontal center shift).
+                * @param[in] y0 The 'y0' parameter (vertical center shift).
+                * @note Both x0 and y0 are not considered 'lens parameters' but rather camera/sensor
+                * parameters. They are therefore @em not transformed in any way, but always interpeted
                 * normalised Photoropter coordinate system.
                 */
                 void set_model_params(double a, double b, double c,
@@ -284,14 +284,14 @@ namespace phtr
 
             public:
                 /**
-                * \brief Get the current model parameters.
-                * \param[out] a The 'a' parameter.
-                * \param[out] b The 'b' parameter.
-                * \param[out] c The 'c' parameter.
-                * \param[out] x0 The 'x0' parameter (horizontal center shift).
-                * \param[out] y0 The 'y0' parameter (vertical center shift).
-                * \note Both x0 and y0 are not considered 'lens parameters' but rather camera/sensor
-                * parameters. They are therefore \em not transformed in any way, but always interpeted
+                * @brief Get the current model parameters.
+                * @param[out] a The 'a' parameter.
+                * @param[out] b The 'b' parameter.
+                * @param[out] c The 'c' parameter.
+                * @param[out] x0 The 'x0' parameter (horizontal center shift).
+                * @param[out] y0 The 'y0' parameter (vertical center shift).
+                * @note Both x0 and y0 are not considered 'lens parameters' but rather camera/sensor
+                * parameters. They are therefore @em not transformed in any way, but always interpeted
                 * normalised Photoropter coordinate system.
                 */
                 void get_model_params(double& a, double& b, double& c,
@@ -299,17 +299,17 @@ namespace phtr
 
             public:
                 /**
-                * \brief Get the current model parameters.
-                * \param[out] a The 'a' parameter.
-                * \param[out] b The 'b' parameter.
-                * \param[out] c The 'c' parameter.
+                * @brief Get the current model parameters.
+                * @param[out] a The 'a' parameter.
+                * @param[out] b The 'b' parameter.
+                * @param[out] c The 'c' parameter.
                 */
                 void get_model_params(double& a, double& b, double& c) const;
 
             public:
                 /**
-                * \brief Create a clone of the correction model functionoid.
-                * \return The clone.
+                * @brief Create a clone of the correction model functionoid.
+                * @return The clone.
                 */
                 IColourCorrectionModel* clone() const;
 

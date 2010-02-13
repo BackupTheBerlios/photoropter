@@ -31,15 +31,15 @@ THE SOFTWARE.
 #include <photoropter/mem_storage_info.h>
 
 /**
-* \brief Main namespace of the Photoropter library.
+* @brief Main namespace of the Photoropter library.
 */
 namespace phtr
 {
 
     /**
-    * \brief Base class template for image views. See \ref MemImageViewR and
-    * \ref MemImageViewW for details.
-    * \param T The storage type (e.g. \ref mem::Storage::rgb_8_inter).
+    * @brief Base class template for image views. See @ref MemImageViewR and
+    * @ref MemImageViewW for details.
+    * @param T The storage type (e.g. @ref mem::Storage::rgb_8_inter).
     */
     template <mem::Storage::type T>
     class MemImageViewBase
@@ -51,36 +51,36 @@ namespace phtr
 
         public:
             /**
-            * \brief The type of the internal storage info object.
+            * @brief The type of the internal storage info object.
             */
             typedef typename mem::MemStorageInfo<T> storage_info_t;
 
         public:
             /**
-            * \brief The channel storage type for this image (e.g., uint8_t).
+            * @brief The channel storage type for this image (e.g., uint8_t).
             */
             typedef typename storage_info_t::channel_storage_t channel_storage_t;
 
         public:
             /**
-            * \brief Get the image width.
-            * \return The width.
+            * @brief Get the image width.
+            * @return The width.
             */
             coord_t width() const;
 
         public:
             /**
-            * \brief Get the image height.
-            * \return The height.
+            * @brief Get the image height.
+            * @return The height.
             */
             coord_t height() const;
 
         public:
             /**
-            * \brief Determine the 'pixel offset' to a given set of coordinates.
-            * \param[in] x The x coordinate.
-            * \param[in] y The y coordinate.
-            * \return The offset
+            * @brief Determine the 'pixel offset' to a given set of coordinates.
+            * @param[in] x The x coordinate.
+            * @param[in] y The y coordinate.
+            * @return The offset
             */
             size_t get_px_offs(coord_t x, coord_t y) const;
 
@@ -90,10 +90,10 @@ namespace phtr
 
         protected:
             /**
-            * \brief Constructor.
-            * \param[in] base_addr The base address of the image data in memory.
-            * \param[in] width The image width.
-            * \param[in] height The image height.
+            * @brief Constructor.
+            * @param[in] base_addr The base address of the image data in memory.
+            * @param[in] width The image width.
+            * @param[in] height The image height.
             */
             MemImageViewBase(void* base_addr,
                              coord_t width,
@@ -101,76 +101,76 @@ namespace phtr
 
         protected:
             /**
-            * \brief The storage type of the image.
+            * @brief The storage type of the image.
             */
             const mem::Storage::type storage_type_;
 
         protected:
             /**
-            * \brief Internal storage info object, used to calculate the memory
+            * @brief Internal storage info object, used to calculate the memory
             * layout parameters.
             */
             const storage_info_t storage_info_;
 
         protected:
             /**
-            * \brief The base address of the image.
+            * @brief The base address of the image.
             */
             channel_storage_t* base_addr_;
 
         protected:
             /**
-            * \brief The image width.
+            * @brief The image width.
             */
             const coord_t width_;
 
         protected:
             /**
-            * \brief The image height.
+            * @brief The image height.
             */
             const coord_t height_;
 
         protected:
             /**
-            * \brief The minimal value a channel can hold.
+            * @brief The minimal value a channel can hold.
             */
             const channel_storage_t min_chan_val_;
 
         protected:
             /**
-            * \brief The maximal value a channel can hold.
+            * @brief The maximal value a channel can hold.
             */
             const channel_storage_t max_chan_val_;
 
         protected:
             /**
-            * \brief The distance between two adjacent pixels, in multiples
+            * @brief The distance between two adjacent pixels, in multiples
             * of the channel storage unit.
             */
             const size_t step_;
 
         protected:
             /**
-            * \brief The distance between two adjacent lines, in multiples
+            * @brief The distance between two adjacent lines, in multiples
             * of the channel storage unit.
             */
             const size_t line_step_;
 
         protected:
             /**
-            * \brief The offset of the red channel to the current memory position.
+            * @brief The offset of the red channel to the current memory position.
             */
             const size_t r_offs_;
 
         protected:
             /**
-            * \brief The offset of the green channel to the current memory position.
+            * @brief The offset of the green channel to the current memory position.
             */
             const size_t g_offs_;
 
         protected:
             /**
-            * \brief The offset of the blue channel to the current memory position.
+            * @brief The offset of the blue channel to the current memory position.
             */
             const size_t b_offs_;
 

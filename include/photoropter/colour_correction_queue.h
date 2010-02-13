@@ -37,7 +37,7 @@ namespace phtr
 {
 
     /**
-    * \brief Class holding a queue of colour correction model functions.
+    * @brief Class holding a queue of colour correction model functions.
     */
     class ColourCorrectionQueue
     {
@@ -47,36 +47,36 @@ namespace phtr
 
         public:
             /**
-            * \brief Standard constructor.
-            * \details This will construct an empty queue.
+            * @brief Standard constructor.
+            * @details This will construct an empty queue.
             */
             ColourCorrectionQueue();
 
         public:
             /**
-            * \brief Destructor.
+            * @brief Destructor.
             */
             virtual ~ColourCorrectionQueue();
 
         public:
             /**
-            * \brief Get the correction factors for the given position.
-            * \param[in] src_x_r The corresponding x coordinate for the 'red' channel
+            * @brief Get the correction factors for the given position.
+            * @param[in] src_x_r The corresponding x coordinate for the 'red' channel
             *                    in the source image.
-            * \param[in] src_y_r The corresponding y coordinate for the 'red' channel
+            * @param[in] src_y_r The corresponding y coordinate for the 'red' channel
             *                    in the source image.
-            * \param[in] src_x_g The corresponding x coordinate for the 'green' channel
+            * @param[in] src_x_g The corresponding x coordinate for the 'green' channel
             *                    in the source image.
-            * \param[in] src_y_g The corresponding y coordinate for the 'green' channel
+            * @param[in] src_y_g The corresponding y coordinate for the 'green' channel
             *                    in the source image.
-            * \param[in] src_x_b The corresponding x coordinate for the 'blue' channel
+            * @param[in] src_x_b The corresponding x coordinate for the 'blue' channel
             *                    in the source image.
-            * \param[in] src_y_b The corresponding y coordinate for the 'blue' channel
+            * @param[in] src_y_b The corresponding y coordinate for the 'blue' channel
             *                    in the source image.
-            * \param[out] fact_r The correction factor for the 'red' channel.
-            * \param[out] fact_g The correction factor for the 'green' channel.
-            * \param[out] fact_b The correction factor for the 'blue' channel.
-            * \return The correction factor.
+            * @param[out] fact_r The correction factor for the 'red' channel.
+            * @param[out] fact_g The correction factor for the 'green' channel.
+            * @param[out] fact_b The correction factor for the 'blue' channel.
+            * @return The correction factor.
             */
             inline void get_correction_factors(interp_coord_t src_x_r, interp_coord_t src_y_r,
                                                interp_coord_t src_x_g, interp_coord_t src_y_g,
@@ -85,16 +85,16 @@ namespace phtr
 
         public:
             /**
-            * \brief Add the given model to the queue.
-            * \note The object will be copied; a reference to the copy is returned.
-            * \param model The colour correction model to be added.
-            * \return Reference to the new correction model copy.
+            * @brief Add the given model to the queue.
+            * @note The object will be copied; a reference to the copy is returned.
+            * @param model The colour correction model to be added.
+            * @return Reference to the new correction model copy.
             */
             model::IColourCorrectionModel& add_model(const model::IColourCorrectionModel& model);
 
         public:
             /**
-            * \brief Clear the current queue contents.
+            * @brief Clear the current queue contents.
             */
             void clear();
 
@@ -104,31 +104,31 @@ namespace phtr
 
         private:
             /**
-            * \brief Copy constructor.
-            * \note Currently deactivated (==private).
-            * \param orig The original queue.
-            * \details This will copy the given queue, duplicating the functionid objects.
+            * @brief Copy constructor.
+            * @note Currently deactivated (==private).
+            * @param orig The original queue.
+            * @details This will copy the given queue, duplicating the functionid objects.
             */
             ColourCorrectionQueue(const ColourCorrectionQueue& orig);
 
         private:
             /**
-            * \brief Assignment operator.
-            * \note Currently deactivated (==private).
-            * \param orig The original queue.
-            * \return Reference to the current instance.
+            * @brief Assignment operator.
+            * @note Currently deactivated (==private).
+            * @param orig The original queue.
+            * @return Reference to the current instance.
             */
             ColourCorrectionQueue& operator=(const ColourCorrectionQueue& orig);
 
         private:
             /**
-            * \brief The internal list of correction models.
+            * @brief The internal list of correction models.
             */
             std::vector<model::IColourCorrectionModel*> correction_model_;
 
         private:
             /**
-            * \brief The number of models currently in the queue.
+            * @brief The number of models currently in the queue.
             */
             unsigned short n_models_;
 

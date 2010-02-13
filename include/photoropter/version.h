@@ -31,7 +31,7 @@ namespace phtr
 {
 
     /**
-    * \brief The library version.
+    * @brief The library version.
     */
     static const char PHTR_VERSION[] = "0.0.2";
 

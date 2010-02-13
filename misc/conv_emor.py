@@ -21,7 +21,7 @@ def print_seq(file, key, vals):
 
         l = l + str(v)
 
-    print >>file, "const double GammaEMOR::%s[] = {%s};" % (key, l)
+    print >>file, "const double GammaEMOR::%s_[] = {%s};" % (key, l)
 
 def convert(basename):    
     inp = open(basename + ".txt")
@@ -57,7 +57,7 @@ def convert(basename):
     all_seq[key] = cur_seq
     cur_seq = []
 
-    outp = open(basename + ".h", "w")
+    outp = open("modpar_" + basename + ".h", "w")
     print >>outp, '''/*
 *
 * Sensor response curve data converted from '%s.txt'
@@ -68,7 +68,8 @@ def convert(basename):
 *
 * http://www.cs.columbia.edu/CAVE/software/softlib/dorf.php
 *
-*/''' % basename
+*/
+/// @cond''' % basename
 
 
     param_seq = []
@@ -91,6 +92,10 @@ def convert(basename):
 
     for key in param_seq:
         print_seq(outp, key, all_seq[param_keys[key]])
+
+    print >>outp, "/// @endcond"
+    outp.close()
+    inp.close()
 
 convert("emor")
 convert("invemor")

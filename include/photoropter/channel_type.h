@@ -31,28 +31,28 @@ namespace phtr
 {
 
     /**
-    * \brief Struct containing channel designations.
-    * \note The class contains an enum which defines the actual channels.
+    * @brief Struct containing channel designations.
+    * @note The class contains an enum which defines the actual channels.
     */
     struct Channel
     {
 
         /**
-        * \brief The actual enum containing channel designations.
+        * @brief The actual enum containing channel designations.
         */
         enum type
         {
 
             /**
-            * \brief The 'red' channel.
+            * @brief The 'red' channel.
             */
             red = 0,
             /**
-            * \brief The 'green' channel.
+            * @brief The 'green' channel.
             */
             green,
             /**
-            * \brief The 'blue' channel.
+            * @brief The 'blue' channel.
             */
             blue
 

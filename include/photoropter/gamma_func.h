@@ -27,48 +27,51 @@ THE SOFTWARE.
 #ifndef __PHTR_GAMMA_FUNC_H__
 #define __PHTR_GAMMA_FUNC_H__
 
+#include <cstddef>
+#include <vector>
+
 namespace phtr
 {
     /**
-    * \brief Gamma correction functions.
+    * @brief Gamma correction functions.
     */
     namespace gamma
     {
 
         /**
-        * \brief Interface base class for %gamma correction functions.
+        * @brief Interface base class for %gamma correction functions.
         */
         class IGammaFunc
         {
 
             public:
                 /**
-                * \brief Apply %gamma transformation.
-                * \param[in] value The input value.
-                * \return The transformed value.
+                * @brief Apply %gamma transformation.
+                * @param[in] value The input value.
+                * @return The transformed value.
                 */
                 virtual double gamma(double value) const = 0;
 
             public:
                 /**
-                * \brief Apply inverse %gamma transformation.
-                * \param[in] value The input value.
-                * \return The transformed value.
+                * @brief Apply inverse %gamma transformation.
+                * @param[in] value The input value.
+                * @return The transformed value.
                 */
                 virtual double inv_gamma(double value) const = 0;
 
         }; // class IGammaFunc
 
         /**
-        * \brief Generic %gamma function.
-        * \details This class models the 'generic' %gamma function, i.e.:
-        * \f[ x_{dst} = x_{src}^\gamma \f]
+        * @brief Generic %gamma function.
+        * @details This class models the 'generic' %gamma function, i.e.:
+        * @f[ x_{dst} = x_{src}^\gamma @f]
         * A %gamma value of 2.2 is the 'norm' value for current operating systems and
         * displays (although quite a lot of flatscreen differ, actually). At least in theory,
         * every image meant for display on a computer should be pre-compensated for a %gamma of
         * 2.2, with the operating system then correcting for the actual display value. In fact,
         * digital images should be pre-compensated using the sRGB %gamma function (see
-        * \ref GammaSRGB), which yields roughly the same result as generic %gamma 2.2 (but not
+        * @ref GammaSRGB), which yields roughly the same result as generic %gamma 2.2 (but not
         * quite identical).
         */
         class GammaGeneric : public IGammaFunc
@@ -80,26 +83,26 @@ namespace phtr
 
             public:
                 /**
-                * \brief Constructor.
-                * \param[in] gam The %gamma value.
+                * @brief Constructor.
+                * @param[in] gam The %gamma value.
                 */
                 GammaGeneric(double gam);
 
             public:
                 /**
-                * \brief Apply %gamma transformation.
-                * \details \f[ x_{dst}=x_{src}^\gamma \f]
-                * \param[in] value The input value.
-                * \return The transformed value.
+                * @brief Apply %gamma transformation.
+                * @details @f[ x_{dst}=x_{src}^\gamma @f]
+                * @param[in] value The input value.
+                * @return The transformed value.
                 */
                 virtual double gamma(double value) const;
 
             public:
                 /**
-                * \brief Apply inverse %gamma transformation.
-                * \details \f[ x_{src}=x_{dst}^{1/\gamma} \f]
-                * \param[in] value The input value.
-                * \return The transformed value.
+                * @brief Apply inverse %gamma transformation.
+                * @details @f[ x_{src}=x_{dst}^{1/\gamma} @f]
+                * @param[in] value The input value.
+                * @return The transformed value.
                 */
                 virtual double inv_gamma(double value) const;
 
@@ -109,17 +112,17 @@ namespace phtr
 
             private:
                 /**
-                * \brief The gamma value.
+                * @brief The gamma value.
                 */
                 double gamma_;
 
         }; // class GammaGeneric
 
         /**
-        * \brief sRGB %gamma function.
-        * \details This class models the 'sRGB' %gamma function, i.e.:
-        * \f[ x_{dst} = \left\{\begin{array}{ll}x_{src} / 12.92 & 0 \leq x \leq 0.04045\\
-        * ((x_{src} + 0.055) / 1.055)^{2.4} & 0.04045 < x \leq 1 \end{array}\right.\f]
+        * @brief sRGB %gamma function.
+        * @details This class models the 'sRGB' %gamma function, i.e.:
+        * @f[ x_{dst} = \left\{\begin{array}{ll}x_{src} / 12.92 & 0 \leq x \leq 0.04045\\
+        * ((x_{src} + 0.055) / 1.055)^{2.4} & 0.04045 < x \leq 1 \end{array}\right.@f]
         * This %gamma function is the de facto standard for digital images.
         * It is close (but not identical) to a generic %gamma compensation with
         * a fixed value of 2.2.
@@ -133,29 +136,29 @@ namespace phtr
 
             public:
                 /**
-                * \brief Apply %gamma transformation.
-                * \details \f[ x_{dst} = \left\{\begin{array}{ll}x_{src} / 12.92 & 0 \leq x_{src} \leq 0.04045\\
-                * ((x_{src} + 0.055) / 1.055)^{2.4} & 0.04045 < x_{src} \leq 1 \end{array}\right.\f]
-                * \param[in] value The input value.
-                * \return The transformed value.
+                * @brief Apply %gamma transformation.
+                * @details @f[ x_{dst} = \left\{\begin{array}{ll}x_{src} / 12.92 & 0 \leq x_{src} \leq 0.04045\\
+                * ((x_{src} + 0.055) / 1.055)^{2.4} & 0.04045 < x_{src} \leq 1 \end{array}\right.@f]
+                * @param[in] value The input value.
+                * @return The transformed value.
                 */
                 virtual double gamma(double value) const;
 
             public:
                 /**
-                * \brief Apply inverse %gamma transformation.
-                * \details \f[ x_{src} = \left\{\begin{array}{ll}12.92\,x_{dst} & 0 \leq x_{dst} \leq 0.0031309\\
-                * 1.055\,x_{dst}^{1/2.4} - 0.055 & 0.0031309 < x_{dst} \leq 1 \end{array}\right.\f]
-                * \param[in] value The input value.
-                * \return The transformed value.
+                * @brief Apply inverse %gamma transformation.
+                * @details @f[ x_{src} = \left\{\begin{array}{ll}12.92\,x_{dst} & 0 \leq x_{dst} \leq 0.0031309\\
+                * 1.055\,x_{dst}^{1/2.4} - 0.055 & 0.0031309 < x_{dst} \leq 1 \end{array}\right.@f]
+                * @param[in] value The input value.
+                * @return The transformed value.
                 */
                 virtual double inv_gamma(double value) const;
 
         }; // class GammaSRGB
 
         /**
-        * \brief EMOR response curve.
-        * \note This class implements the 'Empirical Model of Response'
+        * @brief EMOR response curve.
+        * @note This class implements the 'Empirical Model of Response'
         * (EMOR) for sensor response curves proposed and provided by
         * M.D. Grossberg and S.K. Nayar from the University of
         * Columbia (Computer Vision laboratory). For more information
@@ -165,64 +168,83 @@ namespace phtr
         class GammaEMOR : public IGammaFunc
         {
 
+                /* ****************************************
+                 * public interface
+                 * **************************************** */
+
+                /* ****************************************
+                 * internals
+                 * **************************************** */
             private:
+                /**
+                * The coefficients vector.
+                */
+                std::vector<double> coeff;
+
+                /// @cond
+            private:
+                static const size_t val_num_ = 1024;
+                static const double* h_[];
+                static const double* hinv_[];
+
                 /* EMoR curves */
-                static const double E[];
-                static const double f0[];
-                static const double h01[];
-                static const double h02[];
-                static const double h03[];
-                static const double h04[];
-                static const double h05[];
-                static const double h06[];
-                static const double h07[];
-                static const double h08[];
-                static const double h09[];
-                static const double h10[];
-                static const double h11[];
-                static const double h12[];
-                static const double h13[];
-                static const double h14[];
-                static const double h15[];
-                static const double h16[];
-                static const double h17[];
-                static const double h18[];
-                static const double h19[];
-                static const double h20[];
-                static const double h21[];
-                static const double h22[];
-                static const double h23[];
-                static const double h24[];
-                static const double h25[];
+                static const double E_[];
+                static const double f0_[];
+                static const double h01_[];
+                static const double h02_[];
+                static const double h03_[];
+                static const double h04_[];
+                static const double h05_[];
+                static const double h06_[];
+                static const double h07_[];
+                static const double h08_[];
+                static const double h09_[];
+                static const double h10_[];
+                static const double h11_[];
+                static const double h12_[];
+                static const double h13_[];
+                static const double h14_[];
+                static const double h15_[];
+                static const double h16_[];
+                static const double h17_[];
+                static const double h18_[];
+                static const double h19_[];
+                static const double h20_[];
+                static const double h21_[];
+                static const double h22_[];
+                static const double h23_[];
+                static const double h24_[];
+                static const double h25_[];
 
                 /* Inverse EMoR curves */
-                static const double B[];
-                static const double g0[];
-                static const double hinv01[];
-                static const double hinv02[];
-                static const double hinv03[];
-                static const double hinv04[];
-                static const double hinv05[];
-                static const double hinv06[];
-                static const double hinv07[];
-                static const double hinv08[];
-                static const double hinv09[];
-                static const double hinv10[];
-                static const double hinv11[];
-                static const double hinv12[];
-                static const double hinv13[];
-                static const double hinv14[];
-                static const double hinv15[];
-                static const double hinv16[];
-                static const double hinv17[];
-                static const double hinv18[];
-                static const double hinv19[];
-                static const double hinv20[];
-                static const double hinv21[];
-                static const double hinv22[];
-                static const double hinv23[];
-                static const double hinv24[];
-                static const double hinv25[];
+                static const double B_[];
+                static const double g0_[];
+                static const double hinv01_[];
+                static const double hinv02_[];
+                static const double hinv03_[];
+                static const double hinv04_[];
+                static const double hinv05_[];
+                static const double hinv06_[];
+                static const double hinv07_[];
+                static const double hinv08_[];
+                static const double hinv09_[];
+                static const double hinv10_[];
+                static const double hinv11_[];
+                static const double hinv12_[];
+                static const double hinv13_[];
+                static const double hinv14_[];
+                static const double hinv15_[];
+                static const double hinv16_[];
+                static const double hinv17_[];
+                static const double hinv18_[];
+                static const double hinv19_[];
+                static const double hinv20_[];
+                static const double hinv21_[];
+                static const double hinv22_[];
+                static const double hinv23_[];
+                static const double hinv24_[];
+                static const double hinv25_[];
+                /// @endcond
 
         }; // class GammaEMoR
 

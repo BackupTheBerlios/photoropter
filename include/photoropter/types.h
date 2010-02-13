@@ -33,17 +33,17 @@ namespace phtr
 {
 
     /**
-    * \brief Channel value type.
+    * @brief Channel value type.
     */
     typedef double interp_channel_t;
 
     /**
-    * \brief Coordinate type.
+    * @brief Coordinate type.
     */
     typedef size_t coord_t;
 
     /**
-    * \brief Type used for the image transformation 'lines' loop. Needs to be signed for OpenMP 2.0
+    * @brief Type used for the image transformation 'lines' loop. Needs to be signed for OpenMP 2.0
     */
 #if (defined HAVE_OPENMP) && (!defined OPENMP3)
     typedef long omp_coord_t;
@@ -52,7 +52,7 @@ namespace phtr
 #endif
 
     /**
-    * \brief Type for interpolated coordinates.
+    * @brief Type for interpolated coordinates.
     */
     typedef double interp_coord_t;
 

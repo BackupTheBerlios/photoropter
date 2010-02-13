@@ -31,26 +31,26 @@ namespace phtr
 {
 
     /**
-    * \brief Struct describing interpolation types.
+    * @brief Struct describing interpolation types.
     */
     struct Interpolation
     {
 
         /**
-        * \brief The enum holding the actual values.
+        * @brief The enum holding the actual values.
         */
         enum type
         {
             /**
-            * \brief 'Nearest neighbour' interpolation.
+            * @brief 'Nearest neighbour' interpolation.
             */
             nearest_neighbour = 0,
             /**
-            * \brief Bilinear interpolation.
+            * @brief Bilinear interpolation.
             */
             bilinear,
             /**
-            * \brief Lanczos interpolation.
+            * @brief Lanczos interpolation.
             */
             lanczos
         };

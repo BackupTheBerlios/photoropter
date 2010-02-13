@@ -36,7 +36,7 @@ namespace phtr
 {
 
     /**
-    * \brief Class holding a queue of geometrical correction model functions.
+    * @brief Class holding a queue of geometrical correction model functions.
     */
     class GeomCorrectionQueue
     {
@@ -46,33 +46,33 @@ namespace phtr
 
         public:
             /**
-            * \brief Standard constructor.
-            * \details This will construct an empty queue.
+            * @brief Standard constructor.
+            * @details This will construct an empty queue.
             */
             GeomCorrectionQueue();
 
         public:
             /**
-            * \brief Destructor.
+            * @brief Destructor.
             */
             virtual ~GeomCorrectionQueue();
 
         public:
             /**
-            * \brief Fetch the transformed coordinates for the given position.
-            * \param[in]  dst_x   The x coordinate "seen from" the destination image.
-            * \param[in]  dst_y   The y coordinate "seen from" the destination image.
-            * \param[out] src_x_r The corresponding x coordinate for the 'red' channel
+            * @brief Fetch the transformed coordinates for the given position.
+            * @param[in]  dst_x   The x coordinate "seen from" the destination image.
+            * @param[in]  dst_y   The y coordinate "seen from" the destination image.
+            * @param[out] src_x_r The corresponding x coordinate for the 'red' channel
             *                     in the source image
-            * \param[out] src_y_r The corresponding y coordinate for the 'red' channel
+            * @param[out] src_y_r The corresponding y coordinate for the 'red' channel
             *                     in the source image
-            * \param[out] src_x_g The corresponding x coordinate for the 'green' channel
+            * @param[out] src_x_g The corresponding x coordinate for the 'green' channel
             *                     in the source image
-            * \param[out] src_y_g The corresponding y coordinate for the 'green' channel
+            * @param[out] src_y_g The corresponding y coordinate for the 'green' channel
             *                     in the source image
-            * \param[out] src_x_b The corresponding x coordinate for the 'blue' channel
+            * @param[out] src_x_b The corresponding x coordinate for the 'blue' channel
             *                     in the source image
-            * \param[out] src_y_b The corresponding y coordinate for the 'blue' channel
+            * @param[out] src_y_b The corresponding y coordinate for the 'blue' channel
             *                     in the source image
             */
             inline void get_source_coords(interp_coord_t dst_x, interp_coord_t dst_y,
@@ -82,16 +82,16 @@ namespace phtr
 
         public:
             /**
-            * \brief Add the given model to the queue.
-            * \note The object will be copied; a reference to the copy is returned.
-            * \param model The geometry correction model to be added.
-            * \return Reference to the new correction model copy.
+            * @brief Add the given model to the queue.
+            * @note The object will be copied; a reference to the copy is returned.
+            * @param model The geometry correction model to be added.
+            * @return Reference to the new correction model copy.
             */
             model::IGeomCorrectionModel& add_model(const model::IGeomCorrectionModel& model);
 
         public:
             /**
-            * \brief Clear the current queue contents.
+            * @brief Clear the current queue contents.
             */
             void clear();
 
@@ -101,31 +101,31 @@ namespace phtr
 
         private:
             /**
-            * \brief Copy constructor.
-            * \note Currently deactivated (==private).
-            * \param orig The original queue.
-            * \details This will copy the given queue, duplicating the functionid objects.
+            * @brief Copy constructor.
+            * @note Currently deactivated (==private).
+            * @param orig The original queue.
+            * @details This will copy the given queue, duplicating the functionid objects.
             */
             GeomCorrectionQueue(const GeomCorrectionQueue& orig);
 
         private:
             /**
-            * \brief Assignment operator.
-            * \note Currently deactivated (==private).
-            * \param orig The original queue.
-            * \return Reference to the current instance.
+            * @brief Assignment operator.
+            * @note Currently deactivated (==private).
+            * @param orig The original queue.
+            * @return Reference to the current instance.
             */
             GeomCorrectionQueue& operator=(const GeomCorrectionQueue& orig);
 
         private:
             /**
-            * \brief The internal list of correction models.
+            * @brief The internal list of correction models.
             */
             std::vector<model::IGeomCorrectionModel*> correction_model_;
 
         private:
             /**
-            * \brief The number of models currently in the queue.
+            * @brief The number of models currently in the queue.
             */
             unsigned short n_models_;
 

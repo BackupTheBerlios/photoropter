@@ -36,7 +36,7 @@ namespace phtr
     {
 
         /**
-        * \brief Base exception class.
+        * @brief Base exception class.
         */
         class base_exception : public std::exception
         {
@@ -47,16 +47,16 @@ namespace phtr
 
             public:
                 /**
-                * \brief The message associated with the exception.
-                * \details This message contains the general type of exception,
+                * @brief The message associated with the exception.
+                * @details This message contains the general type of exception,
                 * and possibly a further explanation of the cause.
-                * \return The message.
+                * @return The message.
                 */
                 virtual const char* what() const throw();
 
             public:
                 /**
-                * \brief Destructor.
+                * @brief Destructor.
                 */
                 virtual ~base_exception() throw();
 
@@ -66,33 +66,33 @@ namespace phtr
 
             protected:
                 /**
-                * \brief Standard constructor.
+                * @brief Standard constructor.
                 */
                 base_exception();
 
             protected:
                 /**
-                * \brief Construction with a specific message.
-                * \param[in] msg The message.
+                * @brief Construction with a specific message.
+                * @param[in] msg The message.
                 */
                 base_exception(const std::string& msg);
 
             protected:
                 /**
-                * \brief Internal message prefix.
+                * @brief Internal message prefix.
                 */
                 std::string prefix_;
 
             private:
                 /**
-                * \brief Internal string containing the exception message.
+                * @brief Internal string containing the exception message.
                 */
                 std::string msg_;
 
         }; // class base_exception
 
         /**
-        * \brief Exception that is thrown when a particular feature of a class
+        * @brief Exception that is thrown when a particular feature of a class
         * is not implemented (yet).
         */
         class not_implemented: public base_exception
@@ -100,21 +100,21 @@ namespace phtr
 
             public:
                 /**
-                * \brief Standard constructor.
+                * @brief Standard constructor.
                 */
                 not_implemented();
 
             public:
                 /**
-                * \brief Construction with a specific message.
-                * \param[in] msg The message.
+                * @brief Construction with a specific message.
+                * @param[in] msg The message.
                 */
                 not_implemented(const std::string& msg);
 
         };
 
         /**
-        * \brief Exception that is thrown when a function argument is illegal
+        * @brief Exception that is thrown when a function argument is illegal
         * (e.g., parameter out of range).
         */
         class illegal_argument: public base_exception
@@ -122,14 +122,14 @@ namespace phtr
 
             public:
                 /**
-                * \brief Standard constructor.
+                * @brief Standard constructor.
                 */
                 illegal_argument();
 
             public:
                 /**
-                * \brief Construction with a specific message.
-                * \param[in] msg The message.
+                * @brief Construction with a specific message.
+                * @param[in] msg The message.
                 */
                 illegal_argument(const std::string& msg);
 

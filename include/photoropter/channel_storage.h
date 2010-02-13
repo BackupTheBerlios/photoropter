@@ -36,12 +36,12 @@ namespace phtr
     {
 
         /**
-         * \brief Template for determining the channel storage type
-         * to a given \ref Storage::type.
-         * \details This template \em has to be
+         * @brief Template for determining the channel storage type
+         * to a given @ref Storage::type.
+         * @details This template @em has to be
          * specialised for every supported type. In each specialisation,
          * a member typedef 'type' has to be provided.
-         * \param T The storage type (e.g. \ref Storage::rgb_8_inter).
+         * @param T The storage type (e.g. @ref Storage::rgb_8_inter).
          */
         template <mem::Storage::type T>
         struct ChannelStorage
@@ -53,84 +53,84 @@ namespace phtr
         }; // template struct ChannelStorage
 
         /**
-        * \brief Specialisation of \ref ChannelStorage for \ref Storage::rgb_8_inter.
+        * @brief Specialisation of @ref ChannelStorage for @ref Storage::rgb_8_inter.
         */
         template <>
         struct ChannelStorage<Storage::rgb_8_inter>
         {
 
             /**
-            * \brief The storage type.
+            * @brief The storage type.
             */
             typedef std::uint8_t type;
 
         }; // template struct ChannelStorage<Storage::rgb_8_inter>
 
         /**
-        * \brief Specialisation of \ref ChannelStorage for \ref Storage::rgb_16_inter.
+        * @brief Specialisation of @ref ChannelStorage for @ref Storage::rgb_16_inter.
         */
         template <>
         struct ChannelStorage<Storage::rgb_16_inter>
         {
 
             /**
-            * \brief The storage type.
+            * @brief The storage type.
             */
             typedef std::uint16_t type;
 
         }; // template struct ChannelStorage<Storage::rgb_16_inter>
 
         /**
-        * \brief Specialisation of \ref ChannelStorage for \ref Storage::rgb_32_inter.
+        * @brief Specialisation of @ref ChannelStorage for @ref Storage::rgb_32_inter.
         */
         template <>
         struct ChannelStorage<Storage::rgb_32_inter>
         {
 
             /**
-            * \brief The storage type.
+            * @brief The storage type.
             */
             typedef std::uint32_t type;
 
         }; // template struct ChannelStorage<Storage::rgb_32_inter>
 
         /**
-        * \brief Specialisation of \ref ChannelStorage for \ref Storage::rgb_8_planar.
+        * @brief Specialisation of @ref ChannelStorage for @ref Storage::rgb_8_planar.
         */
         template <>
         struct ChannelStorage<Storage::rgb_8_planar>
         {
 
             /**
-            * \brief The storage type.
+            * @brief The storage type.
             */
             typedef std::uint8_t type;
 
         }; // template struct ChannelStorage<Storage::rgb_8_planar>
 
         /**
-        * \brief Specialisation of \ref ChannelStorage for \ref Storage::rgb_16_planar.
+        * @brief Specialisation of @ref ChannelStorage for @ref Storage::rgb_16_planar.
         */
         template <>
         struct ChannelStorage<Storage::rgb_16_planar>
         {
 
             /**
-            * \brief The storage type.
+            * @brief The storage type.
             */
             typedef std::uint16_t type;
 
         }; // template struct ChannelStorage<Storage::rgb_16_planar>
 
         /**
-        * \brief Specialisation of \ref ChannelStorage for \ref Storage::rgb_32_planar.
+        * @brief Specialisation of @ref ChannelStorage for @ref Storage::rgb_32_planar.
         */
         template <>
         struct ChannelStorage<Storage::rgb_32_planar>
         {
 
             /**
-            * \brief The storage type.
+            * @brief The storage type.
             */
             typedef std::uint32_t type;
 

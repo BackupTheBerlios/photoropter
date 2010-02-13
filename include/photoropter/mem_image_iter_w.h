@@ -34,9 +34,9 @@ namespace phtr
 {
 
     /**
-    * \brief Iterator class for write access to an image in memory.
-    * \details Instances of this class are usually created by \ref MemImageViewW.
-    * \param T The storage type (e.g. \ref mem::Storage::rgb_8_inter).
+    * @brief Iterator class for write access to an image in memory.
+    * @details Instances of this class are usually created by @ref MemImageViewW.
+    * @param T The storage type (e.g. @ref mem::Storage::rgb_8_inter).
     */
     template <mem::Storage::type T>
     class MemImageIterW : public MemImageIterBase<T>
@@ -48,26 +48,26 @@ namespace phtr
 
         public:
             /**
-            * \brief Struct describing the memory layout.
+            * @brief Struct describing the memory layout.
             */
             typedef typename MemImageIterBase<T>::mem_layout_t mem_layout_t;
 
         public:
             /**
-            * \brief The channel storage type for this image (e.g., uint8_t).
+            * @brief The channel storage type for this image (e.g., uint8_t).
             */
             typedef typename MemImageIterBase<T>::channel_storage_t channel_storage_t;
 
         public:
             /**
-            * \brief Constructor.
-            * \param[in] base_addr The base address (i.e., top left corner).
-            * \param[in] px_offs   The current pixel offset.
-            * \param[in] step      The pixel step.
-            * \param[in] line_step The line step.
-            * \param[in] r_offs    The 'red' channel offset.
-            * \param[in] g_offs    The 'green' channel offset.
-            * \param[in] b_offs    The 'blue' channel offset.
+            * @brief Constructor.
+            * @param[in] base_addr The base address (i.e., top left corner).
+            * @param[in] px_offs   The current pixel offset.
+            * @param[in] step      The pixel step.
+            * @param[in] line_step The line step.
+            * @param[in] r_offs    The 'red' channel offset.
+            * @param[in] g_offs    The 'green' channel offset.
+            * @param[in] b_offs    The 'blue' channel offset.
             */
             MemImageIterW(channel_storage_t* base_addr, size_t px_offs,
                           size_t step, size_t line_step,
@@ -75,30 +75,30 @@ namespace phtr
 
         public:
             /**
-            * \brief Write the 'red' channel value to the current pixel.
-            * \param val The value.
+            * @brief Write the 'red' channel value to the current pixel.
+            * @param val The value.
             */
             void write_px_val_r(channel_storage_t val);
 
         public:
             /**
-            * \brief Write the 'green' channel value to the current pixel.
-            * \param val The value.
+            * @brief Write the 'green' channel value to the current pixel.
+            * @param val The value.
             */
             void write_px_val_g(channel_storage_t val);
 
         public:
             /**
-            * \brief Write the 'blue' channel value to the current pixel.
-            * \param val The value.
+            * @brief Write the 'blue' channel value to the current pixel.
+            * @param val The value.
             */
             void write_px_val_b(channel_storage_t val);
 
         public:
             /**
-            * \brief Write the given channel value to the current pixel.
-            * \param chan The channel.
-            * \param val  The value.
+            * @brief Write the given channel value to the current pixel.
+            * @param chan The channel.
+            * @param val  The value.
             */
             inline void write_px_val(Channel::type chan, channel_storage_t val);
 

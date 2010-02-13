@@ -37,10 +37,10 @@ namespace phtr
 {
 
     /**
-    * \brief Image interpolation base class.
-    * \details This stub (among other things) deals with the image's aspect ratio and
+    * @brief Image interpolation base class.
+    * @details This stub (among other things) deals with the image's aspect ratio and
     * contains the image view reference. It is not supposed to be used directly.
-    * \param view_t  The image view that is used for reading data.
+    * @param view_t  The image view that is used for reading data.
     */
     template <typename view_t>
     class ImageInterpolatorBase
@@ -52,14 +52,14 @@ namespace phtr
 
         public:
             /**
-            * \brief The type of the image view used.
+            * @brief The type of the image view used.
             */
             typedef view_t image_view_t;
 
         public:
             /**
-            * \brief Return the aspect ratio of the image.
-            * \return The aspect ratio.
+            * @brief Return the aspect ratio of the image.
+            * @return The aspect ratio.
             */
             interp_coord_t aspect_ratio() const;
 
@@ -69,73 +69,73 @@ namespace phtr
 
         protected:
             /**
-            * \brief Constructor.
-            * \note The aspect ratio will be calculated from width and height of the input
+            * @brief Constructor.
+            * @note The aspect ratio will be calculated from width and height of the input
             * image, i.e. square pixels are assumed.
-            * \param[in] image_view The image view which will be used for reading image data.
+            * @param[in] image_view The image view which will be used for reading image data.
             */
             ImageInterpolatorBase(const view_t& image_view);
 
         protected:
             /**
-            * \brief Constructor.
-            * \param[in] image_view   The image view which will be used for reading image data.
-            * \param[in] aspect_ratio The aspect ratio of the image.
+            * @brief Constructor.
+            * @param[in] image_view   The image view which will be used for reading image data.
+            * @param[in] aspect_ratio The aspect ratio of the image.
             */
             ImageInterpolatorBase(const view_t& image_view, interp_coord_t aspect_ratio);
 
         protected:
             /**
-            * \brief Pointer to the internal image view instance that is used
+            * @brief Pointer to the internal image view instance that is used
             * for image access.
             */
             const view_t& image_view_;
 
         protected:
             /**
-            * \brief The image width.
+            * @brief The image width.
             */
             const coord_t width_;
 
         protected:
             /**
-            * \brief The image height.
+            * @brief The image height.
             */
             const coord_t height_;
 
         protected:
             /**
-            * \brief The value to return for areas outside the image.
+            * @brief The value to return for areas outside the image.
             */
             const interp_channel_t null_val_;
 
         protected:
             /**
-            * \brief The aspect ratio of the image.
+            * @brief The aspect ratio of the image.
             */
             const interp_coord_t aspect_ratio_;
 
         protected:
             /**
-            * \brief Interal scaling factor for the horizontal axis.
+            * @brief Interal scaling factor for the horizontal axis.
             */
             const interp_channel_t scale_x_;
 
         protected:
             /**
-            * \brief Interal scaling factor for the vertical axis.
+            * @brief Interal scaling factor for the vertical axis.
             */
             const interp_channel_t scale_y_;
     };
 
     /**
-    * \brief Class template to facilitate image interpolation.
-    * \details The image is represented using floating-point coordinates ranging from
+    * @brief Class template to facilitate image interpolation.
+    * @details The image is represented using floating-point coordinates ranging from
     *  -0.5 to 0.5. (0.0, 0.0) represents the image's center, (-0.5,-0.5) the upper left corner.
-    * \note This (unspecialised) version does not provide any functionality. Have a look at
-    * e.g., \ref ImageInterpolator<Interpolation::nearest_neighbour, view_t>.
-    * \param inter_t The interpolation type (e.g., nearest neighbour or bilinear).
-    * \param view_t  The image view that is used for reading data.
+    * @note This (unspecialised) version does not provide any functionality. Have a look at
+    * e.g., @ref ImageInterpolator<Interpolation::nearest_neighbour, view_t>.
+    * @param inter_t The interpolation type (e.g., nearest neighbour or bilinear).
+    * @param view_t  The image view that is used for reading data.
     */
     template <Interpolation::type inter_t, typename view_t>
     class ImageInterpolator
@@ -147,11 +147,11 @@ namespace phtr
     };
 
     /**
-    * \brief Class template to facilitate image interpolation.
-    * \details The image is represented using floating-point coordinates ranging from
+    * @brief Class template to facilitate image interpolation.
+    * @details The image is represented using floating-point coordinates ranging from
     *  -0.5 to 0.5. (0.0, 0.0) represents the image's center, (-0.5,-0.5) the upper left corner.
-    * \note This is the specialisation for 'nearest neighbor' interpolation.
-    * \param view_t  The image view that is used for reading data.
+    * @note This is the specialisation for 'nearest neighbor' interpolation.
+    * @param view_t  The image view that is used for reading data.
     */
     template <typename view_t>
     class ImageInterpolator<Interpolation::nearest_neighbour, view_t> : public ImageInterpolatorBase<view_t>
@@ -162,66 +162,66 @@ namespace phtr
 
         public:
             /**
-            * \brief Constructor.
-            * \note The aspect ratio will be calculated from width and height of the input
+            * @brief Constructor.
+            * @note The aspect ratio will be calculated from width and height of the input
             * image, i.e. square pixels are assumed.
-            * \param[in] image_view The image view which will be used for reading image data.
+            * @param[in] image_view The image view which will be used for reading image data.
             */
             ImageInterpolator(const view_t& image_view);
 
         public:
             /**
-            * \brief Constructor.
-            * \param[in] image_view   The image view which will be used for reading image data.
-            * \param[in] aspect_ratio The aspect ratio of the image.
+            * @brief Constructor.
+            * @param[in] image_view   The image view which will be used for reading image data.
+            * @param[in] aspect_ratio The aspect ratio of the image.
             */
             ImageInterpolator(const view_t& image_view, interp_coord_t aspect_ratio);
 
         public:
             /**
-            * \brief Get the value of the 'red' channel at the given coordinates.
-            * \param[in] x The x coordinate.
-            * \param[in] y The y coordinate.
-            * \return The channel value.
+            * @brief Get the value of the 'red' channel at the given coordinates.
+            * @param[in] x The x coordinate.
+            * @param[in] y The y coordinate.
+            * @return The channel value.
             */
             interp_channel_t get_px_val_r(interp_coord_t x, interp_coord_t y);
 
         public:
             /**
-            * \brief Get the value of the 'green' channel at the given coordinates.
-            * \param[in] x The x coordinate.
-            * \param[in] y The y coordinate.
-            * \return The channel value.
+            * @brief Get the value of the 'green' channel at the given coordinates.
+            * @param[in] x The x coordinate.
+            * @param[in] y The y coordinate.
+            * @return The channel value.
             */
             interp_channel_t get_px_val_g(interp_coord_t x, interp_coord_t y);
 
         public:
             /**
-            * \brief Get the value of the 'blue' channel at the given coordinates.
-            * \param[in] x The x coordinate.
-            * \param[in] y The y coordinate.
-            * \return The channel value.
+            * @brief Get the value of the 'blue' channel at the given coordinates.
+            * @param[in] x The x coordinate.
+            * @param[in] y The y coordinate.
+            * @return The channel value.
             */
             interp_channel_t get_px_val_b(interp_coord_t x, interp_coord_t y);
 
         public:
             /**
-            * \brief Get the value of the  given channel at the given coordinates.
-            * \param chan The channel.
-            * \param[in] x The x coordinate.
-            * \param[in] y The y coordinate.
-            * \return The channel value.
+            * @brief Get the value of the  given channel at the given coordinates.
+            * @param chan The channel.
+            * @param[in] x The x coordinate.
+            * @param[in] y The y coordinate.
+            * @return The channel value.
             */
             inline interp_channel_t get_px_val(Channel::type chan, interp_coord_t x, interp_coord_t y);
 
     }; // class ImageInterpolator<Interpolation::nearest_neighbour, ...>
 
     /**
-    * \brief Class template to facilitate image interpolation.
-    * \details The image is represented using floating-point coordinates ranging from
+    * @brief Class template to facilitate image interpolation.
+    * @details The image is represented using floating-point coordinates ranging from
     *  -0.5 to 0.5. (0.0, 0.0) represents the image's center, (-0.5,-0.5) the upper left corner.
-    * \note This is the specialisation for bilinear interpolation.
-    * \param view_t  The image view that is used for reading data.
+    * @note This is the specialisation for bilinear interpolation.
+    * @param view_t  The image view that is used for reading data.
     */
     template <typename view_t>
     class ImageInterpolator<Interpolation::bilinear, view_t> : public ImageInterpolatorBase<view_t>
@@ -232,55 +232,55 @@ namespace phtr
 
         public:
             /**
-            * \brief Constructor.
-            * \note The aspect ratio will be calculated from width and height of the input
+            * @brief Constructor.
+            * @note The aspect ratio will be calculated from width and height of the input
             * image, i.e. square pixels are assumed.
-            * \param[in] image_view The image view which will be used for reading image data.
+            * @param[in] image_view The image view which will be used for reading image data.
             */
             ImageInterpolator(const view_t& image_view);
 
         public:
             /**
-            * \brief Constructor.
-            * \param[in] image_view   The image view which will be used for reading image data.
-            * \param[in] aspect_ratio The aspect ratio of the image.
+            * @brief Constructor.
+            * @param[in] image_view   The image view which will be used for reading image data.
+            * @param[in] aspect_ratio The aspect ratio of the image.
             */
             ImageInterpolator(const view_t& image_view, interp_coord_t aspect_ratio);
 
         public:
             /**
-            * \brief Get the value of the 'red' channel at the given coordinates.
-            * \param[in] x The x coordinate.
-            * \param[in] y The y coordinate.
-            * \return The channel value.
+            * @brief Get the value of the 'red' channel at the given coordinates.
+            * @param[in] x The x coordinate.
+            * @param[in] y The y coordinate.
+            * @return The channel value.
             */
             interp_channel_t get_px_val_r(interp_coord_t x, interp_coord_t y);
 
         public:
             /**
-            * \brief Get the value of the 'green' channel at the given coordinates.
-            * \param[in] x The x coordinate.
-            * \param[in] y The y coordinate.
-            * \return The channel value.
+            * @brief Get the value of the 'green' channel at the given coordinates.
+            * @param[in] x The x coordinate.
+            * @param[in] y The y coordinate.
+            * @return The channel value.
             */
             interp_channel_t get_px_val_g(interp_coord_t x, interp_coord_t y);
 
         public:
             /**
-            * \brief Get the value of the 'blue' channel at the given coordinates.
-            * \param[in] x The x coordinate.
-            * \param[in] y The y coordinate.
-            * \return The channel value.
+            * @brief Get the value of the 'blue' channel at the given coordinates.
+            * @param[in] x The x coordinate.
+            * @param[in] y The y coordinate.
+            * @return The channel value.
             */
             interp_channel_t get_px_val_b(interp_coord_t x, interp_coord_t y);
 
         public:
             /**
-            * \brief Get the value of the  given channel at the given coordinates.
-            * \param[in] chan The channel.
-            * \param[in] x The x coordinate.
-            * \param[in] y The y coordinate.
-            * \return The channel value.
+            * @brief Get the value of the  given channel at the given coordinates.
+            * @param[in] chan The channel.
+            * @param[in] x The x coordinate.
+            * @param[in] y The y coordinate.
+            * @return The channel value.
             */
             inline interp_channel_t get_px_val(Channel::type chan, interp_coord_t x, interp_coord_t y);
 
