@@ -88,6 +88,7 @@ if(DOXYGEN_FOUND)
   set(DOXY_INPUT "${DOXY_INPUT} \"${DOXYGEN_DOCSRC_DIR}/license.txt\"")
   set(DOXY_INPUT "${DOXY_INPUT} \"${DOXYGEN_DOCSRC_DIR}/codingstyle.txt\"")
   set(DOXY_INPUT "${DOXY_INPUT} \"${DOXYGEN_DOCSRC_DIR}/techback.txt\"")
+  set(DOXY_INPUT "${DOXY_INPUT} \"${DOXYGEN_DOCSRC_DIR}/tutorial.txt\"")
 
   if(PHTR_DOCUMENT_ALL)
     set(DOXY_INPUT "${DOXY_INPUT} \"${CMAKE_CURRENT_SOURCE_DIR}\"")

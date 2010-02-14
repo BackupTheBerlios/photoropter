@@ -1,12 +1,25 @@
 /*
 *
-* Sample program to demonstrate basic usage of Photoropter.
+* Quick&Dirty sample program to demonstrate basic usage of Photoropter.
 *
 * Usage example :
 *
 * phtrtest --gain-func emor --param-aspect 1.5333 --vignetting 0:0:0.3 --ptlens 0:0.00987:-0.05127 in.jpg out.jpg
 *
-* (c) 2010 by Robert Fendt
+* Copyright (C) 2010 Robert Fendt
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program.  If not, see <http://www.gnu.org/licenses/>.
 *
 */
 

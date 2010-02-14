@@ -1,0 +1,98 @@
+/**
+
+@page tutorial Photoropter Tutorial
+
+This text will give a short overview of how Photoropter is used.
+
+@section tutorial_memviews Memory access and image views
+
+The most important point when using an algorithmic library like Photoropter is
+always: how will the library access my data? Photoropter works on images, and
+images in memory come in a myriad of formats. Fortunately, only a few are really
+common, and those are easily accommodated. The concept by which Photoropter
+accesses image data is called a 'view', and it is used like this:
+
+@code
+#include <photoropter/mem_image_view_r.h>
+#include <photoropter/mem_image_view_w.h>
+[...]
+
+void* src_ptr;
+void* dst_ptr;
+size_t img_width;
+size_t img_height;
+[...]
+
+using namespace phtr;
+const mem::Storage::type storage_type = mem::Storage::rgb_8_inter;
+
+typedef MemImageViewR<storage_type> view_r_t;
+typedef MemImageViewW<storage_type> view_w_t;
+
+view_r_t src_img_view(src_ptr, img_width, img_height);
+view_w_t dst_img_view(dst_ptr, img_width, img_height);
+@endcode
+
+And that's it. This will create two image views for Photoropter to work with
+(one for reading and one for writing). Since a reading view is strictly
+read-only, an instance can even work directly on top of your application's image
+data.
+
+@section tutorial_ptlens PTLens correction
+
+Now let's perform a geometric transformation on the image. For this, we have to
+decide the interpolation method Photoropter shall use (at the moment, only
+bilinear interpolation is supported, but that will change).
+
+@code
+#include <photoropter/image_interpolator.h>
+#include <photoropter/image_transform.h>
+[...]
+
+typedef ImageInterpolator<Interpolation::bilinear, view_r_t> interp_t;
+typedef ImageTransform<interp_t, view_w_t> transform_t;
+
+transform_t transform(src_img_view, dst_img_view);
+@endcode
+
+Now we have a transformation object which works on the two views we created
+earlier. The latter holds two transformation queues: one for geometrical and one
+for colour transformations. Of course, the PTLens model is a geometrical one.
+
+@code
+#include <photoropter/geom_correction_model.h>
+[...]
+
+double aspect = static_cast<double>(img_width) /
+static_cast<double>(img_height);
+model::PTLensGeomModel ptlens_mod(aspect);
+
+ptlens_mod.set_model_params(0.0, 0.00987, -0.05127);
+
+transform.geom_queue().add_model(ptlens_mod);
+@endcode
+
+The PTLens model requires an aspect ratio parameter, because (in theory at
+least) Photoropter is completely aspect ratio agnostic and can work even on
+anamorphic images. Because of this, all transformations are performed in a
+normalised coordinate system, and thus the PTLens model simply does not know
+(and for the most part, does not have to know) the image size. However, a common
+operation is to convert parameters between portrait and landscape, and for this,
+PTLens has to know the aspect ratio. For more details, see
+@ref techback_phtrcoord.
+
+We have now successfully set up Photoropter to perform a PTLens correction. All
+that is left is to tell it to actually perform the desired corrections:
+@code
+transform.do_transform();
+@endcode
+
+And that's it, actually. The transformation loop is highly optimised (making use
+even of multiple CPU cores), so it should be done quite quickly. Of course,
+there's much more that Photoropter can do, e.g. dealing with different forms of
+regions of interest (ROI), gamma handling, colour corrections... this was just a
+first example. If you want to see a bit more, have a look inside 'phtrtest.cpp'.
+It is a quick&dirty command-line application, but it shows a larger subset of
+Photoropters abilities.
+
+*/

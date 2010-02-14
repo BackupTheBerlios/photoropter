@@ -9,6 +9,9 @@ coding style used in the development of the Photoropter library; mainly to
 make life easier for potential contributers, but if you want to adopt these
 guidelines for your own project, feel free to do so.
 
+Note: these rules are guidelines, not set in stone. There are (small)
+deviations from them even in the Photoropter core.
+
 @section code_org Code organisation
 
 @subsection code_org_classes Classes and structs
@@ -23,7 +26,7 @@ extracted into separate interface definitions.</li>
 both for reading from and writing to a file, this usually means it implements
 two distinct interfaces (one for reading, one for writing).</li>
 <li>Usually a header contains only a single class
-definition. Exception: closely related interface definitons that form
+definition. Exception: closely related interface definitions that form
 a coherent unit.</li>
 </ul>
 
@@ -118,7 +121,7 @@ is named like that class, with the following differences:<ol>
 <li>Plain C files use the suffix ".c".</li>
 <li>C++ files use the suffix ".cpp".</li>
 <li>Header files (C and C++) use the suffix ".h".</li>
-<li>Inline definitons use the double suffix ".inl.h".</li>
+<li>Inline definitions use the double suffix ".inl.h".</li>
 <li>Template definitions use the double suffix ".tpl.h".</li>
 </ul>
 
