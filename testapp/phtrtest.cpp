@@ -46,6 +46,14 @@ namespace po = boost::program_options;
 
 struct Settings
 {
+    enum gainfunc_t
+    {
+        gf_srgb,
+        gf_gamma,
+        gf_emor,
+        gf_invemor
+    };
+
     Settings()
             : ptlens_corr(false),
             ptlens_params(5, 0),
@@ -59,7 +67,8 @@ struct Settings
             sub_rect_y0(0),
             sub_rect_w(0),
             sub_rect_h(0),
-            gamma(0)
+            gamma(2.2),
+            gainfunc(gf_srgb)
 
     {}
 
@@ -78,6 +87,8 @@ struct Settings
     double gamma;
     std::string inp_file;
     std::string outp_file;
+    gainfunc_t gainfunc;
+    std::vector<double> emor_coeffs;
 };
 
 bool parse_command_line(int argc, char* argv[], Settings& settings)
@@ -95,7 +106,13 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
         ("param-crop", po::value<double>(), "Crop factor used for parameter calibration")
         ("image-crop", po::value<double>(), "Diagonal image crop factor")
         ("sub-rect", po::value<std::string>(), "Clip a sub-rectangle from the image: x0:y0:width:height")
+        ("gain-func", po::value<std::string>(), "Type of gain function:\n"
+         "  srgb    - sRGB gamma (default)\n"
+         "  gamma   - generic gamma\n"
+         "  emor    - EMOR\n"
+         "  invemor - inverse EMOR.")
         ("gamma", po::value<double>(), "Gamma value (default: assume sRGB gamma)")
+        ("emor-params", po::value<std::string>(), "EMOR parameters: h1[:h2[:h3...]]")
         ("input-file", po::value<std::string>(), "Input file")
         ("output-file", po::value<std::string>(), "Output file");
 
@@ -247,6 +264,47 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
             settings.sub_rect = true;
         }
 
+        if (options_map.count("gain-func"))
+        {
+            std::string opt = options_map["gain-func"].as<std::string>();
+            if (opt == "srgb")
+            {
+                settings.gainfunc = Settings::gf_srgb;
+            }
+            else if (opt == "gamma")
+            {
+                settings.gainfunc = Settings::gf_gamma;
+            }
+            else if (opt == "emor")
+            {
+                settings.gainfunc = Settings::gf_emor;
+            }
+            if (opt == "invemor")
+            {
+                settings.gainfunc = Settings::gf_invemor;
+            }
+        }
+
+        if (options_map.count("emor-params"))
+        {
+            typedef boost::tokenizer<boost::char_separator<char> > tokenizer_t;
+            typedef boost::char_separator<char> separator_t;
+
+            std::string param_string = options_map["emor-params"].as<std::string>();
+
+            separator_t sep(":;");
+            tokenizer_t tokens(param_string, sep);
+
+            for (tokenizer_t::const_iterator it = tokens.begin(); it != tokens.end(); ++it)
+            {
+                double val;
+                std::stringstream sstr(*it);
+                sstr >> val;
+                settings.emor_coeffs.push_back(val);
+            }
+
+        }
+
         if (options_map.count("gamma"))
         {
             settings.gamma = options_map["gamma"].as<double>();
@@ -273,7 +331,7 @@ void convert(const Settings& settings)
 {
     using namespace phtr;
 
-    std::cerr << "Using Photoropter " << PHTR_VERSION << std::endl;
+    std::cerr << "Using Photoropter version " << PHTR_VERSION << std::endl;
 
     // typedefs and constants
     typedef ImageBuffer<storage_type> buffer_t;
@@ -332,17 +390,63 @@ void convert(const Settings& settings)
     // image transformation object
     transform_t transform(src_img_view, dst_img_view);
 
-    if (settings.gamma)
+    // set gain function
+    switch (settings.gainfunc)
     {
-        std::cerr << "Setting gamma to " << settings.gamma << std::endl;
-        transform.set_gamma(gamma::GammaGeneric(settings.gamma));
-    }
-    else
-    {
-        std::cerr << "Assuming sRGB gamma." << std::endl;
-        gamma::GammaEMOR emor_func;
-        emor_func.set_params(0)(0)(0)(0)(0);
-        transform.set_gamma(emor_func);
+        case Settings::gf_invemor:
+            {
+                gamma::GammaInvEMOR emor_func;
+                util::SetParam<gamma::GammaEMORBase::coeff_iter_t> coeff_iter = emor_func.set_params();
+
+                std::cerr << "Applying inverse EMOR curve." << std::endl;
+                std::cerr << "EMOR coefficients:";
+
+                for (size_t i = 0; i < settings.emor_coeffs.size(); ++i)
+                {
+                    double coeff = settings.emor_coeffs[i];
+                    coeff_iter = coeff_iter(coeff);
+
+                    std::cerr << " " << coeff;
+                }
+                std::cerr << std::endl;
+
+                transform.set_gamma(emor_func);
+            }
+
+            break;
+
+        case Settings::gf_emor:
+            {
+                gamma::GammaEMOR emor_func;
+                util::SetParam<gamma::GammaEMORBase::coeff_iter_t> coeff_iter = emor_func.set_params();
+
+                std::cerr << "Applying EMOR curve." << std::endl;
+                std::cerr << "EMOR coefficients:";
+
+                for (size_t i = 0; i < settings.emor_coeffs.size(); ++i)
+                {
+                    double coeff = settings.emor_coeffs[i];
+                    coeff_iter = coeff_iter(coeff);
+
+                    std::cerr << " " << coeff;
+                }
+                std::cerr << std::endl;
+
+                transform.set_gamma(emor_func);
+            }
+
+            break;
+
+        case Settings::gf_gamma:
+            std::cerr << "Assuming generic image gamma of " << settings.gamma << "." << std::endl;
+            transform.set_gamma(gamma::GammaGeneric(settings.gamma));
+            break;
+
+        case Settings::gf_srgb:
+        default:
+            std::cerr << "Assuming sRGB gamma." << std::endl;
+            transform.set_gamma(gamma::GammaSRGB());
+            break;
     }
 
     // add correction models
@@ -374,7 +478,7 @@ void convert(const Settings& settings)
 
         double a, b, c, d;
         ptlens_mod.get_model_params(a, b, c, d);
-        std::cerr << "PTLens parameters: " << a << ":" << b << ":" << c << std::endl;
+        std::cerr << "PTLens parameters: " << a << " " << b << " " << c << std::endl;
     }
 
     if (settings.vignetting_corr)
@@ -398,7 +502,7 @@ void convert(const Settings& settings)
         // read the parameters back
         double a, b, c;
         int_vign_mod.get_model_params(a, b, c);
-        std::cerr << "Vignetting parameters: " << a << ":" << b << ":" << c << std::endl;
+        std::cerr << "Vignetting parameters: " << a << " " << b << " " << c << std::endl;
 
     }
 

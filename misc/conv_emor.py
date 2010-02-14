@@ -21,7 +21,7 @@ def print_seq(file, key, vals):
 
         l = l + str(v)
 
-    print >>file, "const float GammaEMOR::%s_[] = {%s};" % (key, l)
+    print >>file, "const float GammaEMORBase::%s_[] = {%s};" % (key, l)
 
 def convert(basename):    
     inp = open(basename + ".txt")

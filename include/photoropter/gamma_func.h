@@ -170,7 +170,7 @@ namespace phtr
 
 
         /**
-        * @brief The EMOR response curve.
+        * @brief The EMOR response curve (base class).
         * @details This class implements the 'Empirical Model of Response'
         * (EMOR) for sensor response curves proposed and provided by
         * M.D. Grossberg and S.K. Nayar from the University of
@@ -179,8 +179,9 @@ namespace phtr
         * http://www.cs.columbia.edu/CAVE/software/softlib/dorf.php
         * @note EMOR is not a %gamma function per se, but can rather be
         * regarded as a concept for 'generalised' %gamma.
+        * @note This base class cannot be used directly. Please use GammaEMOR and GammaInvEMOR.
         */
-        class GammaEMOR : public IGammaFunc
+        class GammaEMORBase : public IGammaFunc
         {
 
                 /* ****************************************
@@ -191,21 +192,13 @@ namespace phtr
                 /**
                 * @brief The container type of the internal parameter representation.
                 */
-                typedef std::vector<double>coeff_vect_t;
+                typedef std::vector<double> coeff_vect_t;
 
             public:
                 /**
                 * @brief The iterator type of the internal parameter representation.
                 */
                 typedef coeff_vect_t::iterator coeff_iter_t;
-
-            public:
-                /**
-                * @brief Standard constructor.
-                * @details This initialises the EMOR function to its 'generic' form (i.e., f0 or g0).
-                * All coefficients are set to 0.
-                */
-                GammaEMOR();
 
             public:
                 /**
@@ -217,7 +210,7 @@ namespace phtr
                 * @param[in] param1 The first parameter.
                 * @return A SetParam instance pointing to the second parameter.
                 */
-                util::SetParam<coeff_iter_t> set_params(double param1);
+                util::SetParam<coeff_iter_t> set_params();
 
             public:
                 /**
@@ -229,50 +222,79 @@ namespace phtr
                 template <class iterable_t>
                 void set_param_list(const iterable_t& params);
 
-            public:
-                /**
-                * @brief Apply %gamma transformation.
-                * @note Actually, this calculates the 'inverse' EMOR curve, since this is the
-                * equivalent for the normal %gamma transformation.
-                * @param[in] value The input value.
-                * @return The transformed value.
-                */
-                double gamma(double value) const;
-
-            public:
-                /**
-                * @brief Apply inverse %gamma transformation.
-                * @note Actually, this calculates the 'normal' EMOR curve, since this is the
-                * equivalent for the inverse %gamma transformation.
-                * @param[in] value The input value.
-                * @return The transformed value.
-                */
-                double inv_gamma(double value) const;
-
                 /* ****************************************
                  * internals
                  * **************************************** */
 
+            protected:
+                /**
+                * @brief Standard constructor.
+                * @details This initialises the EMOR function to its 'generic' form (i.e., f0 or g0).
+                * All coefficients are set to 0.
+                */
+                GammaEMORBase();
+
+            protected:
+                /**
+                * @brief The container type of precalculated value lists.
+                */
+                typedef std::vector<double> value_vect_t;
+
+            protected:
+                /**
+                * @brief Worker function that is called by gamma() and inv_gamma().
+                * @details gamma() calls get_function_value() with x and y reversed,
+                * since a 'forward' gamma transformation corresponds to a backwards EMOR
+                * transformation.
+                */
+                double get_function_value(double inp_val, const value_vect_t& xval, const value_vect_t& yval) const;
+
             private:
+                /**
+                * @brief Calculate function values and store them.
+                */
+                virtual void precalc_func() const = 0;
+
+            protected:
+                /**
+                * @brief Internal flag to mark if function values have already been calculated (lazy init).
+                */
+                mutable bool precalc_done_;
+
+            protected:
+                /**
+                * @brief List of 'source' values for the transformation functions.
+                * @details 'x' corresponds to the irradiance level E in the EMOR model.
+                */
+                mutable value_vect_t xval_;
+
+            protected:
+                /**
+                * @brief List of function values.
+                * @details 'y' corresponds to the brightness level 'B' in the EMOR model.
+                */
+                mutable value_vect_t yval_;
+
+            protected:
                 /**
                 * @brief The current coefficients vector.
                 */
                 coeff_vect_t coeff_;
 
-            private:
+            protected:
                 /**
                 * @brief The number of coefficients in the model (i.e., 25).
                 */
                 static const size_t coeff_num_ = 25;
 
-            private:
+            protected:
                 /**
                 * @brief The number of samples in each individual model curve.
                 */
                 static const size_t sample_num_ = 1024;
 
                 /// @cond
-            private:
+            protected:
                 static const float* h_[];
                 static const float* hinv_[];
 
@@ -336,6 +358,93 @@ namespace phtr
                 /// @endcond
 
         }; // class GammaEMoR
+
+        /**
+        * @brief EMOR model response curve.
+        * @details The coefficients for this class are compatible with e.g. the ones Hugin uses.
+        * The EMOR transformation is equivalent to an inverse %gamma transformation, so there
+        * can be a bit of confusion regarding the transformation direction.
+        */
+        class GammaEMOR : public GammaEMORBase
+        {
+
+                /* ****************************************
+                 * public interface
+                 * **************************************** */
+
+            public:
+                /**
+                * @brief Apply %gamma transformation.
+                * @note Actually, this calculates the inverse of the EMOR curve, since the
+                * standard EMOR definition is equivalent to an inverse %gamma transformation.
+                * @param[in] value The input value.
+                * @return The transformed value.
+                */
+                double gamma(double value) const;
+
+            public:
+                /**
+                * @brief Apply inverse %gamma transformation.
+                * @note Actually, this calculates the forward EMOR transformation, since this
+                * is the equivalent for the inverse %gamma transformation.
+                * @param[in] value The input value.
+                * @return The transformed value.
+                */
+                double inv_gamma(double value) const;
+
+                /* ****************************************
+                 * internals
+                 * **************************************** */
+
+            private:
+                /**
+                * @brief Calculate function values and store them.
+                */
+                void precalc_func() const;
+
+        };
+
+        /**
+        * @brief 'Inverse' EMOR model response curve.
+        * @details This class implements the gain transformation based on the 'inverse'
+        * EMOR functions. The inverse definition is very similar to a classical %gamma
+        * transformation; however, most programs use the 'normal' (i.e., forward) definitions,
+        * so to be compatible with coefficient settings used e.g. by Hugin, use GammaEMOR instead.
+        */
+        class GammaInvEMOR : public GammaEMORBase
+        {
+
+                /* ****************************************
+                 * public interface
+                 * **************************************** */
+
+            public:
+                /**
+                * @brief Apply %gamma transformation.
+                * @param[in] value The input value.
+                * @return The transformed value.
+                */
+                double gamma(double value) const;
+
+            public:
+                /**
+                * @brief Apply inverse %gamma transformation.
+                * @param[in] value The input value.
+                * @return The transformed value.
+                */
+                double inv_gamma(double value) const;
+
+                /* ****************************************
+                 * internals
+                 * **************************************** */
+
+            private:
+                /**
+                * @brief Calculate function values and store them.
+                */
+                void precalc_func() const;
+
+        };
 
     } // namespace phtr::gamma
 

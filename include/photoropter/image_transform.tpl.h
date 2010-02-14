@@ -243,7 +243,6 @@ namespace phtr
 
             float ig1 = inv_gam_func.inv_gamma(v1);
             float ig2 = inv_gam_func.inv_gamma(v2);
-            std::cout << g1 << "\t" << ig1 << std::endl;
 
             // determine slope
             float ia = (ig2 - ig1) / (v2 - v1);
