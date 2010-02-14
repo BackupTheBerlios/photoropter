@@ -131,7 +131,7 @@ namespace phtr
     /**
     * @brief Class template to facilitate image interpolation.
     * @details The image is represented using floating-point coordinates ranging from
-    *  -0.5 to 0.5. (0.0, 0.0) represents the image's center, (-0.5,-0.5) the upper left corner.
+    *  -0.5 to 0.5. (0.0, 0.0) represents the image's centre, (-0.5,-0.5) the upper left corner.
     * @note This (unspecialised) version does not provide any functionality. Have a look at
     * e.g., @ref ImageInterpolator<Interpolation::nearest_neighbour, view_t>.
     * @param inter_t The interpolation type (e.g., nearest neighbour or bilinear).
@@ -149,7 +149,7 @@ namespace phtr
     /**
     * @brief Class template to facilitate image interpolation.
     * @details The image is represented using floating-point coordinates ranging from
-    *  -0.5 to 0.5. (0.0, 0.0) represents the image's center, (-0.5,-0.5) the upper left corner.
+    *  -0.5 to 0.5. (0.0, 0.0) represents the image's centre, (-0.5,-0.5) the upper left corner.
     * @note This is the specialisation for 'nearest neighbor' interpolation.
     * @param view_t  The image view that is used for reading data.
     */
@@ -219,7 +219,7 @@ namespace phtr
     /**
     * @brief Class template to facilitate image interpolation.
     * @details The image is represented using floating-point coordinates ranging from
-    *  -0.5 to 0.5. (0.0, 0.0) represents the image's center, (-0.5,-0.5) the upper left corner.
+    *  -0.5 to 0.5. (0.0, 0.0) represents the image's centre, (-0.5,-0.5) the upper left corner.
     * @note This is the specialisation for bilinear interpolation.
     * @param view_t  The image view that is used for reading data.
     */

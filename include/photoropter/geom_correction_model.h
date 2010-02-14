@@ -78,10 +78,10 @@ namespace phtr
         * r_{src} = (a r_{dst}^3 + b r_{dst}^2 + c r_{dst} + d)  r_{dst}
         * @f]
         * Usually, 'd' is left at a fixed value of 1. Additionally, coordinates
-        * describing a shift of the center are often used. Hugin and PanoTools usually
+        * describing a shift of the centre are often used. Hugin and PanoTools usually
         * call these 'd' and 'e', thus creating a bit of a confusion concerning the 'd'
         * parameter in the formula above. Because of that, we will use the format
-        * (x0,y0) to designate the center shift.
+        * (x0,y0) to designate the centre shift.
         */
         class PTLensGeomModel : public IGeomCorrectionModel, private CorrectionModelBase
         {
@@ -124,40 +124,53 @@ namespace phtr
                 * @param[in] b The 'b' parameter.
                 * @param[in] c The 'c' parameter.
                 * @param[in] d The 'd' parameter.
-                * @param[in] x0 The 'x0' parameter (horizontal center shift).
-                * @param[in] y0 The 'y0' parameter (vertical center shift).
-                * @note Both x0 and y0 are not considered 'lens parameters' but rather camera/sensor
-                * parameters. They are therefore @em not transformed in any way, but always interpeted
-                * normalised Photoropter coordinate system.
                 */
-                void set_model_params(double a, double b, double c, double d,
-                                      interp_coord_t x0 = 0, interp_coord_t y0 = 0);
+                void set_model_params(double a, double b, double c, double d);
 
             public:
                 /**
                 * @brief Set the model parameters.
+                * @details The 'd' parameter is automatically calculated so that a+b+c+d=1.
+                * This way, the vertical viewing angle is preserved; this will result in distortion in
+                * the image centre, but in a lighter overall distortion of the image. This is also
+                * what both Hugin and PTLens are usually doing.
                 * @param[in] a The 'a' parameter.
                 * @param[in] b The 'b' parameter.
                 * @param[in] c The 'c' parameter.
-                * @param[in] d The 'd' parameter.
-                * @param[in] x0 The 'x0' parameter (horizontal center shift).
-                * @param[in] y0 The 'y0' parameter (vertical center shift).
-                * @note Both x0 and y0 are not considered 'lens parameters' but rather camera/sensor
-                * parameters. They are therefore @em not transformed in any way, but always interpeted
-                * normalised Photoropter coordinate system.
                 */
-                void get_model_params(double& a, double& b, double& c, double& d,
-                                      interp_coord_t& x0, interp_coord_t& y0) const;
+                void set_model_params(double a, double b, double c);
 
             public:
                 /**
-                * @brief Set the model parameters.
-                * @param[in] a The 'a' parameter.
-                * @param[in] b The 'b' parameter.
-                * @param[in] c The 'c' parameter.
-                * @param[in] d The 'd' parameter.
+                * @brief Get the model parameters.
+                * @param[out] a The 'a' parameter.
+                * @param[out] b The 'b' parameter.
+                * @param[out] c The 'c' parameter.
+                * @param[out] d The 'd' parameter.
                 */
                 void get_model_params(double& a, double& b, double& c, double& d) const;
+
+            public:
+                /**
+                * @brief Set the centre shift.
+                * @param[in] x0 The 'x0' parameter (horizontal centre shift).
+                * @param[in] y0 The 'y0' parameter (vertical centre shift).
+                * @note Both x0 and y0 are not considered 'lens parameters' but rather camera/sensor
+                * parameters. They are therefore @em not transformed in any way, but always interpreted
+                * in the normalised Photoropter coordinate system.
+                */
+                void set_centre_shift(interp_coord_t x0, interp_coord_t y0);
+
+            public:
+                /**
+                * @brief Get the centre shift.
+                * @param[out] x0 The 'x0' parameter (horizontal centre shift).
+                * @param[out] y0 The 'y0' parameter (vertical centre shift).
+                * @note Both x0 and y0 are not considered 'lens parameters' but rather camera/sensor
+                * parameters. They are therefore @em not transformed in any way, but always interpreted
+                * in the normalised Photoropter coordinate system.
+                */
+                void get_centre_shift(interp_coord_t& x0, interp_coord_t& y0) const;
 
             public:
                 /**

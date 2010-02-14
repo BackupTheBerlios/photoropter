@@ -130,26 +130,8 @@ namespace phtr
                 * @param[in] a The 'a' parameter.
                 * @param[in] b The 'b' parameter.
                 * @param[in] c The 'c' parameter.
-                * @param[in] x0 The 'x0' parameter (horizontal center shift).
-                * @param[in] y0 The 'y0' parameter (vertical center shift).
                 */
-                void set_model_params(double a, double b, double c,
-                                      interp_coord_t x0 = 0, interp_coord_t y0 = 0);
-
-            public:
-                /**
-                * @brief Get the current model parameters.
-                * @param[out] a The 'a' parameter.
-                * @param[out] b The 'b' parameter.
-                * @param[out] c The 'c' parameter.
-                * @param[out] x0 The 'x0' parameter (horizontal center shift).
-                * @param[out] y0 The 'y0' parameter (vertical center shift).
-                * @note Both x0 and y0 are not considered 'lens parameters' but rather camera/sensor
-                * parameters. They are therefore @em not transformed in any way, but always interpeted
-                * normalised Photoropter coordinate system.
-                */
-                void get_model_params(double& a, double& b, double& c,
-                                      interp_coord_t& x0, interp_coord_t& y0) const;
+                void set_model_params(double a, double b, double c);
 
             public:
                 /**
@@ -159,6 +141,28 @@ namespace phtr
                 * @param[out] c The 'c' parameter.
                 */
                 void get_model_params(double& a, double& b, double& c) const;
+
+            public:
+                /**
+                * @brief Set the centre shift.
+                * @param[in] x0 The 'x0' parameter (horizontal centre shift).
+                * @param[in] y0 The 'y0' parameter (vertical centre shift).
+                * @note Both x0 and y0 are not considered 'lens parameters' but rather camera/sensor
+                * parameters. They are therefore @em not transformed in any way, but always interpreted
+                * in the normalised Photoropter coordinate system.
+                */
+                void set_centre_shift(interp_coord_t x0, interp_coord_t y0);
+
+            public:
+                /**
+                * @brief Get the centre shift.
+                * @param[out] x0 The 'x0' parameter (horizontal centre shift).
+                * @param[out] y0 The 'y0' parameter (vertical centre shift).
+                * @note Both x0 and y0 are not considered 'lens parameters' but rather camera/sensor
+                * parameters. They are therefore @em not transformed in any way, but always interpreted
+                * in the normalised Photoropter coordinate system.
+                */
+                void get_centre_shift(interp_coord_t& x0, interp_coord_t& y0) const;
 
             public:
                 /**
@@ -216,13 +220,13 @@ namespace phtr
 
             protected:
                 /**
-                * @brief The parameter 'x0'.
+                * @brief The parameter 'x0' (horizontal centre shift).
                 */
                 double x0_;
 
             protected:
                 /**
-                * @brief The parameter 'y0'.
+                * @brief The parameter 'y0' (vertical centre shift).
                 */
                 double y0_;
 
@@ -273,29 +277,8 @@ namespace phtr
                 * @param[in] a The 'a' parameter.
                 * @param[in] b The 'b' parameter.
                 * @param[in] c The 'c' parameter.
-                * @param[in] x0 The 'x0' parameter (horizontal center shift).
-                * @param[in] y0 The 'y0' parameter (vertical center shift).
-                * @note Both x0 and y0 are not considered 'lens parameters' but rather camera/sensor
-                * parameters. They are therefore @em not transformed in any way, but always interpeted
-                * normalised Photoropter coordinate system.
                 */
-                void set_model_params(double a, double b, double c,
-                                      interp_coord_t x0 = 0, interp_coord_t y0 = 0);
-
-            public:
-                /**
-                * @brief Get the current model parameters.
-                * @param[out] a The 'a' parameter.
-                * @param[out] b The 'b' parameter.
-                * @param[out] c The 'c' parameter.
-                * @param[out] x0 The 'x0' parameter (horizontal center shift).
-                * @param[out] y0 The 'y0' parameter (vertical center shift).
-                * @note Both x0 and y0 are not considered 'lens parameters' but rather camera/sensor
-                * parameters. They are therefore @em not transformed in any way, but always interpeted
-                * normalised Photoropter coordinate system.
-                */
-                void get_model_params(double& a, double& b, double& c,
-                                      interp_coord_t& x0, interp_coord_t& y0) const;
+                void set_model_params(double a, double b, double c);
 
             public:
                 /**

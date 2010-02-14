@@ -60,34 +60,37 @@ namespace phtr
         }
 
         void VignettingColourModel::
-        set_model_params(double a, double b, double c,
-                         interp_coord_t x0, interp_coord_t y0)
+        set_model_params(double a, double b, double c)
         {
             a_ = a * std::pow(coord_fact_, 6);
             b_ = b * std::pow(coord_fact_, 4);
             c_ = c * std::pow(coord_fact_, 2);
-            x0_ = x0;
-            y0_ = y0;
-        }
-
-        void VignettingColourModel::
-        get_model_params(double& a, double& b, double& c,
-                         interp_coord_t& x0, interp_coord_t& y0) const
-        {
-            a = a_ / std::pow(coord_fact_, 6);
-            b = b_ / std::pow(coord_fact_, 4);
-            c = c_ / std::pow(coord_fact_, 2);
-            x0 = x0_;
-            y0 = y0_;
         }
 
         void VignettingColourModel::
         get_model_params(double& a, double& b, double& c) const
         {
-            interp_coord_t dummy_x0;
-            interp_coord_t dummy_y0;
-            get_model_params(a, b, c, dummy_x0, dummy_y0);
+            a = a_ / std::pow(coord_fact_, 6);
+            b = b_ / std::pow(coord_fact_, 4);
+            c = c_ / std::pow(coord_fact_, 2);
         }
+
+        void
+        VignettingColourModel::
+        set_centre_shift(interp_coord_t x0, interp_coord_t y0)
+        {
+            x0_ = x0;
+            y0_ = y0;
+        }
+
+        void
+        VignettingColourModel::
+        get_centre_shift(interp_coord_t& x0, interp_coord_t& y0) const
+        {
+            x0 = x0_;
+            y0 = y0_;
+        }
+
 
         inline void VignettingColourModel::
         get_correction_factors(interp_coord_t src_x_r, interp_coord_t src_y_r,
@@ -136,35 +139,21 @@ namespace phtr
         }
 
         void HuginVignettingModel::
-        set_model_params(double a, double b, double c,
-                         interp_coord_t x0, interp_coord_t y0)
+        set_model_params(double a, double b, double c)
         {
             double hugin_fact = 1.0 / std::sqrt(1.0 + param_aspect_ * param_aspect_);
             a_ = a * std::pow(coord_fact_ * hugin_fact, 6);
             b_ = b * std::pow(coord_fact_ * hugin_fact, 4);
             c_ = c * std::pow(coord_fact_ * hugin_fact, 2);
-            x0_ = x0;
-            y0_ = y0;
-        }
-
-        void HuginVignettingModel::
-        get_model_params(double& a, double& b, double& c,
-                         interp_coord_t& x0, interp_coord_t& y0) const
-        {
-            double hugin_fact = 1.0 / std::sqrt(1.0 + param_aspect_ * param_aspect_);
-            a = a_ /  std::pow(coord_fact_ * hugin_fact, 6);
-            b = b_ / std::pow(coord_fact_ * hugin_fact, 4);
-            c = c_ / std::pow(coord_fact_ * hugin_fact, 2);
-            x0 = x0_;
-            y0 = y0_;
         }
 
         void HuginVignettingModel::
         get_model_params(double& a, double& b, double& c) const
         {
-            interp_coord_t dummy_x0;
-            interp_coord_t dummy_y0;
-            get_model_params(a, b, c, dummy_x0, dummy_y0);
+            double hugin_fact = 1.0 / std::sqrt(1.0 + param_aspect_ * param_aspect_);
+            a = a_ /  std::pow(coord_fact_ * hugin_fact, 6);
+            b = b_ / std::pow(coord_fact_ * hugin_fact, 4);
+            c = c_ / std::pow(coord_fact_ * hugin_fact, 2);
         }
 
         IColourCorrectionModel* HuginVignettingModel::clone() const

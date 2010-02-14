@@ -62,37 +62,48 @@ namespace phtr
 
         void
         PTLensGeomModel::
-        set_model_params(double a, double b, double c, double d,
-                         interp_coord_t x0, interp_coord_t y0)
+        set_model_params(double a, double b, double c, double d)
         {
             a_ = a * std::pow(coord_fact_, 3);
             b_ = b * std::pow(coord_fact_, 2);
             c_ = c * coord_fact_;
             d_ = d;
-            x0_ = x0;
-            y0_ = y0;
         }
 
         void
         PTLensGeomModel::
-        get_model_params(double& a, double& b, double& c, double& d,
-                         interp_coord_t& x0, interp_coord_t& y0) const
+        set_model_params(double a, double b, double c)
         {
-            a = a_ / std::pow(coord_fact_, 3);
-            b = b_ / std::pow(coord_fact_, 2);
-            c = c_ / coord_fact_;
-            d = d_;
-            x0 = x0_;
-            y0 = y0_;
+            a_ = a * std::pow(coord_fact_, 3);
+            b_ = b * std::pow(coord_fact_, 2);
+            c_ = c * coord_fact_;
+            d_ = 1.0 - (a + b + c);
         }
 
         void
         PTLensGeomModel::
         get_model_params(double& a, double& b, double& c, double& d) const
         {
-            interp_coord_t dummy_x0;
-            interp_coord_t dummy_y0;
-            get_model_params(a, b, c, d, dummy_x0, dummy_y0);
+            a = a_ / std::pow(coord_fact_, 3);
+            b = b_ / std::pow(coord_fact_, 2);
+            c = c_ / coord_fact_;
+            d = d_;
+        }
+
+        void
+        PTLensGeomModel::
+        set_centre_shift(interp_coord_t x0, interp_coord_t y0)
+        {
+            x0_ = x0;
+            y0_ = y0;
+        }
+
+        void
+        PTLensGeomModel::
+        get_centre_shift(interp_coord_t& x0, interp_coord_t& y0) const
+        {
+            x0 = x0_;
+            y0 = y0_;
         }
 
         void

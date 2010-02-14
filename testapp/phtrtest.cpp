@@ -4,7 +4,7 @@
 *
 * Usage example :
 *
-* phtrtest --param-aspect 1.5333 --vignetting 0:0:0.3 --ptlens 0:0.00987:-0.05127 in.jpg out.jpg
+* phtrtest --gain-func emor --param-aspect 1.5333 --vignetting 0:0:0.3 --ptlens 0:0.00987:-0.05127 in.jpg out.jpg
 *
 * (c) 2010 by Robert Fendt
 *
@@ -469,9 +469,8 @@ void convert(const Settings& settings)
                                           settings.image_crop);
         ptlens_mod.set_model_params(settings.ptlens_params[0],
                                     settings.ptlens_params[1],
-                                    settings.ptlens_params[2],
-                                    1.0,
-                                    settings.ptlens_params[3],
+                                    settings.ptlens_params[2]);
+        ptlens_mod.set_centre_shift(settings.ptlens_params[3],
                                     settings.ptlens_params[4]);
 
         transform.geom_queue().add_model(ptlens_mod);
@@ -496,8 +495,8 @@ void convert(const Settings& settings)
 
         int_vign_mod.set_model_params(settings.vignetting_params[0],
                                       settings.vignetting_params[1],
-                                      settings.vignetting_params[2],
-                                      settings.vignetting_params[3],
+                                      settings.vignetting_params[2]);
+        int_vign_mod.set_centre_shift(settings.vignetting_params[3],
                                       settings.vignetting_params[4]);
         // read the parameters back
         double a, b, c;
