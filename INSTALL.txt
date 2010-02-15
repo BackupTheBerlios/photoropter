@@ -1,6 +1,9 @@
 Installation instructions
 =========================
 
+1. Building
+-----------
+
 Unix (GNU GCC 4.4):
 
 -Extract the archive to a location of your choice.
@@ -34,15 +37,16 @@ directory (alongside the 'photoropter' subdirectory) or anywhere into the
 include search path. There is a Google code project for this purpose at
 http://code.google.com/p/msinttypes/
 
-Notes
-=====
+Notes:
 
 -The CMake gui is also available for Unix. However, I wanted to describe the
 command line usage of CMake as well.
--There are several CMake variables that control the behaviour of the Photoropter
-build. These are:
+-There are several CMake variables that control the behaviour of the
+Photoropter build. These are:
 CMAKE_BUILD_TYPE (string): either 'Release' or 'Debug'; affects generated
 Makefiles as well as Eclipse CDT and Code::Blocks projects
+CMAKE_INSTALL_PREFIX (string): the install prefix, important for manual
+installation on e.g. Unix systems
 PHTR_BUILD_DOCUMENTATION (bool): include Doxygen documentation in default build.
 Otherwise a build target 'doc' is created but not executed by default. You need
 doxygen for this to work.
@@ -52,3 +56,31 @@ PHTR_DOCUMENT_PRVATE (bool): include private members in the documentation;
 requires the previous option
 PHTR_PARALLELISE (bool): use OpenMP in the transformation loop if found
 PHTR_SHARED (bool): build the shared library
+
+2. Installation (Unix)
+----------------------
+
+On Unix-like systems, installation in system-wide directories is common.
+The simplest way of installation is to copy the Photoropter files to
+a pre-defined prefix directory ('/usr/local' by default). This mechanism
+can also be used by package generators, so it is described here.
+
+2.1 Complete install
+ 
+After Photoropter is configured and built, the complete package can be
+installed by means of the standard 'make install'. This will install the
+phtrtest demo application as well (if it was built). The install prefix
+can be configured by setting the CMake variable CMAKE_INSTALL_PREFIX
+accordingly when configuring Photoropter.
+
+2.2 Component install
+
+If you want to install e.g. only the runtime components (i.e., the shared
+library), you can do this by typing the following command in the build
+directory:
+
+cmake -DCMAKE_INSTALL_COMPONENT=bin -P cmake_install.cmake
+
+This selects just the 'bin' component for installation. Other possible
+components are 'dev' (static library and headers) and 'testapp' (the
+phtrtest demo application).
