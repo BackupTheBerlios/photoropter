@@ -1,4 +1,5 @@
 Photoropter Licenses
+====================
 
 The Photoropter library itself is distributed under the terms of the
 MIT/X11 license. All accompanying utility programs are distributed under the

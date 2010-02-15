@@ -33,7 +33,7 @@ namespace phtr
     /**
     * @brief The library version.
     */
-    static const char PHTR_VERSION[] = "0.0.3";
+    static const char PHTR_VERSION[] = "@photoropter_VERSION_MAJOR@.@photoropter_VERSION_MINOR@.@photoropter_VERSION_PATCH@";
 
 } // namespace phtr
 

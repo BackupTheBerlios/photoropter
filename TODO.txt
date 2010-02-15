@@ -1,4 +1,5 @@
-TODO:
+Todo:
+=====
 
 -Lanczos interpolation
 -Correction model for chromatic abberations

@@ -28,10 +28,16 @@ if(PHTR_BUILD_TESTAPP)
     )
 
   target_link_libraries(phtrtest
-    photoropter
+    phtr-static
     vil
     vil_io
     ${Boost_LIBRARIES}
+    )
+
+  install(TARGETS
+    phtrtest
+    DESTINATION bin
+    COMPONENT testapp
     )
 
 endif(PHTR_BUILD_TESTAPP)

@@ -8,6 +8,17 @@ cmake_minimum_required(VERSION 2.6)
 # project name
 project(photoropter)
 
+# version
+set(photoropter_VERSION_MAJOR "0")
+set(photoropter_VERSION_MINOR "0")
+set(photoropter_VERSION_PATCH "3")
+
+# package maintainer
+set(photoropter_MAINTAINER "Robert Fendt <robertfendt@users.berlios.de")
+
+# the library basename
+set(PHTR_LIB_NAME ${CMAKE_PROJECT_NAME})
+
 # set default build type
 if(NOT CMAKE_BUILD_TYPE)
   message("No build type set, defaulting to 'Debug'.")
@@ -39,7 +50,7 @@ set(PHTR_SHARED true CACHE BOOL "Additionally build as a shared library")
 set(PHTR_PARALLELISE true CACHE BOOL "Use parallelised code if possible (OpenMP)")
 
 ########################################
-# configure libraries
+# configure external libraries
 ########################################
 
 # OpenMP
@@ -56,7 +67,7 @@ if(OPENMP_FOUND AND PHTR_PARALLELISE)
 endif()
 
 ########################################
-# doxygen documentation
+# configure, build doxygen documentation
 ########################################
 
 find_package(Doxygen)
@@ -123,13 +134,14 @@ else(DOXYGEN_FOUND)
 endif(DOXYGEN_FOUND)
 
 ########################################
-# configure library components
+# configure, build library components
 ########################################
 
 set(PHTR_INCLUDE_DIR "include/${CMAKE_PROJECT_NAME}")
 set(PHTR_SRC_DIR "src")
 
-set(PHTR_SOURCES
+# set the Photoropter sources
+set(PHTR_INCLUDES
   ${PHTR_INCLUDE_DIR}/channel_type.h
   ${PHTR_INCLUDE_DIR}/channel_storage.h
   ${PHTR_INCLUDE_DIR}/channel_range.h
@@ -166,7 +178,9 @@ set(PHTR_SOURCES
   ${PHTR_INCLUDE_DIR}/storage_type.h
   ${PHTR_INCLUDE_DIR}/types.h
   ${PHTR_INCLUDE_DIR}/util.h
-  ${PHTR_INCLUDE_DIR}/version.h
+  )
+
+set(PHTR_SOURCES
   ${PHTR_SRC_DIR}/colour_correction_model.cpp
   ${PHTR_SRC_DIR}/colour_correction_queue.cpp
   ${PHTR_SRC_DIR}/correction_model_base.cpp
@@ -178,14 +192,80 @@ set(PHTR_SOURCES
   ${PHTR_SRC_DIR}/modpar_invemor.h
   )
 
-include_directories(include)
+configure_file(${PHTR_INCLUDE_DIR}/version.h.in
+  ${CMAKE_CURRENT_BINARY_DIR}/${PHTR_INCLUDE_DIR}/version.h)
 
-add_library(${CMAKE_PROJECT_NAME} STATIC ${PHTR_SOURCES})
+# the include directory to use: just 'include', since the
+# photoropter subdirectory is already referenced in the headers
+include_directories(include ${CMAKE_CURRENT_BINARY_DIR}/include)
 
+# create static library
+add_library(phtr-static STATIC ${PHTR_INCLUDES} ${PHTR_SOURCES})
+set_target_properties(phtr-static
+  PROPERTIES
+  OUTPUT_NAME "${PHTR_LIB_NAME}"
+  VERSION ${photoropter_VERSION_MAJOR}.${photoropter_VERSION_MINOR}.${photoropter_VERSION_PATCH}
+  SOVERSION ${photoropter_VERSION_MAJOR}.${photoropter_VERSION_MINOR}
+  )
+
+# create shared library if needed
 if(PHTR_SHARED)
-  add_library(phtr-shared SHARED ${PHTR_SOURCES})
-  set_target_properties(phtr-shared PROPERTIES OUTPUT_NAME "${CMAKE_PROJECT_NAME}")
+  add_library(phtr-shared SHARED ${PHTR_INCLUDES} ${PHTR_SOURCES})
+  set_target_properties(phtr-shared
+    PROPERTIES
+    OUTPUT_NAME "${PHTR_LIB_NAME}"
+    VERSION ${photoropter_VERSION_MAJOR}.${photoropter_VERSION_MINOR}.${photoropter_VERSION_PATCH}
+    SOVERSION ${photoropter_VERSION_MAJOR}.${photoropter_VERSION_MINOR}
+    )
 endif(PHTR_SHARED)
 
-# test application is in a subdirectory
+# the test application is in a subdirectory
 add_subdirectory(testapp)
+
+########################################
+# Installation
+########################################
+
+install(TARGETS
+  phtr-static
+  DESTINATION lib
+  COMPONENT dev
+  )
+
+if(PHTR_SHARED)
+  install(TARGETS
+    phtr-shared
+    DESTINATION lib
+    COMPONENT bin
+    )
+endif(PHTR_SHARED)
+
+install(FILES
+  ${PHTR_INCLUDES}
+  DESTINATION ${PHTR_INCLUDE_DIR}
+  COMPONENT dev
+  )
+
+install(FILES
+  ${CMAKE_CURRENT_BINARY_DIR}/${PHTR_INCLUDE_DIR}/version.h
+  DESTINATION ${PHTR_INCLUDE_DIR}
+  )
+
+########################################
+# CPack: package generation
+########################################
+
+# include needed runtime components
+include(InstallRequiredSystemLibraries)
+
+# license file to be displayed in binary installers
+set(CPACK_RESOURCE_FILE_LICENSE
+  "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE.txt"
+  )
+
+set(CPACK_PACKAGE_CONTACT ${photoropter_MAINTAINER})
+set(CPACK_PACKAGE_VERSION_MAJOR ${photoropter_VERSION_MAJOR})
+set(CPACK_PACKAGE_VERSION_MINOR ${photoropter_VERSION_MINOR})
+set(CPACK_PACKAGE_VERSION_PATCH ${photoropter_VERSION_PATCH})
+
+include(CPack)
