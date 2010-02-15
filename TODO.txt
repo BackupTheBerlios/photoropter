@@ -1,0 +1,7 @@
+TODO:
+
+-Lanczos interpolation
+-Correction model for chromatic abberations
+-More geometric models
+-Lens geometry conversion
+-Exposure correction

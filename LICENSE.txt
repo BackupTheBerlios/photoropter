@@ -1,0 +1,10 @@
+Photoropter Licenses
+
+The Photoropter library itself is distributed under the terms of the
+MIT/X11 license. All accompanying utility programs are distributed under the
+terms of the GNU General Public License, version 3.
+
+This effectively means that you can use Photoropter in just about
+any software, provided you give credit for it. However, all utility programs
+(e.g., for lens database maintenance or calibration, yet to be written) are
+copylefted. You have been warned.
