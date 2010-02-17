@@ -28,6 +28,7 @@ THE SOFTWARE.
 #define __PHTR_IMAGE_TRANSFORM_H__
 
 #include <vector>
+#include <cassert>
 
 #include <photoropter/geom_correction_queue.h>
 #include <photoropter/colour_correction_queue.h>
@@ -41,9 +42,8 @@ namespace phtr
     * @details Inside this class, the actual image transformation is performed.
     * @param interpolator_t The interpolator class to be used.
     * @param image_view_w_t The writing image view class to be used.
-    * @param oversampling   The (over-)sampling factor.
     */
-    template < typename interpolator_t, typename image_view_w_t, unsigned int oversampling = 1 >
+    template < typename interpolator_t, typename image_view_w_t>
     class ImageTransform
     {
 
@@ -132,6 +132,15 @@ namespace phtr
             */
             void enable_gamma(bool do_enable);
 
+        public:
+            /**
+             * @brief set (over-)sampling factor.
+             * @details If set to a value greater than 1, the destination image will be
+             * subsampled to avoid aliasing artefacts.
+             * @param[in] fact The sampling factor (must be at least 1).
+             */
+            void set_sampling_fact(unsigned int fact);
+
             /* ****************************************
              * internals
              * **************************************** */
@@ -139,13 +148,10 @@ namespace phtr
         private:
             /**
             * @brief Apply channel clipping.
-            * @param[in,out] val_r 'red' channel value.
-            * @param[in,out] val_g 'green' channel value.
-            * @param[in,out] val_b 'blue' channel value.
+            * @param[in] val channel value.
+            * @return clipped channel value.
             */
-            inline void clip_vals(interp_channel_t& val_r,
-                                  interp_channel_t& val_g,
-                                  interp_channel_t& val_b);
+            inline interp_channel_t clip_val(const interp_channel_t& val);
 
         private:
             /**
@@ -171,7 +177,7 @@ namespace phtr
             * @param[in] value The input value.
             * @return The transformed value.
             */
-            inline float gamma(float value);
+            inline double gamma(double value);
 
         private:
             /**
@@ -181,7 +187,7 @@ namespace phtr
             * @param[in] value The input value.
             * @return The transformed value.
             */
-            inline float inv_gamma(float value);
+            inline double inv_gamma(double value);
 
         private:
             /**
@@ -207,6 +213,12 @@ namespace phtr
             * @brief The internal queue of colour correction models to be applied.
             */
             ColourCorrectionQueue colour_queue_;
+
+        private:
+            /**
+             * @brief The (over-)sampling factor.
+             */
+            unsigned short oversampling_;
 
         private:
             /**
@@ -255,42 +267,38 @@ namespace phtr
             /**
             * @brief Number of points in the %gamma lookup tables after next call
             * to @ref set_gamma().
-            * @details Actually, the number of points in the lookup table will be
-            * gam_point_new_max_ + 1.
             */
-            int gam_point_new_max_;
+            unsigned int gam_point_new_num_;
 
         private:
             /**
-            * @brief Number of points in the %gamma lookup tables.
-            * @details Actually, the number of points in the lookup table is
-            * gam_point_cur_max_ + 1.
+            * @brief Current number of points in the %gamma lookup tables.
             */
-            int gam_point_cur_max_;
+            unsigned int gam_point_cur_num_;
 
         private:
             /**
             * @brief Lookup table for %gamma correction (interpolation parameter 'a').
             */
-            std::vector<float> gam_val_a_;
+            std::vector<double> gam_val_a_;
 
         private:
             /**
             * @brief Lookup table for %gamma correction (interpolation parameter 'b').
             */
-            std::vector<float> gam_val_b_;
+            std::vector<double> gam_val_b_;
 
         private:
             /**
             * @brief Lookup table for inverse %gamma correction (interpolation parameter 'a').
             */
-            std::vector<float> inv_gam_val_a_;
+            std::vector<double> inv_gam_val_a_;
 
         private:
             /**
             * @brief Lookup table for inverse %gamma correction (interpolation parameter 'b').
             */
-            std::vector<float> inv_gam_val_b_;
+            std::vector<double> inv_gam_val_b_;
 
     }; // class ImageTransform
 

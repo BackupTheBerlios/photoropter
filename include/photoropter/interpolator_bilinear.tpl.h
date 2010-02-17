@@ -27,67 +27,23 @@ THE SOFTWARE.
 namespace phtr
 {
 
-    /* ****************************************
-     * base
-     * **************************************** */
-
     template <typename view_t>
-    ImageInterpolatorBase<view_t>::ImageInterpolatorBase
+    InterpolatorBilinear<view_t>::InterpolatorBilinear
     (const view_t& image_view)
-            : image_view_(image_view),
-            width_(image_view_.width()),
-            height_(image_view_.height()),
-            null_val_(0),
-            aspect_ratio_(image_view_.aspect_ratio()),
-            scale_x_((static_cast<interp_coord_t>(image_view_.width()) - 1.0) / (2.0 * aspect_ratio_)),
-            scale_y_((static_cast<interp_coord_t>(image_view_.height()) - 1.0) / 2.0)
+            : InterpolatorBase<view_t>(image_view)
     {
-        //NIL
     }
 
     template <typename view_t>
-    ImageInterpolatorBase<view_t>::ImageInterpolatorBase
+    InterpolatorBilinear<view_t>::InterpolatorBilinear
     (const view_t& image_view, interp_coord_t aspect_ratio)
-            : image_view_(image_view),
-            width_(image_view_.width()),
-            height_(image_view_.height()),
-            null_val_(0),
-            aspect_ratio_(aspect_ratio),
-            scale_x_((static_cast<interp_coord_t>(image_view_.width()) - 1.0) / (2.0 * aspect_ratio_)),
-            scale_y_((static_cast<interp_coord_t>(image_view_.height()) - 1.0) / 2.0)
+            : InterpolatorBase<view_t>(image_view, aspect_ratio)
     {
-        //NIL
-    }
-
-    template <typename view_t>
-    interp_coord_t ImageInterpolatorBase<view_t>::aspect_ratio() const
-    {
-        return aspect_ratio_;
-    }
-
-    /* ****************************************
-     * nearest neighbour
-     * **************************************** */
-
-    template <typename view_t>
-    ImageInterpolator<Interpolation::nearest_neighbour, view_t>::ImageInterpolator
-    (const view_t& image_view)
-            : ImageInterpolatorBase<view_t>(image_view)
-    {
-        //NIL
-    }
-
-    template <typename view_t>
-    ImageInterpolator<Interpolation::nearest_neighbour, view_t>::ImageInterpolator
-    (const view_t& image_view, interp_coord_t aspect_ratio)
-            : ImageInterpolatorBase<view_t>(image_view, aspect_ratio)
-    {
-        //NIL
     }
 
     template <typename view_t>
     interp_channel_t
-    ImageInterpolator<Interpolation::nearest_neighbour, view_t>::
+    InterpolatorBilinear<view_t>::
     get_px_val_r
     (interp_coord_t x, interp_coord_t y)
     {
@@ -96,7 +52,7 @@ namespace phtr
 
     template <typename view_t>
     interp_channel_t
-    ImageInterpolator<Interpolation::nearest_neighbour, view_t>::
+    InterpolatorBilinear<view_t>::
     get_px_val_g
     (interp_coord_t x, interp_coord_t y)
     {
@@ -105,7 +61,7 @@ namespace phtr
 
     template <typename view_t>
     interp_channel_t
-    ImageInterpolator<Interpolation::nearest_neighbour, view_t>::
+    InterpolatorBilinear<view_t>::
     get_px_val_b
     (interp_coord_t x, interp_coord_t y)
     {
@@ -114,70 +70,7 @@ namespace phtr
 
     template <typename view_t>
     interp_channel_t
-    ImageInterpolator<Interpolation::nearest_neighbour, view_t>::
-    get_px_val
-    (Channel::type chan, interp_coord_t x, interp_coord_t y)
-    {
-        interp_coord_t x_scaled = (x + this->aspect_ratio_) * this->scale_x_;
-        interp_coord_t y_scaled = (y + 1.0) * this->scale_y_;
-
-        if ((x_scaled < 0) or(x_scaled > this->width_)
-                or(y_scaled < 0) or(y_scaled > this->height_))
-        {
-            return this->null_val_;
-        }
-
-        return this->image_view_.get_px_val(chan, x_scaled + 0.5, y_scaled + 0.5);
-    }
-
-    /* ****************************************
-     * bilinear
-     * **************************************** */
-
-    template <typename view_t>
-    ImageInterpolator<Interpolation::bilinear, view_t>::ImageInterpolator
-    (const view_t& image_view)
-            : ImageInterpolatorBase<view_t>(image_view)
-    {
-    }
-
-    template <typename view_t>
-    ImageInterpolator<Interpolation::bilinear, view_t>::ImageInterpolator
-    (const view_t& image_view, interp_coord_t aspect_ratio)
-            : ImageInterpolatorBase<view_t>(image_view, aspect_ratio)
-    {
-    }
-
-    template <typename view_t>
-    interp_channel_t
-    ImageInterpolator<Interpolation::bilinear, view_t>::
-    get_px_val_r
-    (interp_coord_t x, interp_coord_t y)
-    {
-        return get_px_val(Channel::red, x, y);
-    }
-
-    template <typename view_t>
-    interp_channel_t
-    ImageInterpolator<Interpolation::bilinear, view_t>::
-    get_px_val_g
-    (interp_coord_t x, interp_coord_t y)
-    {
-        return get_px_val(Channel::green, x, y);
-    }
-
-    template <typename view_t>
-    interp_channel_t
-    ImageInterpolator<Interpolation::bilinear, view_t>::
-    get_px_val_b
-    (interp_coord_t x, interp_coord_t y)
-    {
-        return get_px_val(Channel::blue, x, y);
-    }
-
-    template <typename view_t>
-    interp_channel_t
-    ImageInterpolator<Interpolation::bilinear, view_t>::
+    InterpolatorBilinear<view_t>::
     get_px_val
     (Channel::type chan, interp_coord_t x, interp_coord_t y)
     {
@@ -196,7 +89,9 @@ namespace phtr
         interp_coord_t x_2 = x_1 + 1;
         interp_coord_t y_2 = y_1 + 1;
 
-        typename view_t::iter_t iter(this->image_view_.get_iter(x_1, y_1));
+        typename view_t::iter_t iter(
+            this->image_view_.get_iter(
+                static_cast<coord_t>(x_1), static_cast<coord_t>(y_1)));
 
         /* edge values
         val_11 == val(x1, y1) -> upper left

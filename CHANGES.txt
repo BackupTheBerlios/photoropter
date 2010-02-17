@@ -1,0 +1,20 @@
+List of changes
+===============
+
+0.0.4
+-----
+
+-Fixed some bugs in EMOR handling code.
+-Fixed a clipping bug in gamma handling code.
+-Oversampling is runtime-configurable now.
+-Some small changes to signatures, inserted some explicit
+casts (mainly to make VC++ happy).
+-Removed interpolation type as template parameter (historical
+remnant) and created different interpolation class templates.
+-Fixed some historical errors in the documentation.
+-Tutorial updated.
+
+0.0.3
+-----
+
+-Initial public release.

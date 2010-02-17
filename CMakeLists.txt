@@ -11,7 +11,7 @@ project(photoropter)
 # version
 set(photoropter_VERSION_MAJOR "0")
 set(photoropter_VERSION_MINOR "0")
-set(photoropter_VERSION_PATCH "3")
+set(photoropter_VERSION_PATCH "4")
 
 # package maintainer
 set(photoropter_MAINTAINER "Robert Fendt <robertfendt@users.berlios.de")
@@ -156,11 +156,14 @@ set(PHTR_INCLUDES
   ${PHTR_INCLUDE_DIR}/geom_correction_queue.inl.h
   ${PHTR_INCLUDE_DIR}/image_buffer.h
   ${PHTR_INCLUDE_DIR}/image_buffer.tpl.h
-  ${PHTR_INCLUDE_DIR}/image_interpolator.h
-  ${PHTR_INCLUDE_DIR}/image_interpolator.tpl.h
   ${PHTR_INCLUDE_DIR}/image_transform.h
   ${PHTR_INCLUDE_DIR}/image_transform.tpl.h
-  ${PHTR_INCLUDE_DIR}/interpolation_type.h
+  ${PHTR_INCLUDE_DIR}/interpolator_base.h
+  ${PHTR_INCLUDE_DIR}/interpolator_base.tpl.h
+  ${PHTR_INCLUDE_DIR}/interpolator_bilinear.h
+  ${PHTR_INCLUDE_DIR}/interpolator_bilinear.tpl.h
+  ${PHTR_INCLUDE_DIR}/interpolator_nn.h
+  ${PHTR_INCLUDE_DIR}/interpolator_nn.tpl.h
   ${PHTR_INCLUDE_DIR}/mem_image_iter_base.h
   ${PHTR_INCLUDE_DIR}/mem_image_iter_base.tpl.h
   ${PHTR_INCLUDE_DIR}/mem_image_iter_r.h

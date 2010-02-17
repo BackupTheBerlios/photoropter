@@ -212,6 +212,7 @@ namespace phtr
             yval_.resize(sample_num_, 0);
 
             double ytmp;
+            double lasty(0.0);
             for (size_t i = 0; i < sample_num_; ++i)
             {
                 xval_[i] = B_[i];
@@ -221,6 +222,14 @@ namespace phtr
                 {
                     ytmp += coeff_[j] * hinv_[j][i];
                 }
+
+                // enforce monotonicity
+                if (ytmp < lasty)
+                {
+                    ytmp = lasty;
+                }
+
+                lasty = ytmp;
                 yval_[i] = ytmp;
             }
 

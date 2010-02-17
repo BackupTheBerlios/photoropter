@@ -45,7 +45,8 @@ namespace po = boost::program_options;
 #include <photoropter/mem_image_view_w.h>
 #include <photoropter/image_buffer.h>
 #include <photoropter/channel_storage.h>
-#include <photoropter/image_interpolator.h>
+// #include <photoropter/interpolator_nn.h>
+#include <photoropter/interpolator_bilinear.h>
 #include <photoropter/image_transform.h>
 #include <photoropter/colour_correction_model.h>
 #include <photoropter/geom_correction_model.h>
@@ -81,8 +82,8 @@ struct Settings
             sub_rect_w(0),
             sub_rect_h(0),
             gamma(2.2),
-            gainfunc(gf_srgb)
-
+            gainfunc(gf_srgb),
+            oversampling(1)
     {}
 
     bool ptlens_corr;
@@ -102,6 +103,7 @@ struct Settings
     std::string outp_file;
     gainfunc_t gainfunc;
     std::vector<double> emor_coeffs;
+    unsigned oversampling;
 };
 
 bool parse_command_line(int argc, char* argv[], Settings& settings)
@@ -126,6 +128,7 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
          "  invemor - inverse EMOR.")
         ("gamma", po::value<double>(), "Gamma value (default: assume sRGB gamma)")
         ("emor-params", po::value<std::string>(), "EMOR parameters: h1[:h2[:h3...]]")
+        ("oversample", po::value<unsigned>(), "Sampling factor (>= 1)")
         ("input-file", po::value<std::string>(), "Input file")
         ("output-file", po::value<std::string>(), "Output file");
 
@@ -323,6 +326,11 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
             settings.gamma = options_map["gamma"].as<double>();
         }
 
+        if (options_map.count("oversample"))
+        {
+            settings.oversampling = options_map["oversample"].as<unsigned>();
+        }
+
     }
     catch (po::unknown_option& e)
     {
@@ -351,8 +359,9 @@ void convert(const Settings& settings)
     typedef MemImageViewR<storage_type> view_r_t;
     typedef MemImageViewW<storage_type> view_w_t;
     typedef typename view_w_t::iter_t iter_t;
-    typedef ImageInterpolator<Interpolation::bilinear, view_r_t> interp_t;
-    typedef ImageTransform<interp_t, view_w_t, 2> transform_t;
+//    typedef InterpolatorNN<view_r_t> interp_t;
+    typedef InterpolatorBilinear<view_r_t> interp_t;
+    typedef ImageTransform<interp_t, view_w_t> transform_t;
 
     // load the input image
     std::cerr << "Loading test image." << std::endl;
@@ -367,6 +376,7 @@ void convert(const Settings& settings)
     size_t img_height = loaded_img.nj();
     size_t dst_width = img_width;
     size_t dst_height = img_height;
+    // 'sanity checks' on ROI settings
     size_t sub_rect_x0 = settings.sub_rect_x0;
     size_t sub_rect_y0 = settings.sub_rect_y0;
     if (settings.sub_rect && settings.sub_rect_w <= img_width && settings.sub_rect_h <= img_height)
@@ -517,6 +527,9 @@ void convert(const Settings& settings)
         std::cerr << "Vignetting parameters: " << a << " " << b << " " << c << std::endl;
 
     }
+
+    // set oversampling
+    transform.set_sampling_fact(settings.oversampling);
 
     // perform transformation
     time_t t0 = time(0);

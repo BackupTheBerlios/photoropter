@@ -45,11 +45,11 @@ decide the interpolation method Photoropter shall use (at the moment, only
 bilinear interpolation is supported, but that will change).
 
 @code
-#include <photoropter/image_interpolator.h>
+#include <photoropter/interpolator_bilinear.h>
 #include <photoropter/image_transform.h>
 [...]
 
-typedef ImageInterpolator<Interpolation::bilinear, view_r_t> interp_t;
+typedef InterpolatorBilinear<view_r_t> interp_t;
 typedef ImageTransform<interp_t, view_w_t> transform_t;
 
 transform_t transform(src_img_view, dst_img_view);
