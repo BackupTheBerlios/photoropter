@@ -47,6 +47,7 @@ namespace po = boost::program_options;
 #include <photoropter/channel_storage.h>
 // #include <photoropter/interpolator_nn.h>
 #include <photoropter/interpolator_bilinear.h>
+#include <photoropter/interpolator_lanczos.h>
 #include <photoropter/image_transform.h>
 #include <photoropter/colour_correction_model.h>
 #include <photoropter/geom_correction_model.h>
@@ -360,7 +361,7 @@ void convert(const Settings& settings)
     typedef MemImageViewW<storage_type> view_w_t;
     typedef typename view_w_t::iter_t iter_t;
 //    typedef InterpolatorNN<view_r_t> interp_t;
-    typedef InterpolatorBilinear<view_r_t> interp_t;
+    typedef InterpolatorLanczos<view_r_t> interp_t;
     typedef ImageTransform<interp_t, view_w_t> transform_t;
 
     // load the input image

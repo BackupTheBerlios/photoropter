@@ -162,6 +162,8 @@ set(PHTR_INCLUDES
   ${PHTR_INCLUDE_DIR}/interpolator_base.tpl.h
   ${PHTR_INCLUDE_DIR}/interpolator_bilinear.h
   ${PHTR_INCLUDE_DIR}/interpolator_bilinear.tpl.h
+  ${PHTR_INCLUDE_DIR}/interpolator_lanczos.h
+  ${PHTR_INCLUDE_DIR}/interpolator_lanczos.tpl.h
   ${PHTR_INCLUDE_DIR}/interpolator_nn.h
   ${PHTR_INCLUDE_DIR}/interpolator_nn.tpl.h
   ${PHTR_INCLUDE_DIR}/mem_image_iter_base.h

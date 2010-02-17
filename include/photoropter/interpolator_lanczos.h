@@ -24,8 +24,11 @@ THE SOFTWARE.
 
 */
 
-#ifndef __PHTR_INTERPOLATOR_NN_H__
-#define __PHTR_INTERPOLATOR_NN_H__
+#ifndef __PHTR_INTERPOLATOR_LANCZOS_H__
+#define __PHTR_INTERPOLATOR_LANCZOS_H__
+
+#include <cmath>
+#include <vector>
 
 #include <photoropter/interpolator_base.h>
 
@@ -33,15 +36,27 @@ namespace phtr
 {
 
     /**
-    * @brief Class template to facilitate 'nearest neighbor' image interpolation.
+    * @brief Class template to facilitate Lanczos image interpolation.
     * @details The image is represented using floating-point coordinates ranging from
     * -1.0 to 1.0 on the y axis. (0.0, 0.0) represents the image's centre, (-aspect,-1.0)
     * the upper left corner.
+    * @details This class implements a reconstructing Lanczos filter, not a classical lowpass.
+    * The (one-dimensional) interpolation kernel in this case is the product of two sinc
+    * functions: @f[
+    * R(x)=\frac{\sin(\pi{}x)}{\pi{}x}\frac{\sin(\pi{}x/N)}{\pi{}x/N}
+    * @f] where N=1,2,... marks the support of the kernel function. The kernel approximates
+    * the 'ideal' sinc kernel for large N, while for smaller values the sharpness of the result
+    * decreases, thus reducing ringing artefacts. N=2 and N=3 are the most common values which
+    * represent a sensible compromise between sharpness, artefacts and computational complexity.
+    * In two dimensions, the reconstruction/interpolation kernel function is simply the
+    * product of two separate functions R(x) and R(y) (which is a bit different from the 'full' 2D
+    * Lanczos lowpass).
     * @param view_t  The image view that is used for reading data.
     */
     template <typename view_t>
-    class InterpolatorNN : public InterpolatorBase<view_t>
+    class InterpolatorLanczos : public InterpolatorBase<view_t>
     {
+
             /* ****************************************
              * public interface
              * **************************************** */
@@ -53,7 +68,7 @@ namespace phtr
             * image, i.e. square pixels are assumed.
             * @param[in] image_view The image view which will be used for reading image data.
             */
-            InterpolatorNN(const view_t& image_view);
+            InterpolatorLanczos(const view_t& image_view);
 
         public:
             /**
@@ -61,7 +76,7 @@ namespace phtr
             * @param[in] image_view   The image view which will be used for reading image data.
             * @param[in] aspect_ratio The aspect ratio of the image.
             */
-            InterpolatorNN(const view_t& image_view, interp_coord_t aspect_ratio);
+            InterpolatorLanczos(const view_t& image_view, interp_coord_t aspect_ratio);
 
         public:
             /**
@@ -93,17 +108,36 @@ namespace phtr
         public:
             /**
             * @brief Get the value of the  given channel at the given coordinates.
-            * @param chan The channel.
+            * @param[in] chan The channel.
             * @param[in] x The x coordinate.
             * @param[in] y The y coordinate.
             * @return The channel value.
             */
             inline interp_channel_t get_px_val(Channel::type chan, interp_coord_t x, interp_coord_t y);
 
-    }; // class InterpolatorNN<...>
+            /* ****************************************
+             * internals
+             * **************************************** */
+
+        private:
+            void precalc_kernel();
+
+        private:
+            double sinc(double x);
+
+        private:
+            const unsigned int support_;
+
+        private:
+            const unsigned int resolution_;
+
+        private:
+            std::vector<double> kernel_;
+
+    }; // class InterpolatorLanczos<...>
 
 } // namespace phtr
 
-#include "interpolator_nn.tpl.h"
+#include "interpolator_lanczos.tpl.h"
 
-#endif // __PHTR_INTERPOLATOR_NN_H__
+#endif // __PHTR_INTERPOLATOR_LANCZOS_H__
