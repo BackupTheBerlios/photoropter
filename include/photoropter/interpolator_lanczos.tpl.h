@@ -86,67 +86,47 @@ namespace phtr
             return this->null_val_;
         }
 
-        // determine the edges of the 'square' in which we interpolate
-        interp_coord_t x_1 = std::floor(x_scaled);
-        interp_coord_t y_1 = std::floor(y_scaled);
-        interp_coord_t x_2 = x_1 + 1;
-        interp_coord_t y_2 = y_1 + 1;
+        coord_t xoffs = static_cast<coord_t>((x_scaled - std::floor(x_scaled)) * resolution_);
+        coord_t yoffs = static_cast<coord_t>((y_scaled - std::floor(y_scaled)) * resolution_);
 
-        typename view_t::iter_t iter(
-            this->image_view_.get_iter(
-                static_cast<coord_t>(x_1), static_cast<coord_t>(y_1)));
+        long x0 = static_cast<coord_t>(x_scaled);
+        long y0 = static_cast<coord_t>(y_scaled);
 
-        /* edge values
-        val_11 == val(x1, y1) -> upper left
-        val_21 == val(x2, y1) -> upper right
-        val_12 == val(x1, y2) -> lower left
-        val_22 == val(x2, y2) -> lower right
-        */
-        interp_channel_t val_11(iter.get_px_val(chan));
-        interp_channel_t val_21(0);
-        interp_channel_t val_12(0);
-        interp_channel_t val_22(0);
+        long x_left = x0 - support_ + 1;
+        long x_right = x0 + support_ + 1;
+        long y_top = y0 - support_ + 1;
+        long y_bottom = y0 + support_ + 1;
 
-        if (x_2 >= this->width_) // right image edge
+        if (x_left < 0) x_left = 0;
+        if (x_right > static_cast<long>(this->width_)) x_right = static_cast<long>(this->width_);
+        if (y_top < 0) y_top = 0;
+        if (y_bottom > static_cast<long>(this->height_)) y_bottom = static_cast<long>(this->height_);
+
+        interp_channel_t cur_val(0);
+        interp_channel_t sum_val(0);
+
+        long i(0);
+        long j(0);
+        for (long y = y_top; y < y_bottom; ++y)
         {
-            val_21 = val_11;
-        }
-        else
-        {
-            iter.inc_x();
-            val_21 = iter.get_px_val(chan);
-            iter.dec_x();
-        }
+            j = y0 - y;
+            typename view_t::iter_t iter(this->image_view_.get_iter(x_left, y));
 
-        if (y_2 >= this->height_) // lower edge
-        {
-            val_12 = val_11;
-            val_22 = val_21;
-        }
-        else
-        {
-            iter.inc_y();
-            val_12 = iter.get_px_val(chan);
-
-            if (x_2 < this->width_)
+            for (long x = x_left; x < x_right; ++x)
             {
+                i = x0 - x;
+                cur_val = iter.get_px_val(chan);
                 iter.inc_x();
-                val_22 = iter.get_px_val(chan);
-            }
-            else
-            {
-                val_22 = val_12;
+
+                long x_idx = (i + support_) * resolution_ + xoffs;
+                long y_idx = (j + support_) * resolution_ + yoffs;
+                cur_val *= kernel_[x_idx] * kernel_[y_idx];
+
+                sum_val += cur_val;
             }
         }
+        return sum_val;
 
-        // interpolate in x direction
-        interp_channel_t tmp_val_1 = (x_2 - x_scaled) * val_11 + (x_scaled - x_1) * val_21;
-        interp_channel_t tmp_val_2 = (x_2 - x_scaled) * val_12 + (x_scaled - x_1) * val_22;
-
-        // interpolate in y direction
-        interp_channel_t interp_val = (y_2 - y_scaled) * tmp_val_1 + (y_scaled - y_1) * tmp_val_2;
-
-        return interp_val;
     }
 
     template <typename view_t>
@@ -154,16 +134,17 @@ namespace phtr
     InterpolatorLanczos<view_t>::
     InterpolatorLanczos::precalc_kernel()
     {
-        unsigned int num_val = resolution_ * support_;
+        unsigned int num_val = 2 * resolution_ * support_ + 1;
 
         kernel_.resize(num_val, 0.0);
+        buf_.resize((2 * support_ + 1) * (2 * support_ + 1));
 
         for (unsigned int i = 0; i < num_val; ++i)
         {
-            double val = static_cast<double>(support_ * i)
-                         / static_cast<double>(num_val - 1);
+            double x = (static_cast<double>(support_ * i) / static_cast<double>(resolution_ * support_))
+                       - static_cast<double>(support_);
 
-            kernel_[i] = sinc(val) * sinc(val / support_);
+            kernel_[i] = sinc(x) * sinc(x / support_);
         }
     }
 
@@ -172,7 +153,14 @@ namespace phtr
     InterpolatorLanczos<view_t>::
     InterpolatorLanczos::sinc(double x)
     {
-        return std::sin(M_PI * x) / (M_PI * x);
+        if (x == 0.0)
+        {
+            return 1.0;
+        }
+        else
+        {
+            return std::sin(M_PI * x) / (M_PI * x);
+        }
     }
 
 } // namespace phtr
