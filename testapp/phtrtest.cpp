@@ -45,7 +45,7 @@ namespace po = boost::program_options;
 #include <photoropter/mem_image_view_w.h>
 #include <photoropter/image_buffer.h>
 #include <photoropter/channel_storage.h>
-// #include <photoropter/interpolator_nn.h>
+#include <photoropter/interpolator_nn.h>
 #include <photoropter/interpolator_bilinear.h>
 #include <photoropter/interpolator_lanczos.h>
 #include <photoropter/image_transform.h>

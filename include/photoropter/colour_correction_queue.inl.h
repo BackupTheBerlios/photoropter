@@ -53,4 +53,22 @@ namespace phtr
 
     }
 
+    void ColourCorrectionQueue::get_correction_factors(const mem::CoordTupleRGB& coords,
+            mem::ColourTupleRGB& factors) const
+    {
+
+        factors.val_r = 1.0;
+        factors.val_g = 1.0;
+        factors.val_b = 1.0;
+
+        mem::ColourTupleRGB tmp_factors;
+
+        for (size_t i = 0; i < n_models_; ++i)
+        {
+            correction_model_[i]->get_correction_factors(coords, tmp_factors);
+            factors *= tmp_factors;
+        }
+
+    }
+
 } // namespace phtr

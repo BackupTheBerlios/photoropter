@@ -40,49 +40,22 @@ namespace phtr
     template <mem::Storage::type T>
     typename MemImageViewR<T>::channel_storage_t
     MemImageViewR<T>::
-    get_px_val_r
-    (coord_t x, coord_t y) const
-    {
-        return this->base_addr_[this->get_px_offs(x, y) + this->r_offs_];
-    }
-
-    template <mem::Storage::type T>
-    typename MemImageViewR<T>::channel_storage_t
-    MemImageViewR<T>::
-    get_px_val_g
-    (coord_t x, coord_t y) const
-    {
-        return this->base_addr_[this->get_px_offs(x, y) + this->g_offs_];
-    }
-
-    template <mem::Storage::type T>
-    typename MemImageViewR<T>::channel_storage_t
-    MemImageViewR<T>::
-    get_px_val_b
-    (coord_t x, coord_t y) const
-    {
-        return this->base_addr_[this->get_px_offs(x, y) + this->b_offs_];
-    }
-
-    template <mem::Storage::type T>
-    typename MemImageViewR<T>::channel_storage_t
-    MemImageViewR<T>::
     get_px_val
     (Channel::type chan, coord_t x, coord_t y) const
     {
         switch (chan)
         {
             case Channel::red:
-                return get_px_val_r(x, y);
+                return this->base_addr_[this->get_px_offs(x, y) + this->r_offs_];
                 break;
 
             case Channel::green:
-                return get_px_val_g(x, y);
+                return this->base_addr_[this->get_px_offs(x, y) + this->g_offs_];
                 break;
 
             case Channel::blue:
             default:
-                return get_px_val_b(x, y);
+                return this->base_addr_[this->get_px_offs(x, y) + this->b_offs_];
                 break;
         }
     }

@@ -47,35 +47,8 @@ namespace phtr
     template <typename view_t>
     interp_channel_t
     InterpolatorLanczos<view_t>::
-    get_px_val_r
-    (interp_coord_t x, interp_coord_t y)
-    {
-        return get_px_val(Channel::red, x, y);
-    }
-
-    template <typename view_t>
-    interp_channel_t
-    InterpolatorLanczos<view_t>::
-    get_px_val_g
-    (interp_coord_t x, interp_coord_t y)
-    {
-        return get_px_val(Channel::green, x, y);
-    }
-
-    template <typename view_t>
-    interp_channel_t
-    InterpolatorLanczos<view_t>::
-    get_px_val_b
-    (interp_coord_t x, interp_coord_t y)
-    {
-        return get_px_val(Channel::blue, x, y);
-    }
-
-    template <typename view_t>
-    interp_channel_t
-    InterpolatorLanczos<view_t>::
     get_px_val
-    (Channel::type chan, interp_coord_t x, interp_coord_t y)
+    (Channel::type chan, interp_coord_t x, interp_coord_t y) const
     {
         interp_coord_t x_scaled = (x + this->aspect_ratio_) * this->scale_x_;
         interp_coord_t y_scaled = (y + 1.0) * this->scale_y_;
@@ -147,6 +120,20 @@ namespace phtr
         interp_channel_t interp_val = (y_2 - y_scaled) * tmp_val_1 + (y_scaled - y_1) * tmp_val_2;
 
         return interp_val;
+    }
+
+    template <typename view_t>
+    mem::ColourTupleRGB
+    InterpolatorLanczos<view_t>::
+    get_px_vals(const mem::CoordTupleRGB& coords) const
+    {
+        mem::ColourTupleRGB ret;
+
+        ret.val_r = get_px_val(Channel::red,   coords.x_r, coords.y_r);
+        ret.val_g = get_px_val(Channel::green, coords.x_g, coords.y_g);
+        ret.val_b = get_px_val(Channel::blue,  coords.x_b, coords.y_b);
+
+        return ret;
     }
 
     template <typename view_t>

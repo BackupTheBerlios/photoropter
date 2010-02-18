@@ -30,7 +30,7 @@ namespace phtr
     template <typename interpolator_t, typename image_view_w_t>
     ImageTransform<interpolator_t, image_view_w_t>::
     ImageTransform
-    (const typename ImageTransform::image_view_t& image_view_r, image_view_w_t& image_view_w)
+    (const typename ImageTransform::image_view_r_t& image_view_r, image_view_w_t& image_view_w)
             : interpolator_(image_view_r),
             image_view_w_(image_view_w),
             oversampling_(1),
@@ -51,8 +51,7 @@ namespace phtr
     template <typename interpolator_t, typename image_view_w_t>
     void
     ImageTransform<interpolator_t, image_view_w_t>::
-    do_transform
-    ()
+    do_transform()
     {
         // oversampling parameters
         const interp_coord_t sampling_fact = static_cast<interp_coord_t>(oversampling_);
@@ -110,22 +109,13 @@ namespace phtr
                 interp_coord_t dst_y(0);
 
                 // coordinates transformed to source image
-                interp_coord_t src_x_r(0);
-                interp_coord_t src_y_r(0);
-                interp_coord_t src_x_g(0);
-                interp_coord_t src_y_g(0);
-                interp_coord_t src_x_b(0);
-                interp_coord_t src_y_b(0);
+                coord_tuple_t src_coords;
 
                 // channel values
-                interp_channel_t val_r(0);
-                interp_channel_t val_g(0);
-                interp_channel_t val_b(0);
+                colour_tuple_t values;
 
                 // channel factors
-                double fact_r(1.0);
-                double fact_g(1.0);
-                double fact_b(1.0);
+                colour_tuple_t factors;
 
                 // prepare (over-)sampling loop
                 interp_coord_t cur_samp_x(0);
@@ -145,20 +135,12 @@ namespace phtr
                         dst_y = ((cur_samp_y + p_offs_y) * scale_y) - 1.0;
 
                         // get coordinates transformed to source image
-                        geom_queue_.get_source_coords(dst_x, dst_y,
-                                                      src_x_r, src_y_r,
-                                                      src_x_g, src_y_g,
-                                                      src_x_b, src_y_b);
+                        geom_queue_.get_src_coords(dst_x, dst_y, src_coords);
 
                         // get channel values and correction factors
-                        colour_queue_.get_correction_factors(src_x_r, src_y_r,
-                                                             src_x_g, src_y_g,
-                                                             src_x_b, src_y_b,
-                                                             fact_r, fact_g, fact_b);
+                        colour_queue_.get_correction_factors(src_coords, factors);
 
-                        val_r += normalise(interpolator_.get_px_val(Channel::red, src_x_r, src_y_r)) * fact_r;
-                        val_g += normalise(interpolator_.get_px_val(Channel::green, src_x_g, src_y_g)) * fact_g;
-                        val_b += normalise(interpolator_.get_px_val(Channel::blue, src_x_b, src_y_b)) * fact_b;
+                        values += normalise(interpolator_.get_px_vals(src_coords)) * factors;
 
                         cur_samp_x += sampling_step_x;
                     } // (inner) oversampling loop
@@ -167,14 +149,10 @@ namespace phtr
                 } // (outer) oversampling loop
 
                 // scale channel values (due to oversampling)
-                val_r *= channel_scaling;
-                val_g *= channel_scaling;
-                val_b *= channel_scaling;
+                values *= channel_scaling;
 
                 // write channel values
-                iter.write_px_val(Channel::red, static_cast<channel_storage_t>(unnormalise(val_r)));
-                iter.write_px_val(Channel::green, static_cast<channel_storage_t>(unnormalise(val_g)));
-                iter.write_px_val(Channel::blue, static_cast<channel_storage_t>(unnormalise(val_b)));
+                iter.write_px_vals(unnormalise(values));
 
                 // increment iterator position
                 iter.inc_x();
@@ -278,7 +256,7 @@ namespace phtr
     template <typename interpolator_t, typename image_view_w_t>
     interp_channel_t
     ImageTransform<interpolator_t, image_view_w_t>::
-    clip_val(const interp_channel_t& val)
+    clip_val(const interp_channel_t& val) const
     {
         interp_channel_t ret(val);
 
@@ -297,25 +275,53 @@ namespace phtr
     template <typename interpolator_t, typename image_view_w_t>
     interp_channel_t
     ImageTransform<interpolator_t, image_view_w_t>::
-    normalise(interp_channel_t value)
+    normalise(interp_channel_t value) const
     {
         return static_cast<interp_channel_t>(
                    gamma((value - min_chan_val_) / (max_chan_val_ - min_chan_val_)));
     }
 
     template <typename interpolator_t, typename image_view_w_t>
+    mem::ColourTupleRGB
+    ImageTransform<interpolator_t, image_view_w_t>::
+    normalise(const mem::ColourTupleRGB& values) const
+    {
+        mem::ColourTupleRGB ret;
+
+        ret.val_r = normalise(values.val_r);
+        ret.val_g = normalise(values.val_g);
+        ret.val_b = normalise(values.val_b);
+
+        return ret;
+    }
+
+    template <typename interpolator_t, typename image_view_w_t>
     interp_channel_t
     ImageTransform<interpolator_t, image_view_w_t>::
-    unnormalise(interp_channel_t value)
+    unnormalise(interp_channel_t value) const
     {
         return static_cast<interp_channel_t>(clip_val(inv_gamma(value)))
                * (max_chan_val_ - min_chan_val_) + min_chan_val_;
     }
 
     template <typename interpolator_t, typename image_view_w_t>
+    mem::ColourTupleRGB
+    ImageTransform<interpolator_t, image_view_w_t>::
+    unnormalise(const mem::ColourTupleRGB& values) const
+    {
+        mem::ColourTupleRGB ret;
+
+        ret.val_r = unnormalise(values.val_r);
+        ret.val_g = unnormalise(values.val_g);
+        ret.val_b = unnormalise(values.val_b);
+
+        return ret;
+    }
+
+    template <typename interpolator_t, typename image_view_w_t>
     double
     ImageTransform<interpolator_t, image_view_w_t>::
-    gamma(double value)
+    gamma(double value) const
     {
 
         if (!do_gamma_)
@@ -347,7 +353,7 @@ namespace phtr
     template <typename interpolator_t, typename image_view_w_t>
     double
     ImageTransform<interpolator_t, image_view_w_t>::
-    inv_gamma(double value)
+    inv_gamma(double value) const
     {
 
         if (!do_inv_gamma_)

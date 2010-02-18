@@ -28,6 +28,8 @@ THE SOFTWARE.
 #define __PHTR_MEM_LAYOUT_H__
 
 #include <photoropter/types.h>
+#include <photoropter/coord_tuple.h>
+#include <photoropter/colour_tuple.h>
 #include <photoropter/channel_type.h>
 #include <photoropter/storage_type.h>
 
@@ -46,6 +48,16 @@ namespace phtr
         */
         struct ChannelOrderRGB
         {
+
+        	/**
+             * @brief The type of coordinate tuples (i.e., mem::CoordTupleRGB or mem::CoordTupleRGBA).
+             */
+            typedef CoordTupleRGB coord_tuple_t;
+
+            /**
+             * @brief The type of colour tuples (i.e., mem::ColourTupleRGB or mem::ColourTupleRGBA).
+             */
+            typedef ColourTupleRGB colour_tuple_t;
 
             /**
             * @brief Return the channel order for this layout type.

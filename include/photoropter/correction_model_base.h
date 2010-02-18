@@ -48,6 +48,24 @@ namespace phtr
                  * public interface
                  * **************************************** */
 
+            public:
+                /**
+                * @brief Reset the coordinate system parameters.
+                * @note Calling this function does not reset the current model parameters. Call
+                * the appropriate set_model_params() function (or similar) afterwards to ensure a
+                * correct parameter set.
+                * @param[in] param_aspect The aspect ratio that was used when determining the model parameters.
+                * @param[in] input_aspect The aspect ratio of the input image.
+                * @param[in] param_crop The crop factor that was used when determining the model parameters.
+                * @param[in] input_crop The crop factor of the input image.
+                */
+                void set_coord_params(double param_aspect, double input_aspect,
+                                      double param_crop, double input_crop);
+
+                /* ****************************************
+                 * internals
+                 * **************************************** */
+
             protected:
                 /**
                 * @brief Constructor.
@@ -74,24 +92,6 @@ namespace phtr
                 * @param[in] input_aspect The aspect ratio of the input image.
                 */
                 explicit CorrectionModelBase(double input_aspect);
-
-            public:
-                /**
-                * @brief Reset the coordinate system parameters.
-                * @note Calling this function does not reset the current model parameters. Call
-                * the appropriate set_model_params() function (or similar) afterwards to ensure a
-                * correct parameter set.
-                * @param[in] param_aspect The aspect ratio that was used when determining the model parameters.
-                * @param[in] input_aspect The aspect ratio of the input image.
-                * @param[in] param_crop The crop factor that was used when determining the model parameters.
-                * @param[in] input_crop The crop factor of the input image.
-                */
-                void set_coord_params(double param_aspect, double input_aspect,
-                                      double param_crop, double input_crop);
-
-                /* ****************************************
-                 * internals
-                 * **************************************** */
 
             protected:
                 /**

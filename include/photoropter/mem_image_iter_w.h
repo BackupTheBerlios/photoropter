@@ -27,6 +27,7 @@ THE SOFTWARE.
 #ifndef __PHTR_MEM_IMAGE_ITER_W_H__
 #define __PHTR_MEM_IMAGE_ITER_W_H__
 
+#include <photoropter/colour_tuple.h>
 #include <photoropter/mem_image_iter_base.h>
 #include <photoropter/channel_type.h>
 
@@ -75,32 +76,18 @@ namespace phtr
 
         public:
             /**
-            * @brief Write the 'red' channel value to the current pixel.
-            * @param val The value.
+            * @brief Write the given channel value to the current pixel.
+            * @param[in] chan The channel.
+            * @param[in] val  The value.
             */
-            void write_px_val_r(channel_storage_t val);
-
-        public:
-            /**
-            * @brief Write the 'green' channel value to the current pixel.
-            * @param val The value.
-            */
-            void write_px_val_g(channel_storage_t val);
-
-        public:
-            /**
-            * @brief Write the 'blue' channel value to the current pixel.
-            * @param val The value.
-            */
-            void write_px_val_b(channel_storage_t val);
+            inline void write_px_val(Channel::type chan, channel_storage_t val);
 
         public:
             /**
             * @brief Write the given channel value to the current pixel.
-            * @param chan The channel.
-            * @param val  The value.
+            * @param[in] values The values.
             */
-            inline void write_px_val(Channel::type chan, channel_storage_t val);
+            inline void write_px_vals(const mem::ColourTupleRGB& values);
 
     }; // template class MemImageIterW<>
 

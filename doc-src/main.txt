@@ -1,6 +1,6 @@
 /**
 
-@mainpage Photoropter
+@mainpage Photoropter: lens correction
 
 @section intro Introduction
 

@@ -75,27 +75,6 @@ namespace phtr
 
         public:
             /**
-            * @brief Read the 'red' channel value.
-            * @return The value.
-            */
-            channel_storage_t get_px_val_r();
-
-        public:
-            /**
-            * @brief Read the 'green' channel value.
-            * @return The value.
-            */
-            channel_storage_t get_px_val_g();
-
-        public:
-            /**
-            * @brief Read the 'blue' channel value.
-            * @return The value.
-            */
-            channel_storage_t get_px_val_b();
-
-        public:
-            /**
             * @brief Read the value for the given channel.
             * @param channel The channel.
             * @return The value.

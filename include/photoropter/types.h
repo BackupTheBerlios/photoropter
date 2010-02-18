@@ -43,7 +43,10 @@ namespace phtr
     typedef size_t coord_t;
 
     /**
-    * @brief Type used for the image transformation 'lines' loop. Needs to be signed for OpenMP 2.0
+    * @brief Type used for the image transformation 'lines' loop.
+    * @details This type needs to be signed for OpenMP 2.0, so it
+    * is defined as 'long' when only OpenMP 2.0 is available
+    * (i.e., Visual Studio).
     */
 #if (defined HAVE_OPENMP) && (!defined OPENMP3)
     typedef long omp_coord_t;

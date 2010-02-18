@@ -11,7 +11,9 @@ project(photoropter)
 # version
 set(photoropter_VERSION_MAJOR "0")
 set(photoropter_VERSION_MINOR "0")
-set(photoropter_VERSION_PATCH "4")
+set(photoropter_VERSION_PATCH "5b")
+set(photoropter_VERSION 
+  "${photoropter_VERSION_MAJOR}.${photoropter_VERSION_MINOR}.${photoropter_VERSION_PATCH}")
 
 # package maintainer
 set(photoropter_MAINTAINER "Robert Fendt <robertfendt@users.berlios.de")
@@ -145,6 +147,9 @@ set(PHTR_INCLUDES
   ${PHTR_INCLUDE_DIR}/channel_type.h
   ${PHTR_INCLUDE_DIR}/channel_storage.h
   ${PHTR_INCLUDE_DIR}/channel_range.h
+  ${PHTR_INCLUDE_DIR}/colour_tuple.h
+  ${PHTR_INCLUDE_DIR}/colour_tuple.inl.h
+  ${PHTR_INCLUDE_DIR}/coord_tuple.h
   ${PHTR_INCLUDE_DIR}/correction_model_base.h
   ${PHTR_INCLUDE_DIR}/colour_correction_model.h
   ${PHTR_INCLUDE_DIR}/colour_correction_queue.h

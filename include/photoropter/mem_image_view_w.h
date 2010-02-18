@@ -27,6 +27,8 @@ THE SOFTWARE.
 #ifndef __PHTR_MEM_IMAGE_VIEW_W_H__
 #define __PHTR_MEM_IMAGE_VIEW_W_H__
 
+#include <photoropter/coord_tuple.h>
+#include <photoropter/colour_tuple.h>
 #include <photoropter/mem_image_view_base.h>
 #include <photoropter/mem_image_iter_w.h>
 #include <photoropter/channel_type.h>
@@ -81,33 +83,6 @@ namespace phtr
 
         public:
             /**
-            * @brief Write the 'red' channel value.
-            * @param[in] x   The x coordinate.
-            * @param[in] y   The y coordinate.
-            * @param[in] val The channel value.
-            */
-            void write_px_val_r(coord_t x, coord_t y, channel_storage_t val);
-
-        public:
-            /**
-            * @brief Write the 'green' channel value.
-            * @param[in] x   The x coordinate.
-            * @param[in] y   The y coordinate.
-            * @param[in] val The channel value.
-            */
-            void write_px_val_g(coord_t x, coord_t y, channel_storage_t val);
-
-        public:
-            /**
-            * @brief Write the 'blue' channel value.
-            * @param[in] x   The x coordinate.
-            * @param[in] y   The y coordinate.
-            * @param[in] val The channel value.
-            */
-            void write_px_val_b(coord_t x, coord_t y, channel_storage_t val);
-
-        public:
-            /**
             * @brief Write the given channel value.
             * @param[in] chan The channel.
             * @param[in] x    The x coordinate.
@@ -115,6 +90,14 @@ namespace phtr
             * @param[in] val  The channel value.
             */
             inline void write_px_val(Channel::type chan, coord_t x, coord_t y, channel_storage_t val);
+
+        public:
+            /**
+            * @brief Write RGB channel values to a pixel.
+            * @param[in] coords The coordinates.
+            * @param[in] values The channel values.
+            */
+            inline void write_px_vals(const mem::CoordTupleRGB& coords, const mem::ColourTupleRGB& values);
 
         public:
             /**

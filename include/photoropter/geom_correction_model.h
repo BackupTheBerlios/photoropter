@@ -28,6 +28,7 @@ THE SOFTWARE.
 #define __PHTR_GEOM_CORRECTION_MODEL_H__
 
 #include <photoropter/types.h>
+#include <photoropter/coord_tuple.h>
 #include <photoropter/correction_model_base.h>
 
 namespace phtr
@@ -62,6 +63,13 @@ namespace phtr
                 virtual void get_src_coords(interp_coord_t& x_r, interp_coord_t& y_r,
                                             interp_coord_t& x_g, interp_coord_t& y_g,
                                             interp_coord_t& x_b, interp_coord_t& y_b) const = 0;
+
+            public:
+                /**
+                * @brief Get the corrected source image coordinates for the current position.
+                * @param[in] coords The coordinates tuple.
+                */
+                virtual void get_src_coords(mem::CoordTupleRGB& coords) const = 0;
 
             public:
                 /**
@@ -191,6 +199,13 @@ namespace phtr
                 void get_src_coords(interp_coord_t& x_r, interp_coord_t& y_r,
                                     interp_coord_t& x_g, interp_coord_t& y_g,
                                     interp_coord_t& x_b, interp_coord_t& y_b) const;
+
+            public:
+                /**
+                * @brief Get the corrected source image coordinates for the current position.
+                * @param[in] coords The coordinates tuple.
+                */
+                void get_src_coords(mem::CoordTupleRGB& coords) const;
 
             public:
                 /**

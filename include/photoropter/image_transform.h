@@ -30,6 +30,7 @@ THE SOFTWARE.
 #include <vector>
 #include <cassert>
 
+#include <photoropter/colour_tuple.h>
 #include <photoropter/geom_correction_queue.h>
 #include <photoropter/colour_correction_queue.h>
 #include <photoropter/gamma_func.h>
@@ -55,7 +56,7 @@ namespace phtr
             /**
             * @brief The type of the input image view.
             */
-            typedef typename interpolator_t::image_view_t image_view_t;
+            typedef typename interpolator_t::image_view_t image_view_r_t;
 
         public:
             /**
@@ -69,7 +70,7 @@ namespace phtr
             * @param[in] image_view_r Input image view.
             * @param[in] image_view_w Output image view.
             */
-            ImageTransform(const typename ImageTransform::image_view_t& image_view_r, image_view_w_t& image_view_w);
+            ImageTransform(const typename ImageTransform::image_view_r_t& image_view_r, image_view_w_t& image_view_w);
 
         public:
             /**
@@ -147,19 +148,39 @@ namespace phtr
 
         private:
             /**
+             * @brief The type of coordinate tuples (i.e., mem::CoordTupleRGB or mem::CoordTupleRGBA).
+             */
+            typedef typename image_view_r_t::storage_info_t::mem_layout_t::coord_tuple_t coord_tuple_t;
+
+        private:
+            /**
+             * @brief The type of colour tuples (i.e., mem::ColourTupleRGB or mem::ColourTupleRGBA).
+             */
+            typedef typename image_view_r_t::storage_info_t::mem_layout_t::colour_tuple_t colour_tuple_t;
+
+        private:
+            /**
             * @brief Apply channel clipping.
             * @param[in] val channel value.
             * @return clipped channel value.
             */
-            inline interp_channel_t clip_val(const interp_channel_t& val);
+            inline interp_channel_t clip_val(const interp_channel_t& val) const;
 
         private:
             /**
-            * @brief Normalise a channel value to [0:1.0]
+            * @brief Normalise a channel value to [0:1.0].
             * @param[in] value The unnormalised value.
             * @return The normalised value.
             */
-            inline interp_channel_t normalise(interp_channel_t value);
+            inline interp_channel_t normalise(interp_channel_t value) const;
+
+        private:
+            /**
+            * @brief Normalise a tuple of values to [0:1.0].
+            * @param[in] values The unnormalised values.
+            * @return The normalised values.
+            */
+            inline mem::ColourTupleRGB normalise(const mem::ColourTupleRGB& values) const;
 
         private:
             /**
@@ -167,7 +188,15 @@ namespace phtr
             * @param[in] value The normalised value.
             * @return The scaled value.
             */
-            inline interp_channel_t unnormalise(interp_channel_t value);
+            inline interp_channel_t unnormalise(interp_channel_t value) const;
+
+        private:
+            /**
+            * @brief Scale a tuple of normalised values to the full channel range.
+            * @param[in] values The normalised values.
+            * @return The scaled values.
+            */
+            inline mem::ColourTupleRGB unnormalise(const mem::ColourTupleRGB& values) const;
 
         private:
             /**
@@ -177,7 +206,7 @@ namespace phtr
             * @param[in] value The input value.
             * @return The transformed value.
             */
-            inline double gamma(double value);
+            inline double gamma(double value) const;
 
         private:
             /**
@@ -187,7 +216,7 @@ namespace phtr
             * @param[in] value The input value.
             * @return The transformed value.
             */
-            inline double inv_gamma(double value);
+            inline double inv_gamma(double value) const;
 
         private:
             /**

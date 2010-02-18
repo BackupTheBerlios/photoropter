@@ -27,6 +27,8 @@ THE SOFTWARE.
 #ifndef __PHTR_INTERPOLATOR_NN_H__
 #define __PHTR_INTERPOLATOR_NN_H__
 
+#include <photoropter/coord_tuple.h>
+#include <photoropter/colour_tuple.h>
 #include <photoropter/interpolator_base.h>
 
 namespace phtr
@@ -65,40 +67,21 @@ namespace phtr
 
         public:
             /**
-            * @brief Get the value of the 'red' channel at the given coordinates.
-            * @param[in] x The x coordinate.
-            * @param[in] y The y coordinate.
-            * @return The channel value.
-            */
-            interp_channel_t get_px_val_r(interp_coord_t x, interp_coord_t y);
-
-        public:
-            /**
-            * @brief Get the value of the 'green' channel at the given coordinates.
-            * @param[in] x The x coordinate.
-            * @param[in] y The y coordinate.
-            * @return The channel value.
-            */
-            interp_channel_t get_px_val_g(interp_coord_t x, interp_coord_t y);
-
-        public:
-            /**
-            * @brief Get the value of the 'blue' channel at the given coordinates.
-            * @param[in] x The x coordinate.
-            * @param[in] y The y coordinate.
-            * @return The channel value.
-            */
-            interp_channel_t get_px_val_b(interp_coord_t x, interp_coord_t y);
-
-        public:
-            /**
             * @brief Get the value of the  given channel at the given coordinates.
             * @param chan The channel.
             * @param[in] x The x coordinate.
             * @param[in] y The y coordinate.
             * @return The channel value.
             */
-            inline interp_channel_t get_px_val(Channel::type chan, interp_coord_t x, interp_coord_t y);
+            inline interp_channel_t get_px_val(Channel::type chan, interp_coord_t x, interp_coord_t y) const;
+
+        public:
+            /**
+             * @brief Get the channel values at the given positions.
+             * @param[in] coords The coordinates tuple.
+             * @return The channel values.
+             */
+            inline mem::ColourTupleRGB get_px_vals(const mem::CoordTupleRGB& coords) const;
 
     }; // class InterpolatorNN<...>
 

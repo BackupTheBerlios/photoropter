@@ -92,12 +92,14 @@ namespace phtr
         }
 
 
-        inline void VignettingColourModel::
+        inline void
+        VignettingColourModel::
         get_correction_factors(interp_coord_t src_x_r, interp_coord_t src_y_r,
                                interp_coord_t src_x_g, interp_coord_t src_y_g,
                                interp_coord_t src_x_b, interp_coord_t src_y_b,
                                double& fact_r, double& fact_g, double& fact_b) const
         {
+
             src_x_r -= x0_;
             src_y_r -= y0_;
             double r2_r = src_x_r * src_x_r + src_y_r * src_y_r;
@@ -115,6 +117,32 @@ namespace phtr
             double r2_b = src_x_b * src_x_b + src_y_b * src_y_b;
 
             fact_b = 1.0 / (((a_ * r2_b + b_) * r2_b + c_) * r2_b + 1.0);
+
+        }
+
+        inline void
+        VignettingColourModel::
+        get_correction_factors(const mem::CoordTupleRGB& coords,
+                               mem::ColourTupleRGB& factors) const
+        {
+
+            double x_r = coords.x_r - x0_;
+            double y_r = coords.y_r - y0_;
+            double r2_r = x_r * x_r + y_r * y_r;
+
+            factors.val_r = 1.0 / (((a_ * r2_r + b_) * r2_r + c_) * r2_r + 1.0);
+
+            double x_g = coords.x_g - x0_;
+            double y_g = coords.y_g - y0_;
+            double r2_g = x_g * x_g + y_g * y_g;
+
+            factors.val_g = 1.0 / (((a_ * r2_g + b_) * r2_g + c_) * r2_g + 1.0);
+
+            double x_b = coords.x_b - x0_;
+            double y_b = coords.y_b - y0_;
+            double r2_b = x_b * x_b + y_b * y_b;
+
+            factors.val_b = 1.0 / (((a_ * r2_b + b_) * r2_b + c_) * r2_b + 1.0);
 
         }
 

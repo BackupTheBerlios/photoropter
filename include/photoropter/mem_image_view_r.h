@@ -80,36 +80,6 @@ namespace phtr
 
         public:
             /**
-            * @brief Read the 'red' channel value.
-            * @param[in] x The x coordinate.
-            * @param[in] y The y coordinate.
-            * @return The channel value.
-            */
-            channel_storage_t
-            get_px_val_r(coord_t x, coord_t y) const;
-
-        public:
-            /**
-            * @brief Read the 'green' channel value.
-            * @param[in] x The x coordinate.
-            * @param[in] y The y coordinate.
-            * @return The channel value.
-            */
-            channel_storage_t
-            get_px_val_g(coord_t x, coord_t y) const;
-
-        public:
-            /**
-            * @brief Read the 'blue' channel value.
-            * @param[in] x The x coordinate.
-            * @param[in] y The y coordinate.
-            * @return The channel value.
-            */
-            channel_storage_t
-            get_px_val_b(coord_t x, coord_t y) const;
-
-        public:
-            /**
             * @brief Read the given channel value.
             * @param[in] chan The channel.
             * @param[in] x The x coordinate.

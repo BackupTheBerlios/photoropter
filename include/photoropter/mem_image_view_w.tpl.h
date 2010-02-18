@@ -47,51 +47,35 @@ namespace phtr
     template <mem::Storage::type T>
     void
     MemImageViewW<T>::
-    write_px_val_r
-    (coord_t x, coord_t y, channel_storage_t val)
-    {
-        this->base_addr_[this->get_px_offs(x, y) + this->r_offs_] = val;
-    }
-
-    template <mem::Storage::type T>
-    void
-    MemImageViewW<T>::
-    write_px_val_g
-    (coord_t x, coord_t y, channel_storage_t val)
-    {
-        this->base_addr_[this->get_px_offs(x, y) + this->g_offs_] = val;
-    }
-
-    template <mem::Storage::type T>
-    void
-    MemImageViewW<T>::
-    write_px_val_b
-    (coord_t x, coord_t y, channel_storage_t val)
-    {
-        this->base_addr_[this->get_px_offs(x, y) + this->b_offs_] = val;
-    }
-
-    template <mem::Storage::type T>
-    void
-    MemImageViewW<T>::
     write_px_val
     (Channel::type chan, coord_t x, coord_t y, channel_storage_t val)
     {
         switch (chan)
         {
             case Channel::red:
-                write_px_val_r(x, y, val);
+                this->base_addr_[this->get_px_offs(x, y) + this->r_offs_] = val;
                 break;
 
             case Channel::green:
-                write_px_val_g(x, y, val);
+                this->base_addr_[this->get_px_offs(x, y) + this->g_offs_] = val;
                 break;
 
             case Channel::blue:
             default:
-                write_px_val_b(x, y, val);
+                this->base_addr_[this->get_px_offs(x, y) + this->b_offs_] = val;
                 break;
         }
+    }
+
+    template <mem::Storage::type T>
+    void
+    MemImageViewW<T>::
+    write_px_vals
+    (const mem::CoordTupleRGB& coords, const mem::ColourTupleRGB& values)
+    {
+        write_px_val(Channel::red,   coords.x_r, coords.y_r, values.val_r);
+        write_px_val(Channel::green, coords.x_g, coords.y_g, values.val_g);
+        write_px_val(Channel::blue,  coords.x_b, coords.y_b, values.val_b);
     }
 
     template <mem::Storage::type T>

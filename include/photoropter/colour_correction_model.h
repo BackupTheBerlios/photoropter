@@ -28,6 +28,8 @@ THE SOFTWARE.
 #define __PHTR_COLOUR_CORRECTION_MODEL_H__
 
 #include <photoropter/types.h>
+#include <photoropter/coord_tuple.h>
+#include <photoropter/colour_tuple.h>
 #include <photoropter/channel_type.h>
 #include <photoropter/correction_model_base.h>
 
@@ -46,7 +48,7 @@ namespace phtr
 
             public:
                 /**
-                * @brief Get the correction factors for the given position.
+                * @brief Get the correction factors for a given position.
                 * @param[in] src_x_r The corresponding x coordinate for the 'red' channel
                 *                    in the source image.
                 * @param[in] src_y_r The corresponding y coordinate for the 'red' channel
@@ -62,12 +64,20 @@ namespace phtr
                 * @param[out] fact_r The correction factor for the 'red' channel.
                 * @param[out] fact_g The correction factor for the 'green' channel.
                 * @param[out] fact_b The correction factor for the 'blue' channel.
-                * @return The correction factor.
                 */
                 virtual void get_correction_factors(interp_coord_t src_x_r, interp_coord_t src_y_r,
                                                     interp_coord_t src_x_g, interp_coord_t src_y_g,
                                                     interp_coord_t src_x_b, interp_coord_t src_y_b,
                                                     double& fact_r, double& fact_g, double& fact_b) const = 0;
+
+            public:
+                /**
+                * @brief Get the correction factors for a given position.
+                * @param[in] coords The coordinates in the source image.
+                * @param[out] factors The correction factors.
+                */
+                virtual void get_correction_factors(const mem::CoordTupleRGB& coords,
+                                                    mem::ColourTupleRGB& factors) const = 0;
 
             public:
                 /**
@@ -188,6 +198,15 @@ namespace phtr
                                             interp_coord_t src_x_g, interp_coord_t src_y_g,
                                             interp_coord_t src_x_b, interp_coord_t src_y_b,
                                             double& fact_r, double& fact_g, double& fact_b) const;
+
+            public:
+                /**
+                * @brief Get the correction factors for a given position.
+                * @param[in] coords The coordinates in the source image.
+                * @param[out] factors The correction factors.
+                */
+                void get_correction_factors(const mem::CoordTupleRGB& coords,
+                                            mem::ColourTupleRGB& factors) const;
 
             public:
                 /**
