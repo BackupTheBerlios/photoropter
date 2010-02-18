@@ -104,6 +104,8 @@ namespace phtr
 
         interp_channel_t cur_val(0);
         interp_channel_t sum_val(0);
+        double sum_fact(0);
+        double fact(0);
 
         long i(0);
         long j(0);
@@ -120,12 +122,14 @@ namespace phtr
 
                 long x_idx = (i + support_) * resolution_ + xoffs;
                 long y_idx = (j + support_) * resolution_ + yoffs;
-                cur_val *= kernel_[x_idx] * kernel_[y_idx];
+                fact = kernel_[x_idx] * kernel_[y_idx];
+                cur_val *= fact;
+                sum_fact += fact;
 
                 sum_val += cur_val;
             }
         }
-        return sum_val;
+        return sum_val / sum_fact;
 
     }
 
@@ -143,8 +147,9 @@ namespace phtr
         {
             double x = (static_cast<double>(support_ * i) / static_cast<double>(resolution_ * support_))
                        - static_cast<double>(support_);
+            double y = sinc(x) * sinc(x / support_);
 
-            kernel_[i] = sinc(x) * sinc(x / support_);
+            kernel_[i] = y;
         }
     }
 
