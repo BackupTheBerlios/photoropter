@@ -1,6 +1,15 @@
 List of changes
 ===============
 
+0.0.5
+-----
+
+-Refactoring to make image transformation more agnostic of
+pixel format (preparation for alpha-channel handling)
+-Documentation now contains only 'public' parts of API by
+default
+-Lanczos interpolation support 
+
 0.0.4
 -----
 

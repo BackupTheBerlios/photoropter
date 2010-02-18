@@ -139,6 +139,12 @@ namespace phtr
              */
             std::vector<interp_channel_t> buf_;
 
+        private:
+            /**
+             * @brief The numerical constant 'pi'.
+             */
+            static const double pi_;
+
     }; // class InterpolatorLanczos<...>
 
 } // namespace phtr

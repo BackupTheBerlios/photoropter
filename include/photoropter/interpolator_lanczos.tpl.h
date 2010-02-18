@@ -28,6 +28,10 @@ namespace phtr
 {
 
     template <typename view_t>
+    const double
+    InterpolatorLanczos<view_t>::pi_ = 3.14159265358979323846;
+
+    template <typename view_t>
     InterpolatorLanczos<view_t>::InterpolatorLanczos
     (const view_t& image_view)
             : InterpolatorBase<view_t>(image_view),
@@ -65,27 +69,42 @@ namespace phtr
         long x0 = static_cast<coord_t>(x_scaled);
         long y0 = static_cast<coord_t>(y_scaled);
 
+        // determine interpolation area
         long x_left = x0 - support_ + 1;
         long x_right = x0 + support_ + 1;
         long y_top = y0 - support_ + 1;
         long y_bottom = y0 + support_ + 1;
 
-        if (x_left < 0) x_left = 0;
-        if (x_right > static_cast<long>(this->width_)) x_right = static_cast<long>(this->width_);
-        if (y_top < 0) y_top = 0;
-        if (y_bottom > static_cast<long>(this->height_)) y_bottom = static_cast<long>(this->height_);
+        // check boundaries
+        if (x_left < 0)
+        {
+            x_left = 0;
+        }
+        if (x_right > static_cast<long>(this->width_))
+        {
+            x_right = static_cast<long>(this->width_);
+        }
+        if (y_top < 0)
+        {
+            y_top = 0;
+        }
+        if (y_bottom > static_cast<long>(this->height_))
+        {
+            y_bottom = static_cast<long>(this->height_);
+        }
 
-        interp_channel_t cur_val(0);
-        interp_channel_t sum_val(0);
-        double sum_fact(0);
-        double fact(0);
+        interp_channel_t cur_val(0); // current channel value
+        interp_channel_t sum_val(0); // sum of values so far
+        double sum_fact(0); // sum of Lanczos weight factors (for normalisation)
+        double fact(0); // current Lanczos weight factor
+        typename view_t::iter_t iter(this->image_view_.get_iter(0, 0));
 
         long i(0);
         long j(0);
         for (long y = y_top; y < y_bottom; ++y)
         {
             j = y0 - y;
-            typename view_t::iter_t iter(this->image_view_.get_iter(x_left, y));
+            iter.set_px_offs(this->image_view_.get_px_offs(x_left, y));
 
             for (long x = x_left; x < x_right; ++x)
             {
@@ -97,11 +116,12 @@ namespace phtr
                 long y_idx = (j + support_) * resolution_ + yoffs;
                 fact = kernel_[x_idx] * kernel_[y_idx];
                 cur_val *= fact;
-                sum_fact += fact;
 
+                sum_fact += fact;
                 sum_val += cur_val;
             }
         }
+
         return sum_val / sum_fact;
 
     }
@@ -123,7 +143,7 @@ namespace phtr
     template <typename view_t>
     void
     InterpolatorLanczos<view_t>::
-    InterpolatorLanczos::precalc_kernel()
+    precalc_kernel()
     {
         unsigned int num_val = 2 * resolution_ * support_ + 1;
 
@@ -143,7 +163,7 @@ namespace phtr
     template <typename view_t>
     double
     InterpolatorLanczos<view_t>::
-    InterpolatorLanczos::sinc(double x)
+    sinc(double x)
     {
         if (x == 0.0)
         {
@@ -151,7 +171,7 @@ namespace phtr
         }
         else
         {
-            return std::sin(M_PI * x) / (M_PI * x);
+            return std::sin(pi_ * x) / (pi_ * x);
         }
     }
 
