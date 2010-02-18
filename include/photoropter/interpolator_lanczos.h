@@ -133,6 +133,9 @@ namespace phtr
              */
             std::vector<double> kernel_;
 
+        private:
+            std::vector<interp_channel_t> buf_;
+
     }; // class InterpolatorLanczos<...>
 
 } // namespace phtr

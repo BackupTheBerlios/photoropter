@@ -4,7 +4,7 @@
 *
 * Usage example :
 *
-* phtrtest --gain-func emor --param-aspect 1.5333 --vignetting 0:0:0.3 --ptlens 0:0.00987:-0.05127 in.jpg out.jpg
+* phtrtest --gain-func emor --param-aspect 1.5333 --vignetting 0:0:-0.3 --ptlens 0:0.00987:-0.05127 in.jpg out.jpg
 *
 * Copyright (C) 2010 Robert Fendt
 *
@@ -361,6 +361,7 @@ void convert(const Settings& settings)
     typedef MemImageViewW<storage_type> view_w_t;
     typedef typename view_w_t::iter_t iter_t;
 //    typedef InterpolatorNN<view_r_t> interp_t;
+//    typedef InterpolatorBilinear<view_r_t> interp_t;
     typedef InterpolatorLanczos<view_r_t> interp_t;
     typedef ImageTransform<interp_t, view_w_t> transform_t;
 
