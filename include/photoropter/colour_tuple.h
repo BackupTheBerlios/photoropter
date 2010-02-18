@@ -35,6 +35,7 @@ namespace phtr
     namespace mem
     {
 
+        ///@cond PROTECTED
 
         /* ****************************************
          * RGB
@@ -238,6 +239,8 @@ namespace phtr
          */
         inline ColourTupleRGBA
         operator+(const ColourTupleRGBA& tuple1, const ColourTupleRGBA& tuple2);
+
+        ///@endcond
 
     } // namespace phtr::mem
 

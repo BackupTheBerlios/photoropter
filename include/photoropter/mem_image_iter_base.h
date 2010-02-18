@@ -34,6 +34,8 @@ THE SOFTWARE.
 namespace phtr
 {
 
+    ///@cond PROTECTED
+
     /**
     * @brief Base class template for iterator classes. Not supposed to be used directly.
     * See @ref MemImageIterR and @ref MemImageIterW for details.
@@ -162,6 +164,8 @@ namespace phtr
             const size_t b_offs_;
 
     }; // template class MemImageIterBase<>
+
+    ///@endcond
 
 } // namespace phtr
 

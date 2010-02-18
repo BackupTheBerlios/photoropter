@@ -66,6 +66,7 @@ namespace phtr
                  * internals
                  * **************************************** */
 
+                ///@cond PROTECTED
             protected:
                 /**
                 * @brief Constructor.
@@ -128,6 +129,7 @@ namespace phtr
                 * @brief The coordinate scaling factor.
                 */
                 double coord_fact_;
+                ///@endcond
 
         }; // CorrectionModelBase
 

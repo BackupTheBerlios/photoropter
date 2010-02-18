@@ -35,16 +35,18 @@ namespace phtr
     namespace mem
     {
 
+        ///@cond PROTECTED
+
         /**
          * @brief A tuple containing 3 coordinate pairs.
          */
         struct CoordTupleRGB
         {
 
-        	/**
-             * @brief Constructor.
-             * @note All members are set to 0.
-             */
+            /**
+                * @brief Constructor.
+                * @note All members are set to 0.
+                */
             CoordTupleRGB()
                     : x_r(0),
                     y_r(0),
@@ -94,10 +96,10 @@ namespace phtr
         struct CoordTupleRGBA
         {
 
-        	/**
-             * @brief Constructor.
-             * @note All members are set to 0.
-             */
+            /**
+                * @brief Constructor.
+                * @note All members are set to 0.
+                */
             CoordTupleRGBA()
                     : x_r(0),
                     y_r(0),
@@ -152,6 +154,8 @@ namespace phtr
             interp_coord_t y_a;
 
         };
+
+        ///@endcond
 
     } // namespace phtr::mem
 

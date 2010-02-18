@@ -40,6 +40,8 @@ namespace phtr
     namespace mem
     {
 
+        ///@cond PROTECTED
+
         /**
         * @brief Template providing details on the memory storage of a given
         * image type.
@@ -132,6 +134,8 @@ namespace phtr
             */
             const size_t b_offs;
         }; // template struct MemStorageInfo
+
+        ///@endcond
 
     } // namespace phtr::mem
 

@@ -204,7 +204,7 @@ namespace phtr
                 /**
                 * @brief Set the coefficients.
                 * @details This method allows to set an arbitrary number of parameters by cascaded calls.
-                * Example: @code set_params(1.0)(0.0)(0.1)(0.2)(0.1); @endcode
+                * Example: @code set_params()(1.0)(0.0)(0.1)(0.2)(0.1); @endcode
                 * @note The coefficients vector is cleared first, so any remaining parameter not set will
                 * be zero.
                 * @return A SetParam instance pointing to the second parameter.
@@ -225,6 +225,7 @@ namespace phtr
                  * internals
                  * **************************************** */
 
+                ///@cond PROTECTED
             protected:
                 /**
                 * @brief Standard constructor.
@@ -291,6 +292,7 @@ namespace phtr
                 * @brief The number of samples in each individual model curve.
                 */
                 static const size_t sample_num_ = 1024;
+                ///@endcond
 
                 /// @cond
             protected:

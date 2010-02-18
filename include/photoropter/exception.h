@@ -32,6 +32,9 @@ THE SOFTWARE.
 namespace phtr
 {
 
+    /**
+     * @brief Exceptions.
+     */
     namespace exception
     {
 
@@ -77,11 +80,13 @@ namespace phtr
                 */
                 base_exception(const std::string& msg);
 
+                ///@cond PROTECTED
             protected:
                 /**
                 * @brief Internal message prefix.
                 */
                 std::string prefix_;
+                ///@endcond
 
             private:
                 /**

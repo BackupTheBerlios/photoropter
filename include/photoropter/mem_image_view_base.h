@@ -88,6 +88,7 @@ namespace phtr
              * internals
              * **************************************** */
 
+            ///@cond PROTECTED
         protected:
             /**
             * @brief Constructor.
@@ -173,6 +174,7 @@ namespace phtr
             * @brief The offset of the blue channel to the current memory position.
             */
             const size_t b_offs_;
+            ///@endcond
 
     }; // template class MemImageViewBase<>
 

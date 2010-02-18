@@ -129,11 +129,14 @@ namespace phtr
 
         private:
             /**
-             * The interpolation kernel buffer.
+             * @brief The interpolation kernel buffer.
              */
             std::vector<double> kernel_;
 
         private:
+            /**
+             * @brief The pixel interpolation buffer.
+             */
             std::vector<interp_channel_t> buf_;
 
     }; // class InterpolatorLanczos<...>

@@ -219,6 +219,7 @@ namespace phtr
                  * internals
                  * **************************************** */
 
+                ///@cond PROTECTED
             protected:
                 /**
                 * @brief The parameter 'a'.
@@ -248,6 +249,7 @@ namespace phtr
                 * @brief The parameter 'y0' (vertical centre shift).
                 */
                 double y0_;
+                ///@endcond
 
         }; // class VignettingColourModel
 

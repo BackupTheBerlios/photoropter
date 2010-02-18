@@ -30,6 +30,8 @@ THE SOFTWARE.
 namespace phtr
 {
 
+    ///@cond PROTECTED
+
     /**
     * @brief Struct containing channel designations.
     * @note The class contains an enum which defines the actual channels.
@@ -59,6 +61,8 @@ namespace phtr
         }; // enum Channel::type
 
     }; // class Channel
+
+    ///@endcond
 
 } // namespace phtr
 

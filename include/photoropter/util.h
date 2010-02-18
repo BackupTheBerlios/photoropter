@@ -34,6 +34,9 @@ namespace phtr
     */
     namespace util
     {
+
+        ///@cond PROTECTED
+
         /**
         * @brief Class to set a list of parameters in an easy way.
         * @param iter_t The iteration type.
@@ -90,6 +93,8 @@ namespace phtr
                 iter_t pos_;
 
         }; // template class SetParam<>
+
+        ///@endcond
 
     } // namespace phtr::util
 } // namespace phtr

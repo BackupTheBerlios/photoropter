@@ -33,6 +33,8 @@ THE SOFTWARE.
 namespace phtr
 {
 
+    ///@cond PROTECTED
+
     /**
     * @brief Iterator class for read access to an image in memory.
     * @details Instances of this class are usually created by @ref MemImageViewR.
@@ -82,6 +84,8 @@ namespace phtr
             inline channel_storage_t get_px_val(Channel::type channel);
 
     }; // template class MemImageIterR<>
+
+    ///@endcond
 
 } // namespace phtr
 

@@ -34,6 +34,8 @@ THE SOFTWARE.
 namespace phtr
 {
 
+    ///@cond PROTECTED
+
     /**
     * @brief Iterator class for write access to an image in memory.
     * @details Instances of this class are usually created by @ref MemImageViewW.
@@ -90,6 +92,8 @@ namespace phtr
             inline void write_px_vals(const mem::ColourTupleRGB& values);
 
     }; // template class MemImageIterW<>
+
+    ///@endcond
 
 } // namespace phtr
 

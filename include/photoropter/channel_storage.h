@@ -35,6 +35,8 @@ namespace phtr
     namespace mem
     {
 
+        ///@cond PROTECTED
+
         /**
          * @brief Template for determining the channel storage type
          * to a given @ref Storage::type.
@@ -135,6 +137,8 @@ namespace phtr
             typedef std::uint32_t type;
 
         }; // template struct ChannelStorage<Storage::rgb_32_planar>
+
+        ///@endcond
 
     } // namespace phtr::mem
 

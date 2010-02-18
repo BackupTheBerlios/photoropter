@@ -63,6 +63,7 @@ namespace phtr
              * internals
              * **************************************** */
 
+            ///@cond PROTECTED
         protected:
             /**
             * @brief Constructor.
@@ -122,6 +123,7 @@ namespace phtr
             * @brief Interal scaling factor for the vertical axis.
             */
             const interp_channel_t scale_y_;
+            ///@endcond
 
     }; // template class InterpolatorBase<...>
 

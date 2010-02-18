@@ -30,6 +30,8 @@ namespace phtr
     namespace mem
     {
 
+        ///@cond PROTECTED
+
 
         /* ****************************************
          * RGB
@@ -194,6 +196,8 @@ namespace phtr
 
             return ret;
         }
+
+        ///@endcond
 
     } // namespace phtr::mem
 

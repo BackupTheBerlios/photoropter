@@ -35,6 +35,8 @@ namespace phtr
     namespace mem
     {
 
+        ///@cond PROTECTED
+
         /**
         * @brief A struct template for accessing the minimal and maximal values of a
         * channel storage type. Uses std::numeric_limits.
@@ -70,6 +72,8 @@ namespace phtr
             }
 
         }; // namespace phtr
+
+        ///@endcond
 
     } // namespace phtr::mem
 

@@ -42,16 +42,18 @@ namespace phtr
     namespace mem
     {
 
+        ///@cond PROTECTED
+
         /**
-        * @brief Struct describing the order of channels. Used as base by
-        * specialisations of @ref MemLayout.
-        */
+         * @brief Struct describing the order of channels. Used as base by
+         * specialisations of @ref MemLayout.
+         */
         struct ChannelOrderRGB
         {
 
-        	/**
-             * @brief The type of coordinate tuples (i.e., mem::CoordTupleRGB or mem::CoordTupleRGBA).
-             */
+            /**
+                * @brief The type of coordinate tuples (i.e., mem::CoordTupleRGB or mem::CoordTupleRGBA).
+                */
             typedef CoordTupleRGB coord_tuple_t;
 
             /**
@@ -282,6 +284,8 @@ namespace phtr
         struct MemLayout<Storage::rgb_32_planar> : public GenericPlanarLayout, public ChannelOrderRGB
         {
         }; // template struct MemLayout<Storage::rgb_32_planar>
+
+        ///@endcond
 
     } // namespace phtr::mem
 
