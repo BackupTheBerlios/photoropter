@@ -27,32 +27,6 @@ THE SOFTWARE.
 namespace phtr
 {
 
-    void ColourCorrectionQueue::get_correction_factors(interp_coord_t src_x_r, interp_coord_t src_y_r,
-            interp_coord_t src_x_g, interp_coord_t src_y_g,
-            interp_coord_t src_x_b, interp_coord_t src_y_b,
-            double& fact_r, double& fact_g, double& fact_b) const
-    {
-
-        fact_r = 1.0;
-        fact_g = 1.0;
-        fact_b = 1.0;
-
-        double tmp_fact_r(1.0);
-        double tmp_fact_g(1.0);
-        double tmp_fact_b(1.0);
-
-        for (size_t i = 0; i < n_models_; ++i)
-        {
-            correction_model_[i]->get_correction_factors(src_x_r, src_y_r,
-                    src_x_g, src_y_g, src_x_b, src_y_b, tmp_fact_r, tmp_fact_g, tmp_fact_b);
-
-            fact_r *= tmp_fact_r;
-            fact_g *= tmp_fact_g;
-            fact_b *= tmp_fact_b;
-        }
-
-    }
-
     void ColourCorrectionQueue::get_correction_factors(const mem::CoordTupleRGB& coords,
             mem::ColourTupleRGB& factors) const
     {

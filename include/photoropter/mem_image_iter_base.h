@@ -113,7 +113,7 @@ namespace phtr
             */
             MemImageIterBase(channel_storage_t* base_addr, size_t px_offs,
                              size_t step, size_t line_step,
-                             size_t r_offs, size_t g_offs, size_t b_offs);
+                             size_t r_offs, size_t g_offs, size_t b_offs, size_t a_offs);
 
         protected:
             /**
@@ -162,6 +162,12 @@ namespace phtr
             * @brief The offset of the 'blue' channel.
             */
             const size_t b_offs_;
+
+        protected:
+            /**
+            * @brief The offset of the 'alpha' channel.
+            */
+            const size_t a_offs_;
 
     }; // template class MemImageIterBase<>
 

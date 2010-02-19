@@ -47,27 +47,8 @@ namespace phtr
             public:
                 /**
                 * @brief Get the corrected source image coordinates for the current position.
-                * @param[in,out] x_r The corresponding x coordinate for the 'red' channel
-                *                    in the source image.
-                * @param[in,out] y_r The corresponding y coordinate for the 'red' channel
-                *                    in the source image.
-                * @param[in,out] x_g The corresponding x coordinate for the 'green' channel
-                *                    in the source image.
-                * @param[in,out] y_g The corresponding y coordinate for the 'green' channel
-                *                    in the source image.
-                * @param[in,out] x_b The corresponding x coordinate for the 'blue' channel
-                *                    in the source image.
-                * @param[in,out] y_b The corresponding y coordinate for the 'blue' channel
-                *                    in the source image.
-                */
-                virtual void get_src_coords(interp_coord_t& x_r, interp_coord_t& y_r,
-                                            interp_coord_t& x_g, interp_coord_t& y_g,
-                                            interp_coord_t& x_b, interp_coord_t& y_b) const = 0;
-
-            public:
-                /**
-                * @brief Get the corrected source image coordinates for the current position.
-                * @param[in] coords The coordinates tuple.
+                * @note This function changes the input tuple.
+                * @param[in,out] coords The coordinates tuple.
                 */
                 virtual void get_src_coords(mem::CoordTupleRGB& coords) const = 0;
 
@@ -183,27 +164,8 @@ namespace phtr
             public:
                 /**
                 * @brief Get the corrected source image coordinates for the current position.
-                * @param[in,out] x_r The corresponding x coordinate for the 'red' channel
-                *                     in the source image.
-                * @param[in,out] y_r The corresponding y coordinate for the 'red' channel
-                *                     in the source image.
-                * @param[in,out] x_g The corresponding x coordinate for the 'green' channel
-                *                     in the source image.
-                * @param[in,out] y_g The corresponding y coordinate for the 'green' channel
-                *                     in the source image.
-                * @param[in,out] x_b The corresponding x coordinate for the 'blue' channel
-                *                     in the source image.
-                * @param[in,out] y_b The corresponding y coordinate for the 'blue' channel
-                *                     in the source image.
-                */
-                void get_src_coords(interp_coord_t& x_r, interp_coord_t& y_r,
-                                    interp_coord_t& x_g, interp_coord_t& y_g,
-                                    interp_coord_t& x_b, interp_coord_t& y_b) const;
-
-            public:
-                /**
-                * @brief Get the corrected source image coordinates for the current position.
-                * @param[in] coords The coordinates tuple.
+                * @note This function changes the input tuple.
+                * @param[in,out] coords The coordinates tuple.
                 */
                 void get_src_coords(mem::CoordTupleRGB& coords) const;
 

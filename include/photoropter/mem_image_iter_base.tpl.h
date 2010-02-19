@@ -31,7 +31,7 @@ namespace phtr
     MemImageIterBase<T>::MemImageIterBase
     (channel_storage_t* base_addr, size_t px_offs,
      size_t step, size_t line_step,
-     size_t r_offs, size_t g_offs, size_t b_offs)
+     size_t r_offs, size_t g_offs, size_t b_offs, size_t a_offs)
             : base_addr_(base_addr),
             px_offs_(px_offs),
             storage_type_(T),
@@ -39,7 +39,8 @@ namespace phtr
             line_step_(line_step),
             r_offs_(r_offs),
             g_offs_(g_offs),
-            b_offs_(b_offs)
+            b_offs_(b_offs),
+            a_offs_(a_offs)
     {
         //NIL
     }

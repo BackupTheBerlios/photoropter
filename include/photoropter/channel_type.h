@@ -56,7 +56,11 @@ namespace phtr
             /**
             * @brief The 'blue' channel.
             */
-            blue
+            blue,
+            /**
+            * @brief The 'alpha' channel.
+            */
+            alpha
 
         }; // enum Channel::type
 

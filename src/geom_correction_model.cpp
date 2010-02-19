@@ -108,46 +108,6 @@ namespace phtr
 
         void
         PTLensGeomModel::
-        get_src_coords(interp_coord_t& x_r, interp_coord_t& y_r,
-                       interp_coord_t& x_g, interp_coord_t& y_g,
-                       interp_coord_t& x_b, interp_coord_t& y_b) const
-        {
-            // calculate the 'red' channel
-            x_r -= x0_;
-            y_r -= y0_;
-            double r_r = std::sqrt(x_r * x_r + y_r * y_r);
-            double cos_phi_r = x_r / r_r;
-            double sin_phi_r = y_r / r_r;
-            r_r = (((a_ * r_r + b_) * r_r + c_) * r_r + d_) * r_r;
-
-            x_r = cos_phi_r * r_r + x0_;
-            y_r = sin_phi_r * r_r + y0_;
-
-            // calculate the 'green' channel
-            x_g -= x0_;
-            y_g -= y0_;
-            double r_g = std::sqrt(x_g * x_g + y_g * y_g);
-            double cos_phi_g = x_g / r_g;
-            double sin_phi_g = y_g / r_g;
-            r_g = (((a_ * r_g + b_) * r_g + c_) * r_g + d_) * r_g;
-
-            x_g = cos_phi_g * r_g + x0_;
-            y_g = sin_phi_g * r_g + y0_;
-
-            // calculate the 'blue' channel
-            x_b -= x0_;
-            y_b -= y0_;
-            double r_b = std::sqrt(x_b * x_b + y_b * y_b);
-            double cos_phi_b = x_b / r_b;
-            double sin_phi_b = y_b / r_b;
-            r_b = (((a_ * r_b + b_) * r_b + c_) * r_b + d_) * r_b;
-
-            x_b = cos_phi_b * r_b + x0_;
-            y_b = sin_phi_b * r_b + y0_;
-        }
-
-        void
-        PTLensGeomModel::
         get_src_coords(mem::CoordTupleRGB& coords) const
         {
             // calculate the 'red' channel

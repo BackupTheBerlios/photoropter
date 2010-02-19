@@ -29,29 +29,6 @@ namespace phtr
 
     void
     GeomCorrectionQueue::
-    get_src_coords(interp_coord_t dst_x, interp_coord_t dst_y,
-                   interp_coord_t& src_x_r, interp_coord_t& src_y_r,
-                   interp_coord_t& src_x_g, interp_coord_t& src_y_g,
-                   interp_coord_t& src_x_b, interp_coord_t& src_y_b) const
-    {
-        src_x_r = dst_x;
-        src_y_r = dst_y;
-
-        src_x_g = dst_x;
-        src_y_g = dst_y;
-
-        src_x_b = dst_x;
-        src_y_b = dst_y;
-
-        for (size_t i = 0; i < n_models_; ++i)
-        {
-            correction_model_[i]->get_src_coords(src_x_r, src_y_r, src_x_g, src_y_g, src_x_b, src_y_b);
-        }
-
-    }
-
-    void
-    GeomCorrectionQueue::
     get_src_coords(interp_coord_t dst_x, interp_coord_t dst_y, mem::CoordTupleRGB& coords) const
     {
         coords.x_r = dst_x;

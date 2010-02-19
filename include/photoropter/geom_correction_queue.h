@@ -60,29 +60,6 @@ namespace phtr
 
         public:
             /**
-            * @brief Fetch the transformed coordinates for the given position.
-            * @param[in]  dst_x   The x coordinate "seen from" the destination image.
-            * @param[in]  dst_y   The y coordinate "seen from" the destination image.
-            * @param[out] src_x_r The corresponding x coordinate for the 'red' channel
-            *                     in the source image
-            * @param[out] src_y_r The corresponding y coordinate for the 'red' channel
-            *                     in the source image
-            * @param[out] src_x_g The corresponding x coordinate for the 'green' channel
-            *                     in the source image
-            * @param[out] src_y_g The corresponding y coordinate for the 'green' channel
-            *                     in the source image
-            * @param[out] src_x_b The corresponding x coordinate for the 'blue' channel
-            *                     in the source image
-            * @param[out] src_y_b The corresponding y coordinate for the 'blue' channel
-            *                     in the source image
-            */
-            inline void get_src_coords(interp_coord_t dst_x, interp_coord_t dst_y,
-                                       interp_coord_t& src_x_r, interp_coord_t& src_y_r,
-                                       interp_coord_t& src_x_g, interp_coord_t& src_y_g,
-                                       interp_coord_t& src_x_b, interp_coord_t& src_y_b) const;
-
-        public:
-            /**
             * @brief Get the corrected source image coordinates for the current position.
             * @param[in]  dst_x   The x coordinate "seen from" the destination image.
             * @param[in]  dst_y   The y coordinate "seen from" the destination image.

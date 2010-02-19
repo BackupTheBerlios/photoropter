@@ -71,6 +71,7 @@ namespace phtr
                 switch (index)
                 {
                     case 0:
+                    default:
                         return Channel::red;
                         break;
 
@@ -79,7 +80,6 @@ namespace phtr
                         break;
 
                     case 2:
-                    default:
                         return Channel::blue;
                         break;
                 }
@@ -91,7 +91,7 @@ namespace phtr
         * @brief Struct describing a generic interleaved memory storage type. Used as base by
         * some specialisations of @ref MemLayout.
         */
-        struct GenericInterleavedLayout
+        struct GenericInterleavedLayoutRGB
         {
 
             /**
@@ -151,13 +151,22 @@ namespace phtr
                 return 2;
             }
 
+            /**
+            * @brief Return the alpha channel offset (e.g., 0 for non-alpha images).
+            * @return The alpha offset.
+            */
+            static size_t a_offs(coord_t, coord_t)
+            {
+                return 0;
+            }
+
         }; // struct GenericInterleavedLayout
 
         /**
         * @brief Struct describing a generic planar memory storage type. Used as base by
         * some specialisations of @ref MemLayout.
         */
-        struct GenericPlanarLayout
+        struct GenericPlanarLayoutRGB
         {
 
             /**
@@ -200,7 +209,7 @@ namespace phtr
             }
 
             /**
-            * @brief Return the green channel offset (e.g., 0).
+            * @brief Return the green channel offset (e.g., width * height).
             * @return The green offset.
             */
             static size_t g_offs(coord_t width, coord_t height)
@@ -209,12 +218,21 @@ namespace phtr
             }
 
             /**
-            * @brief Return the blue channel offset (e.g., 0).
+            * @brief Return the blue channel offset (e.g., 2 * width * height).
             * @return The blue offset.
             */
             static size_t b_offs(coord_t width, coord_t height)
             {
                 return 2 * width * height;
+            }
+
+            /**
+            * @brief Return the alpha channel offset (e.g., 3 * width * height, 0 for non-alpha images).
+            * @return The alpha offset.
+            */
+            static size_t a_offs(coord_t, coord_t)
+            {
+                return 0;
             }
 
         }; // struct GenericPlanarLayout
@@ -241,7 +259,7 @@ namespace phtr
         * @brief Specialisation of @ref MemLayout for @ref Storage::rgb_8_inter.
         */
         template <>
-        struct MemLayout<Storage::rgb_8_inter> : public GenericInterleavedLayout, public ChannelOrderRGB
+        struct MemLayout<Storage::rgb_8_inter> : public GenericInterleavedLayoutRGB, public ChannelOrderRGB
         {
         }; // template struct MemLayout<Storage::rgb_8_inter>
 
@@ -249,7 +267,7 @@ namespace phtr
         * @brief Specialisation of @ref MemLayout for @ref Storage::rgb_16_inter.
         */
         template <>
-        struct MemLayout<Storage::rgb_16_inter> : public GenericInterleavedLayout, public ChannelOrderRGB
+        struct MemLayout<Storage::rgb_16_inter> : public GenericInterleavedLayoutRGB, public ChannelOrderRGB
         {
         }; // template struct MemLayout<Storage::rgb_16_inter>
 
@@ -257,7 +275,7 @@ namespace phtr
         * @brief Specialisation of @ref MemLayout for @ref Storage::rgb_32_inter.
         */
         template <>
-        struct MemLayout<Storage::rgb_32_inter> : public GenericInterleavedLayout, public ChannelOrderRGB
+        struct MemLayout<Storage::rgb_32_inter> : public GenericInterleavedLayoutRGB, public ChannelOrderRGB
         {
         }; // template struct MemLayout<Storage::rgb_32_inter>
 
@@ -265,7 +283,7 @@ namespace phtr
         * @brief Specialisation of @ref MemLayout for @ref Storage::rgb_8_planar.
         */
         template <>
-        struct MemLayout<Storage::rgb_8_planar> : public GenericPlanarLayout, public ChannelOrderRGB
+        struct MemLayout<Storage::rgb_8_planar> : public GenericPlanarLayoutRGB, public ChannelOrderRGB
         {
         }; // template struct MemLayout<Storage::rgb_8_planar>
 
@@ -273,7 +291,7 @@ namespace phtr
         * @brief Specialisation of @ref MemLayout for @ref Storage::rgb_16_planar.
         */
         template <>
-        struct MemLayout<Storage::rgb_16_planar> : public GenericPlanarLayout, public ChannelOrderRGB
+        struct MemLayout<Storage::rgb_16_planar> : public GenericPlanarLayoutRGB, public ChannelOrderRGB
         {
         }; // template struct MemLayout<Storage::rgb_16_planar>
 
@@ -281,7 +299,7 @@ namespace phtr
         * @brief Specialisation of @ref MemLayout for @ref Storage::rgb_32_planar.
         */
         template <>
-        struct MemLayout<Storage::rgb_32_planar> : public GenericPlanarLayout, public ChannelOrderRGB
+        struct MemLayout<Storage::rgb_32_planar> : public GenericPlanarLayoutRGB, public ChannelOrderRGB
         {
         }; // template struct MemLayout<Storage::rgb_32_planar>
 

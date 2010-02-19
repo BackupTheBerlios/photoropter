@@ -74,7 +74,7 @@ namespace phtr
             */
             MemImageIterW(channel_storage_t* base_addr, size_t px_offs,
                           size_t step, size_t line_step,
-                          size_t r_offs, size_t g_offs, size_t b_offs);
+                          size_t r_offs, size_t g_offs, size_t b_offs, size_t a_offs);
 
         public:
             /**

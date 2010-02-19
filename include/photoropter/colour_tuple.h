@@ -41,12 +41,18 @@ namespace phtr
          * RGB
          * **************************************** */
 
+		struct CoordTupleRGB;
 
         /**
          * @brief A 3-tuple of RGB channel/colour values.
          */
         struct ColourTupleRGB
         {
+        	/**
+        	 * @brief The corresponding coordinates tuple type.
+        	 */
+        	typedef CoordTupleRGB coord_tuple_t;
+
             /**
              * @brief Constructor.
              * @note All members are set to 0.
@@ -140,13 +146,19 @@ namespace phtr
          * RGBA
          * **************************************** */
 
+		struct CoordTupleRGBA;
 
         /**
          * @brief A 4-tuple of RGBA channel/colour values.
          */
         struct ColourTupleRGBA
         {
-            /**
+        	/**
+        	 * @brief The corresponding coordinates tuple type.
+        	 */
+        	typedef CoordTupleRGBA coord_tuple_t;
+
+        	/**
              * @brief Constructor.
              * @note All members are set to 0.
              */

@@ -174,6 +174,12 @@ namespace phtr
             * @brief The offset of the blue channel to the current memory position.
             */
             const size_t b_offs_;
+
+        protected:
+            /**
+            * @brief The offset of the alpha channel to the current memory position.
+            */
+            const size_t a_offs_;
             ///@endcond
 
     }; // template class MemImageViewBase<>

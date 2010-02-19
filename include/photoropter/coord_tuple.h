@@ -37,16 +37,22 @@ namespace phtr
 
         ///@cond PROTECTED
 
+    struct ColourTupleRGB;
+
         /**
          * @brief A tuple containing 3 coordinate pairs.
          */
         struct CoordTupleRGB
         {
+        	/**
+        	 * @brief The corresponding colour tuple type.
+        	 */
+        	typedef ColourTupleRGB colour_tuple_t;
 
             /**
-                * @brief Constructor.
-                * @note All members are set to 0.
-                */
+             * @brief Constructor.
+             * @note All members are set to 0.
+             */
             CoordTupleRGB()
                     : x_r(0),
                     y_r(0),
@@ -90,16 +96,23 @@ namespace phtr
 
         };
 
+        struct ColourTupleRGBA;
+
         /**
          * @brief A tuple containing 3 coordinate pairs.
          */
         struct CoordTupleRGBA
         {
 
-            /**
-                * @brief Constructor.
-                * @note All members are set to 0.
-                */
+        	/**
+        	 * @brief The corresponding colour tuple type.
+        	 */
+        	typedef ColourTupleRGBA colour_tuple_t;
+
+        	/**
+             * @brief Constructor.
+             * @note All members are set to 0.
+             */
             CoordTupleRGBA()
                     : x_r(0),
                     y_r(0),

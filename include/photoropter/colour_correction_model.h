@@ -49,30 +49,6 @@ namespace phtr
             public:
                 /**
                 * @brief Get the correction factors for a given position.
-                * @param[in] src_x_r The corresponding x coordinate for the 'red' channel
-                *                    in the source image.
-                * @param[in] src_y_r The corresponding y coordinate for the 'red' channel
-                *                    in the source image.
-                * @param[in] src_x_g The corresponding x coordinate for the 'green' channel
-                *                    in the source image.
-                * @param[in] src_y_g The corresponding y coordinate for the 'green' channel
-                *                    in the source image.
-                * @param[in] src_x_b The corresponding x coordinate for the 'blue' channel
-                *                    in the source image.
-                * @param[in] src_y_b The corresponding y coordinate for the 'blue' channel
-                *                    in the source image.
-                * @param[out] fact_r The correction factor for the 'red' channel.
-                * @param[out] fact_g The correction factor for the 'green' channel.
-                * @param[out] fact_b The correction factor for the 'blue' channel.
-                */
-                virtual void get_correction_factors(interp_coord_t src_x_r, interp_coord_t src_y_r,
-                                                    interp_coord_t src_x_g, interp_coord_t src_y_g,
-                                                    interp_coord_t src_x_b, interp_coord_t src_y_b,
-                                                    double& fact_r, double& fact_g, double& fact_b) const = 0;
-
-            public:
-                /**
-                * @brief Get the correction factors for a given position.
                 * @param[in] coords The coordinates in the source image.
                 * @param[out] factors The correction factors.
                 */
@@ -173,31 +149,6 @@ namespace phtr
                 * in the normalised Photoropter coordinate system.
                 */
                 void get_centre_shift(interp_coord_t& x0, interp_coord_t& y0) const;
-
-            public:
-                /**
-                * @brief Get the correction factors for the given position.
-                * @param[in] src_x_r The corresponding x coordinate for the 'red' channel
-                *                    in the source image.
-                * @param[in] src_y_r The corresponding y coordinate for the 'red' channel
-                *                    in the source image.
-                * @param[in] src_x_g The corresponding x coordinate for the 'green' channel
-                *                    in the source image.
-                * @param[in] src_y_g The corresponding y coordinate for the 'green' channel
-                *                    in the source image.
-                * @param[in] src_x_b The corresponding x coordinate for the 'blue' channel
-                *                    in the source image.
-                * @param[in] src_y_b The corresponding y coordinate for the 'blue' channel
-                *                    in the source image.
-                * @param[out] fact_r The correction factor for the 'red' channel.
-                * @param[out] fact_g The correction factor for the 'green' channel.
-                * @param[out] fact_b The correction factor for the 'blue' channel.
-                * @return The correction factor.
-                */
-                void get_correction_factors(interp_coord_t src_x_r, interp_coord_t src_y_r,
-                                            interp_coord_t src_x_g, interp_coord_t src_y_g,
-                                            interp_coord_t src_x_b, interp_coord_t src_y_b,
-                                            double& fact_r, double& fact_g, double& fact_b) const;
 
             public:
                 /**

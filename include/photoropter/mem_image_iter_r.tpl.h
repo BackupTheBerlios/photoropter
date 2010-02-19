@@ -30,9 +30,9 @@ namespace phtr
     template <mem::Storage::type T>
     MemImageIterR<T>::MemImageIterR
     (channel_storage_t* base_addr, size_t px_offs, size_t step, size_t line_step,
-     size_t r_offs, size_t g_offs, size_t b_offs)
+     size_t r_offs, size_t g_offs, size_t b_offs, size_t a_offs)
             : MemImageIterBase<T>(const_cast<channel_storage_t*>(base_addr), px_offs,
-                                  step, line_step, r_offs, g_offs, b_offs)
+                                  step, line_step, r_offs, g_offs, b_offs, a_offs)
     {
         //NIL
     }
@@ -44,6 +44,7 @@ namespace phtr
         switch (channel)
         {
             case Channel::red:
+            default:
                 return this->base_addr_[this->px_offs_ + this->r_offs_];
                 break;
 
@@ -52,8 +53,11 @@ namespace phtr
                 break;
 
             case Channel::blue:
-            default:
                 return this->base_addr_[this->px_offs_ + this->b_offs_];
+                break;
+
+            case Channel::alpha:
+                return this->base_addr_[this->px_offs_ + this->a_offs_];
                 break;
         }
     }

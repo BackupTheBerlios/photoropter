@@ -94,34 +94,6 @@ namespace phtr
 
         inline void
         VignettingColourModel::
-        get_correction_factors(interp_coord_t src_x_r, interp_coord_t src_y_r,
-                               interp_coord_t src_x_g, interp_coord_t src_y_g,
-                               interp_coord_t src_x_b, interp_coord_t src_y_b,
-                               double& fact_r, double& fact_g, double& fact_b) const
-        {
-
-            src_x_r -= x0_;
-            src_y_r -= y0_;
-            double r2_r = src_x_r * src_x_r + src_y_r * src_y_r;
-
-            fact_r = 1.0 / (((a_ * r2_r + b_) * r2_r + c_) * r2_r + 1.0);
-
-            src_x_g -= x0_;
-            src_y_g -= y0_;
-            double r2_g = src_x_g * src_x_g + src_y_g * src_y_g;
-
-            fact_g = 1.0 / (((a_ * r2_g + b_) * r2_g + c_) * r2_g + 1.0);
-
-            src_x_b -= x0_;
-            src_y_b -= y0_;
-            double r2_b = src_x_b * src_x_b + src_y_b * src_y_b;
-
-            fact_b = 1.0 / (((a_ * r2_b + b_) * r2_b + c_) * r2_b + 1.0);
-
-        }
-
-        inline void
-        VignettingColourModel::
         get_correction_factors(const mem::CoordTupleRGB& coords,
                                mem::ColourTupleRGB& factors) const
         {

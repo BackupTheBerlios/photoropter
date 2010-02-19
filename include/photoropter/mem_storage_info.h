@@ -75,7 +75,8 @@ namespace phtr
                     num_channels(mem_layout_t::num_channels()),
                     r_offs(mem_layout_t::r_offs(width, height)),
                     g_offs(mem_layout_t::g_offs(width, height)),
-                    b_offs(mem_layout_t::b_offs(width, height))
+                    b_offs(mem_layout_t::b_offs(width, height)),
+                    a_offs(mem_layout_t::a_offs(width, height))
             {
             }
 
@@ -101,13 +102,13 @@ namespace phtr
 
             /**
             * @brief The step between pixels, in multiples of the channel
-            * storage unit (e.g., 1 for planar images, 3 for interleaved).
+            * storage unit (e.g., 1 for planar images, 3 for RGB interleaved).
             */
             const size_t step;
 
             /**
             * @brief The step between lines, in multiples of the channel
-            * storage unit (e.g., width for planar images, 3*width for interleaved).
+            * storage unit (e.g., width for planar images, 3*width for RGB interleaved).
             */
             const size_t line_step;
 
@@ -118,21 +119,28 @@ namespace phtr
 
             /**
             * @brief The offset of the red channel to the current memory position
-            (e.g. 0 for RGB).
+            * (e.g. 0 for RGB).
             */
             const size_t r_offs;
 
             /**
             * @brief The offset of the blue channel to the current memory
-            position (e.g. 1 for RGB interleave, width*height for RGB planar).
+            * position (e.g. 1 for RGB interleave, width*height for RGB planar).
             */
             const size_t g_offs;
 
             /**
             * @brief The offset of the green channel to the current memory
-            position (e.g. 2 for RGB interleave, 2*width*height for RGB planar).
+            * position (e.g. 2 for RGB interleave, 2*width*height for RGB planar).
             */
             const size_t b_offs;
+
+            /**
+            * @brief The offset of the alpha channel to the current memory
+            * position (e.g. 3 for RGBA interleave, 3*width*height for RGB planar).
+            * @note This value is set to 0 in the case of images without alpha channel.
+            */
+            const size_t a_offs;
         }; // template struct MemStorageInfo
 
         ///@endcond

@@ -46,6 +46,7 @@ namespace phtr
         switch (chan)
         {
             case Channel::red:
+            default:
                 return this->base_addr_[this->get_px_offs(x, y) + this->r_offs_];
                 break;
 
@@ -54,8 +55,11 @@ namespace phtr
                 break;
 
             case Channel::blue:
-            default:
                 return this->base_addr_[this->get_px_offs(x, y) + this->b_offs_];
+                break;
+
+            case Channel::alpha:
+                return this->base_addr_[this->get_px_offs(x, y) + this->a_offs_];
                 break;
         }
     }
@@ -67,7 +71,7 @@ namespace phtr
     (coord_t x, coord_t y) const
     {
         return MemImageIterR<T>(this->base_addr_, this->get_px_offs(x, y), this->step_, this->line_step_,
-                                this->r_offs_, this->g_offs_, this->b_offs_);
+                                this->r_offs_, this->g_offs_, this->b_offs_, this->a_offs_);
     }
 
     template <mem::Storage::type T>

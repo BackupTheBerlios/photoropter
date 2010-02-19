@@ -70,10 +70,11 @@ namespace phtr
             * @param[in] r_offs    The 'red' channel offset.
             * @param[in] g_offs    The 'green' channel offset.
             * @param[in] b_offs    The 'blue' channel offset.
+            * @param[in] a_offs    The 'alpha' channel offset.
             */
             MemImageIterR(channel_storage_t* base_addr, size_t px_offs,
                           size_t step, size_t line_step,
-                          size_t r_offs, size_t g_offs, size_t b_offs);
+                          size_t r_offs, size_t g_offs, size_t b_offs, size_t a_offs);
 
         public:
             /**

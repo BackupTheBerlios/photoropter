@@ -41,7 +41,8 @@ namespace phtr
             line_step_(storage_info_.line_step),
             r_offs_(storage_info_.r_offs),
             g_offs_(storage_info_.g_offs),
-            b_offs_(storage_info_.b_offs)
+            b_offs_(storage_info_.b_offs),
+            a_offs_(storage_info_.a_offs)
     {
         //NIL
     }
