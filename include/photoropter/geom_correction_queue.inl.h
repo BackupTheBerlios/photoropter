@@ -31,12 +31,11 @@ namespace phtr
     GeomCorrectionQueue::
     get_src_coords(interp_coord_t dst_x, interp_coord_t dst_y, mem::CoordTupleRGB& coords) const
     {
-        coords.x_r = dst_x;
-        coords.y_r = dst_y;
-        coords.x_g = dst_x;
-        coords.y_g = dst_y;
-        coords.x_b = dst_x;
-        coords.y_b = dst_y;
+        for (size_t i = 0; i < mem::ColourTupleRGB::num_vals; ++i)
+        {
+            coords.x[i] = dst_x;
+            coords.y[i] = dst_y;
+        }
 
         for (size_t i = 0; i < n_models_; ++i)
         {

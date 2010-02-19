@@ -31,9 +31,10 @@ namespace phtr
             mem::ColourTupleRGB& factors) const
     {
 
-        factors.val_r = 1.0;
-        factors.val_g = 1.0;
-        factors.val_b = 1.0;
+        for (size_t i = 0; i < mem::ColourTupleRGB::num_vals; ++i)
+        {
+            factors.value[i] = 1.0;
+        }
 
         mem::ColourTupleRGB tmp_factors;
 

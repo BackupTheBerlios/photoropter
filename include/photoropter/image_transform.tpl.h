@@ -111,8 +111,9 @@ namespace phtr
                 // coordinates transformed to source image
                 coord_tuple_t src_coords;
 
-                // channel values
-                colour_tuple_t values;
+                // channel value tuple (sum over oversampling steps)
+                colour_tuple_t value_sum;
+                value_sum.clear();
 
                 // channel factors
                 colour_tuple_t factors;
@@ -140,7 +141,7 @@ namespace phtr
                         // get channel values and correction factors
                         colour_queue_.get_correction_factors(src_coords, factors);
 
-                        values += normalise(interpolator_.get_px_vals(src_coords)) * factors;
+                        value_sum += normalise(interpolator_.get_px_vals(src_coords)) * factors;
 
                         cur_samp_x += sampling_step_x;
                     } // (inner) oversampling loop
@@ -149,10 +150,10 @@ namespace phtr
                 } // (outer) oversampling loop
 
                 // scale channel values (due to oversampling)
-                values *= channel_scaling;
+                value_sum *= channel_scaling;
 
                 // write channel values
-                iter.write_px_vals(unnormalise(values));
+                iter.write_px_vals(unnormalise(value_sum));
 
                 // increment iterator position
                 iter.inc_x();
@@ -288,9 +289,10 @@ namespace phtr
     {
         mem::ColourTupleRGB ret;
 
-        ret.val_r = normalise(values.val_r);
-        ret.val_g = normalise(values.val_g);
-        ret.val_b = normalise(values.val_b);
+        for (size_t i = 0; i < mem::ColourTupleRGB::num_vals; ++i)
+        {
+            ret.value[i] = normalise(values.value[i]);
+        }
 
         return ret;
     }
@@ -311,9 +313,10 @@ namespace phtr
     {
         mem::ColourTupleRGB ret;
 
-        ret.val_r = unnormalise(values.val_r);
-        ret.val_g = unnormalise(values.val_g);
-        ret.val_b = unnormalise(values.val_b);
+        for (size_t i = 0; i < mem::ColourTupleRGB::num_vals; ++i)
+        {
+            ret.value[i] = unnormalise(values.value[i]);
+        }
 
         return ret;
     }

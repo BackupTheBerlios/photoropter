@@ -361,8 +361,8 @@ void convert(const Settings& settings)
     typedef MemImageViewW<storage_type> view_w_t;
     typedef typename view_w_t::iter_t iter_t;
 //    typedef InterpolatorNN<view_r_t> interp_t;
-//    typedef InterpolatorBilinear<view_r_t> interp_t;
-    typedef InterpolatorLanczos<view_r_t> interp_t;
+    typedef InterpolatorBilinear<view_r_t> interp_t;
+//    typedef InterpolatorLanczos<view_r_t> interp_t;
     typedef ImageTransform<interp_t, view_w_t> transform_t;
 
     // load the input image

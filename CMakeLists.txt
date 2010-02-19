@@ -151,6 +151,7 @@ set(PHTR_INCLUDES
   ${PHTR_INCLUDE_DIR}/colour_tuple.h
   ${PHTR_INCLUDE_DIR}/colour_tuple.inl.h
   ${PHTR_INCLUDE_DIR}/coord_tuple.h
+  ${PHTR_INCLUDE_DIR}/coord_tuple.inl.h
   ${PHTR_INCLUDE_DIR}/correction_model_base.h
   ${PHTR_INCLUDE_DIR}/colour_correction_model.h
   ${PHTR_INCLUDE_DIR}/colour_correction_queue.h
@@ -195,6 +196,8 @@ set(PHTR_SOURCES
   ${PHTR_SRC_DIR}/colour_correction_model.cpp
   ${PHTR_SRC_DIR}/colour_correction_queue.cpp
   ${PHTR_SRC_DIR}/correction_model_base.cpp
+  ${PHTR_SRC_DIR}/colour_tuple.cpp
+  ${PHTR_SRC_DIR}/coord_tuple.cpp
   ${PHTR_SRC_DIR}/exception.cpp
   ${PHTR_SRC_DIR}/gamma_func.cpp
   ${PHTR_SRC_DIR}/geom_correction_model.cpp

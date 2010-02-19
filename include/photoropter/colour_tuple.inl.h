@@ -37,14 +37,40 @@ namespace phtr
          * RGB
          * **************************************** */
 
+        ColourTupleRGB::ColourTupleRGB(const ColourTupleRGB& orig)
+        {
+            for (size_t i = 0; i < num_vals; ++i)
+            {
+                value[i] = orig.value[i];
+            }
+        }
+
+        ColourTupleRGB& ColourTupleRGB::operator=(const ColourTupleRGB& orig)
+        {
+            for (size_t i = 0; i < num_vals; ++i)
+            {
+                value[i] = orig.value[i];
+            }
+
+            return *this;
+        }
+
+        void ColourTupleRGB::clear()
+        {
+            for (size_t i = 0; i < num_vals; ++i)
+            {
+                value[i] = 0.0;
+            }
+        }
 
         ColourTupleRGB&
         ColourTupleRGB::
         operator*=(const ColourTupleRGB& other)
         {
-            val_r *= other.val_r;
-            val_g *= other.val_g;
-            val_b *= other.val_b;
+            for (size_t i = 0; i < num_vals; ++i)
+            {
+                value[i] *= other.value[i];
+            }
 
             return *this;
         }
@@ -53,9 +79,10 @@ namespace phtr
         ColourTupleRGB::
         operator*=(interp_channel_t factor)
         {
-            val_r *= factor;
-            val_g *= factor;
-            val_b *= factor;
+            for (size_t i = 0; i < num_vals; ++i)
+            {
+                value[i] *= factor;
+            }
 
             return *this;
         }
@@ -64,9 +91,10 @@ namespace phtr
         ColourTupleRGB::
         operator+=(const ColourTupleRGB& other)
         {
-            val_r += other.val_r;
-            val_g += other.val_g;
-            val_b += other.val_b;
+            for (size_t i = 0; i < num_vals; ++i)
+            {
+                value[i] += other.value[i];
+            }
 
             return *this;
         }
@@ -74,9 +102,11 @@ namespace phtr
         ColourTupleRGB operator*(const ColourTupleRGB& tuple, interp_channel_t factor)
         {
             ColourTupleRGB ret(tuple);
-            ret.val_r *= factor;
-            ret.val_g *= factor;
-            ret.val_b *= factor;
+
+            for (size_t i = 0; i < ColourTupleRGB::num_vals; ++i)
+            {
+                ret.value[i] *= factor;
+            }
 
             return ret;
         }
@@ -84,9 +114,11 @@ namespace phtr
         ColourTupleRGB operator*(interp_channel_t factor, const ColourTupleRGB& tuple)
         {
             ColourTupleRGB ret(tuple);
-            ret.val_r *= factor;
-            ret.val_g *= factor;
-            ret.val_b *= factor;
+
+            for (size_t i = 0; i < ColourTupleRGB::num_vals; ++i)
+            {
+                ret.value[i] *= factor;
+            }
 
             return ret;
         }
@@ -94,9 +126,11 @@ namespace phtr
         ColourTupleRGB operator*(const ColourTupleRGB& tuple1, const ColourTupleRGB& tuple2)
         {
             ColourTupleRGB ret(tuple1);
-            ret.val_r *= tuple2.val_r;
-            ret.val_g *= tuple2.val_g;
-            ret.val_b *= tuple2.val_b;
+
+            for (size_t i = 0; i < ColourTupleRGB::num_vals; ++i)
+            {
+                ret.value[i] *= tuple2.value[i];
+            }
 
             return ret;
         }
@@ -104,9 +138,11 @@ namespace phtr
         ColourTupleRGB operator+(const ColourTupleRGB& tuple1, const ColourTupleRGB& tuple2)
         {
             ColourTupleRGB ret(tuple1);
-            ret.val_r += tuple2.val_r;
-            ret.val_g += tuple2.val_g;
-            ret.val_b += tuple2.val_b;
+
+            for (size_t i = 0; i < ColourTupleRGB::num_vals; ++i)
+            {
+                ret.value[i] += tuple2.value[i];
+            }
 
             return ret;
         }

@@ -31,6 +31,7 @@ THE SOFTWARE.
 
 #include <photoropter/types.h>
 #include <photoropter/coord_tuple.h>
+#include <photoropter/colour_tuple.h>
 #include <photoropter/geom_correction_model.h>
 
 namespace phtr

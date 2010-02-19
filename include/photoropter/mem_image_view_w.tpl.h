@@ -71,15 +71,19 @@ namespace phtr
         }
     }
 
-    template <mem::Storage::type T>
+    template <mem::Storage::type T> template <typename coord_tuple_t>
     void
     MemImageViewW<T>::
     write_px_vals
-    (const mem::CoordTupleRGB& coords, const mem::ColourTupleRGB& values)
+    (const coord_tuple_t& coords, const typename coord_tuple_t::colour_tuple_t& values)
     {
-        write_px_val(Channel::red,   coords.x_r, coords.y_r, values.val_r);
-        write_px_val(Channel::green, coords.x_g, coords.y_g, values.val_g);
-        write_px_val(Channel::blue,  coords.x_b, coords.y_b, values.val_b);
+        typedef typename coord_tuple_t::colour_tuple_t colour_tuple_t;
+
+        for (size_t i = 0; i < colour_tuple_t::num_vals; ++i)
+        {
+            write_px_val(colour_tuple_t::channel_type[i], coords.x[i], coords.y[i], values.value[i]);
+        }
+
     }
 
     template <mem::Storage::type T>

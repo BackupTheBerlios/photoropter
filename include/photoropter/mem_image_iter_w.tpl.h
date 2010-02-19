@@ -62,14 +62,15 @@ namespace phtr
         }
     }
 
-    template <mem::Storage::type T>
+    template <mem::Storage::type T> template <typename colour_tuple_t>
     void
     MemImageIterW<T>::write_px_vals
-    (const mem::ColourTupleRGB& values)
+    (const colour_tuple_t& values)
     {
-        write_px_val(Channel::red,   static_cast<channel_storage_t>(values.val_r));
-        write_px_val(Channel::green, static_cast<channel_storage_t>(values.val_g));
-        write_px_val(Channel::blue,  static_cast<channel_storage_t>(values.val_b));
+        for (size_t i = 0; i < colour_tuple_t::num_vals; ++i)
+        {
+            write_px_val(colour_tuple_t::channel_type[i], static_cast<channel_storage_t>(values.value[i]));
+        }
     }
 
 } // namespace phtr

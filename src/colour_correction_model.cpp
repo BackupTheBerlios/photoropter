@@ -26,6 +26,7 @@ THE SOFTWARE.
 
 #include <cmath>
 
+#include <photoropter/mem_layout.h>
 #include <photoropter/colour_correction_model.h>
 
 namespace phtr
@@ -98,23 +99,25 @@ namespace phtr
                                mem::ColourTupleRGB& factors) const
         {
 
-            double x_r = coords.x_r - x0_;
-            double y_r = coords.y_r - y0_;
+            typedef mem::ColourTupleRGB::channel_order_t channel_order_t;
+
+            double x_r = coords.x[channel_order_t::idx_red] - x0_;
+            double y_r = coords.y[channel_order_t::idx_red] - y0_;
             double r2_r = x_r * x_r + y_r * y_r;
 
-            factors.val_r = 1.0 / (((a_ * r2_r + b_) * r2_r + c_) * r2_r + 1.0);
+            factors.value[channel_order_t::idx_red] = 1.0 / (((a_ * r2_r + b_) * r2_r + c_) * r2_r + 1.0);
 
-            double x_g = coords.x_g - x0_;
-            double y_g = coords.y_g - y0_;
+            double x_g = coords.x[channel_order_t::idx_green] - x0_;
+            double y_g = coords.y[channel_order_t::idx_green] - y0_;
             double r2_g = x_g * x_g + y_g * y_g;
 
-            factors.val_g = 1.0 / (((a_ * r2_g + b_) * r2_g + c_) * r2_g + 1.0);
+            factors.value[channel_order_t::idx_green] = 1.0 / (((a_ * r2_g + b_) * r2_g + c_) * r2_g + 1.0);
 
-            double x_b = coords.x_b - x0_;
-            double y_b = coords.y_b - y0_;
+            double x_b = coords.x[channel_order_t::idx_blue] - x0_;
+            double y_b = coords.y[channel_order_t::idx_blue] - y0_;
             double r2_b = x_b * x_b + y_b * y_b;
 
-            factors.val_b = 1.0 / (((a_ * r2_b + b_) * r2_b + c_) * r2_b + 1.0);
+            factors.value[channel_order_t::idx_blue] = 1.0 / (((a_ * r2_b + b_) * r2_b + c_) * r2_b + 1.0);
 
         }
 

@@ -27,6 +27,7 @@ THE SOFTWARE.
 #ifndef __PHTR_COORD_TUPLE_H__
 #define __PHTR_COORD_TUPLE_H__
 
+#include <photoropter/colour_tuple.h>
 #include <photoropter/types.h>
 
 namespace phtr
@@ -37,62 +38,53 @@ namespace phtr
 
         ///@cond PROTECTED
 
-    struct ColourTupleRGB;
+        struct ChannelOrderRGB;
 
         /**
          * @brief A tuple containing 3 coordinate pairs.
          */
         struct CoordTupleRGB
         {
-        	/**
-        	 * @brief The corresponding colour tuple type.
-        	 */
-        	typedef ColourTupleRGB colour_tuple_t;
+            /**
+             * @brief The corresponding colour tuple type.
+             */
+            typedef ColourTupleRGB colour_tuple_t;
+
+            /**
+             * @brief Channel order information.
+             */
+            typedef ChannelOrderRGB channel_order_t;
 
             /**
              * @brief Constructor.
-             * @note All members are set to 0.
              */
             CoordTupleRGB()
-                    : x_r(0),
-                    y_r(0),
-                    x_g(0),
-                    y_g(0),
-                    x_b(0),
-                    y_b(0)
             {
                 //NIL
             }
 
             /**
-             * @brief The x coordinate for the 'red' channel.
+             * Copy constructor.
+             * @param[in] orig The original object.
              */
-            interp_coord_t x_r;
+            inline CoordTupleRGB(const CoordTupleRGB& orig);
 
             /**
-             * @brief The y coordinate for the 'red' channel.
+             * Assignment.
+             * @param[in] orig The original object.
+             * @return Reference to the current object.
              */
-            interp_coord_t y_r;
+            inline CoordTupleRGB& operator=(const CoordTupleRGB& orig);
 
             /**
-             * @brief The x coordinate for the 'green' channel.
+             * @brief The x values.
              */
-            interp_coord_t x_g;
+            interp_coord_t x[3];
 
             /**
-             * @brief The y coordinate for the 'green' channel.
+             * @brief The y values.
              */
-            interp_coord_t y_g;
-
-            /**
-             * @brief The x coordinate for the 'blue' channel.
-             */
-            interp_coord_t x_b;
-
-            /**
-             * @brief The y coordinate for the 'blue' channel.
-             */
-            interp_coord_t y_b;
+            interp_coord_t y[3];
 
         };
 
@@ -104,15 +96,15 @@ namespace phtr
         struct CoordTupleRGBA
         {
 
-        	/**
-        	 * @brief The corresponding colour tuple type.
-        	 */
-        	typedef ColourTupleRGBA colour_tuple_t;
-
-        	/**
-             * @brief Constructor.
-             * @note All members are set to 0.
+            /**
+             * @brief The corresponding colour tuple type.
              */
+            typedef ColourTupleRGBA colour_tuple_t;
+
+            /**
+                * @brief Constructor.
+                * @note All members are set to 0.
+                */
             CoordTupleRGBA()
                     : x_r(0),
                     y_r(0),
@@ -173,5 +165,7 @@ namespace phtr
     } // namespace phtr::mem
 
 } // namespace phtr
+
+#include <photoropter/coord_tuple.inl.h>
 
 #endif // __PHTR_COORD_TUPLE_H__

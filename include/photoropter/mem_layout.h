@@ -85,6 +85,11 @@ namespace phtr
                 }
             }
 
+            static const size_t idx_red = 0;
+            static const size_t idx_green = 1;
+            static const size_t idx_blue = 2;
+            static const size_t idx_alpha = 0;
+
         };
 
         /**

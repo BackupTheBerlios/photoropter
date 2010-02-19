@@ -89,7 +89,8 @@ namespace phtr
             * @brief Write the given channel value to the current pixel.
             * @param[in] values The values.
             */
-            inline void write_px_vals(const mem::ColourTupleRGB& values);
+            template <typename colour_tuple_t>
+            inline void write_px_vals(const colour_tuple_t& values);
 
     }; // template class MemImageIterW<>
 

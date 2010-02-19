@@ -81,7 +81,8 @@ namespace phtr
              * @param[in] coords The coordinates tuple.
              * @return The channel values.
              */
-            inline mem::ColourTupleRGB get_px_vals(const mem::CoordTupleRGB& coords) const;
+            template <typename coord_tuple_t>
+            inline typename coord_tuple_t::colour_tuple_t get_px_vals(const coord_tuple_t& coords) const;
 
     }; // class InterpolatorNN<...>
 

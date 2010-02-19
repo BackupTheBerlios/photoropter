@@ -126,16 +126,17 @@ namespace phtr
 
     }
 
-    template <typename view_t>
-    mem::ColourTupleRGB
+    template <typename view_t> template <typename coord_tuple_t>
+    typename coord_tuple_t::colour_tuple_t
     InterpolatorLanczos<view_t>::
-    get_px_vals(const mem::CoordTupleRGB& coords) const
+    get_px_vals(const coord_tuple_t& coords) const
     {
-        mem::ColourTupleRGB ret;
+        typename coord_tuple_t::colour_tuple_t ret;
 
-        ret.val_r = get_px_val(Channel::red,   coords.x_r, coords.y_r);
-        ret.val_g = get_px_val(Channel::green, coords.x_g, coords.y_g);
-        ret.val_b = get_px_val(Channel::blue,  coords.x_b, coords.y_b);
+        for (size_t i = 0; i < coord_tuple_t::colour_tuple_t::num_vals; ++i)
+        {
+            ret.value[i] = get_px_val(coord_tuple_t::colour_tuple_t::channel_type[i], coords.x[i], coords.y[i]);
+        }
 
         return ret;
     }

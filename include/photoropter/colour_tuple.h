@@ -28,6 +28,7 @@ THE SOFTWARE.
 #define __PHTR__COLOUR_TUPLE_H__
 
 #include <photoropter/types.h>
+#include <photoropter/channel_type.h>
 
 namespace phtr
 {
@@ -41,29 +42,49 @@ namespace phtr
          * RGB
          * **************************************** */
 
-		struct CoordTupleRGB;
+        struct CoordTupleRGB;
+        struct ChannelOrderRGB;
 
         /**
          * @brief A 3-tuple of RGB channel/colour values.
          */
         struct ColourTupleRGB
         {
-        	/**
-        	 * @brief The corresponding coordinates tuple type.
-        	 */
-        	typedef CoordTupleRGB coord_tuple_t;
+            /**
+             * @brief The corresponding coordinates tuple type.
+             */
+            typedef CoordTupleRGB coord_tuple_t;
+
+            /**
+             * @brief Channel order information.
+             */
+            typedef ChannelOrderRGB channel_order_t;
 
             /**
              * @brief Constructor.
-             * @note All members are set to 0.
              */
             ColourTupleRGB()
-                    : val_r(0),
-                    val_g(0),
-                    val_b(0)
             {
                 //NIL
             }
+
+            /**
+             * @brief Copy constructor.
+             * @param[in] orig The original object.
+             */
+            inline ColourTupleRGB(const ColourTupleRGB& orig);
+
+            /**
+             * @brief Assignment
+             * @param[in] orig The original object.
+             * @return Reference to the current object.
+             */
+            inline ColourTupleRGB& operator=(const ColourTupleRGB& orig);
+
+            /**
+             * @brief Clear the values.
+             */
+            inline void clear();
 
             /**
              * @brief Multiplication with values from another tuple.
@@ -88,19 +109,19 @@ namespace phtr
             inline ColourTupleRGB& operator+=(const ColourTupleRGB& other);
 
             /**
-             * The 'red' value.
+             * The array of values;
              */
-            interp_channel_t val_r;
+            interp_channel_t value[3];
 
             /**
-             * The 'green' value.
+             * The number of values (i.e., 3).
              */
-            interp_channel_t val_g;
+            static const size_t num_vals;
 
             /**
-             * The 'blue' value.
+             * The channel types.
              */
-            interp_channel_t val_b;
+            static const Channel::type channel_type[];
 
         }; // struct ColourTupleRGB
 
@@ -146,22 +167,22 @@ namespace phtr
          * RGBA
          * **************************************** */
 
-		struct CoordTupleRGBA;
+        struct CoordTupleRGBA;
 
         /**
          * @brief A 4-tuple of RGBA channel/colour values.
          */
         struct ColourTupleRGBA
         {
-        	/**
-        	 * @brief The corresponding coordinates tuple type.
-        	 */
-        	typedef CoordTupleRGBA coord_tuple_t;
-
-        	/**
-             * @brief Constructor.
-             * @note All members are set to 0.
+            /**
+             * @brief The corresponding coordinates tuple type.
              */
+            typedef CoordTupleRGBA coord_tuple_t;
+
+            /**
+                * @brief Constructor.
+                * @note All members are set to 0.
+                */
             ColourTupleRGBA()
                     : val_r(0),
                     val_g(0),
