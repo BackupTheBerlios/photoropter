@@ -24,7 +24,8 @@ THE SOFTWARE.
 
 */
 
-#include <photoropter/coord_tuple.h>
+#include <photoropter/mem_layout.h>
+#include <photoropter/channel_type.h>
 
 namespace phtr
 {
@@ -32,6 +33,25 @@ namespace phtr
     namespace mem
     {
 
+        const Channel::type ChannelOrderRGB::channel_type[] = {Channel::red, Channel::green, Channel::blue};
+
+        const size_t ChannelOrderRGB::idx_red = 0;
+
+        const size_t ChannelOrderRGB::idx_green = 1;
+
+        const size_t ChannelOrderRGB::idx_blue = 2;
+
+        const size_t ChannelOrderRGB::idx_alpha = 0;
+
+        const Channel::type ChannelOrderRGBA::channel_type[] = {Channel::red, Channel::green, Channel::blue, Channel::alpha};
+
+        const size_t ChannelOrderRGBA::idx_red = 0;
+
+        const size_t ChannelOrderRGBA::idx_green = 1;
+
+        const size_t ChannelOrderRGBA::idx_blue = 2;
+
+        const size_t ChannelOrderRGBA::idx_alpha = 3;
 
     } // namespace phtr::mem
 

@@ -75,13 +75,15 @@ namespace phtr
     void
     MemImageViewW<T>::
     write_px_vals
-    (const coord_tuple_t& coords, const typename coord_tuple_t::colour_tuple_t& values)
+    (const coord_tuple_t& coords, const typename coord_tuple_t::channel_order_t::colour_tuple_t& values)
     {
-        typedef typename coord_tuple_t::colour_tuple_t colour_tuple_t;
+        typedef typename coord_tuple_t::channel_order_t channel_order_t;
+        typedef typename channel_order_t::colour_tuple_t colour_tuple_t;
 
         for (size_t i = 0; i < colour_tuple_t::num_vals; ++i)
         {
-            write_px_val(colour_tuple_t::channel_type[i], coords.x[i], coords.y[i], values.value[i]);
+            write_px_val(channel_order_t::channel_type[i], coords.x[i], coords.y[i],
+                         static_cast<channel_storage_t>(values.value[i] + 0.5));
         }
 
     }

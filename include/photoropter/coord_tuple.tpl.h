@@ -24,14 +24,36 @@ THE SOFTWARE.
 
 */
 
-#include <photoropter/coord_tuple.h>
-
 namespace phtr
 {
 
     namespace mem
     {
 
+        template <typename channel_order_T, size_t num_vals_T>
+        CoordTuple<channel_order_T, num_vals_T>::
+        CoordTuple(const CoordTuple<channel_order_T, num_vals_T>& orig)
+        {
+            for (size_t i = 0; i < channel_order_T::num_vals_T; ++i)
+            {
+                x[i] = orig.x[i];
+                y[i] = orig.y[i];
+            }
+        }
+
+        template <typename channel_order_T, size_t num_vals_T>
+        CoordTuple<channel_order_T, num_vals_T>&
+        CoordTuple<channel_order_T, num_vals_T>::
+        operator=(const CoordTuple<channel_order_T, num_vals_T>& orig)
+        {
+            for (size_t i = 0; i < channel_order_T::num_vals_T; ++i)
+            {
+                x[i] = orig.x[i];
+                y[i] = orig.y[i];
+            }
+
+            return *this;
+        }
 
     } // namespace phtr::mem
 

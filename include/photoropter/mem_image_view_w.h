@@ -98,7 +98,8 @@ namespace phtr
             * @param[in] values The channel values.
             */
             template <typename coord_tuple_t>
-            inline void write_px_vals(const coord_tuple_t& coords, const typename coord_tuple_t::colour_tuple_t& values);
+            inline void write_px_vals(const coord_tuple_t& coords,
+                                      const typename coord_tuple_t::channel_order_t::colour_tuple_t& values);
 
         public:
             /**

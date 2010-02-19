@@ -28,8 +28,6 @@ THE SOFTWARE.
 #define __PHTR_MEM_LAYOUT_H__
 
 #include <photoropter/types.h>
-#include <photoropter/coord_tuple.h>
-#include <photoropter/colour_tuple.h>
 #include <photoropter/channel_type.h>
 #include <photoropter/storage_type.h>
 
@@ -44,9 +42,16 @@ namespace phtr
 
         ///@cond PROTECTED
 
+        template <typename channel_order_T, size_t num_vals>
+        struct CoordTuple;
+
+        template <typename channel_order_T, int num_vals_T>
+        struct ColourTuple;
+
         /**
          * @brief Struct describing the order of channels. Used as base by
          * specialisations of @ref MemLayout.
+         * @note: This describes the 3-channel (RGB) case.
          */
         struct ChannelOrderRGB
         {
@@ -54,19 +59,19 @@ namespace phtr
             /**
                 * @brief The type of coordinate tuples (i.e., mem::CoordTupleRGB or mem::CoordTupleRGBA).
                 */
-            typedef CoordTupleRGB coord_tuple_t;
+            typedef CoordTuple<ChannelOrderRGB, 3> coord_tuple_t;
 
             /**
              * @brief The type of colour tuples (i.e., mem::ColourTupleRGB or mem::ColourTupleRGBA).
              */
-            typedef ColourTupleRGB colour_tuple_t;
+            typedef ColourTuple<ChannelOrderRGB, 3> colour_tuple_t;
 
             /**
             * @brief Return the channel order for this layout type.
             * @param index The channel index (ranging from 0 to 2).
             * @return The channel.
             */
-            Channel::type get_channel(size_t index)
+            Channel::type get_channel_type(size_t index)
             {
                 switch (index)
                 {
@@ -85,10 +90,103 @@ namespace phtr
                 }
             }
 
-            static const size_t idx_red = 0;
-            static const size_t idx_green = 1;
-            static const size_t idx_blue = 2;
-            static const size_t idx_alpha = 0;
+            /**
+             * @brief The channel types.
+             */
+            static const Channel::type channel_type[];
+
+            /**
+             * @brief The index of the red channel.
+             */
+            static const size_t idx_red;
+
+            /**
+             * @brief The index of the green channel.
+             */
+            static const size_t idx_green;
+
+            /**
+             * @brief The index of the blue channel.
+             */
+            static const size_t idx_blue;
+
+            /**
+             * @brief The index of the alpha channel.
+             */
+            static const size_t idx_alpha;
+
+        };
+
+        /**
+         * @brief Struct describing the order of channels. Used as base by
+         * specialisations of @ref MemLayout.
+         * @note: This describes the 4-channel (RGBA) case.
+         */
+        struct ChannelOrderRGBA
+        {
+
+            /**
+                * @brief The type of coordinate tuples (i.e., mem::CoordTupleRGB or mem::CoordTupleRGBA).
+                */
+            typedef CoordTuple<ChannelOrderRGBA, 4> coord_tuple_t;
+
+            /**
+             * @brief The type of colour tuples (i.e., mem::ColourTupleRGB or mem::ColourTupleRGBA).
+             */
+            typedef ColourTuple<ChannelOrderRGBA, 4> colour_tuple_t;
+
+            /**
+            * @brief Return the channel order for this layout type.
+            * @param index The channel index (ranging from 0 to 2).
+            * @return The channel.
+            */
+            Channel::type get_channel_type(size_t index)
+            {
+                switch (index)
+                {
+                    case 0:
+                    default:
+                        return Channel::red;
+                        break;
+
+                    case 1:
+                        return Channel::green;
+                        break;
+
+                    case 2:
+                        return Channel::blue;
+                        break;
+
+                    case 3:
+                        return Channel::alpha;
+                        break;
+                }
+            }
+
+            /**
+             * @brief The channel types.
+             */
+            static const Channel::type channel_type[];
+
+            /**
+             * @brief The index of the red channel.
+             */
+            static const size_t idx_red;
+
+            /**
+             * @brief The index of the green channel.
+             */
+            static const size_t idx_green;
+
+            /**
+             * @brief The index of the blue channel.
+             */
+            static const size_t idx_blue;
+
+            /**
+             * @brief The index of the alpha channel.
+             */
+            static const size_t idx_alpha;
 
         };
 

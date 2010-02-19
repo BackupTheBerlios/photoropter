@@ -66,15 +66,17 @@ namespace phtr
     }
 
     template <typename view_t> template <typename coord_tuple_t>
-    typename coord_tuple_t::colour_tuple_t
+    typename coord_tuple_t::channel_order_t::colour_tuple_t
     InterpolatorNN<view_t>::
     get_px_vals(const coord_tuple_t& coords) const
     {
-        typename coord_tuple_t::colour_tuple_t ret;
+        typedef typename coord_tuple_t::channel_order_t::colour_tuple_t colour_tuple_t;
 
-        for (size_t i = 0; i < coord_tuple_t::colour_tuple_t::num_vals; ++i)
+        colour_tuple_t ret;
+
+        for (size_t i = 0; i < colour_tuple_t::num_vals; ++i)
         {
-            ret.value[i] = get_px_val(coord_tuple_t::colour_tuple_t::channel_type[i], coords.x[i], coords.y[i]);
+            ret.value[i] = get_px_val(coord_tuple_t::channel_order_t::channel_type[i], coords.x[i], coords.y[i]);
         }
 
         return ret;

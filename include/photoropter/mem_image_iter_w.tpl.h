@@ -69,7 +69,8 @@ namespace phtr
     {
         for (size_t i = 0; i < colour_tuple_t::num_vals; ++i)
         {
-            write_px_val(colour_tuple_t::channel_type[i], static_cast<channel_storage_t>(values.value[i]));
+            write_px_val(colour_tuple_t::channel_order_t::channel_type[i],
+                         static_cast<channel_storage_t>(values.value[i] + 0.5));
         }
     }
 
