@@ -93,13 +93,31 @@ namespace phtr
         }
 
 
-        inline void
+        void
         VignettingColourModel::
         get_correction_factors(const mem::CoordTupleRGB& coords,
                                mem::ColourTupleRGB& factors) const
         {
+            get_correction_factors_impl(coords, factors);
+        }
 
-            typedef mem::ColourTupleRGB::channel_order_t channel_order_t;
+        void
+        VignettingColourModel::
+        get_correction_factors(const mem::CoordTupleRGBA& coords,
+                               mem::ColourTupleRGBA& factors) const
+        {
+            get_correction_factors_impl(coords, factors);
+        }
+
+        template <typename coord_tuple_T>
+        void
+        VignettingColourModel::
+        get_correction_factors_impl(const coord_tuple_T& coords,
+                                    typename coord_tuple_T::channel_order_t::colour_tuple_t& factors) const
+        {
+
+            typedef typename coord_tuple_T::channel_order_t channel_order_t;
+            typedef typename channel_order_t::colour_tuple_t colour_tuple_t;
 
             double x_r = coords.x[channel_order_t::idx_red] - x0_;
             double y_r = coords.y[channel_order_t::idx_red] - y0_;

@@ -138,6 +138,90 @@ namespace phtr
 
         }; // template struct ChannelStorage<Storage::rgb_32_planar>
 
+        /**
+        * @brief Specialisation of @ref ChannelStorage for @ref Storage::rgba_8_inter.
+        */
+        template <>
+        struct ChannelStorage<Storage::rgba_8_inter>
+        {
+
+            /**
+            * @brief The storage type.
+            */
+            typedef std::uint8_t type;
+
+        }; // template struct ChannelStorage<Storage::rgba_8_inter>
+
+        /**
+        * @brief Specialisation of @ref ChannelStorage for @ref Storage::rgba_16_inter.
+        */
+        template <>
+        struct ChannelStorage<Storage::rgba_16_inter>
+        {
+
+            /**
+            * @brief The storage type.
+            */
+            typedef std::uint16_t type;
+
+        }; // template struct ChannelStorage<Storage::rgba_16_inter>
+
+        /**
+        * @brief Specialisation of @ref ChannelStorage for @ref Storage::rgba_32_inter.
+        */
+        template <>
+        struct ChannelStorage<Storage::rgba_32_inter>
+        {
+
+            /**
+            * @brief The storage type.
+            */
+            typedef std::uint32_t type;
+
+        }; // template struct ChannelStorage<Storage::rgba_32_inter>
+
+        /**
+        * @brief Specialisation of @ref ChannelStorage for @ref Storage::rgba_8_planar.
+        */
+        template <>
+        struct ChannelStorage<Storage::rgba_8_planar>
+        {
+
+            /**
+            * @brief The storage type.
+            */
+            typedef std::uint8_t type;
+
+        }; // template struct ChannelStorage<Storage::rgba_8_planar>
+
+        /**
+        * @brief Specialisation of @ref ChannelStorage for @ref Storage::rgba_16_planar.
+        */
+        template <>
+        struct ChannelStorage<Storage::rgba_16_planar>
+        {
+
+            /**
+            * @brief The storage type.
+            */
+            typedef std::uint16_t type;
+
+        }; // template struct ChannelStorage<Storage::rgba_16_planar>
+
+        /**
+        * @brief Specialisation of @ref ChannelStorage for @ref Storage::rgba_32_planar.
+        */
+        template <>
+        struct ChannelStorage<Storage::rgba_32_planar>
+        {
+
+            /**
+            * @brief The storage type.
+            */
+            typedef std::uint32_t type;
+
+        }; // template struct ChannelStorage<Storage::rgba_32_planar>
+
         ///@endcond
 
     } // namespace phtr::mem

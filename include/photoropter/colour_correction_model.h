@@ -57,6 +57,15 @@ namespace phtr
 
             public:
                 /**
+                * @brief Get the correction factors for a given position.
+                * @param[in] coords The coordinates in the source image.
+                * @param[out] factors The correction factors.
+                */
+                virtual void get_correction_factors(const mem::CoordTupleRGBA& coords,
+                                                    mem::ColourTupleRGBA& factors) const = 0;
+
+            public:
+                /**
                 * @brief Create a clone of the correction model functionoid.
                 * @return The clone.
                 */
@@ -161,6 +170,15 @@ namespace phtr
 
             public:
                 /**
+                * @brief Get the correction factors for a given position.
+                * @param[in] coords The coordinates in the source image.
+                * @param[out] factors The correction factors.
+                */
+                void get_correction_factors(const mem::CoordTupleRGBA& coords,
+                                            mem::ColourTupleRGBA& factors) const;
+
+            public:
+                /**
                 * @brief Create a clone of the correction model functionoid.
                 * @return The clone.
                 */
@@ -171,6 +189,16 @@ namespace phtr
                  * **************************************** */
 
                 ///@cond PROTECTED
+            protected:
+                /**
+                * @brief Get the correction factors for a given position (implementation).
+                * @param[in] coords The coordinates in the source image.
+                * @param[out] factors The correction factors.
+                */
+                template <typename coord_tuple_T>
+                inline void get_correction_factors_impl(const coord_tuple_T& coords,
+                                                        typename coord_tuple_T::channel_order_t::colour_tuple_t& factors) const;
+
             protected:
                 /**
                 * @brief The parameter 'a'.

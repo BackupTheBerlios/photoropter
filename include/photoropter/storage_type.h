@@ -79,7 +79,31 @@ namespace phtr
                 /**
                 * @brief 32 bit unsigned RGB, planar.
                 */
-                rgb_32_planar
+                rgb_32_planar,
+                /**
+                * @brief 8 bit unsigned RGBA, interleaved.
+                */
+                rgba_8_inter,
+                /**
+                * @brief 16 bit unsigned RGBA, interleaved.
+                */
+                rgba_16_inter,
+                /**
+                * @brief 32 bit unsigned RGBA, interleaved.
+                */
+                rgba_32_inter,
+                /**
+                * @brief 8 bit unsigned RGBA, planar.
+                */
+                rgba_8_planar,
+                /**
+                * @brief 16 bit unsigned RGBA, planar.
+                */
+                rgba_16_planar,
+                /**
+                * @brief 32 bit unsigned RGBA, planar.
+                */
+                rgba_32_planar
 
             }; // enum Storage::type
 
