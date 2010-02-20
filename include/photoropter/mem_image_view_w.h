@@ -42,10 +42,10 @@ namespace phtr
     * @details The template uses internal templates to deal efficiently with
     * different storage types. Both a region of interest (ROI) and a 'parent window'
     * size/offset can be specified to deal with different cases of sub-picture rendering.
-    * @param T The storage type (e.g. @ref mem::Storage::rgb_8_inter).
+    * @param storage_T The storage type (e.g. @ref mem::Storage::rgb_8_inter).
     */
-    template <mem::Storage::type T>
-    class MemImageViewW : public MemImageViewBase<T>
+    template <mem::Storage::type storage_T>
+    class MemImageViewW : public MemImageViewBase<storage_T>
     {
 
             /* ****************************************
@@ -56,19 +56,19 @@ namespace phtr
             /**
             * @brief The type of the internal storage info object.
             */
-            typedef typename MemImageViewBase<T>::storage_info_t storage_info_t;
+            typedef typename MemImageViewBase<storage_T>::storage_info_t storage_info_t;
 
         public:
             /**
             * @brief The channel storage type for this image (e.g., uint8_t).
             */
-            typedef typename MemImageViewBase<T>::channel_storage_t channel_storage_t;
+            typedef typename MemImageViewBase<storage_T>::channel_storage_t channel_storage_t;
 
         public:
             /**
             * @brief The type of the internal iterator.
             */
-            typedef typename phtr::MemImageIterW<T> iter_t;
+            typedef typename phtr::MemImageIterW<storage_T> iter_t;
 
         public:
             /**
@@ -97,9 +97,9 @@ namespace phtr
             * @param[in] coords The coordinates.
             * @param[in] values The channel values.
             */
-            template <typename coord_tuple_t>
-            inline void write_px_vals(const coord_tuple_t& coords,
-                                      const typename coord_tuple_t::channel_order_t::colour_tuple_t& values);
+            template <typename coord_tuple_T>
+            inline void write_px_vals(const coord_tuple_T& coords,
+                                      const typename coord_tuple_T::channel_order_t::colour_tuple_t& values);
 
         public:
             /**

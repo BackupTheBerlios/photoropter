@@ -39,10 +39,10 @@ namespace phtr
     /**
     * @brief Iterator class for write access to an image in memory.
     * @details Instances of this class are usually created by @ref MemImageViewW.
-    * @param T The storage type (e.g. @ref mem::Storage::rgb_8_inter).
+    * @param storage_T The storage type (e.g. @ref mem::Storage::rgb_8_inter).
     */
-    template <mem::Storage::type T>
-    class MemImageIterW : public MemImageIterBase<T>
+    template <mem::Storage::type storage_T>
+    class MemImageIterW : public MemImageIterBase<storage_T>
     {
 
             /* ****************************************
@@ -53,13 +53,13 @@ namespace phtr
             /**
             * @brief Struct describing the memory layout.
             */
-            typedef typename MemImageIterBase<T>::mem_layout_t mem_layout_t;
+            typedef typename MemImageIterBase<storage_T>::mem_layout_t mem_layout_t;
 
         public:
             /**
             * @brief The channel storage type for this image (e.g., uint8_t).
             */
-            typedef typename MemImageIterBase<T>::channel_storage_t channel_storage_t;
+            typedef typename MemImageIterBase<storage_T>::channel_storage_t channel_storage_t;
 
         public:
             /**
@@ -89,8 +89,8 @@ namespace phtr
             * @brief Write the given channel value to the current pixel.
             * @param[in] values The values.
             */
-            template <typename colour_tuple_t>
-            inline void write_px_vals(const colour_tuple_t& values);
+            template <typename colour_tuple_T>
+            inline void write_px_vals(const colour_tuple_T& values);
 
     }; // template class MemImageIterW<>
 

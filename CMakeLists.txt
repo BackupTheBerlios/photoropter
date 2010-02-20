@@ -155,12 +155,12 @@ set(PHTR_INCLUDES
   ${PHTR_INCLUDE_DIR}/correction_model_base.h
   ${PHTR_INCLUDE_DIR}/colour_correction_model.h
   ${PHTR_INCLUDE_DIR}/colour_correction_queue.h
-  ${PHTR_INCLUDE_DIR}/colour_correction_queue.inl.h
+  ${PHTR_INCLUDE_DIR}/colour_correction_queue.tpl.h
   ${PHTR_INCLUDE_DIR}/exception.h
   ${PHTR_INCLUDE_DIR}/gamma_func.h
   ${PHTR_INCLUDE_DIR}/geom_correction_model.h
   ${PHTR_INCLUDE_DIR}/geom_correction_queue.h
-  ${PHTR_INCLUDE_DIR}/geom_correction_queue.inl.h
+  ${PHTR_INCLUDE_DIR}/geom_correction_queue.tpl.h
   ${PHTR_INCLUDE_DIR}/image_buffer.h
   ${PHTR_INCLUDE_DIR}/image_buffer.tpl.h
   ${PHTR_INCLUDE_DIR}/image_transform.h

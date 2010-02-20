@@ -41,10 +41,10 @@ namespace phtr
     /**
     * @brief Image transformation class template.
     * @details Inside this class, the actual image transformation is performed.
-    * @param interpolator_t The interpolator class to be used.
-    * @param image_view_w_t The writing image view class to be used.
+    * @param interpolator_T The interpolator class to be used.
+    * @param image_view_w_T The writing image view class to be used.
     */
-    template < typename interpolator_t, typename image_view_w_t>
+    template < typename interpolator_T, typename image_view_w_T>
     class ImageTransform
     {
 
@@ -56,13 +56,13 @@ namespace phtr
             /**
             * @brief The type of the input image view.
             */
-            typedef typename interpolator_t::image_view_t image_view_r_t;
+            typedef typename interpolator_T::image_view_t image_view_r_t;
 
         public:
             /**
             * @brief The channel storage type.
             */
-            typedef typename image_view_w_t::storage_info_t::channel_storage_t channel_storage_t;
+            typedef typename image_view_w_T::storage_info_t::channel_storage_t channel_storage_t;
 
         public:
             /**
@@ -70,7 +70,7 @@ namespace phtr
             * @param[in] image_view_r Input image view.
             * @param[in] image_view_w Output image view.
             */
-            ImageTransform(const typename ImageTransform::image_view_r_t& image_view_r, image_view_w_t& image_view_w);
+            ImageTransform(const typename ImageTransform::image_view_r_t& image_view_r, image_view_w_T& image_view_w);
 
         public:
             /**
@@ -223,13 +223,13 @@ namespace phtr
             * @brief Internal interpolator object.
             * @details The interpolator uses the input view given in the constructor.
             */
-            interpolator_t interpolator_;
+            interpolator_T interpolator_;
 
         private:
             /**
             * @brief Internal output image view object.
             */
-            image_view_w_t& image_view_w_;
+            image_view_w_T& image_view_w_;
 
         private:
             /**
@@ -266,7 +266,7 @@ namespace phtr
             * @brief Internal object holding information on storage details
             * (needed for e.g. the maximal channel values).
             */
-            typename image_view_w_t::storage_info_t storage_info_;
+            typename image_view_w_T::storage_info_t storage_info_;
 
         private:
             /**

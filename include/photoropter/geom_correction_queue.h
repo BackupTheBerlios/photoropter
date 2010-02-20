@@ -64,11 +64,12 @@ namespace phtr
             * @brief Get the corrected source image coordinates for the current position.
             * @param[in]  dst_x   The x coordinate "seen from" the destination image.
             * @param[in]  dst_y   The y coordinate "seen from" the destination image.
-            * @param[in] coords The tuple holding the source coordinates.
+            * @param[out] coords The tuple holding the source coordinates.
             */
+            template <typename coord_tuple_T>
             inline void get_src_coords(interp_coord_t dst_x,
                                        interp_coord_t dst_y,
-                                       mem::CoordTupleRGB& coords) const;
+                                       coord_tuple_T& coords) const;
 
         public:
             /**
@@ -123,6 +124,6 @@ namespace phtr
 
 } // namespace phtr
 
-#include <photoropter/geom_correction_queue.inl.h>
+#include <photoropter/geom_correction_queue.tpl.h>
 
 #endif // __PHTR_GEOM_CORRECTION_QUEUE_H__

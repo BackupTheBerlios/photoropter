@@ -27,11 +27,11 @@ THE SOFTWARE.
 namespace phtr
 {
 
-    template <mem::Storage::type T>
-    MemImageViewW<T>::
+    template <mem::Storage::type storage_T>
+    MemImageViewW<storage_T>::
     MemImageViewW
     (void* base_addr, coord_t width, coord_t height)
-            : MemImageViewBase<T>(base_addr, width, height),
+            : MemImageViewBase<storage_T>(base_addr, width, height),
             roi_x_min_(0),
             roi_x_limit_(width),
             roi_y_min_(0),
@@ -44,9 +44,9 @@ namespace phtr
         //NIL
     }
 
-    template <mem::Storage::type T>
+    template <mem::Storage::type storage_T>
     void
-    MemImageViewW<T>::
+    MemImageViewW<storage_T>::
     write_px_val
     (Channel::type chan, coord_t x, coord_t y, channel_storage_t val)
     {
@@ -71,13 +71,13 @@ namespace phtr
         }
     }
 
-    template <mem::Storage::type T> template <typename coord_tuple_t>
+    template <mem::Storage::type storage_T> template <typename coord_tuple_T>
     void
-    MemImageViewW<T>::
+    MemImageViewW<storage_T>::
     write_px_vals
-    (const coord_tuple_t& coords, const typename coord_tuple_t::channel_order_t::colour_tuple_t& values)
+    (const coord_tuple_T& coords, const typename coord_tuple_T::channel_order_t::colour_tuple_t& values)
     {
-        typedef typename coord_tuple_t::channel_order_t channel_order_t;
+        typedef typename coord_tuple_T::channel_order_t channel_order_t;
         typedef typename channel_order_t::colour_tuple_t colour_tuple_t;
 
         for (size_t i = 0; i < colour_tuple_t::num_vals; ++i)
@@ -88,19 +88,19 @@ namespace phtr
 
     }
 
-    template <mem::Storage::type T>
-    typename MemImageViewW<T>::iter_t
-    MemImageViewW<T>::
+    template <mem::Storage::type storage_T>
+    typename MemImageViewW<storage_T>::iter_t
+    MemImageViewW<storage_T>::
     get_iter
     (coord_t x, coord_t y)
     {
-        return MemImageIterW<T>(this->base_addr_, this->get_px_offs(x, y), this->step_, this->line_step_,
-                                this->r_offs_, this->g_offs_, this->b_offs_, this->a_offs_);
+        return MemImageIterW<storage_T>(this->base_addr_, this->get_px_offs(x, y), this->step_, this->line_step_,
+                                        this->r_offs_, this->g_offs_, this->b_offs_, this->a_offs_);
     }
 
-    template <mem::Storage::type T>
+    template <mem::Storage::type storage_T>
     void
-    MemImageViewW<T>::
+    MemImageViewW<storage_T>::
     set_roi
     (coord_t x_min, coord_t y_min, coord_t x_limit, coord_t y_limit)
     {
@@ -110,9 +110,9 @@ namespace phtr
         roi_y_limit_ = y_limit;
     }
 
-    template <mem::Storage::type T>
+    template <mem::Storage::type storage_T>
     void
-    MemImageViewW<T>::
+    MemImageViewW<storage_T>::
     get_roi
     (coord_t& x_min, coord_t& y_min, coord_t& x_limit, coord_t& y_limit)
     {
@@ -122,9 +122,9 @@ namespace phtr
         y_limit = roi_y_limit_;
     }
 
-    template <mem::Storage::type T>
+    template <mem::Storage::type storage_T>
     void
-    MemImageViewW<T>::
+    MemImageViewW<storage_T>::
     set_parent_window(coord_t offs_x, coord_t offs_y,
                       coord_t width, coord_t height)
     {
@@ -134,9 +134,9 @@ namespace phtr
         parent_height_ = height;
     }
 
-    template <mem::Storage::type T>
+    template <mem::Storage::type storage_T>
     void
-    MemImageViewW<T>::
+    MemImageViewW<storage_T>::
     get_parent_window(coord_t& offs_x, coord_t& offs_y,
                       coord_t& width, coord_t& height)
     {

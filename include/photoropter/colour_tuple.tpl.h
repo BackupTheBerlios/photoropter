@@ -37,10 +37,10 @@ namespace phtr
          * Generic
          * **************************************** */
 
-        template <typename channel_order_T, int num_vals_T>
+        template <typename channel_order_T, size_t num_vals_T>
         const size_t ColourTuple<channel_order_T, num_vals_T>::num_vals = num_vals_T;
 
-        template <typename channel_order_T, int num_vals_T>
+        template <typename channel_order_T, size_t num_vals_T>
         ColourTuple<channel_order_T, num_vals_T>::
         ColourTuple(const ColourTuple<channel_order_T, num_vals_T>& orig)
         {
@@ -50,7 +50,7 @@ namespace phtr
             }
         }
 
-        template <typename channel_order_T, int num_vals_T>
+        template <typename channel_order_T, size_t num_vals_T>
         ColourTuple<channel_order_T, num_vals_T>&
         ColourTuple<channel_order_T, num_vals_T>::
         operator=(const ColourTuple<channel_order_T, num_vals_T>& orig)
@@ -63,7 +63,7 @@ namespace phtr
             return *this;
         }
 
-        template <typename channel_order_T, int num_vals_T>
+        template <typename channel_order_T, size_t num_vals_T>
         void
         ColourTuple<channel_order_T, num_vals_T>::
         clear()
@@ -74,7 +74,7 @@ namespace phtr
             }
         }
 
-        template <typename channel_order_T, int num_vals_T>
+        template <typename channel_order_T, size_t num_vals_T>
         ColourTuple<channel_order_T, num_vals_T>&
         ColourTuple<channel_order_T, num_vals_T>::
         operator*=(const ColourTuple<channel_order_T, num_vals_T>& other)
@@ -87,7 +87,7 @@ namespace phtr
             return *this;
         }
 
-        template <typename channel_order_T, int num_vals_T>
+        template <typename channel_order_T, size_t num_vals_T>
         ColourTuple<channel_order_T, num_vals_T>&
         ColourTuple<channel_order_T, num_vals_T>::
         operator*=(interp_channel_t factor)
@@ -100,7 +100,7 @@ namespace phtr
             return *this;
         }
 
-        template <typename channel_order_T, int num_vals_T>
+        template <typename channel_order_T, size_t num_vals_T>
         ColourTuple<channel_order_T, num_vals_T>&
         ColourTuple<channel_order_T, num_vals_T>::
         operator+=(const ColourTuple<channel_order_T, num_vals_T>& other)
@@ -113,7 +113,7 @@ namespace phtr
             return *this;
         }
 
-        template <typename channel_order_T, int num_vals_T>
+        template <typename channel_order_T, size_t num_vals_T>
         ColourTuple<channel_order_T, num_vals_T>
         operator*(const  ColourTuple<channel_order_T, num_vals_T>& tuple, interp_channel_t factor)
         {
@@ -127,7 +127,7 @@ namespace phtr
             return ret;
         }
 
-        template <typename channel_order_T, int num_vals_T>
+        template <typename channel_order_T, size_t num_vals_T>
         ColourTuple<channel_order_T, num_vals_T>
         operator*(interp_channel_t factor, const ColourTuple<channel_order_T, num_vals_T>& tuple)
         {
@@ -141,7 +141,7 @@ namespace phtr
             return ret;
         }
 
-        template <typename channel_order_T, int num_vals_T>
+        template <typename channel_order_T, size_t num_vals_T>
         ColourTuple<channel_order_T, num_vals_T>
         operator*(const ColourTuple<channel_order_T, num_vals_T>& tuple1,
                   const ColourTuple<channel_order_T, num_vals_T>& tuple2)
@@ -156,7 +156,7 @@ namespace phtr
             return ret;
         }
 
-        template <typename channel_order_T, int num_vals_T>
+        template <typename channel_order_T, size_t num_vals_T>
         ColourTuple<channel_order_T, num_vals_T>
         operator+(const ColourTuple<channel_order_T, num_vals_T>& tuple1,
                   const ColourTuple<channel_order_T, num_vals_T>& tuple2)

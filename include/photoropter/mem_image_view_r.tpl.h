@@ -27,19 +27,19 @@ THE SOFTWARE.
 namespace phtr
 {
 
-    template <mem::Storage::type T>
-    MemImageViewR<T>::
+    template <mem::Storage::type storage_T>
+    MemImageViewR<storage_T>::
     MemImageViewR
     (const void* base_addr, coord_t width, coord_t height)
-            : MemImageViewBase<T>(const_cast<void*>(base_addr), width, height)
+            : MemImageViewBase<storage_T>(const_cast<void*>(base_addr), width, height)
     {
         aspect_ratio_ = static_cast<interp_coord_t>(this->width()) /
                         static_cast<interp_coord_t>(this->height());
     }
 
-    template <mem::Storage::type T>
-    typename MemImageViewR<T>::channel_storage_t
-    MemImageViewR<T>::
+    template <mem::Storage::type storage_T>
+    typename MemImageViewR<storage_T>::channel_storage_t
+    MemImageViewR<storage_T>::
     get_px_val
     (Channel::type chan, coord_t x, coord_t y) const
     {
@@ -64,26 +64,26 @@ namespace phtr
         }
     }
 
-    template <mem::Storage::type T>
-    typename MemImageViewR<T>::iter_t
-    MemImageViewR<T>::
+    template <mem::Storage::type storage_T>
+    typename MemImageViewR<storage_T>::iter_t
+    MemImageViewR<storage_T>::
     get_iter
     (coord_t x, coord_t y) const
     {
-        return MemImageIterR<T>(this->base_addr_, this->get_px_offs(x, y), this->step_, this->line_step_,
-                                this->r_offs_, this->g_offs_, this->b_offs_, this->a_offs_);
+        return MemImageIterR<storage_T>(this->base_addr_, this->get_px_offs(x, y), this->step_, this->line_step_,
+                                        this->r_offs_, this->g_offs_, this->b_offs_, this->a_offs_);
     }
 
-    template <mem::Storage::type T>
+    template <mem::Storage::type storage_T>
     void
-    MemImageViewR<T>::set_aspect_ratio(interp_coord_t aspect_ratio)
+    MemImageViewR<storage_T>::set_aspect_ratio(interp_coord_t aspect_ratio)
     {
         aspect_ratio_ = aspect_ratio;
     }
 
-    template <mem::Storage::type T>
+    template <mem::Storage::type storage_T>
     interp_coord_t
-    MemImageViewR<T>::aspect_ratio() const
+    MemImageViewR<storage_T>::aspect_ratio() const
     {
         return aspect_ratio_;
     }

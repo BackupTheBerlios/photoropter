@@ -46,7 +46,7 @@ namespace phtr
         /**
          * @brief A tuple of RGB(A) channel/colour values.
          */
-        template <typename channel_order_T, int num_vals_T>
+        template <typename channel_order_T, size_t num_vals_T>
         struct ColourTuple
         {
             /**
@@ -130,7 +130,7 @@ namespace phtr
          * @param[in] factor The multiplication factor.
          * @return New object containing the result.
          */
-        template <typename channel_order_T, int num_vals_T>
+        template <typename channel_order_T, size_t num_vals_T>
         inline ColourTuple<channel_order_T, num_vals_T>
         operator*(const ColourTuple<channel_order_T, num_vals_T>& tuple, interp_channel_t factor);
 
@@ -140,7 +140,7 @@ namespace phtr
          * @param[in] tuple The input tuple.
          * @return New object containing the result.
          */
-        template <typename channel_order_T, int num_vals_T>
+        template <typename channel_order_T, size_t num_vals_T>
         inline ColourTuple<channel_order_T, num_vals_T>
         operator*(interp_channel_t factor, const ColourTuple<channel_order_T, num_vals_T>& tuple);
 
@@ -151,7 +151,7 @@ namespace phtr
          * @param[in] tuple2 The second input tuple.
          * @return New object containing the result.
          */
-        template <typename channel_order_T, int num_vals_T>
+        template <typename channel_order_T, size_t num_vals_T>
         inline ColourTuple<channel_order_T, num_vals_T>
         operator*(const ColourTuple<channel_order_T, num_vals_T>& tuple1,
                   const ColourTuple<channel_order_T, num_vals_T>& tuple2);
@@ -162,7 +162,7 @@ namespace phtr
          * @param[in] tuple2 The second input tuple.
          * @return New object containing the result.
          */
-        template <typename channel_order_T, int num_vals_T>
+        template <typename channel_order_T, size_t num_vals_T>
         inline ColourTuple<channel_order_T, num_vals_T>
         operator+(const ColourTuple<channel_order_T, num_vals_T>& tuple1,
                   const ColourTuple<channel_order_T, num_vals_T>& tuple2);

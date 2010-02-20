@@ -29,25 +29,25 @@ THE SOFTWARE.
 namespace phtr
 {
 
-    template <typename view_t>
-    InterpolatorNN<view_t>::InterpolatorNN
-    (const view_t& image_view)
-            : InterpolatorBase<view_t>(image_view)
+    template <typename view_T>
+    InterpolatorNN<view_T>::InterpolatorNN
+    (const view_T& image_view)
+            : InterpolatorBase<view_T>(image_view)
     {
         //NIL
     }
 
-    template <typename view_t>
-    InterpolatorNN<view_t>::InterpolatorNN
-    (const view_t& image_view, interp_coord_t aspect_ratio)
-            : InterpolatorBase<view_t>(image_view, aspect_ratio)
+    template <typename view_T>
+    InterpolatorNN<view_T>::InterpolatorNN
+    (const view_T& image_view, interp_coord_t aspect_ratio)
+            : InterpolatorBase<view_T>(image_view, aspect_ratio)
     {
         //NIL
     }
 
-    template <typename view_t>
+    template <typename view_T>
     interp_channel_t
-    InterpolatorNN<view_t>::
+    InterpolatorNN<view_T>::
     get_px_val
     (Channel::type chan, interp_coord_t x, interp_coord_t y) const
     {
@@ -65,18 +65,18 @@ namespace phtr
                                             static_cast<coord_t>(y_scaled + 0.5));
     }
 
-    template <typename view_t> template <typename coord_tuple_t>
-    typename coord_tuple_t::channel_order_t::colour_tuple_t
-    InterpolatorNN<view_t>::
-    get_px_vals(const coord_tuple_t& coords) const
+    template <typename view_T> template <typename coord_tuple_T>
+    typename coord_tuple_T::channel_order_t::colour_tuple_t
+    InterpolatorNN<view_T>::
+    get_px_vals(const coord_tuple_T& coords) const
     {
-        typedef typename coord_tuple_t::channel_order_t::colour_tuple_t colour_tuple_t;
+        typedef typename coord_tuple_T::channel_order_t::colour_tuple_t colour_tuple_t;
 
         colour_tuple_t ret;
 
         for (size_t i = 0; i < colour_tuple_t::num_vals; ++i)
         {
-            ret.value[i] = get_px_val(coord_tuple_t::channel_order_t::channel_type[i], coords.x[i], coords.y[i]);
+            ret.value[i] = get_px_val(coord_tuple_T::channel_order_t::channel_type[i], coords.x[i], coords.y[i]);
         }
 
         return ret;

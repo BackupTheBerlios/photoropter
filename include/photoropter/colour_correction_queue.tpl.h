@@ -27,8 +27,9 @@ THE SOFTWARE.
 namespace phtr
 {
 
-    void ColourCorrectionQueue::get_correction_factors(const mem::CoordTupleRGB& coords,
-            mem::ColourTupleRGB& factors) const
+    template <typename coord_tuple_T>
+    void ColourCorrectionQueue::get_correction_factors(const coord_tuple_T& coords,
+            typename coord_tuple_T::channel_order_t::colour_tuple_t& factors) const
     {
 
         for (size_t i = 0; i < mem::ColourTupleRGB::num_vals; ++i)

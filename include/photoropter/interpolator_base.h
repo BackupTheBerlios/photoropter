@@ -36,9 +36,9 @@ namespace phtr
     * @brief Image interpolation base class.
     * @details This stub (among other things) deals with the image's aspect ratio and
     * contains the image view reference. It is not supposed to be used directly.
-    * @param view_t  The image view that is used for reading data.
+    * @param view_T The image view that is used for reading data.
     */
-    template <typename view_t>
+    template <typename view_T>
     class InterpolatorBase
     {
 
@@ -50,7 +50,7 @@ namespace phtr
             /**
             * @brief The type of the image view used.
             */
-            typedef view_t image_view_t;
+            typedef view_T image_view_t;
 
         public:
             /**
@@ -71,7 +71,7 @@ namespace phtr
             * image, i.e. square pixels are assumed.
             * @param[in] image_view The image view which will be used for reading image data.
             */
-            InterpolatorBase(const view_t& image_view);
+            InterpolatorBase(const view_T& image_view);
 
         protected:
             /**
@@ -79,14 +79,14 @@ namespace phtr
             * @param[in] image_view   The image view which will be used for reading image data.
             * @param[in] aspect_ratio The aspect ratio of the image.
             */
-            InterpolatorBase(const view_t& image_view, interp_coord_t aspect_ratio);
+            InterpolatorBase(const view_T& image_view, interp_coord_t aspect_ratio);
 
         protected:
             /**
             * @brief Pointer to the internal image view instance that is used
             * for image access.
             */
-            const view_t& image_view_;
+            const view_T& image_view_;
 
         protected:
             /**

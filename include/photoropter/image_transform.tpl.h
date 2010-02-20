@@ -27,10 +27,10 @@ THE SOFTWARE.
 namespace phtr
 {
 
-    template <typename interpolator_t, typename image_view_w_t>
-    ImageTransform<interpolator_t, image_view_w_t>::
+    template <typename interpolator_T, typename image_view_w_T>
+    ImageTransform<interpolator_T, image_view_w_T>::
     ImageTransform
-    (const typename ImageTransform::image_view_r_t& image_view_r, image_view_w_t& image_view_w)
+    (const typename ImageTransform::image_view_r_t& image_view_r, image_view_w_T& image_view_w)
             : interpolator_(image_view_r),
             image_view_w_(image_view_w),
             oversampling_(1),
@@ -48,9 +48,9 @@ namespace phtr
         set_gamma(gamma::GammaSRGB());
     }
 
-    template <typename interpolator_t, typename image_view_w_t>
+    template <typename interpolator_T, typename image_view_w_T>
     void
-    ImageTransform<interpolator_t, image_view_w_t>::
+    ImageTransform<interpolator_T, image_view_w_T>::
     do_transform()
     {
         // oversampling parameters
@@ -96,7 +96,7 @@ namespace phtr
         {
 
             // write-access iterator for this line
-            typename image_view_w_t::iter_t iter(image_view_w_.get_iter(i0, j));
+            typename image_view_w_T::iter_t iter(image_view_w_.get_iter(i0, j));
 
             for (i = i0; i < i_limit; ++i) // pixel loop
             {
@@ -164,33 +164,33 @@ namespace phtr
 
     } //  ImageTransform<...>::do_transform()
 
-    template <typename interpolator_t, typename image_view_w_t>
+    template <typename interpolator_T, typename image_view_w_T>
     GeomCorrectionQueue&
-    ImageTransform<interpolator_t, image_view_w_t>::
+    ImageTransform<interpolator_T, image_view_w_T>::
     geom_queue()
     {
         return geom_queue_;
     }
 
-    template <typename interpolator_t, typename image_view_w_t>
+    template <typename interpolator_T, typename image_view_w_T>
     ColourCorrectionQueue&
-    ImageTransform<interpolator_t, image_view_w_t>::
+    ImageTransform<interpolator_T, image_view_w_T>::
     colour_queue()
     {
         return colour_queue_;
     }
 
-    template <typename interpolator_t, typename image_view_w_t>
+    template <typename interpolator_T, typename image_view_w_T>
     void
-    ImageTransform<interpolator_t, image_view_w_t>::
+    ImageTransform<interpolator_T, image_view_w_T>::
     set_gamma(const gamma::IGammaFunc& gam_func)
     {
         set_gamma(gam_func, gam_func);
     }
 
-    template <typename interpolator_t, typename image_view_w_t>
+    template <typename interpolator_T, typename image_view_w_T>
     void
-    ImageTransform<interpolator_t, image_view_w_t>::
+    ImageTransform<interpolator_T, image_view_w_T>::
     set_gamma(const gamma::IGammaFunc& gam_func, const gamma::IGammaFunc& inv_gam_func)
     {
         // prepare gamma lookup tables
@@ -228,35 +228,35 @@ namespace phtr
 
     }
 
-    template <typename interpolator_t, typename image_view_w_t>
+    template <typename interpolator_T, typename image_view_w_T>
     void
-    ImageTransform<interpolator_t, image_view_w_t>::
+    ImageTransform<interpolator_T, image_view_w_T>::
     set_gamma_precision(unsigned int num)
     {
         assert(gam_point_new_num_ >= 2);
         gam_point_new_num_ = num;
     }
 
-    template <typename interpolator_t, typename image_view_w_t>
+    template <typename interpolator_T, typename image_view_w_T>
     void
-    ImageTransform<interpolator_t, image_view_w_t>::
+    ImageTransform<interpolator_T, image_view_w_T>::
     enable_gamma(bool do_enable)
     {
         do_gamma_ = do_inv_gamma_ = do_enable;
     }
 
-    template <typename interpolator_t, typename image_view_w_t>
+    template <typename interpolator_T, typename image_view_w_T>
     void
-    ImageTransform<interpolator_t, image_view_w_t>::
+    ImageTransform<interpolator_T, image_view_w_T>::
     set_sampling_fact(unsigned int fact)
     {
         assert(fact > 0);
         oversampling_ = fact;
     }
 
-    template <typename interpolator_t, typename image_view_w_t>
+    template <typename interpolator_T, typename image_view_w_T>
     interp_channel_t
-    ImageTransform<interpolator_t, image_view_w_t>::
+    ImageTransform<interpolator_T, image_view_w_T>::
     clip_val(const interp_channel_t& val) const
     {
         interp_channel_t ret(val);
@@ -273,18 +273,18 @@ namespace phtr
         return ret;
     }
 
-    template <typename interpolator_t, typename image_view_w_t>
+    template <typename interpolator_T, typename image_view_w_T>
     interp_channel_t
-    ImageTransform<interpolator_t, image_view_w_t>::
+    ImageTransform<interpolator_T, image_view_w_T>::
     normalise(interp_channel_t value) const
     {
         return static_cast<interp_channel_t>(
                    gamma((value - min_chan_val_) / (max_chan_val_ - min_chan_val_)));
     }
 
-    template <typename interpolator_t, typename image_view_w_t>
+    template <typename interpolator_T, typename image_view_w_T>
     mem::ColourTupleRGB
-    ImageTransform<interpolator_t, image_view_w_t>::
+    ImageTransform<interpolator_T, image_view_w_T>::
     normalise(const mem::ColourTupleRGB& values) const
     {
         mem::ColourTupleRGB ret;
@@ -297,18 +297,18 @@ namespace phtr
         return ret;
     }
 
-    template <typename interpolator_t, typename image_view_w_t>
+    template <typename interpolator_T, typename image_view_w_T>
     interp_channel_t
-    ImageTransform<interpolator_t, image_view_w_t>::
+    ImageTransform<interpolator_T, image_view_w_T>::
     unnormalise(interp_channel_t value) const
     {
         return static_cast<interp_channel_t>(clip_val(inv_gamma(value)))
                * (max_chan_val_ - min_chan_val_) + min_chan_val_;
     }
 
-    template <typename interpolator_t, typename image_view_w_t>
+    template <typename interpolator_T, typename image_view_w_T>
     mem::ColourTupleRGB
-    ImageTransform<interpolator_t, image_view_w_t>::
+    ImageTransform<interpolator_T, image_view_w_T>::
     unnormalise(const mem::ColourTupleRGB& values) const
     {
         mem::ColourTupleRGB ret;
@@ -321,9 +321,9 @@ namespace phtr
         return ret;
     }
 
-    template <typename interpolator_t, typename image_view_w_t>
+    template <typename interpolator_T, typename image_view_w_T>
     double
-    ImageTransform<interpolator_t, image_view_w_t>::
+    ImageTransform<interpolator_T, image_view_w_T>::
     gamma(double value) const
     {
 
@@ -353,9 +353,9 @@ namespace phtr
 
     }
 
-    template <typename interpolator_t, typename image_view_w_t>
+    template <typename interpolator_T, typename image_view_w_T>
     double
-    ImageTransform<interpolator_t, image_view_w_t>::
+    ImageTransform<interpolator_T, image_view_w_T>::
     inv_gamma(double value) const
     {
 

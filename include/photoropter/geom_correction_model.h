@@ -54,6 +54,14 @@ namespace phtr
 
             public:
                 /**
+                * @brief Get the corrected source image coordinates for the current position.
+                * @note This function changes the input tuple.
+                * @param[in,out] coords The coordinates tuple.
+                */
+                virtual void get_src_coords(mem::CoordTupleRGBA& coords) const = 0;
+
+            public:
+                /**
                 * @brief Create a clone of the correction model functionoid.
                 * @return The clone.
                 */
@@ -171,6 +179,14 @@ namespace phtr
 
             public:
                 /**
+                * @brief Get the corrected source image coordinates for the current position.
+                * @note This function changes the input tuple.
+                * @param[in,out] coords The coordinates tuple.
+                */
+                void get_src_coords(mem::CoordTupleRGBA& coords) const;
+
+            public:
+                /**
                 * @brief Create a clone of the correction model functionoid.
                 * @return The clone.
                 */
@@ -179,6 +195,15 @@ namespace phtr
                 /* ****************************************
                  * internals
                  * **************************************** */
+
+            private:
+                /**
+                * @brief Get the corrected source image coordinates for the current position (implementation).
+                * @note This function changes the input tuple.
+                * @param[in,out] coords The coordinates tuple.
+                */
+                template <typename coord_tuple_T>
+                inline void get_src_coords_impl(coord_tuple_T& coords) const;
 
             private:
                 /**

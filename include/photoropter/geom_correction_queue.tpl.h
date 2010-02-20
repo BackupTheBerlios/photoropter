@@ -27,9 +27,10 @@ THE SOFTWARE.
 namespace phtr
 {
 
+    template <typename coord_tuple_T>
     void
     GeomCorrectionQueue::
-    get_src_coords(interp_coord_t dst_x, interp_coord_t dst_y, mem::CoordTupleRGB& coords) const
+    get_src_coords(interp_coord_t dst_x, interp_coord_t dst_y, coord_tuple_T& coords) const
     {
         for (size_t i = 0; i < mem::ColourTupleRGB::num_vals; ++i)
         {

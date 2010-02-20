@@ -41,10 +41,10 @@ namespace phtr
     * @details The image is represented using floating-point coordinates ranging from
     * -1.0 to 1.0 on the y axis. (0.0, 0.0) represents the image's centre, (-aspect,-1.0)
     * the upper left corner.
-    * @param view_t  The image view that is used for reading data.
+    * @param view_T  The image view that is used for reading data.
     */
-    template <typename view_t>
-    class InterpolatorBilinear : public InterpolatorBase<view_t>
+    template <typename view_T>
+    class InterpolatorBilinear : public InterpolatorBase<view_T>
     {
             /* ****************************************
              * public interface
@@ -57,7 +57,7 @@ namespace phtr
             * image, i.e. square pixels are assumed.
             * @param[in] image_view The image view which will be used for reading image data.
             */
-            InterpolatorBilinear(const view_t& image_view);
+            InterpolatorBilinear(const view_T& image_view);
 
         public:
             /**
@@ -65,7 +65,7 @@ namespace phtr
             * @param[in] image_view   The image view which will be used for reading image data.
             * @param[in] aspect_ratio The aspect ratio of the image.
             */
-            InterpolatorBilinear(const view_t& image_view, interp_coord_t aspect_ratio);
+            InterpolatorBilinear(const view_T& image_view, interp_coord_t aspect_ratio);
 
         public:
             /**
@@ -83,8 +83,8 @@ namespace phtr
              * @param[in] coords The coordinates tuple.
              * @return The channel values.
              */
-            template <typename coord_tuple_t>
-            inline typename coord_tuple_t::channel_order_t::colour_tuple_t get_px_vals(const coord_tuple_t& coords) const;
+            template <typename coord_tuple_T>
+            inline typename coord_tuple_T::channel_order_t::colour_tuple_t get_px_vals(const coord_tuple_T& coords) const;
 
 
     }; // class InterpolatorBilinear<...>

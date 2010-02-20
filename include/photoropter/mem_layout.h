@@ -42,10 +42,10 @@ namespace phtr
 
         ///@cond PROTECTED
 
-        template <typename channel_order_T, size_t num_vals>
+        // necessary forward declarations
+        template <typename channel_order_T, size_t num_vals_T>
         struct CoordTuple;
-
-        template <typename channel_order_T, int num_vals_T>
+        template <typename channel_order_T, size_t num_vals_T>
         struct ColourTuple;
 
         /**
@@ -347,9 +347,9 @@ namespace phtr
         * specialised for every supported type. In each specialisation, the following
         * static member functions have to be provided: step, r_offs, g_offs, b_offs.
         * See the existing specialisations for example code.
-        * @param T The storage type (e.g. @ref Storage::rgb_8_inter).
+        * @param storage_T The storage type (e.g. @ref Storage::rgb_8_inter).
         */
-        template <Storage::type T>
+        template <Storage::type storage_T>
         struct MemLayout
         {
             // provoke a compile-time error whenever this unspecialised version is used

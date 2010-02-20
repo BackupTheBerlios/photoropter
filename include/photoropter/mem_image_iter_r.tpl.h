@@ -27,19 +27,19 @@ THE SOFTWARE.
 namespace phtr
 {
 
-    template <mem::Storage::type T>
-    MemImageIterR<T>::MemImageIterR
+    template <mem::Storage::type storage_T>
+    MemImageIterR<storage_T>::MemImageIterR
     (channel_storage_t* base_addr, size_t px_offs, size_t step, size_t line_step,
      size_t r_offs, size_t g_offs, size_t b_offs, size_t a_offs)
-            : MemImageIterBase<T>(const_cast<channel_storage_t*>(base_addr), px_offs,
-                                  step, line_step, r_offs, g_offs, b_offs, a_offs)
+            : MemImageIterBase<storage_T>(const_cast<channel_storage_t*>(base_addr), px_offs,
+                                          step, line_step, r_offs, g_offs, b_offs, a_offs)
     {
         //NIL
     }
 
-    template <mem::Storage::type T>
-    typename MemImageIterR<T>::channel_storage_t
-    MemImageIterR<T>::get_px_val(Channel::type channel)
+    template <mem::Storage::type storage_T>
+    typename MemImageIterR<storage_T>::channel_storage_t
+    MemImageIterR<storage_T>::get_px_val(Channel::type channel)
     {
         switch (channel)
         {

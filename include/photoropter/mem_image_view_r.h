@@ -39,10 +39,10 @@ namespace phtr
     *  memory position.
     * @details The template uses internal templates to deal efficiently with
     * different storage types.
-    * @param T The storage type (e.g. @ref mem::Storage::rgb_8_inter).
+    * @param storage_T The storage type (e.g. @ref mem::Storage::rgb_8_inter).
     */
-    template <mem::Storage::type T>
-    class MemImageViewR : public MemImageViewBase<T>
+    template <mem::Storage::type storage_T>
+    class MemImageViewR : public MemImageViewBase<storage_T>
     {
 
             /* ****************************************
@@ -53,19 +53,19 @@ namespace phtr
             /**
             * @brief The type of the internal storage info object.
             */
-            typedef typename MemImageViewBase<T>::storage_info_t storage_info_t;
+            typedef typename MemImageViewBase<storage_T>::storage_info_t storage_info_t;
 
         public:
             /**
             * @brief The channel storage type for this image (e.g., uint8_t).
             */
-            typedef typename MemImageViewBase<T>::channel_storage_t channel_storage_t;
+            typedef typename MemImageViewBase<storage_T>::channel_storage_t channel_storage_t;
 
         public:
             /**
             * @brief The type of the internal iterator.
             */
-            typedef typename phtr::MemImageIterR<T> iter_t;
+            typedef typename phtr::MemImageIterR<storage_T> iter_t;
 
         public:
             /**

@@ -45,20 +45,20 @@ namespace phtr
         /**
         * @brief Template providing details on the memory storage of a given
         * image type.
-        * @param T The storage type (e.g. @ref Storage::rgb_8_inter).
+        * @param storage_T The storage type (e.g. @ref Storage::rgb_8_inter).
         */
-        template <Storage::type T>
+        template <Storage::type storage_T>
         struct MemStorageInfo
         {
             /**
             * @brief The channel storage type (e.g., uint8_t).
             */
-            typedef typename ChannelStorage<T>::type channel_storage_t;
+            typedef typename ChannelStorage<storage_T>::type channel_storage_t;
 
             /**
             * @brief The memory layout.
             */
-            typedef mem::MemLayout<T> mem_layout_t;
+            typedef mem::MemLayout<storage_T> mem_layout_t;
 
             /**
             * @brief Constructor.
@@ -68,8 +68,8 @@ namespace phtr
             MemStorageInfo(coord_t width, coord_t height)
                     : width(width),
                     height(height),
-                    min_val(ChannelRange<T>::min()),
-                    max_val(ChannelRange<T>::max()),
+                    min_val(ChannelRange<storage_T>::min()),
+                    max_val(ChannelRange<storage_T>::max()),
                     step(mem_layout_t::step(width, height)),
                     line_step(mem_layout_t::line_step(width, height)),
                     num_channels(mem_layout_t::num_channels()),

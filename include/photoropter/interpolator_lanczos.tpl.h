@@ -27,30 +27,30 @@ THE SOFTWARE.
 namespace phtr
 {
 
-    template <typename view_t>
+    template <typename view_T>
     const double
-    InterpolatorLanczos<view_t>::pi_ = 3.14159265358979323846;
+    InterpolatorLanczos<view_T>::pi_ = 3.14159265358979323846;
 
-    template <typename view_t>
-    InterpolatorLanczos<view_t>::InterpolatorLanczos
-    (const view_t& image_view)
-            : InterpolatorBase<view_t>(image_view),
+    template <typename view_T>
+    InterpolatorLanczos<view_T>::InterpolatorLanczos
+    (const view_T& image_view)
+            : InterpolatorBase<view_T>(image_view),
             support_(2),
             resolution_(1024)
     {
         precalc_kernel();
     }
 
-    template <typename view_t>
-    InterpolatorLanczos<view_t>::InterpolatorLanczos
-    (const view_t& image_view, interp_coord_t aspect_ratio)
-            : InterpolatorBase<view_t>(image_view, aspect_ratio)
+    template <typename view_T>
+    InterpolatorLanczos<view_T>::InterpolatorLanczos
+    (const view_T& image_view, interp_coord_t aspect_ratio)
+            : InterpolatorBase<view_T>(image_view, aspect_ratio)
     {
     }
 
-    template <typename view_t>
+    template <typename view_T>
     interp_channel_t
-    InterpolatorLanczos<view_t>::
+    InterpolatorLanczos<view_T>::
     get_px_val
     (Channel::type chan, interp_coord_t x, interp_coord_t y) const
     {
@@ -97,7 +97,7 @@ namespace phtr
         interp_channel_t sum_val(0); // sum of values so far
         double sum_fact(0); // sum of Lanczos weight factors (for normalisation)
         double fact(0); // current Lanczos weight factor
-        typename view_t::iter_t iter(this->image_view_.get_iter(0, 0));
+        typename view_T::iter_t iter(this->image_view_.get_iter(0, 0));
 
         long i(0);
         long j(0);
@@ -126,26 +126,26 @@ namespace phtr
 
     }
 
-    template <typename view_t> template <typename coord_tuple_t>
-    typename coord_tuple_t::channel_order_t::colour_tuple_t
-    InterpolatorLanczos<view_t>::
-    get_px_vals(const coord_tuple_t& coords) const
+    template <typename view_T> template <typename coord_tuple_T>
+    typename coord_tuple_T::channel_order_t::colour_tuple_t
+    InterpolatorLanczos<view_T>::
+    get_px_vals(const coord_tuple_T& coords) const
     {
-        typedef typename coord_tuple_t::channel_order_t::colour_tuple_t colour_tuple_t;
+        typedef typename coord_tuple_T::channel_order_t::colour_tuple_t colour_tuple_t;
 
         colour_tuple_t ret;
 
         for (size_t i = 0; i < colour_tuple_t::num_vals; ++i)
         {
-            ret.value[i] = get_px_val(coord_tuple_t::channel_order_t::channel_type[i], coords.x[i], coords.y[i]);
+            ret.value[i] = get_px_val(coord_tuple_T::channel_order_t::channel_type[i], coords.x[i], coords.y[i]);
         }
 
         return ret;
     }
 
-    template <typename view_t>
+    template <typename view_T>
     void
-    InterpolatorLanczos<view_t>::
+    InterpolatorLanczos<view_T>::
     precalc_kernel()
     {
         unsigned int num_val = 2 * resolution_ * support_ + 1;
@@ -163,9 +163,9 @@ namespace phtr
         }
     }
 
-    template <typename view_t>
+    template <typename view_T>
     double
-    InterpolatorLanczos<view_t>::
+    InterpolatorLanczos<view_T>::
     sinc(double x)
     {
         if (x == 0.0)

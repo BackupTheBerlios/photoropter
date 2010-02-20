@@ -31,9 +31,9 @@ namespace phtr
      * base
      * **************************************** */
 
-    template <typename view_t>
-    InterpolatorBase<view_t>::InterpolatorBase
-    (const view_t& image_view)
+    template <typename view_T>
+    InterpolatorBase<view_T>::InterpolatorBase
+    (const view_T& image_view)
             : image_view_(image_view),
             width_(image_view_.width()),
             height_(image_view_.height()),
@@ -45,9 +45,9 @@ namespace phtr
         //NIL
     }
 
-    template <typename view_t>
-    InterpolatorBase<view_t>::InterpolatorBase
-    (const view_t& image_view, interp_coord_t aspect_ratio)
+    template <typename view_T>
+    InterpolatorBase<view_T>::InterpolatorBase
+    (const view_T& image_view, interp_coord_t aspect_ratio)
             : image_view_(image_view),
             width_(image_view_.width()),
             height_(image_view_.height()),
@@ -59,8 +59,8 @@ namespace phtr
         //NIL
     }
 
-    template <typename view_t>
-    interp_coord_t InterpolatorBase<view_t>::aspect_ratio() const
+    template <typename view_T>
+    interp_coord_t InterpolatorBase<view_T>::aspect_ratio() const
     {
         return aspect_ratio_;
     }

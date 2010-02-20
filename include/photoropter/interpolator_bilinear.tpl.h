@@ -27,23 +27,23 @@ THE SOFTWARE.
 namespace phtr
 {
 
-    template <typename view_t>
-    InterpolatorBilinear<view_t>::InterpolatorBilinear
-    (const view_t& image_view)
-            : InterpolatorBase<view_t>(image_view)
+    template <typename view_T>
+    InterpolatorBilinear<view_T>::InterpolatorBilinear
+    (const view_T& image_view)
+            : InterpolatorBase<view_T>(image_view)
     {
     }
 
-    template <typename view_t>
-    InterpolatorBilinear<view_t>::InterpolatorBilinear
-    (const view_t& image_view, interp_coord_t aspect_ratio)
-            : InterpolatorBase<view_t>(image_view, aspect_ratio)
+    template <typename view_T>
+    InterpolatorBilinear<view_T>::InterpolatorBilinear
+    (const view_T& image_view, interp_coord_t aspect_ratio)
+            : InterpolatorBase<view_T>(image_view, aspect_ratio)
     {
     }
 
-    template <typename view_t>
+    template <typename view_T>
     interp_channel_t
-    InterpolatorBilinear<view_t>::
+    InterpolatorBilinear<view_T>::
     get_px_val
     (Channel::type chan, interp_coord_t x, interp_coord_t y) const
     {
@@ -62,7 +62,7 @@ namespace phtr
         interp_coord_t x_2 = x_1 + 1;
         interp_coord_t y_2 = y_1 + 1;
 
-        typename view_t::iter_t iter(
+        typename view_T::iter_t iter(
             this->image_view_.get_iter(
                 static_cast<coord_t>(x_1), static_cast<coord_t>(y_1)));
 
@@ -119,9 +119,9 @@ namespace phtr
         return interp_val;
     }
 
-    template <typename view_t> template <typename coord_tuple_t>
+    template <typename view_T> template <typename coord_tuple_t>
     typename coord_tuple_t::channel_order_t::colour_tuple_t
-    InterpolatorBilinear<view_t>::
+    InterpolatorBilinear<view_T>::
     get_px_vals(const coord_tuple_t& coords) const
     {
         typedef typename coord_tuple_t::channel_order_t::colour_tuple_t colour_tuple_t;

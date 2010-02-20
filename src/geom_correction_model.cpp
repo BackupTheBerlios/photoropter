@@ -112,7 +112,27 @@ namespace phtr
         PTLensGeomModel::
         get_src_coords(mem::CoordTupleRGB& coords) const
         {
-            typedef mem::ColourTupleRGB::channel_order_t channel_order_t;
+            get_src_coords_impl(coords);
+        }
+
+        void
+        PTLensGeomModel::
+        get_src_coords(mem::CoordTupleRGBA& coords) const
+        {
+            get_src_coords_impl(coords);
+        }
+
+        IGeomCorrectionModel* PTLensGeomModel::clone() const
+        {
+            return new PTLensGeomModel(*this);
+        }
+
+        template <typename coord_tuple_T>
+        void
+        PTLensGeomModel::
+        get_src_coords_impl(coord_tuple_T& coords) const
+        {
+            typedef typename coord_tuple_T::channel_order_t channel_order_t;
 
             // calculate the 'red' channel
             coords.x[channel_order_t::idx_red] -= x0_;
@@ -149,11 +169,6 @@ namespace phtr
 
             coords.x[channel_order_t::idx_blue] = cos_phi_b * r_b + x0_;
             coords.y[channel_order_t::idx_blue] = sin_phi_b * r_b + y0_;
-        }
-
-        IGeomCorrectionModel* PTLensGeomModel::clone() const
-        {
-            return new PTLensGeomModel(*this);
         }
 
     } // namespace phtr::model

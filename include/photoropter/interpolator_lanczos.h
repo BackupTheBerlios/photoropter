@@ -53,10 +53,10 @@ namespace phtr
     * In two dimensions, the reconstruction/interpolation kernel function is simply the
     * product of two separate functions R(x) and R(y) (which is a bit different from the 'full' 2D
     * Lanczos lowpass).
-    * @param view_t  The image view that is used for reading data.
+    * @param view_T  The image view that is used for reading data.
     */
-    template <typename view_t>
-    class InterpolatorLanczos : public InterpolatorBase<view_t>
+    template <typename view_T>
+    class InterpolatorLanczos : public InterpolatorBase<view_T>
     {
 
             /* ****************************************
@@ -70,7 +70,7 @@ namespace phtr
             * image, i.e. square pixels are assumed.
             * @param[in] image_view The image view which will be used for reading image data.
             */
-            InterpolatorLanczos(const view_t& image_view);
+            InterpolatorLanczos(const view_T& image_view);
 
         public:
             /**
@@ -78,7 +78,7 @@ namespace phtr
             * @param[in] image_view   The image view which will be used for reading image data.
             * @param[in] aspect_ratio The aspect ratio of the image.
             */
-            InterpolatorLanczos(const view_t& image_view, interp_coord_t aspect_ratio);
+            InterpolatorLanczos(const view_T& image_view, interp_coord_t aspect_ratio);
 
         public:
             /**

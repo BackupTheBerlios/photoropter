@@ -66,8 +66,9 @@ namespace phtr
             * @param[in]  coords  The coordinates in the source image.
             * @param[out] factors The correction factors.
             */
-            inline void get_correction_factors(const mem::CoordTupleRGB& coords,
-                                               mem::ColourTupleRGB& factors) const;
+            template <typename coord_tuple_T>
+            inline void get_correction_factors(const coord_tuple_T& coords,
+                                               typename coord_tuple_T::channel_order_t::colour_tuple_t& factors) const;
 
         public:
             /**
@@ -122,6 +123,6 @@ namespace phtr
 
 } // namespace phtr
 
-#include <photoropter/colour_correction_queue.inl.h>
+#include <photoropter/colour_correction_queue.tpl.h>
 
 #endif // __PHTR_COLOUR_CORRECTION_QUEUE_H__

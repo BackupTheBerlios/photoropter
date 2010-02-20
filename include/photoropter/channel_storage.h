@@ -43,9 +43,9 @@ namespace phtr
          * @details This template @em has to be
          * specialised for every supported type. In each specialisation,
          * a member typedef 'type' has to be provided.
-         * @param T The storage type (e.g. @ref Storage::rgb_8_inter).
+         * @param storage_T The storage type (e.g. @ref Storage::rgb_8_inter).
          */
-        template <mem::Storage::type T>
+        template <mem::Storage::type storage_T>
         struct ChannelStorage
         {
             // provoke a compile-time error whenever this unspecialised version is used

@@ -38,10 +38,10 @@ namespace phtr
     /**
     * @brief Iterator class for read access to an image in memory.
     * @details Instances of this class are usually created by @ref MemImageViewR.
-    * @param T The storage type (e.g. @ref mem::Storage::rgb_8_inter).
+    * @param storage_T The storage type (e.g. @ref mem::Storage::rgb_8_inter).
     */
-    template <mem::Storage::type T>
-    class MemImageIterR : public MemImageIterBase<T>
+    template <mem::Storage::type storage_T>
+    class MemImageIterR : public MemImageIterBase<storage_T>
     {
 
             /* ****************************************
@@ -52,13 +52,13 @@ namespace phtr
             /**
             * @brief Struct describing the memory layout.
             */
-            typedef typename MemImageIterBase<T>::mem_layout_t mem_layout_t;
+            typedef typename MemImageIterBase<storage_T>::mem_layout_t mem_layout_t;
 
         public:
             /**
             * @brief The channel storage type for this image (e.g., uint8_t).
             */
-            typedef typename MemImageIterBase<T>::channel_storage_t channel_storage_t;
+            typedef typename MemImageIterBase<storage_T>::channel_storage_t channel_storage_t;
 
         public:
             /**

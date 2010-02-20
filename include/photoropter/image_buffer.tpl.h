@@ -29,8 +29,8 @@ THE SOFTWARE.
 namespace phtr
 {
 
-    template <mem::Storage::type T>
-    ImageBuffer<T>::ImageBuffer
+    template <mem::Storage::type storage_T>
+    ImageBuffer<storage_T>::ImageBuffer
     (coord_t width, coord_t height, bool zero)
             : storage_info_(width, height),
             data_(0),
@@ -49,32 +49,32 @@ namespace phtr
         }
     }
 
-    template <mem::Storage::type T>
-    ImageBuffer<T>::~ImageBuffer
+    template <mem::Storage::type storage_T>
+    ImageBuffer<storage_T>::~ImageBuffer
     ()
     {
         delete[] data_;
     }
 
-    template <mem::Storage::type T>
+    template <mem::Storage::type storage_T>
     void*
-    ImageBuffer<T>::data
+    ImageBuffer<storage_T>::data
     ()
     {
         return data_;
     }
 
-    template <mem::Storage::type T>
+    template <mem::Storage::type storage_T>
     size_t
-    ImageBuffer<T>::num_pixels
+    ImageBuffer<storage_T>::num_pixels
     ()
     {
         return num_pixels_;
     }
 
-    template <mem::Storage::type T>
+    template <mem::Storage::type storage_T>
     size_t
-    ImageBuffer<T>::num_bytes
+    ImageBuffer<storage_T>::num_bytes
     ()
     {
         return num_bytes_;

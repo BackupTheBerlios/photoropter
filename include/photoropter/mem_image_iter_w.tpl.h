@@ -27,18 +27,18 @@ THE SOFTWARE.
 namespace phtr
 {
 
-    template <mem::Storage::type T>
-    MemImageIterW<T>::MemImageIterW
+    template <mem::Storage::type storage_T>
+    MemImageIterW<storage_T>::MemImageIterW
     (channel_storage_t* base_addr, size_t px_offs, size_t step, size_t line_step,
      size_t r_offs, size_t g_offs, size_t b_offs, size_t a_offs)
-            : MemImageIterBase<T>(base_addr, px_offs, step, line_step, r_offs, g_offs, b_offs, a_offs)
+            : MemImageIterBase<storage_T>(base_addr, px_offs, step, line_step, r_offs, g_offs, b_offs, a_offs)
     {
         //NIL
     }
 
-    template <mem::Storage::type T>
+    template <mem::Storage::type storage_T>
     void
-    MemImageIterW<T>::write_px_val
+    MemImageIterW<storage_T>::write_px_val
     (Channel::type chan, channel_storage_t val)
     {
         switch (chan)
@@ -62,14 +62,14 @@ namespace phtr
         }
     }
 
-    template <mem::Storage::type T> template <typename colour_tuple_t>
+    template <mem::Storage::type storage_T> template <typename colour_tuple_T>
     void
-    MemImageIterW<T>::write_px_vals
-    (const colour_tuple_t& values)
+    MemImageIterW<storage_T>::write_px_vals
+    (const colour_tuple_T& values)
     {
-        for (size_t i = 0; i < colour_tuple_t::num_vals; ++i)
+        for (size_t i = 0; i < colour_tuple_T::num_vals; ++i)
         {
-            write_px_val(colour_tuple_t::channel_order_t::channel_type[i],
+            write_px_val(colour_tuple_T::channel_order_t::channel_type[i],
                          static_cast<channel_storage_t>(values.value[i] + 0.5));
         }
     }

@@ -40,8 +40,9 @@ namespace phtr
         /**
         * @brief A struct template for accessing the minimal and maximal values of a
         * channel storage type. Uses std::numeric_limits.
+        * @param storage_T The storage type (e.g. @ref Storage::rgb_8_inter).
         */
-        template <Storage::type T>
+        template <Storage::type storage_T>
         struct ChannelRange
         {
 
@@ -49,7 +50,7 @@ namespace phtr
             /**
             * @brief The channel storage type (e.g., uint8_t).
             */
-            typedef typename ChannelStorage<T>::type channel_storage_t;
+            typedef typename ChannelStorage<storage_T>::type channel_storage_t;
 
         public:
             /**
