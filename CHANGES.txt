@@ -8,7 +8,12 @@ List of changes
 pixel format (preparation for alpha-channel handling)
 -Documentation now contains only 'public' parts of API by
 default
--Lanczos interpolation support 
+-Lanczos interpolation support
+-RGBA support: the library can now fully deal with alpha channel data;
+alpha information will be subject to all geometric transformations (and
+ignored in colour transformations).
+-PTLens model can now use different parameters on separate channels;
+this should enable fulla-style TCA correction (untested as yet).
 
 0.0.4
 -----
