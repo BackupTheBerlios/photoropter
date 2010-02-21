@@ -33,6 +33,8 @@ namespace phtr
     namespace mem
     {
 
+        ///@cond PROTECTED
+
         size_t ChannelOrderRGB::get_channel_index(Channel::type chan_type)
         {
             switch (chan_type)
@@ -94,6 +96,8 @@ namespace phtr
         const size_t ChannelOrderRGBA::idx_blue = 2;
 
         const size_t ChannelOrderRGBA::idx_alpha = 3;
+
+        ///@endcond
 
     } // namespace phtr::mem
 

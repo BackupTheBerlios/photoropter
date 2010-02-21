@@ -27,6 +27,8 @@ THE SOFTWARE.
 namespace phtr
 {
 
+    ///@cond PROTECTED
+
     template <mem::Storage::type T>
     MemImageViewBase<T>::MemImageViewBase
     (void* base_addr, coord_t width, coord_t height)
@@ -71,5 +73,6 @@ namespace phtr
         return ((y * width_) + x) * step_;
     }
 
+    ///@endcond
 
 } // namespace phtr

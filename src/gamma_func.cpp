@@ -35,6 +35,8 @@ namespace phtr
     namespace gamma
     {
 
+        ///@cond PROTECTED
+
         GammaGeneric::GammaGeneric(double gam)
                 : gamma_(gam)
         {
@@ -246,6 +248,8 @@ namespace phtr
         {
             return get_function_value(value, yval_, xval_);
         }
+
+        ///@endcond
 
     } // namespace phtr::gamma
 

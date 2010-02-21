@@ -60,7 +60,7 @@ earlier. The latter holds two transformation queues: one for geometrical and one
 for colour transformations. Of course, the PTLens model is a geometrical one.
 
 @code
-#include <photoropter/geom_correction_model.h>
+#include <photoropter/model/geom_correction_model.h>
 [...]
 
 double aspect = static_cast<double>(img_width) /

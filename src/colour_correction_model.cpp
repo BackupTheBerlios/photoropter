@@ -35,6 +35,8 @@ namespace phtr
     namespace model
     {
 
+        ///@cond PROTECTED
+
         VignettingColourModel::
         VignettingColourModel(double param_aspect, double input_aspect,
                               double param_crop, double input_crop)
@@ -185,6 +187,8 @@ namespace phtr
         {
             return new HuginVignettingModel(*this);
         }
+
+        ///@endcond
 
     } // namespace phtr::model
 

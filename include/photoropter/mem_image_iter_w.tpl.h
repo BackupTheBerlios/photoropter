@@ -27,6 +27,8 @@ THE SOFTWARE.
 namespace phtr
 {
 
+    ///@cond PROTECTED
+
     template <mem::Storage::type storage_T>
     MemImageIterW<storage_T>::MemImageIterW
     (channel_storage_t* base_addr, size_t px_offs, size_t step, size_t line_step,
@@ -73,5 +75,7 @@ namespace phtr
                          static_cast<channel_storage_t>(values.value[i] + 0.5));
         }
     }
+
+    ///@endcond
 
 } // namespace phtr

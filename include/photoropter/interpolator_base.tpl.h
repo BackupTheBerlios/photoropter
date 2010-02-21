@@ -26,6 +26,7 @@ THE SOFTWARE.
 
 namespace phtr
 {
+    ///@cond PROTECTED
 
     /* ****************************************
      * base
@@ -64,5 +65,7 @@ namespace phtr
     {
         return aspect_ratio_;
     }
+
+    ///@endcond
 
 } // namespace phtr

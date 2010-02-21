@@ -34,6 +34,8 @@ namespace phtr
     namespace model
     {
 
+        ///@cond PROTECTED
+
         CorrectionModelBase::
         CorrectionModelBase(double param_aspect, double input_aspect,
                             double param_crop, double input_crop)
@@ -81,6 +83,8 @@ namespace phtr
                           std::sqrt(1 + input_aspect_ * input_aspect_) *
                           param_crop_ / input_crop_;
         }
+
+        ///@endcond
 
     } // namespace phtr::model
 

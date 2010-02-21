@@ -30,6 +30,8 @@ namespace phtr
     namespace mem
     {
 
+		///@cond PROTECTED
+
         template <typename channel_order_T, size_t num_vals_T>
         CoordTuple<channel_order_T, num_vals_T>::
         CoordTuple(const CoordTuple<channel_order_T, num_vals_T>& orig)
@@ -54,6 +56,8 @@ namespace phtr
 
             return *this;
         }
+
+        ///@endcond
 
     } // namespace phtr::mem
 
