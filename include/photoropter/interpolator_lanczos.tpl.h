@@ -56,6 +56,7 @@ namespace phtr
         assert(supp > 0);
 
         support_ = supp;
+        precalc_kernel();
     }
 
     template <typename view_T>
@@ -64,6 +65,7 @@ namespace phtr
     (unsigned int res)
     {
         resolution_ = res;
+        precalc_kernel();
     }
 
     template <typename view_T>

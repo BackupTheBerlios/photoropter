@@ -29,8 +29,8 @@ THE SOFTWARE.
 
 #include <cmath>
 
-#include <photoropter/coord_tuple.h>
-#include <photoropter/colour_tuple.h>
+#include <photoropter/mem/coord_tuple.h>
+#include <photoropter/mem/colour_tuple.h>
 #include <photoropter/interpolator_base.h>
 
 namespace phtr

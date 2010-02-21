@@ -255,6 +255,15 @@ namespace phtr
     }
 
     template <typename interpolator_T, typename image_view_w_T>
+    interpolator_T&
+    ImageTransform<interpolator_T, image_view_w_T>::
+    interpolator()
+    {
+        return interpolator_;
+    }
+
+
+    template <typename interpolator_T, typename image_view_w_T>
     interp_channel_t
     ImageTransform<interpolator_T, image_view_w_T>::
     clip_val(const interp_channel_t& val) const

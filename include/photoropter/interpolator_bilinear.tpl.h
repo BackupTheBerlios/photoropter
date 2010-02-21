@@ -119,18 +119,18 @@ namespace phtr
         return interp_val;
     }
 
-    template <typename view_T> template <typename coord_tuple_t>
-    typename coord_tuple_t::channel_order_t::colour_tuple_t
+    template <typename view_T> template <typename coord_tuple_T>
+    typename coord_tuple_T::channel_order_t::colour_tuple_t
     InterpolatorBilinear<view_T>::
-    get_px_vals(const coord_tuple_t& coords) const
+    get_px_vals(const coord_tuple_T& coords) const
     {
-        typedef typename coord_tuple_t::channel_order_t::colour_tuple_t colour_tuple_t;
+        typedef typename coord_tuple_T::channel_order_t::colour_tuple_t colour_tuple_t;
 
         colour_tuple_t ret;
 
         for (size_t i = 0; i < colour_tuple_t::num_vals; ++i)
         {
-            ret.value[i] = get_px_val(coord_tuple_t::channel_order_t::channel_type[i], coords.x[i], coords.y[i]);
+            ret.value[i] = get_px_val(coord_tuple_T::channel_order_t::channel_type[i], coords.x[i], coords.y[i]);
         }
 
         return ret;

@@ -28,7 +28,7 @@ THE SOFTWARE.
 #define __PHTR_MEM_IMAGE_ITER_R_H__
 
 #include <photoropter/mem_image_iter_base.h>
-#include <photoropter/channel_type.h>
+#include <photoropter/mem/channel_type.h>
 
 namespace phtr
 {

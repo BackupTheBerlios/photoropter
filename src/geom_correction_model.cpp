@@ -26,9 +26,9 @@ THE SOFTWARE.
 
 #include <cmath>
 
-#include <photoropter/colour_tuple.h>
-#include <photoropter/mem_layout.h>
-#include <photoropter/geom_correction_model.h>
+#include <photoropter/mem/colour_tuple.h>
+#include <photoropter/mem/mem_layout.h>
+#include <photoropter/model/geom_correction_model.h>
 
 namespace phtr
 {

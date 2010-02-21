@@ -28,8 +28,8 @@ THE SOFTWARE.
 #define __PHTR_MEM_LAYOUT_H__
 
 #include <photoropter/types.h>
-#include <photoropter/channel_type.h>
-#include <photoropter/storage_type.h>
+#include <photoropter/mem/channel_type.h>
+#include <photoropter/mem/storage_type.h>
 
 namespace phtr
 {
@@ -68,7 +68,7 @@ namespace phtr
 
             /**
             * @brief Return the channel order for this layout type.
-            * @param index The channel type.
+            * @param chan_type The channel type.
             * @return The index (i.e., 0-2).
             */
             static size_t get_channel_index(Channel::type chan_type);
@@ -120,7 +120,7 @@ namespace phtr
 
             /**
             * @brief Return the channel order for this layout type.
-            * @param index The channel type.
+            * @param chan_type The channel type.
             * @return The index (i.e., 0-3).
             */
             static size_t get_channel_index(Channel::type chan_type);

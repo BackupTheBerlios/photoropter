@@ -27,11 +27,11 @@ THE SOFTWARE.
 #ifndef __PHTR_MEM_IMAGE_VIEW_W_H__
 #define __PHTR_MEM_IMAGE_VIEW_W_H__
 
-#include <photoropter/coord_tuple.h>
-#include <photoropter/colour_tuple.h>
+#include <photoropter/mem/coord_tuple.h>
+#include <photoropter/mem/colour_tuple.h>
+#include <photoropter/mem/channel_type.h>
 #include <photoropter/mem_image_view_base.h>
 #include <photoropter/mem_image_iter_w.h>
-#include <photoropter/channel_type.h>
 
 namespace phtr
 {

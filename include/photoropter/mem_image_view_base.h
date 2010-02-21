@@ -27,8 +27,8 @@ THE SOFTWARE.
 #ifndef __PHTR_MEM_IMAGE_VIEW_BASE_H__
 #define __PHTR_MEM_IMAGE_VIEW_BASE_H__
 
-#include <photoropter/storage_type.h>
-#include <photoropter/mem_storage_info.h>
+#include <photoropter/mem/storage_type.h>
+#include <photoropter/mem/mem_storage_info.h>
 
 /**
 * @brief Main namespace of the Photoropter library.

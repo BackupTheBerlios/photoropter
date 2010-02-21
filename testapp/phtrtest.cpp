@@ -44,14 +44,13 @@ namespace po = boost::program_options;
 #include <photoropter/mem_image_view_r.h>
 #include <photoropter/mem_image_view_w.h>
 #include <photoropter/image_buffer.h>
-#include <photoropter/channel_storage.h>
+#include <photoropter/mem/channel_storage.h>
 #include <photoropter/interpolator_nn.h>
 #include <photoropter/interpolator_bilinear.h>
 #include <photoropter/interpolator_lanczos.h>
 #include <photoropter/image_transform.h>
-#include <photoropter/colour_correction_model.h>
-#include <photoropter/geom_correction_model.h>
-#include <photoropter/colour_correction_model.h>
+#include <photoropter/model/colour_correction_model.h>
+#include <photoropter/model/geom_correction_model.h>
 #include <photoropter/version.h>
 
 #include <ctime>
@@ -414,6 +413,9 @@ void convert(const Settings& settings)
 
     // image transformation object
     transform_t transform(src_img_view, dst_img_view);
+
+    // this only works on Lanczos interpolated transformation objects.
+//    transform.interpolator().set_support(3);
 
     // set gain function
     switch (settings.gainfunc)

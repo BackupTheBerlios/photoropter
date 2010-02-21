@@ -29,9 +29,9 @@ THE SOFTWARE.
 
 #include <photoropter/image_buffer.h>
 #include <photoropter/types.h>
-#include <photoropter/storage_type.h>
-#include <photoropter/channel_storage.h>
-#include <photoropter/mem_storage_info.h>
+#include <photoropter/mem/storage_type.h>
+#include <photoropter/mem/channel_storage.h>
+#include <photoropter/mem/mem_storage_info.h>
 
 namespace phtr
 {

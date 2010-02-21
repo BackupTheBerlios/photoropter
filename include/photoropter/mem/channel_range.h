@@ -27,7 +27,7 @@ THE SOFTWARE.
 #ifndef __PHTR_CHANNEL_RANGE_H__
 #define __PHTR_CHANNEL_RANGE_H__
 
-#include <photoropter/channel_storage.h>
+#include <photoropter/mem/channel_storage.h>
 
 namespace phtr
 {

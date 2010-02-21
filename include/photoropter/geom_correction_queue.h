@@ -30,9 +30,9 @@ THE SOFTWARE.
 #include <vector>
 
 #include <photoropter/types.h>
-#include <photoropter/coord_tuple.h>
-#include <photoropter/colour_tuple.h>
-#include <photoropter/geom_correction_model.h>
+#include <photoropter/mem/coord_tuple.h>
+#include <photoropter/mem/colour_tuple.h>
+#include <photoropter/model/geom_correction_model.h>
 
 namespace phtr
 {

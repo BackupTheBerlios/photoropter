@@ -30,8 +30,8 @@ THE SOFTWARE.
 #include <cmath>
 #include <vector>
 
-#include <photoropter/coord_tuple.h>
-#include <photoropter/colour_tuple.h>
+#include <photoropter/mem/coord_tuple.h>
+#include <photoropter/mem/colour_tuple.h>
 #include <photoropter/interpolator_base.h>
 
 namespace phtr
@@ -113,8 +113,8 @@ namespace phtr
              * @param[in] coords The coordinates tuple.
              * @return The channel values.
              */
-            template <typename coord_tuple_t>
-            inline typename coord_tuple_t::channel_order_t::colour_tuple_t get_px_vals(const coord_tuple_t& coords) const;
+            template <typename coord_tuple_T>
+            inline typename coord_tuple_T::channel_order_t::colour_tuple_t get_px_vals(const coord_tuple_T& coords) const;
 
             /* ****************************************
              * internals
@@ -137,13 +137,13 @@ namespace phtr
             /**
              * @brief The size of the interpolation kernel's support (i.e., commonly 2 or 3).
              */
-            const unsigned int support_;
+            unsigned int support_;
 
         private:
             /**
              * @brief The interpolation resolution (samples per unit length, i.e. 1024).
              */
-            const unsigned int resolution_;
+            unsigned int resolution_;
 
         private:
             /**

@@ -27,7 +27,7 @@ THE SOFTWARE.
 #ifndef __PHTR_COORD_TUPLE_H__
 #define __PHTR_COORD_TUPLE_H__
 
-#include <photoropter/colour_tuple.h>
+#include <photoropter/mem/colour_tuple.h>
 #include <photoropter/types.h>
 
 namespace phtr
@@ -101,6 +101,6 @@ namespace phtr
 
 } // namespace phtr
 
-#include <photoropter/coord_tuple.tpl.h>
+#include <photoropter/mem/coord_tuple.tpl.h>
 
 #endif // __PHTR_COORD_TUPLE_H__

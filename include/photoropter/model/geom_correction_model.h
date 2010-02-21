@@ -28,8 +28,8 @@ THE SOFTWARE.
 #define __PHTR_GEOM_CORRECTION_MODEL_H__
 
 #include <photoropter/types.h>
-#include <photoropter/coord_tuple.h>
-#include <photoropter/correction_model_base.h>
+#include <photoropter/mem/coord_tuple.h>
+#include <photoropter/model/correction_model_base.h>
 
 namespace phtr
 {

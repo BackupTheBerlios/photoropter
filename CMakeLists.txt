@@ -105,7 +105,6 @@ if(DOXYGEN_FOUND)
 
   if(PHTR_DOCUMENT_ALL)
     set(DOXY_ENABLED_SECTIONS "PROTECTED")
-    set(DOXY_INPUT "${DOXY_INPUT} \"${CMAKE_CURRENT_SOURCE_DIR}\"")
 
     if(PHTR_DOCUMENT_PRIVATE)
       set(DOXY_EXTRACT_PRIVATE "YES")
@@ -145,20 +144,23 @@ set(PHTR_SRC_DIR "src")
 
 # set the Photoropter sources
 set(PHTR_INCLUDES
-  ${PHTR_INCLUDE_DIR}/channel_type.h
-  ${PHTR_INCLUDE_DIR}/channel_storage.h
-  ${PHTR_INCLUDE_DIR}/channel_range.h
-  ${PHTR_INCLUDE_DIR}/colour_tuple.h
-  ${PHTR_INCLUDE_DIR}/colour_tuple.tpl.h
-  ${PHTR_INCLUDE_DIR}/coord_tuple.h
-  ${PHTR_INCLUDE_DIR}/coord_tuple.tpl.h
-  ${PHTR_INCLUDE_DIR}/correction_model_base.h
-  ${PHTR_INCLUDE_DIR}/colour_correction_model.h
+  ${PHTR_INCLUDE_DIR}/mem/channel_range.h
+  ${PHTR_INCLUDE_DIR}/mem/channel_storage.h
+  ${PHTR_INCLUDE_DIR}/mem/channel_type.h
+  ${PHTR_INCLUDE_DIR}/mem/colour_tuple.h
+  ${PHTR_INCLUDE_DIR}/mem/colour_tuple.tpl.h
+  ${PHTR_INCLUDE_DIR}/mem/coord_tuple.h
+  ${PHTR_INCLUDE_DIR}/mem/coord_tuple.tpl.h
+  ${PHTR_INCLUDE_DIR}/mem/mem_layout.h
+  ${PHTR_INCLUDE_DIR}/mem/mem_storage_info.h
+  ${PHTR_INCLUDE_DIR}/mem/storage_type.h
+  ${PHTR_INCLUDE_DIR}/model/correction_model_base.h
+  ${PHTR_INCLUDE_DIR}/model/colour_correction_model.h
+  ${PHTR_INCLUDE_DIR}/model/geom_correction_model.h
   ${PHTR_INCLUDE_DIR}/colour_correction_queue.h
   ${PHTR_INCLUDE_DIR}/colour_correction_queue.tpl.h
   ${PHTR_INCLUDE_DIR}/exception.h
   ${PHTR_INCLUDE_DIR}/gamma_func.h
-  ${PHTR_INCLUDE_DIR}/geom_correction_model.h
   ${PHTR_INCLUDE_DIR}/geom_correction_queue.h
   ${PHTR_INCLUDE_DIR}/geom_correction_queue.tpl.h
   ${PHTR_INCLUDE_DIR}/image_buffer.h
@@ -185,9 +187,6 @@ set(PHTR_INCLUDES
   ${PHTR_INCLUDE_DIR}/mem_image_view_r.tpl.h
   ${PHTR_INCLUDE_DIR}/mem_image_view_w.h
   ${PHTR_INCLUDE_DIR}/mem_image_view_w.tpl.h
-  ${PHTR_INCLUDE_DIR}/mem_layout.h
-  ${PHTR_INCLUDE_DIR}/mem_storage_info.h
-  ${PHTR_INCLUDE_DIR}/storage_type.h
   ${PHTR_INCLUDE_DIR}/types.h
   ${PHTR_INCLUDE_DIR}/util.h
   )

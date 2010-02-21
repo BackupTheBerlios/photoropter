@@ -30,7 +30,7 @@ THE SOFTWARE.
 #include <vector>
 #include <cassert>
 
-#include <photoropter/colour_tuple.h>
+#include <photoropter/mem/colour_tuple.h>
 #include <photoropter/geom_correction_queue.h>
 #include <photoropter/colour_correction_queue.h>
 #include <photoropter/gamma_func.h>
@@ -141,6 +141,13 @@ namespace phtr
              * @param[in] fact The sampling factor (must be at least 1).
              */
             void set_sampling_fact(unsigned int fact);
+
+        public:
+            /**
+             * @brief Access to the internal interpolation implementation.
+             * @return The interpolator object.
+             */
+            interpolator_T& interpolator();
 
             /* ****************************************
              * internals

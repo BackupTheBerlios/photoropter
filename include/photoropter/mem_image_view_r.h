@@ -29,7 +29,7 @@ THE SOFTWARE.
 
 #include <photoropter/mem_image_view_base.h>
 #include <photoropter/mem_image_iter_r.h>
-#include <photoropter/channel_type.h>
+#include <photoropter/mem/channel_type.h>
 
 namespace phtr
 {

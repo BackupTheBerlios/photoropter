@@ -30,10 +30,10 @@ THE SOFTWARE.
 #include <vector>
 
 #include <photoropter/types.h>
-#include <photoropter/coord_tuple.h>
-#include <photoropter/colour_tuple.h>
-#include <photoropter/channel_type.h>
-#include <photoropter/colour_correction_model.h>
+#include <photoropter/mem/coord_tuple.h>
+#include <photoropter/mem/colour_tuple.h>
+#include <photoropter/mem/channel_type.h>
+#include <photoropter/model/colour_correction_model.h>
 
 namespace phtr
 {

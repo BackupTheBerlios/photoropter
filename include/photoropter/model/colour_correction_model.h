@@ -28,10 +28,10 @@ THE SOFTWARE.
 #define __PHTR_COLOUR_CORRECTION_MODEL_H__
 
 #include <photoropter/types.h>
-#include <photoropter/coord_tuple.h>
-#include <photoropter/colour_tuple.h>
-#include <photoropter/channel_type.h>
-#include <photoropter/correction_model_base.h>
+#include <photoropter/mem/coord_tuple.h>
+#include <photoropter/mem/colour_tuple.h>
+#include <photoropter/mem/channel_type.h>
+#include <photoropter/model/correction_model_base.h>
 
 namespace phtr
 {

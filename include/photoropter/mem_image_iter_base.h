@@ -27,9 +27,9 @@ THE SOFTWARE.
 #ifndef __PHTR_MEM_IMAGE_ITER_BASE_H__
 #define __PHTR_MEM_IMAGE_ITER_BASE_H__
 
-#include <photoropter/storage_type.h>
-#include <photoropter/channel_range.h>
-#include <photoropter/mem_layout.h>
+#include <photoropter/mem/storage_type.h>
+#include <photoropter/mem/channel_range.h>
+#include <photoropter/mem/mem_layout.h>
 
 namespace phtr
 {
@@ -110,6 +110,7 @@ namespace phtr
             * @param[in] r_offs    The 'red' channel offset.
             * @param[in] g_offs    The 'green' channel offset.
             * @param[in] b_offs    The 'blue' channel offset.
+            * @param[in] a_offs    The 'alpha' channel offset.
             */
             MemImageIterBase(channel_storage_t* base_addr, size_t px_offs,
                              size_t step, size_t line_step,
