@@ -32,7 +32,9 @@ namespace phtr
     GeomCorrectionQueue::
     get_src_coords(interp_coord_t dst_x, interp_coord_t dst_y, coord_tuple_T& coords) const
     {
-        for (size_t i = 0; i < mem::ColourTupleRGB::num_vals; ++i)
+        typedef typename coord_tuple_T::channel_order_t::colour_tuple_t colour_tuple_t;
+
+        for (size_t i = 0; i < colour_tuple_t::num_vals; ++i)
         {
             coords.x[i] = dst_x;
             coords.y[i] = dst_y;

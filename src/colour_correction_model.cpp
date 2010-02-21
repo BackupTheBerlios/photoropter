@@ -106,7 +106,11 @@ namespace phtr
         get_correction_factors(const mem::CoordTupleRGBA& coords,
                                mem::ColourTupleRGBA& factors) const
         {
+            typedef mem::CoordTupleRGBA::channel_order_t channel_order_t;
+
             get_correction_factors_impl(coords, factors);
+
+            factors.value[channel_order_t::idx_alpha] = 1.0;
         }
 
         template <typename coord_tuple_T>

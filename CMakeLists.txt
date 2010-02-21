@@ -196,7 +196,6 @@ set(PHTR_SOURCES
   ${PHTR_SRC_DIR}/colour_correction_model.cpp
   ${PHTR_SRC_DIR}/colour_correction_queue.cpp
   ${PHTR_SRC_DIR}/correction_model_base.cpp
-  ${PHTR_SRC_DIR}/coord_tuple.cpp
   ${PHTR_SRC_DIR}/exception.cpp
   ${PHTR_SRC_DIR}/gamma_func.cpp
   ${PHTR_SRC_DIR}/geom_correction_model.cpp

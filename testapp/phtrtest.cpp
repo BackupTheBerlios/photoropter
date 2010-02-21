@@ -500,8 +500,9 @@ void convert(const Settings& settings)
 
         transform.geom_queue().add_model(ptlens_mod);
 
+        typedef phtr::mem::ColourTupleRGB::channel_order_t channel_order_t;
         double a, b, c, d;
-        ptlens_mod.get_model_params(a, b, c, d);
+        ptlens_mod.get_model_params(channel_order_t::idx_green, a, b, c, d);
         std::cerr << "PTLens parameters: " << a << " " << b << " " << c << std::endl;
     }
 

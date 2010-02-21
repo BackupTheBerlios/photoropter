@@ -116,7 +116,18 @@ namespace phtr
 
             public:
                 /**
-                * @brief Set the model parameters.
+                * @brief Set the model parameters (single channel).
+                * @param[in] chan_idx The channel index.
+                * @param[in] a        The 'a' parameter.
+                * @param[in] b        The 'b' parameter.
+                * @param[in] c        The 'c' parameter.
+                * @param[in] d        The 'd' parameter.
+                */
+                void set_model_params_single(size_t chan_idx, double a, double b, double c, double d);
+
+            public:
+                /**
+                * @brief Set the model parameters (all channels).
                 * @param[in] a The 'a' parameter.
                 * @param[in] b The 'b' parameter.
                 * @param[in] c The 'c' parameter.
@@ -126,7 +137,21 @@ namespace phtr
 
             public:
                 /**
-                * @brief Set the model parameters.
+                * @brief Set the model parameters (single channel).
+                * @details The 'd' parameter is automatically calculated so that a+b+c+d=1.
+                * This way, the vertical viewing angle is preserved; this will result in distortion in
+                * the image centre, but in a lighter overall distortion of the image. This is also
+                * what both Hugin and PTLens are usually doing.
+                * @param[in] chan_idx The channel index.
+                * @param[in] a        The 'a' parameter.
+                * @param[in] b        The 'b' parameter.
+                * @param[in] c        The 'c' parameter.
+                */
+                void set_model_params_single(size_t chan_idx, double a, double b, double c);
+
+            public:
+                /**
+                * @brief Set the model parameters (all channels).
                 * @details The 'd' parameter is automatically calculated so that a+b+c+d=1.
                 * This way, the vertical viewing angle is preserved; this will result in distortion in
                 * the image centre, but in a lighter overall distortion of the image. This is also
@@ -140,34 +165,36 @@ namespace phtr
             public:
                 /**
                 * @brief Get the model parameters.
-                * @param[out] a The 'a' parameter.
-                * @param[out] b The 'b' parameter.
-                * @param[out] c The 'c' parameter.
-                * @param[out] d The 'd' parameter.
+                * @param[in]  chan_idx The channel index.
+                * @param[out] a        The 'a' parameter.
+                * @param[out] b        The 'b' parameter.
+                * @param[out] c        The 'c' parameter.
+                * @param[out] d        The 'd' parameter.
                 */
-                void get_model_params(double& a, double& b, double& c, double& d) const;
+                void get_model_params(size_t chan_idx, double& a, double& b, double& c, double& d) const;
 
             public:
                 /**
-                * @brief Set the centre shift.
-                * @param[in] x0 The 'x0' parameter (horizontal centre shift).
-                * @param[in] y0 The 'y0' parameter (vertical centre shift).
+                * @brief Set the centre shift (all channels).
                 * @note Both x0 and y0 are not considered 'lens parameters' but rather camera/sensor
                 * parameters. They are therefore @em not transformed in any way, but always interpreted
                 * in the normalised Photoropter coordinate system.
+                * @param[in] x0 The 'x0' parameter (horizontal centre shift).
+                * @param[in] y0 The 'y0' parameter (vertical centre shift).
                 */
                 void set_centre_shift(interp_coord_t x0, interp_coord_t y0);
 
             public:
                 /**
                 * @brief Get the centre shift.
-                * @param[out] x0 The 'x0' parameter (horizontal centre shift).
-                * @param[out] y0 The 'y0' parameter (vertical centre shift).
                 * @note Both x0 and y0 are not considered 'lens parameters' but rather camera/sensor
                 * parameters. They are therefore @em not transformed in any way, but always interpreted
                 * in the normalised Photoropter coordinate system.
+                * @param[in]  chan_idx The channel index.
+                * @param[out] x0       The 'x0' parameter (horizontal centre shift).
+                * @param[out] y0       The 'y0' parameter (vertical centre shift).
                 */
-                void get_centre_shift(interp_coord_t& x0, interp_coord_t& y0) const;
+                void get_centre_shift(size_t chan_idx, interp_coord_t& x0, interp_coord_t& y0) const;
 
             public:
                 /**
@@ -209,37 +236,37 @@ namespace phtr
                 /**
                 * @brief The parameter 'a'.
                 */
-                double a_;
+                double a_[mem::PHTR_MAX_CHANNELS];
 
             private:
                 /**
                 * @brief The parameter 'b'.
                 */
-                double b_;
+                double b_[mem::PHTR_MAX_CHANNELS];
 
             private:
                 /**
                 * @brief The parameter 'c'.
                 */
-                double c_;
+                double c_[mem::PHTR_MAX_CHANNELS];
 
             private:
                 /**
                 * @brief The parameter 'd'.
                 */
-                double d_;
+                double d_[mem::PHTR_MAX_CHANNELS];
 
             private:
                 /**
                 * @brief The parameter 'x0'.
                 */
-                double x0_;
+                double x0_[mem::PHTR_MAX_CHANNELS];
 
             private:
                 /**
                 * @brief The parameter 'y0'.
                 */
-                double y0_;
+                double y0_[mem::PHTR_MAX_CHANNELS];
 
         }; // class PTLensGeomModel
 

@@ -37,6 +37,11 @@ namespace phtr
     namespace mem
     {
 
+        /**
+         * @brief The maximal number of channels supported (i.e., 4).
+         */
+        static const size_t PHTR_MAX_CHANNELS = 4;
+
         ///@cond PROTECTED
 
         /* ****************************************

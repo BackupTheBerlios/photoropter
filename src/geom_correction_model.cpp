@@ -39,73 +39,100 @@ namespace phtr
         PTLensGeomModel::
         PTLensGeomModel(double param_aspect, double input_aspect,
                         double param_crop, double input_crop)
-                : CorrectionModelBase(param_aspect, input_aspect, param_crop, input_crop),
-                a_(0),
-                b_(0),
-                c_(0),
-                d_(0),
-                x0_(0),
-                y0_(0)
+                : CorrectionModelBase(param_aspect, input_aspect, param_crop, input_crop)
         {
+            for (size_t i = 0; i < mem::PHTR_MAX_CHANNELS; ++i)
+            {
+                a_[i] = 0;
+                b_[i] = 0;
+                c_[i] = 0;
+                d_[i] = 0;
+                x0_[i] = 0;
+                y0_[i] = 0;
+            }
             //NIL
         }
 
         PTLensGeomModel::
         PTLensGeomModel(double input_aspect)
-                : CorrectionModelBase(input_aspect),
-                a_(0),
-                b_(0),
-                c_(0),
-                d_(0),
-                x0_(0),
-                y0_(0)
+                : CorrectionModelBase(input_aspect)
         {
+            for (size_t i = 0; i < mem::PHTR_MAX_CHANNELS; ++i)
+            {
+                a_[i] = 0;
+                b_[i] = 0;
+                c_[i] = 0;
+                d_[i] = 0;
+                x0_[i] = 0;
+                y0_[i] = 0;
+            }
+        }
+
+        void
+        PTLensGeomModel::
+        set_model_params_single(size_t chan_idx, double a, double b, double c, double d)
+        {
+            a_[chan_idx] = a * std::pow(coord_fact_, 3);
+            b_[chan_idx] = b * std::pow(coord_fact_, 2);
+            c_[chan_idx] = c * coord_fact_;
+            d_[chan_idx] = d;
         }
 
         void
         PTLensGeomModel::
         set_model_params(double a, double b, double c, double d)
         {
-            a_ = a * std::pow(coord_fact_, 3);
-            b_ = b * std::pow(coord_fact_, 2);
-            c_ = c * coord_fact_;
-            d_ = d;
+            for (size_t i = 0; i < mem::PHTR_MAX_CHANNELS; ++i)
+            {
+                set_model_params_single(i, a, b, c, d);
+            }
+        }
+
+        void
+        PTLensGeomModel::
+        set_model_params_single(size_t chan_idx, double a, double b, double c)
+        {
+            double d = 1.0 - (a + b + c);
+            set_model_params_single(chan_idx, a, b, c, d);
         }
 
         void
         PTLensGeomModel::
         set_model_params(double a, double b, double c)
         {
-            a_ = a * std::pow(coord_fact_, 3);
-            b_ = b * std::pow(coord_fact_, 2);
-            c_ = c * coord_fact_;
-            d_ = 1.0 - (a + b + c);
+            for (size_t i = 0; i < mem::PHTR_MAX_CHANNELS; ++i)
+            {
+                set_model_params_single(i, a, b, c);
+            }
         }
 
         void
         PTLensGeomModel::
-        get_model_params(double& a, double& b, double& c, double& d) const
+        get_model_params(size_t chan_idx, double& a, double& b, double& c, double& d) const
         {
-            a = a_ / std::pow(coord_fact_, 3);
-            b = b_ / std::pow(coord_fact_, 2);
-            c = c_ / coord_fact_;
-            d = d_;
+            a = a_[chan_idx] / std::pow(coord_fact_, 3);
+            b = b_[chan_idx] / std::pow(coord_fact_, 2);
+            c = c_[chan_idx] / coord_fact_;
+            d = d_[chan_idx];
         }
 
         void
         PTLensGeomModel::
         set_centre_shift(interp_coord_t x0, interp_coord_t y0)
         {
-            x0_ = x0;
-            y0_ = y0;
+            for (size_t i = 0; i < mem::PHTR_MAX_CHANNELS; ++i)
+            {
+                x0_[i] = x0;
+                y0_[i] = y0;
+            }
         }
 
         void
         PTLensGeomModel::
-        get_centre_shift(interp_coord_t& x0, interp_coord_t& y0) const
+        get_centre_shift(size_t chan_idx, interp_coord_t& x0, interp_coord_t& y0) const
         {
-            x0 = x0_;
-            y0 = y0_;
+            x0 = x0_[chan_idx];
+            y0 = y0_[chan_idx];
         }
 
         void
@@ -133,42 +160,22 @@ namespace phtr
         get_src_coords_impl(coord_tuple_T& coords) const
         {
             typedef typename coord_tuple_T::channel_order_t channel_order_t;
+            typedef typename channel_order_t::colour_tuple_t colour_tuple_t;
 
-            // calculate the 'red' channel
-            coords.x[channel_order_t::idx_red] -= x0_;
-            coords.y[channel_order_t::idx_red] -= y0_;
-            double r_r = std::sqrt(coords.x[channel_order_t::idx_red] * coords.x[channel_order_t::idx_red] +
-                                   coords.y[channel_order_t::idx_red] * coords.y[channel_order_t::idx_red]);
-            double cos_phi_r = coords.x[channel_order_t::idx_red] / r_r;
-            double sin_phi_r = coords.y[channel_order_t::idx_red] / r_r;
-            r_r = (((a_ * r_r + b_) * r_r + c_) * r_r + d_) * r_r;
+            for (size_t i = 0; i < colour_tuple_t::num_vals; ++i)
+            {
+                coords.x[i] -= x0_[i];
+                coords.y[i] -= y0_[i];
+                double r_r = std::sqrt(coords.x[i] * coords.x[i] +
+                                       coords.y[i] * coords.y[i]);
+                double cos_phi_r = coords.x[i] / r_r;
+                double sin_phi_r = coords.y[i] / r_r;
+                r_r = (((a_[i] * r_r + b_[i]) * r_r + c_[i]) * r_r + d_[i]) * r_r;
 
-            coords.x[channel_order_t::idx_red] = cos_phi_r * r_r + x0_;
-            coords.y[channel_order_t::idx_red] = sin_phi_r * r_r + y0_;
+                coords.x[i] = cos_phi_r * r_r + x0_[i];
+                coords.y[i] = sin_phi_r * r_r + y0_[i];
+            }
 
-            // calculate the 'green' channel
-            coords.x[channel_order_t::idx_green] -= x0_;
-            coords.y[channel_order_t::idx_green] -= y0_;
-            double r_g = std::sqrt(coords.x[channel_order_t::idx_green] * coords.x[channel_order_t::idx_green] +
-                                   coords.y[channel_order_t::idx_green] * coords.y[channel_order_t::idx_green]);
-            double cos_phi_g = coords.x[channel_order_t::idx_green] / r_g;
-            double sin_phi_g = coords.y[channel_order_t::idx_green] / r_g;
-            r_g = (((a_ * r_g + b_) * r_g + c_) * r_g + d_) * r_g;
-
-            coords.x[channel_order_t::idx_green] = cos_phi_g * r_g + x0_;
-            coords.y[channel_order_t::idx_green] = sin_phi_g * r_g + y0_;
-
-            // calculate the 'blue' channel
-            coords.x[channel_order_t::idx_blue] -= x0_;
-            coords.y[channel_order_t::idx_blue] -= y0_;
-            double r_b = std::sqrt(coords.x[channel_order_t::idx_blue] * coords.x[channel_order_t::idx_blue] +
-                                   coords.y[channel_order_t::idx_blue] * coords.y[channel_order_t::idx_blue]);
-            double cos_phi_b = coords.x[channel_order_t::idx_blue] / r_b;
-            double sin_phi_b = coords.y[channel_order_t::idx_blue] / r_b;
-            r_b = (((a_ * r_b + b_) * r_b + c_) * r_b + d_) * r_b;
-
-            coords.x[channel_order_t::idx_blue] = cos_phi_b * r_b + x0_;
-            coords.y[channel_order_t::idx_blue] = sin_phi_b * r_b + y0_;
         }
 
     } // namespace phtr::model

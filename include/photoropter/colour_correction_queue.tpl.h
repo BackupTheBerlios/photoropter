@@ -31,13 +31,14 @@ namespace phtr
     void ColourCorrectionQueue::get_correction_factors(const coord_tuple_T& coords,
             typename coord_tuple_T::channel_order_t::colour_tuple_t& factors) const
     {
+        typedef typename coord_tuple_T::channel_order_t::colour_tuple_t colour_tuple_t;
 
-        for (size_t i = 0; i < mem::ColourTupleRGB::num_vals; ++i)
+        for (size_t i = 0; i < colour_tuple_t::num_vals; ++i)
         {
             factors.value[i] = 1.0;
         }
 
-        mem::ColourTupleRGB tmp_factors;
+        colour_tuple_t tmp_factors;
 
         for (size_t i = 0; i < n_models_; ++i)
         {

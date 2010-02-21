@@ -282,14 +282,14 @@ namespace phtr
                    gamma((value - min_chan_val_) / (max_chan_val_ - min_chan_val_)));
     }
 
-    template <typename interpolator_T, typename image_view_w_T>
-    mem::ColourTupleRGB
+    template <typename interpolator_T, typename image_view_w_T> template <typename colour_tuple_T>
+    colour_tuple_T
     ImageTransform<interpolator_T, image_view_w_T>::
-    normalise(const mem::ColourTupleRGB& values) const
+    normalise(const colour_tuple_T& values) const
     {
-        mem::ColourTupleRGB ret;
+        colour_tuple_T ret;
 
-        for (size_t i = 0; i < mem::ColourTupleRGB::num_vals; ++i)
+        for (size_t i = 0; i < colour_tuple_T::num_vals; ++i)
         {
             ret.value[i] = normalise(values.value[i]);
         }
@@ -306,14 +306,14 @@ namespace phtr
                * (max_chan_val_ - min_chan_val_) + min_chan_val_;
     }
 
-    template <typename interpolator_T, typename image_view_w_T>
-    mem::ColourTupleRGB
+    template <typename interpolator_T, typename image_view_w_T> template <typename colour_tuple_T>
+    colour_tuple_T
     ImageTransform<interpolator_T, image_view_w_T>::
-    unnormalise(const mem::ColourTupleRGB& values) const
+    unnormalise(const colour_tuple_T& values) const
     {
-        mem::ColourTupleRGB ret;
+        colour_tuple_T ret;
 
-        for (size_t i = 0; i < mem::ColourTupleRGB::num_vals; ++i)
+        for (size_t i = 0; i < colour_tuple_T::num_vals; ++i)
         {
             ret.value[i] = unnormalise(values.value[i]);
         }

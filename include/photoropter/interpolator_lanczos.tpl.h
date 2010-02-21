@@ -49,6 +49,24 @@ namespace phtr
     }
 
     template <typename view_T>
+    void
+    InterpolatorLanczos<view_T>::set_support
+    (unsigned int supp)
+    {
+        assert(supp > 0);
+
+        support_ = supp;
+    }
+
+    template <typename view_T>
+    void
+    InterpolatorLanczos<view_T>::set_resolution
+    (unsigned int res)
+    {
+        resolution_ = res;
+    }
+
+    template <typename view_T>
     interp_channel_t
     InterpolatorLanczos<view_T>::
     get_px_val

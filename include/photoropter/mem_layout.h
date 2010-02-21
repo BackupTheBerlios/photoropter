@@ -68,27 +68,10 @@ namespace phtr
 
             /**
             * @brief Return the channel order for this layout type.
-            * @param index The channel index (ranging from 0 to 2).
-            * @return The channel.
+            * @param index The channel type.
+            * @return The index (i.e., 0-2).
             */
-            Channel::type get_channel_type(size_t index)
-            {
-                switch (index)
-                {
-                    case 0:
-                    default:
-                        return Channel::red;
-                        break;
-
-                    case 1:
-                        return Channel::green;
-                        break;
-
-                    case 2:
-                        return Channel::blue;
-                        break;
-                }
-            }
+            static size_t get_channel_index(Channel::type chan_type);
 
             /**
              * @brief The channel types.
@@ -137,31 +120,10 @@ namespace phtr
 
             /**
             * @brief Return the channel order for this layout type.
-            * @param index The channel index (ranging from 0 to 2).
-            * @return The channel.
+            * @param index The channel type.
+            * @return The index (i.e., 0-3).
             */
-            Channel::type get_channel_type(size_t index)
-            {
-                switch (index)
-                {
-                    case 0:
-                    default:
-                        return Channel::red;
-                        break;
-
-                    case 1:
-                        return Channel::green;
-                        break;
-
-                    case 2:
-                        return Channel::blue;
-                        break;
-
-                    case 3:
-                        return Channel::alpha;
-                        break;
-                }
-            }
+            static size_t get_channel_index(Channel::type chan_type);
 
             /**
              * @brief The channel types.
@@ -263,7 +225,82 @@ namespace phtr
                 return 0;
             }
 
-        }; // struct GenericInterleavedLayout
+        }; // struct GenericInterleavedLayoutRGB
+
+        /**
+        * @brief Struct describing a generic interleaved memory storage type. Used as base by
+        * some specialisations of @ref MemLayout.
+        */
+        struct GenericInterleavedLayoutRGBA
+        {
+
+            /**
+            * @brief Return the number of channels (e.g., 3).
+            * @details The number has to be at least 3 in order for RGB data to fit,
+            * but can be larger (e.g. 4 for RGBA).
+            * @note Additional channels are ignored by Photoropter.
+            * @return The number of channels.
+            */
+            static size_t num_channels()
+            {
+                return 4;
+            }
+
+            /**
+            * @brief Return the 'step' between pixels (e.g., 3 for RGB interleaved)
+            * @return The step value.
+            */
+            static size_t step(coord_t, coord_t)
+            {
+                return 4;
+            }
+
+            /**
+            * @brief Return the 'step' between lines (e.g., 3 * width for RGB interleaved)
+            * @return The step value.
+            */
+            static size_t line_step(coord_t width, coord_t)
+            {
+                return 4 * width;
+            }
+
+            /**
+            * @brief Return the red channel offset (e.g., 0).
+            * @return The red offset.
+            */
+            static size_t r_offs(coord_t, coord_t)
+            {
+                return 0;
+            }
+
+            /**
+            * @brief Return the green channel offset (e.g., 0).
+            * @return The green offset.
+            */
+            static size_t g_offs(coord_t, coord_t)
+            {
+                return 1;
+            }
+
+            /**
+            * @brief Return the blue channel offset (e.g., 0).
+            * @return The blue offset.
+            */
+            static size_t b_offs(coord_t, coord_t)
+            {
+                return 2;
+            }
+
+            /**
+            * @brief Return the alpha channel offset (e.g., 0 for non-alpha images).
+            * @return The alpha offset.
+            */
+            static size_t a_offs(coord_t, coord_t)
+            {
+                return 3;
+            }
+
+        }; // struct GenericInterleavedLayoutRGBA
 
         /**
         * @brief Struct describing a generic planar memory storage type. Used as base by
@@ -338,7 +375,82 @@ namespace phtr
                 return 0;
             }
 
-        }; // struct GenericPlanarLayout
+        }; // struct GenericPlanarLayoutRGB
+
+        /**
+        * @brief Struct describing a generic planar memory storage type. Used as base by
+        * some specialisations of @ref MemLayout.
+        */
+        struct GenericPlanarLayoutRGBA
+        {
+
+            /**
+            * @brief Return the number of channels (e.g., 3).
+            * @details The number has to be at least 3 in order for RGB data to fit,
+            * but can be larger (e.g. 4 for RGBA).
+            * @note Additional channels are ignored by Photoropter.
+            * @return The number of channels.
+            */
+            static size_t num_channels()
+            {
+                return 4;
+            }
+
+            /**
+            * @brief Return the 'step' between pixels (e.g., 3 for RGB interleaved)
+            * @return The step value.
+            */
+            static size_t step(coord_t, coord_t)
+            {
+                return 1;
+            }
+
+            /**
+            * @brief Return the 'step' between lines (e.g., 3 * width for RGB interleaved)
+            * @return The step value.
+            */
+            static size_t line_step(coord_t width, coord_t)
+            {
+                return width;
+            }
+
+            /**
+            * @brief Return the red channel offset (e.g., 0).
+            * @return The red offset.
+            */
+            static size_t r_offs(coord_t, coord_t)
+            {
+                return 0;
+            }
+
+            /**
+            * @brief Return the green channel offset (e.g., width * height).
+            * @return The green offset.
+            */
+            static size_t g_offs(coord_t width, coord_t height)
+            {
+                return width * height;
+            }
+
+            /**
+            * @brief Return the blue channel offset (e.g., 2 * width * height).
+            * @return The blue offset.
+            */
+            static size_t b_offs(coord_t width, coord_t height)
+            {
+                return 2 * width * height;
+            }
+
+            /**
+            * @brief Return the alpha channel offset (e.g., 3 * width * height, 0 for non-alpha images).
+            * @return The alpha offset.
+            */
+            static size_t a_offs(coord_t width, coord_t height)
+            {
+                return 3 * width * height;
+            }
+
+        }; // struct GenericPlanarLayoutRGBA
 
         /**
         * @brief Template to describe the memory layout of
@@ -352,10 +464,6 @@ namespace phtr
         template <Storage::type storage_T>
         struct MemLayout
         {
-            // provoke a compile-time error whenever this unspecialised version is used
-            struct must_be_specialised_t;
-            const size_t must_be_specialised;
-            MemLayout() : must_be_specialised(sizeof(must_be_specialised_t)) {}
         }; // template struct MemLayout<>
 
         /**
@@ -405,6 +513,54 @@ namespace phtr
         struct MemLayout<Storage::rgb_32_planar> : public GenericPlanarLayoutRGB, public ChannelOrderRGB
         {
         }; // template struct MemLayout<Storage::rgb_32_planar>
+
+        /**
+        * @brief Specialisation of @ref MemLayout for @ref Storage::rgba_8_inter.
+        */
+        template <>
+        struct MemLayout<Storage::rgba_8_inter> : public GenericInterleavedLayoutRGBA, public ChannelOrderRGBA
+        {
+        }; // template struct MemLayout<Storage::rgba_8_inter>
+
+        /**
+        * @brief Specialisation of @ref MemLayout for @ref Storage::rgba_16_inter.
+        */
+        template <>
+        struct MemLayout<Storage::rgba_16_inter> : public GenericInterleavedLayoutRGBA, public ChannelOrderRGBA
+        {
+        }; // template struct MemLayout<Storage::rgba_16_inter>
+
+        /**
+        * @brief Specialisation of @ref MemLayout for @ref Storage::rgba_32_inter.
+        */
+        template <>
+        struct MemLayout<Storage::rgba_32_inter> : public GenericInterleavedLayoutRGBA, public ChannelOrderRGBA
+        {
+        }; // template struct MemLayout<Storage::rgba_32_inter>
+
+        /**
+        * @brief Specialisation of @ref MemLayout for @ref Storage::rgba_8_planar.
+        */
+        template <>
+        struct MemLayout<Storage::rgba_8_planar> : public GenericPlanarLayoutRGBA, public ChannelOrderRGBA
+        {
+        }; // template struct MemLayout<Storage::rgba_8_planar>
+
+        /**
+        * @brief Specialisation of @ref MemLayout for @ref Storage::rgba_16_planar.
+        */
+        template <>
+        struct MemLayout<Storage::rgba_16_planar> : public GenericPlanarLayoutRGBA, public ChannelOrderRGBA
+        {
+        }; // template struct MemLayout<Storage::rgba_16_planar>
+
+        /**
+        * @brief Specialisation of @ref MemLayout for @ref Storage::rgba_32_planar.
+        */
+        template <>
+        struct MemLayout<Storage::rgba_32_planar> : public GenericPlanarLayoutRGBA, public ChannelOrderRGBA
+        {
+        }; // template struct MemLayout<Storage::rgba_32_planar>
 
         ///@endcond
 

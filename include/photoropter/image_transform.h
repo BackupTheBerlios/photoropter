@@ -180,7 +180,8 @@ namespace phtr
             * @param[in] values The unnormalised values.
             * @return The normalised values.
             */
-            inline mem::ColourTupleRGB normalise(const mem::ColourTupleRGB& values) const;
+            template <typename colour_tuple_T>
+            inline colour_tuple_T normalise(const colour_tuple_T& values) const;
 
         private:
             /**
@@ -196,7 +197,8 @@ namespace phtr
             * @param[in] values The normalised values.
             * @return The scaled values.
             */
-            inline mem::ColourTupleRGB unnormalise(const mem::ColourTupleRGB& values) const;
+            template <typename colour_tuple_T>
+            inline colour_tuple_T unnormalise(const colour_tuple_T& values) const;
 
         private:
             /**

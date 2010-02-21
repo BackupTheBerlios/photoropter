@@ -82,6 +82,23 @@ namespace phtr
 
         public:
             /**
+             * @brief Set support size of the Lanzcos interpolation kernel.
+             * @details The minimal legal value is 1; sensible choices range between
+             * 1 and 3. The default value is 2.
+             * @param[in] supp The new support size.
+             */
+            void set_support(unsigned int supp);
+
+        public:
+            /**
+             * @brief Set resolution of the Lanzcos interpolation kernel.
+             * @details The default value is 1024.
+             * @param[in] res The new resolution.
+             */
+            void set_resolution(unsigned int res);
+
+        public:
+            /**
             * @brief Get the value of the  given channel at the given coordinates.
             * @param[in] chan The channel.
             * @param[in] x The x coordinate.
