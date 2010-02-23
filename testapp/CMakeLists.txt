@@ -25,6 +25,8 @@ if(PHTR_BUILD_TESTAPP)
 
   add_executable(phtrtest
     phtrtest.cpp
+    parseconf.h
+    parseconf.cpp
     )
 
   target_link_libraries(phtrtest

@@ -39,13 +39,89 @@ namespace phtr
 {
 
     /**
+    * @brief Image transformation class interface.
+    */
+    class IImageTransform
+    {
+        public:
+            /**
+            * @brief Transform the image.
+            * @details The image data is read from the input image view and
+            * written to the output view, while applying selected transformations.
+            */
+            virtual void do_transform() = 0;
+
+        public:
+            /**
+            * @brief Access the geometry correction queue.
+            * @return Reference to the queue object.
+            */
+            virtual GeomCorrectionQueue& geom_queue() = 0;
+
+        public:
+            /**
+            * @brief Access the colour correction queue.
+            * @return Reference to the queue object.
+            */
+            virtual ColourCorrectionQueue& colour_queue() = 0;
+
+        public:
+            /**
+            * @brief Set the %gamma correction.
+            * @details This function fills the internal %gamma correction tables
+            * using the given function.
+            * @param[in] gam_func The %gamma function to be used.
+            */
+            virtual void set_gamma(const gamma::IGammaFunc& gam_func) = 0;
+
+        public:
+            /**
+            * @brief Set the %gamma correction.
+            * @details This function fills the internal %gamma correction tables
+            * using the given function.
+            * @param[in] gam_func The %gamma function to be used.
+            * @param[in] inv_gam_func The %gamma function to be used for inverse correction.
+            */
+            virtual void set_gamma(const gamma::IGammaFunc& gam_func,
+                                   const gamma::IGammaFunc& inv_gam_func) = 0;
+
+        public:
+            /**
+            * @brief Set the precision of the %gamma interpolation.
+            * @details The default is to use 1024 points for interpolation.
+            * Changing this will not have any effect until the next call to @ref set_gamma().
+            * @param[in] num The number of points-
+            */
+            virtual void set_gamma_precision(unsigned int num) = 0;
+
+        public:
+            /**
+            * @brief Enable/disable %gamma handling.
+            * @details If %gamma is disabled completely, things get a little bit
+            * faster; however, use it only on linear input or if performing no
+            * colour corrections, or you will get wrong output.
+            * @param[in] do_enable If 'true', enable %gamma correction, disable otherwise.
+            */
+            virtual void enable_gamma(bool do_enable) = 0;
+
+        public:
+            /**
+             * @brief set (over-)sampling factor.
+             * @details If set to a value greater than 1, the destination image will be
+             * subsampled to avoid aliasing artefacts.
+             * @param[in] fact The sampling factor (must be at least 1).
+             */
+            virtual void set_sampling_fact(unsigned int fact) = 0;
+    };
+
+    /**
     * @brief Image transformation class template.
     * @details Inside this class, the actual image transformation is performed.
     * @param interpolator_T The interpolator class to be used.
     * @param image_view_w_T The writing image view class to be used.
     */
     template < typename interpolator_T, typename image_view_w_T>
-    class ImageTransform
+    class ImageTransform : public IImageTransform
     {
 
             /* ****************************************
