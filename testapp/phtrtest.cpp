@@ -50,9 +50,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <photoropter/version.h>
 
 #include <ctime>
-#include <string>
-#include <vector>
-#include <sstream>
+#include <iostream>
 
 template <phtr::mem::Storage::type storage_type, typename vil_channel_t>
 void convert(const Settings& settings)
