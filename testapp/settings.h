@@ -47,10 +47,13 @@ struct Settings
 {
     Settings()
             : ptlens_corr(false),
-            ptlens_params(5, 0),
+            ptlens_params(3, 0),
             vignetting_corr(false),
-            vignetting_params(5, 0),
-            param_aspect(0),
+            vignetting_params(3, 0),
+            x0(0),
+            y0(0),
+            param_aspect_override(false),
+            param_aspect(1.0),
             param_crop(1.0),
             image_crop(1.0),
             sub_rect(false),
@@ -58,32 +61,48 @@ struct Settings
             sub_rect_y0(0),
             sub_rect_w(0),
             sub_rect_h(0),
-            gamma(2.2),
             gainfunc(GainFunc::srgb),
+            gamma(2.2),
             oversampling(1),
             interp_type(Interpolation::bilinear),
             lanczos_support(2)
     {}
 
+    // perform PTLens correction?
     bool ptlens_corr;
     std::vector<double> ptlens_params;
+
+    // perform vignetting correction?
     bool vignetting_corr;
     std::vector<double> vignetting_params;
+
+    // centre shift
+    double x0;
+    double y0;
+
+    // parameter aspect, crop factor etc.
+    bool param_aspect_override;
     double param_aspect;
     double param_crop;
     double image_crop;
+
+    // clip rectangle
     bool sub_rect;
     size_t sub_rect_x0;
     size_t sub_rect_y0;
     size_t sub_rect_w;
     size_t sub_rect_h;
-    double gamma;
+
+    // input / output file names
     std::string inp_file;
     std::string outp_file;
 
+    // gain function (i.e., gamma etc)
     GainFunc::type gainfunc;
+    double gamma;
     std::vector<double> emor_coeffs;
 
+    // interpolation / oversampling
     unsigned oversampling;
     Interpolation::type interp_type;
     unsigned lanczos_support;

@@ -20,6 +20,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include <iostream>
+#include <list>
+#include <algorithm>
 
 #include <boost/program_options.hpp>
 #include <boost/tokenizer.hpp>
@@ -36,8 +38,8 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
         po::options_description opt_desc("Allowed options");
         opt_desc.add_options()
         ("help,h", "show options")
-        ("ptlens", po::value<std::string>(), "Set PTLens correction model parameters: a:b:c[:x0:y0]")
-        ("vignetting", po::value<std::string>(), "Set vignetting correction parameters: a:b:c[:x0:y0]")
+        ("ptlens,r", po::value<std::string>(), "Set PTLens correction model parameters: a:b:c[:d]")
+        ("vignetting,c", po::value<std::string>(), "Set vignetting correction parameters: a:b:c")
         ("param-aspect", po::value<double>(), "Aspect ratio used for parameter calibration")
         ("param-crop", po::value<double>(), "Crop factor used for parameter calibration")
         ("image-crop", po::value<double>(), "Diagonal image crop factor")
@@ -50,6 +52,7 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
         ("gamma", po::value<double>(), "Gamma value (default: assume sRGB gamma)")
         ("emor-params", po::value<std::string>(), "EMOR parameters: h1[:h2[:h3...]]")
         ("oversample", po::value<unsigned>(), "Sampling factor (>= 1)")
+        ("centre-shift,x", po::value<std::string>(), "Centre shift: x0:y0")
         ("input-file", po::value<std::string>(), "Input file")
         ("output-file", po::value<std::string>(), "Output file");
 
@@ -75,6 +78,7 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
 
         if (options_map.count("param-aspect"))
         {
+            settings.param_aspect_override = true;
             settings.param_aspect = options_map["param-aspect"].as<double>();
         }
 
@@ -103,6 +107,39 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
             return false;
         }
 
+        if (options_map.count("centre-shift"))
+        {
+            typedef boost::tokenizer<boost::char_separator<char> > tokenizer_t;
+            typedef boost::char_separator<char> separator_t;
+
+            std::string param_string = options_map["centre-shift"].as<std::string>();
+
+            separator_t sep(":;");
+            tokenizer_t tokens(param_string, sep);
+
+            std::list<double> tmp_list;
+            for (tokenizer_t::const_iterator it = tokens.begin(); it != tokens.end(); ++it)
+            {
+                std::stringstream sstr(*it);
+                double tmp_val;
+                sstr >> tmp_val;
+                tmp_list.push_back(tmp_val);
+            }
+
+            size_t num_params = tmp_list.size();
+            if (num_params == 2)
+            {
+                settings.x0 = tmp_list.front();
+                settings.y0 = tmp_list.back();
+            }
+            else
+            {
+                std::cerr << "Error: incorrent number of parameters for centre shift" << std::endl;
+                return false;
+            }
+
+        }
+
         if (options_map.count("ptlens"))
         {
             settings.ptlens_corr = true;
@@ -115,25 +152,27 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
             separator_t sep(":;");
             tokenizer_t tokens(param_string, sep);
 
-            size_t param_idx(0);
+            std::list<double> tmp_list;
             for (tokenizer_t::const_iterator it = tokens.begin(); it != tokens.end(); ++it)
             {
                 std::stringstream sstr(*it);
-                sstr >> settings.ptlens_params[param_idx++];
+                double tmp_val;
+                sstr >> tmp_val;
+                tmp_list.push_back(tmp_val);
             }
 
-            if (!(param_idx == 3 || param_idx == 5))
+            size_t num_params = tmp_list.size();
+            if (num_params == 3 || num_params == 4)
+            {
+                settings.ptlens_params.resize(num_params);
+                std::copy(tmp_list.begin(), tmp_list.end(), settings.ptlens_params.begin());
+            }
+            else
             {
                 std::cerr << "Error: incorrent number of parameters for PTLens correction" << std::endl;
                 return false;
             }
 
-            std::cerr << "Performing PTLens correction: "
-                      << settings.ptlens_params[0] << ":"
-                      << settings.ptlens_params[1] << ":"
-                      << settings.ptlens_params[2] << ":"
-                      << settings.ptlens_params[3] << ":"
-                      << settings.ptlens_params[4] << std::endl;
         }
 
         if (options_map.count("vignetting"))
@@ -148,25 +187,27 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
             separator_t sep(":;");
             tokenizer_t tokens(param_string, sep);
 
-            size_t param_idx(0);
+            std::list<double> tmp_list;
             for (tokenizer_t::const_iterator it = tokens.begin(); it != tokens.end(); ++it)
             {
                 std::stringstream sstr(*it);
-                sstr >> settings.vignetting_params[param_idx++];
+                double tmp_val;
+                sstr >> tmp_val;
+                tmp_list.push_back(tmp_val);
             }
 
-            if (!(param_idx == 3 || param_idx == 5))
+            size_t num_params = tmp_list.size();
+            if (num_params == 3)
+            {
+                settings.vignetting_params.resize(num_params);
+                std::copy(tmp_list.begin(), tmp_list.end(), settings.vignetting_params.begin());
+            }
+            else
             {
                 std::cerr << "Error: incorrent number of parameters for Vignetting correction" << std::endl;
                 return false;
             }
 
-            std::cerr << "Performing Vignetting correction: "
-                      << settings.vignetting_params[0] << ":"
-                      << settings.vignetting_params[1] << ":"
-                      << settings.vignetting_params[2] << ":"
-                      << settings.vignetting_params[3] << ":"
-                      << settings.vignetting_params[4] << std::endl;
         }
 
         if (options_map.count("sub-rect"))
@@ -179,25 +220,26 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
             separator_t sep(":;");
             tokenizer_t tokens(param_string, sep);
 
-            std::vector<size_t> rect_params(4, 0);
-
-            size_t param_idx(0);
+            std::vector<size_t> tmp_list;
             for (tokenizer_t::const_iterator it = tokens.begin(); it != tokens.end(); ++it)
             {
                 std::stringstream sstr(*it);
-                sstr >> rect_params[param_idx++];
+                double tmp_val;
+                sstr >> tmp_val;
+                tmp_list.push_back(tmp_val);
             }
 
-            if (!(param_idx == 4))
+            size_t num_params = tmp_list.size();
+            if (num_params != 4)
             {
                 std::cerr << "Error: incorrent number of parameters for sub rectangle" << std::endl;
                 return false;
             }
 
-            settings.sub_rect_x0 = rect_params[0];
-            settings.sub_rect_y0 = rect_params[1];
-            settings.sub_rect_w = rect_params[2];
-            settings.sub_rect_h = rect_params[3];
+            settings.sub_rect_x0 = tmp_list[0];
+            settings.sub_rect_y0 = tmp_list[1];
+            settings.sub_rect_w = tmp_list[2];
+            settings.sub_rect_h = tmp_list[3];
             settings.sub_rect = true;
         }
 

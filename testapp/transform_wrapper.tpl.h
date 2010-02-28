@@ -180,14 +180,18 @@ add_models()
 
     double image_aspect = input_view_->aspect_ratio();
     double param_aspect(0);
-    if (settings_.param_aspect)
+    if (settings_.param_aspect_override)
     {
         param_aspect = settings_.param_aspect;
     }
     else
     {
-        param_aspect = image_aspect;
+        // if no aspect explicitely given, assume landscape aspect ratio of input image
+        param_aspect = (image_aspect > 1) ? image_aspect : (1 / image_aspect);
     }
+
+    double x0 = settings_.x0 / input_view_->height();
+    double y0 = settings_.y0 / input_view_->height();
 
     if (settings_.ptlens_corr)
     {
@@ -195,11 +199,21 @@ add_models()
                                           image_aspect,
                                           settings_.param_crop,
                                           settings_.image_crop);
-        ptlens_mod.set_model_params(settings_.ptlens_params[0],
-                                    settings_.ptlens_params[1],
-                                    settings_.ptlens_params[2]);
-        ptlens_mod.set_centre_shift(settings_.ptlens_params[3],
-                                    settings_.ptlens_params[4]);
+        if (settings_.ptlens_params.size() == 4)
+        {
+            ptlens_mod.set_model_params(settings_.ptlens_params[0],
+                                        settings_.ptlens_params[1],
+                                        settings_.ptlens_params[2],
+                                        settings_.ptlens_params[3]);
+
+        }
+        else
+        {
+            ptlens_mod.set_model_params(settings_.ptlens_params[0],
+                                        settings_.ptlens_params[1],
+                                        settings_.ptlens_params[2]);
+        }
+        ptlens_mod.set_centre_shift(x0, y0);
 
         image_transform_->geom_queue().add_model(ptlens_mod);
 
@@ -224,8 +238,7 @@ add_models()
         int_vign_mod.set_model_params(settings_.vignetting_params[0],
                                       settings_.vignetting_params[1],
                                       settings_.vignetting_params[2]);
-        int_vign_mod.set_centre_shift(settings_.vignetting_params[3],
-                                      settings_.vignetting_params[4]);
+        int_vign_mod.set_centre_shift(x0, y0);
         // read the parameters back
         double a, b, c;
         int_vign_mod.get_model_params(a, b, c);
