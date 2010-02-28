@@ -24,8 +24,8 @@ THE SOFTWARE.
 
 */
 
-#ifndef __PHTR_CORRECTION_MODEL_BASE_H__
-#define __PHTR_CORRECTION_MODEL_BASE_H__
+#ifndef PHTR_CORRECTION_MODEL_BASE_H__
+#define PHTR_CORRECTION_MODEL_BASE_H__
 
 namespace phtr
 {
@@ -137,4 +137,4 @@ namespace phtr
 
 } // namespace phtr
 
-#endif // __PHTR_CORRECTION_MODEL_BASE_H__
+#endif // PHTR_CORRECTION_MODEL_BASE_H__

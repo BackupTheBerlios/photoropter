@@ -24,8 +24,8 @@ THE SOFTWARE.
 
 */
 
-#ifndef __PHTR__COLOUR_TUPLE_H__
-#define __PHTR__COLOUR_TUPLE_H__
+#ifndef PHTR__COLOUR_TUPLE_H__
+#define PHTR__COLOUR_TUPLE_H__
 
 #include <photoropter/types.h>
 #include <photoropter/mem/channel_type.h>
@@ -180,4 +180,4 @@ namespace phtr
 
 #include <photoropter/mem/colour_tuple.tpl.h>
 
-#endif // __PHTR__COLOUR_TUPLE_H__
+#endif // PHTR__COLOUR_TUPLE_H__

@@ -24,8 +24,8 @@ THE SOFTWARE.
 
 */
 
-#ifndef __PHTR_MEM_LAYOUT_H__
-#define __PHTR_MEM_LAYOUT_H__
+#ifndef PHTR_MEM_LAYOUT_H__
+#define PHTR_MEM_LAYOUT_H__
 
 #include <photoropter/types.h>
 #include <photoropter/mem/channel_type.h>
@@ -462,9 +462,7 @@ namespace phtr
         * @param storage_T The storage type (e.g. @ref Storage::rgb_8_inter).
         */
         template <Storage::type storage_T>
-        struct MemLayout
-        {
-        }; // template struct MemLayout<>
+        struct MemLayout;
 
         /**
         * @brief Specialisation of @ref MemLayout for @ref Storage::rgb_8_inter.
@@ -568,4 +566,4 @@ namespace phtr
 
 } // namespace phtr
 
-#endif // __PHTR_MEM_LAYOUT_H__
+#endif // PHTR_MEM_LAYOUT_H__

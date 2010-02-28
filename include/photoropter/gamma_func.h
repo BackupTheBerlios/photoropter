@@ -24,8 +24,8 @@ THE SOFTWARE.
 
 */
 
-#ifndef __PHTR_GAMMA_FUNC_H__
-#define __PHTR_GAMMA_FUNC_H__
+#ifndef PHTR_GAMMA_FUNC_H__
+#define PHTR_GAMMA_FUNC_H__
 
 #include <cstddef>
 #include <vector>
@@ -44,6 +44,12 @@ namespace phtr
         */
         class IGammaFunc
         {
+
+            public:
+                /**
+                 * @ brief (Dummy) Destructor.
+                 */
+                virtual ~IGammaFunc() {};
 
             public:
                 /**
@@ -451,4 +457,4 @@ namespace phtr
 
 } // namespace phtr
 
-#endif // __PHTR_GAMMA_FUNC_H__
+#endif // PHTR_GAMMA_FUNC_H__

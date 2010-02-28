@@ -24,8 +24,8 @@ THE SOFTWARE.
 
 */
 
-#ifndef __PHTR_UTIL_H__
-#define __PHTR_UTIL_H__
+#ifndef PHTR_UTIL_H__
+#define PHTR_UTIL_H__
 
 namespace phtr
 {
@@ -99,4 +99,4 @@ namespace phtr
     } // namespace phtr::util
 } // namespace phtr
 
-#endif // __PHTR_UTIL_H__
+#endif // PHTR_UTIL_H__

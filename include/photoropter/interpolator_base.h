@@ -24,8 +24,8 @@ THE SOFTWARE.
 
 */
 
-#ifndef __PHTR_INTERPOLATOR_BASE_H__
-#define __PHTR_INTERPOLATOR_BASE_H__
+#ifndef PHTR_INTERPOLATOR_BASE_H__
+#define PHTR_INTERPOLATOR_BASE_H__
 
 #include <photoropter/types.h>
 
@@ -131,4 +131,4 @@ namespace phtr
 
 #include <photoropter/interpolator_base.tpl.h>
 
-#endif // __PHTR_INTERPOLATOR_BASE_H__
+#endif // PHTR_INTERPOLATOR_BASE_H__

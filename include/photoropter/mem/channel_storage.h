@@ -24,8 +24,8 @@ THE SOFTWARE.
 
 */
 
-#ifndef __PHTR_CHANNEL_STORAGE_H__
-#define __PHTR_CHANNEL_STORAGE_H__
+#ifndef PHTR_CHANNEL_STORAGE_H__
+#define PHTR_CHANNEL_STORAGE_H__
 
 #include <photoropter/mem/storage_type.h>
 #include <cstddef>
@@ -46,13 +46,7 @@ namespace phtr
          * @param storage_T The storage type (e.g. @ref Storage::rgb_8_inter).
          */
         template <mem::Storage::type storage_T>
-        struct ChannelStorage
-        {
-            // provoke a compile-time error whenever this unspecialised version is used
-            struct must_be_specialised_t;
-            const size_t must_be_specialised;
-            ChannelStorage() : must_be_specialised(sizeof(must_be_specialised_t)) {}
-        }; // template struct ChannelStorage
+        struct ChannelStorage;
 
         /**
         * @brief Specialisation of @ref ChannelStorage for @ref Storage::rgb_8_inter.
@@ -64,7 +58,7 @@ namespace phtr
             /**
             * @brief The storage type.
             */
-            typedef std::uint8_t type;
+            typedef uint8_t type;
 
         }; // template struct ChannelStorage<Storage::rgb_8_inter>
 
@@ -78,7 +72,7 @@ namespace phtr
             /**
             * @brief The storage type.
             */
-            typedef std::uint16_t type;
+            typedef uint16_t type;
 
         }; // template struct ChannelStorage<Storage::rgb_16_inter>
 
@@ -92,7 +86,7 @@ namespace phtr
             /**
             * @brief The storage type.
             */
-            typedef std::uint32_t type;
+            typedef uint32_t type;
 
         }; // template struct ChannelStorage<Storage::rgb_32_inter>
 
@@ -106,7 +100,7 @@ namespace phtr
             /**
             * @brief The storage type.
             */
-            typedef std::uint8_t type;
+            typedef uint8_t type;
 
         }; // template struct ChannelStorage<Storage::rgb_8_planar>
 
@@ -120,7 +114,7 @@ namespace phtr
             /**
             * @brief The storage type.
             */
-            typedef std::uint16_t type;
+            typedef uint16_t type;
 
         }; // template struct ChannelStorage<Storage::rgb_16_planar>
 
@@ -134,7 +128,7 @@ namespace phtr
             /**
             * @brief The storage type.
             */
-            typedef std::uint32_t type;
+            typedef uint32_t type;
 
         }; // template struct ChannelStorage<Storage::rgb_32_planar>
 
@@ -148,7 +142,7 @@ namespace phtr
             /**
             * @brief The storage type.
             */
-            typedef std::uint8_t type;
+            typedef uint8_t type;
 
         }; // template struct ChannelStorage<Storage::rgba_8_inter>
 
@@ -162,7 +156,7 @@ namespace phtr
             /**
             * @brief The storage type.
             */
-            typedef std::uint16_t type;
+            typedef uint16_t type;
 
         }; // template struct ChannelStorage<Storage::rgba_16_inter>
 
@@ -176,7 +170,7 @@ namespace phtr
             /**
             * @brief The storage type.
             */
-            typedef std::uint32_t type;
+            typedef uint32_t type;
 
         }; // template struct ChannelStorage<Storage::rgba_32_inter>
 
@@ -190,7 +184,7 @@ namespace phtr
             /**
             * @brief The storage type.
             */
-            typedef std::uint8_t type;
+            typedef uint8_t type;
 
         }; // template struct ChannelStorage<Storage::rgba_8_planar>
 
@@ -204,7 +198,7 @@ namespace phtr
             /**
             * @brief The storage type.
             */
-            typedef std::uint16_t type;
+            typedef uint16_t type;
 
         }; // template struct ChannelStorage<Storage::rgba_16_planar>
 
@@ -218,7 +212,7 @@ namespace phtr
             /**
             * @brief The storage type.
             */
-            typedef std::uint32_t type;
+            typedef uint32_t type;
 
         }; // template struct ChannelStorage<Storage::rgba_32_planar>
 
@@ -228,4 +222,4 @@ namespace phtr
 
 } // namespace phtr
 
-#endif // __PHTR_CHANNEL_STORAGE_H__
+#endif // PHTR_CHANNEL_STORAGE_H__

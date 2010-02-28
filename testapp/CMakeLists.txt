@@ -25,8 +25,13 @@ if(PHTR_BUILD_TESTAPP)
 
   add_executable(phtrtest
     phtrtest.cpp
+    settings.h
+    vil_pixel_type.h
     parseconf.h
     parseconf.cpp
+    transform_wrapper.h
+    transform_wrapper.tpl.h
+    transform_wrapper.cpp
     )
 
   target_link_libraries(phtrtest

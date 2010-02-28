@@ -24,8 +24,8 @@ THE SOFTWARE.
 
 */
 
-#ifndef __PHTR_MEM_IMAGE_VIEW_W_H__
-#define __PHTR_MEM_IMAGE_VIEW_W_H__
+#ifndef PHTR_MEM_IMAGE_VIEW_W_H__
+#define PHTR_MEM_IMAGE_VIEW_W_H__
 
 #include <photoropter/mem/coord_tuple.h>
 #include <photoropter/mem/colour_tuple.h>
@@ -229,4 +229,4 @@ namespace phtr
 
 #include <photoropter/mem_image_view_w.tpl.h>
 
-#endif // __PHTR_MEM_IMAGE_VIEW_W_H__
+#endif // PHTR_MEM_IMAGE_VIEW_W_H__

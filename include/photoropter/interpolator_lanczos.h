@@ -24,11 +24,12 @@ THE SOFTWARE.
 
 */
 
-#ifndef __PHTR_INTERPOLATOR_LANCZOS_H__
-#define __PHTR_INTERPOLATOR_LANCZOS_H__
+#ifndef PHTR_INTERPOLATOR_LANCZOS_H__
+#define PHTR_INTERPOLATOR_LANCZOS_H__
 
 #include <cmath>
 #include <vector>
+#include <cassert>
 
 #include <photoropter/mem/coord_tuple.h>
 #include <photoropter/mem/colour_tuple.h>
@@ -169,4 +170,4 @@ namespace phtr
 
 #include "interpolator_lanczos.tpl.h"
 
-#endif // __PHTR_INTERPOLATOR_LANCZOS_H__
+#endif // PHTR_INTERPOLATOR_LANCZOS_H__

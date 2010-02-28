@@ -24,8 +24,8 @@ THE SOFTWARE.
 
 */
 
-#ifndef __PHTR_GEOM_CORRECTION_MODEL_H__
-#define __PHTR_GEOM_CORRECTION_MODEL_H__
+#ifndef PHTR_GEOM_CORRECTION_MODEL_H__
+#define PHTR_GEOM_CORRECTION_MODEL_H__
 
 #include <photoropter/types.h>
 #include <photoropter/mem/coord_tuple.h>
@@ -44,7 +44,13 @@ namespace phtr
         class IGeomCorrectionModel
         {
 
-            public:
+        public:
+        	/**
+        	 * @ brief (Dummy) Destructor.
+        	 */
+        	virtual ~IGeomCorrectionModel() {};
+
+        public:
                 /**
                 * @brief Get the corrected source image coordinates for the current position.
                 * @note This function changes the input tuple.
@@ -274,4 +280,4 @@ namespace phtr
 
 } // namespace phtr
 
-#endif // __PHTR_GEOM_CORRECTION_MODEL_H__
+#endif // PHTR_GEOM_CORRECTION_MODEL_H__

@@ -24,8 +24,8 @@ THE SOFTWARE.
 
 */
 
-#ifndef __PHTR_CHANNEL_TYPES_H__
-#define __PHTR_CHANNEL_TYPES_H__
+#ifndef PHTR_CHANNEL_TYPES_H__
+#define PHTR_CHANNEL_TYPES_H__
 
 namespace phtr
 {
@@ -70,4 +70,4 @@ namespace phtr
 
 } // namespace phtr
 
-#endif // __PHTR_CHANNEL_TYPES_H__
+#endif // PHTR_CHANNEL_TYPES_H__

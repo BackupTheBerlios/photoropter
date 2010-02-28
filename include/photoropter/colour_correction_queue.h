@@ -24,8 +24,8 @@ THE SOFTWARE.
 
 */
 
-#ifndef __PHTR_COLOUR_CORRECTION_QUEUE_H__
-#define __PHTR_COLOUR_CORRECTION_QUEUE_H__
+#ifndef PHTR_COLOUR_CORRECTION_QUEUE_H__
+#define PHTR_COLOUR_CORRECTION_QUEUE_H__
 
 #include <vector>
 
@@ -125,4 +125,4 @@ namespace phtr
 
 #include <photoropter/colour_correction_queue.tpl.h>
 
-#endif // __PHTR_COLOUR_CORRECTION_QUEUE_H__
+#endif // PHTR_COLOUR_CORRECTION_QUEUE_H__

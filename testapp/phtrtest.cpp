@@ -23,6 +23,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include "parseconf.h"
+#include "transform_wrapper.h"
 
 // VIL is needed for image file I/O
 #include <vcl_iostream.h>
@@ -51,6 +52,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <ctime>
 #include <iostream>
+#include <memory>
 
 template <phtr::mem::Storage::type storage_type, typename vil_channel_t>
 void convert(const Settings& settings)
@@ -58,6 +60,11 @@ void convert(const Settings& settings)
     using namespace phtr;
 
     std::cerr << "Using Photoropter version " << PHTR_VERSION << std::endl;
+
+//    std::auto_ptr<TransformWrapperBase> tf(TransformWrapperBase::get_instance(settings));
+//    tf->do_transform();
+//    tf->save();
+//    return;
 
     // typedefs and constants
     typedef ImageBuffer<storage_type> buffer_t;
@@ -125,7 +132,7 @@ void convert(const Settings& settings)
     // set gain function
     switch (settings.gainfunc)
     {
-        case Settings::gf_invemor:
+        case GainFunc::invemor:
             {
                 gamma::GammaInvEMOR emor_func;
                 util::SetParam<gamma::GammaEMORBase::coeff_iter_t> coeff_iter = emor_func.set_params();
@@ -147,7 +154,7 @@ void convert(const Settings& settings)
 
             break;
 
-        case Settings::gf_emor:
+        case GainFunc::emor:
             {
                 gamma::GammaEMOR emor_func;
                 util::SetParam<gamma::GammaEMORBase::coeff_iter_t> coeff_iter = emor_func.set_params();
@@ -169,12 +176,12 @@ void convert(const Settings& settings)
 
             break;
 
-        case Settings::gf_gamma:
+        case GainFunc::gamma:
             std::cerr << "Assuming generic image gamma of " << settings.gamma << "." << std::endl;
             transform.set_gamma(gamma::GammaGeneric(settings.gamma));
             break;
 
-        case Settings::gf_srgb:
+        case GainFunc::srgb:
         default:
             std::cerr << "Assuming sRGB gamma." << std::endl;
             transform.set_gamma(gamma::GammaSRGB());

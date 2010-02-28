@@ -24,8 +24,8 @@ THE SOFTWARE.
 
 */
 
-#ifndef __PHTR_MEM_STORAGE_INFO_H__
-#define __PHTR_MEM_STORAGE_INFO_H__
+#ifndef PHTR_MEM_STORAGE_INFO_H__
+#define PHTR_MEM_STORAGE_INFO_H__
 
 #include <limits>
 
@@ -149,4 +149,4 @@ namespace phtr
 
 } // namespace phtr
 
-#endif // __PHTR_MEM_STORAGE_INFO_H__
+#endif // PHTR_MEM_STORAGE_INFO_H__

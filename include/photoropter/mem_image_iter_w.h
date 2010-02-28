@@ -24,8 +24,8 @@ THE SOFTWARE.
 
 */
 
-#ifndef __PHTR_MEM_IMAGE_ITER_W_H__
-#define __PHTR_MEM_IMAGE_ITER_W_H__
+#ifndef PHTR_MEM_IMAGE_ITER_W_H__
+#define PHTR_MEM_IMAGE_ITER_W_H__
 
 #include <photoropter/mem/colour_tuple.h>
 #include <photoropter/mem_image_iter_base.h>
@@ -101,4 +101,4 @@ namespace phtr
 
 #include <photoropter/mem_image_iter_w.tpl.h>
 
-#endif // __PHTR_MEM_IMAGE_ITER_W_H__
+#endif // PHTR_MEM_IMAGE_ITER_W_H__

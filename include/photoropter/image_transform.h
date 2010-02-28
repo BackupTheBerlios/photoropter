@@ -24,8 +24,8 @@ THE SOFTWARE.
 
 */
 
-#ifndef __PHTR_IMAGE_TRANSFORM_H__
-#define __PHTR_IMAGE_TRANSFORM_H__
+#ifndef PHTR_IMAGE_TRANSFORM_H__
+#define PHTR_IMAGE_TRANSFORM_H__
 
 #include <vector>
 #include <cassert>
@@ -43,6 +43,13 @@ namespace phtr
     */
     class IImageTransform
     {
+
+        public:
+            /**
+             * @ brief (Dummy) Destructor.
+             */
+            virtual ~IImageTransform() {};
+
         public:
             /**
             * @brief Transform the image.
@@ -420,4 +427,4 @@ namespace phtr
 
 #include <photoropter/image_transform.tpl.h>
 
-#endif // __PHTR_IMAGE_TRANSFORM_H__
+#endif // PHTR_IMAGE_TRANSFORM_H__

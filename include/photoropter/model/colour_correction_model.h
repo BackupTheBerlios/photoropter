@@ -24,8 +24,8 @@ THE SOFTWARE.
 
 */
 
-#ifndef __PHTR_COLOUR_CORRECTION_MODEL_H__
-#define __PHTR_COLOUR_CORRECTION_MODEL_H__
+#ifndef PHTR_COLOUR_CORRECTION_MODEL_H__
+#define PHTR_COLOUR_CORRECTION_MODEL_H__
 
 #include <photoropter/types.h>
 #include <photoropter/mem/coord_tuple.h>
@@ -45,6 +45,12 @@ namespace phtr
         */
         class IColourCorrectionModel
         {
+
+        public:
+        	/**
+        	 * @ brief (Dummy) Destructor.
+        	 */
+        	virtual ~IColourCorrectionModel() {};
 
             public:
                 /**
@@ -302,4 +308,4 @@ namespace phtr
 
 } // namespace phtr
 
-#endif // __PHTR_COLOUR_CORRECTION_MODEL_H__
+#endif // PHTR_COLOUR_CORRECTION_MODEL_H__

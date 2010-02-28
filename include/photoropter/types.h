@@ -24,8 +24,8 @@ THE SOFTWARE.
 
 */
 
-#ifndef __PHTR_TYPES_H__
-#define __PHTR_TYPES_H__
+#ifndef PHTR_TYPES_H__
+#define PHTR_TYPES_H__
 
 #include <cstddef>
 
@@ -61,4 +61,4 @@ namespace phtr
 
 } // namespace phtr
 
-#endif // __PHTR_TYPES_H__
+#endif // PHTR_TYPES_H__

@@ -206,19 +206,19 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
             std::string opt = options_map["gain-func"].as<std::string>();
             if (opt == "srgb")
             {
-                settings.gainfunc = Settings::gf_srgb;
+                settings.gainfunc = GainFunc::srgb;
             }
             else if (opt == "gamma")
             {
-                settings.gainfunc = Settings::gf_gamma;
+                settings.gainfunc = GainFunc::gamma;
             }
             else if (opt == "emor")
             {
-                settings.gainfunc = Settings::gf_emor;
+                settings.gainfunc = GainFunc::emor;
             }
             if (opt == "invemor")
             {
-                settings.gainfunc = Settings::gf_invemor;
+                settings.gainfunc = GainFunc::invemor;
             }
         }
 

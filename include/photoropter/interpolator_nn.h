@@ -24,8 +24,10 @@ THE SOFTWARE.
 
 */
 
-#ifndef __PHTR_INTERPOLATOR_NN_H__
-#define __PHTR_INTERPOLATOR_NN_H__
+#ifndef PHTR_INTERPOLATOR_NN_H__
+#define PHTR_INTERPOLATOR_NN_H__
+
+#include <cassert>
 
 #include <photoropter/mem/coord_tuple.h>
 #include <photoropter/mem/colour_tuple.h>
@@ -90,4 +92,4 @@ namespace phtr
 
 #include "interpolator_nn.tpl.h"
 
-#endif // __PHTR_INTERPOLATOR_NN_H__
+#endif // PHTR_INTERPOLATOR_NN_H__
