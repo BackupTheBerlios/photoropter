@@ -193,6 +193,31 @@ add_models()
     double x0 = settings_.x0 / input_view_->height();
     double y0 = settings_.y0 / input_view_->height();
 
+    if (settings_.ptlens_tca_corr)
+    {
+        model::PTLensGeomModel ptlens_tca_mod(param_aspect,
+                                              image_aspect,
+                                              settings_.param_crop,
+                                              settings_.image_crop);
+
+        size_t idx_red = view_r_t::storage_info_t::mem_layout_t::idx_red;
+        size_t idx_blue = view_r_t::storage_info_t::mem_layout_t::idx_blue;
+
+        ptlens_tca_mod.set_model_params(0, 0, 0);
+        ptlens_tca_mod.set_model_params_single(idx_red, settings_.ptlens_r_params[0],
+                                               settings_.ptlens_r_params[1],
+                                               settings_.ptlens_r_params[2],
+                                               settings_.ptlens_r_params[3]);
+        ptlens_tca_mod.set_model_params_single(idx_blue, settings_.ptlens_b_params[0],
+                                               settings_.ptlens_b_params[1],
+                                               settings_.ptlens_b_params[2],
+                                               settings_.ptlens_b_params[3]);
+
+        ptlens_tca_mod.set_centre_shift(x0, y0);
+
+        image_transform_->geom_queue().add_model(ptlens_tca_mod);
+    }
+
     if (settings_.ptlens_corr)
     {
         model::PTLensGeomModel ptlens_mod(param_aspect,
@@ -216,10 +241,6 @@ add_models()
         ptlens_mod.set_centre_shift(x0, y0);
 
         image_transform_->geom_queue().add_model(ptlens_mod);
-
-        typedef phtr::mem::ColourTupleRGB::channel_order_t channel_order_t;
-        double a, b, c, d;
-        ptlens_mod.get_model_params(channel_order_t::idx_green, a, b, c, d);
     }
 
     if (settings_.vignetting_corr)
@@ -239,10 +260,6 @@ add_models()
                                       settings_.vignetting_params[1],
                                       settings_.vignetting_params[2]);
         int_vign_mod.set_centre_shift(x0, y0);
-        // read the parameters back
-        double a, b, c;
-        int_vign_mod.get_model_params(a, b, c);
-
     }
 }
 

@@ -38,7 +38,9 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
         po::options_description opt_desc("Allowed options");
         opt_desc.add_options()
         ("help,h", "show options")
-        ("ptlens,r", po::value<std::string>(), "Set PTLens correction model parameters: a:b:c[:d]")
+        ("ptlens,g", po::value<std::string>(), "Set PTLens correction model parameters: a:b:c[:d]")
+        ("ptlens-r,r", po::value<std::string>(), "Set PTLens correction model parameters (red channel shift, use for TCA): a:b:c[:d]")
+        ("ptlens-b,b", po::value<std::string>(), "Set PTLens correction model parameters (blue channel shift, use for TCA): a:b:c[:d]")
         ("vignetting,c", po::value<std::string>(), "Set vignetting correction parameters: a:b:c")
         ("param-aspect", po::value<double>(), "Aspect ratio used for parameter calibration")
         ("param-crop", po::value<double>(), "Crop factor used for parameter calibration")
@@ -166,6 +168,76 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
             {
                 settings.ptlens_params.resize(num_params);
                 std::copy(tmp_list.begin(), tmp_list.end(), settings.ptlens_params.begin());
+            }
+            else
+            {
+                std::cerr << "Error: incorrent number of parameters for PTLens correction" << std::endl;
+                return false;
+            }
+
+        }
+
+        if (options_map.count("ptlens-r"))
+        {
+            settings.ptlens_tca_corr = true;
+
+            typedef boost::tokenizer<boost::char_separator<char> > tokenizer_t;
+            typedef boost::char_separator<char> separator_t;
+
+            std::string param_string = options_map["ptlens-r"].as<std::string>();
+
+            separator_t sep(":;");
+            tokenizer_t tokens(param_string, sep);
+
+            std::list<double> tmp_list;
+            for (tokenizer_t::const_iterator it = tokens.begin(); it != tokens.end(); ++it)
+            {
+                std::stringstream sstr(*it);
+                double tmp_val;
+                sstr >> tmp_val;
+                tmp_list.push_back(tmp_val);
+            }
+
+            size_t num_params = tmp_list.size();
+            if (num_params == 4)
+            {
+                settings.ptlens_r_params.resize(num_params);
+                std::copy(tmp_list.begin(), tmp_list.end(), settings.ptlens_r_params.begin());
+            }
+            else
+            {
+                std::cerr << "Error: incorrent number of parameters for PTLens correction" << std::endl;
+                return false;
+            }
+
+        }
+
+        if (options_map.count("ptlens-b"))
+        {
+            settings.ptlens_tca_corr = true;
+
+            typedef boost::tokenizer<boost::char_separator<char> > tokenizer_t;
+            typedef boost::char_separator<char> separator_t;
+
+            std::string param_string = options_map["ptlens-b"].as<std::string>();
+
+            separator_t sep(":;");
+            tokenizer_t tokens(param_string, sep);
+
+            std::list<double> tmp_list;
+            for (tokenizer_t::const_iterator it = tokens.begin(); it != tokens.end(); ++it)
+            {
+                std::stringstream sstr(*it);
+                double tmp_val;
+                sstr >> tmp_val;
+                tmp_list.push_back(tmp_val);
+            }
+
+            size_t num_params = tmp_list.size();
+            if (num_params == 4)
+            {
+                settings.ptlens_b_params.resize(num_params);
+                std::copy(tmp_list.begin(), tmp_list.end(), settings.ptlens_b_params.begin());
             }
             else
             {

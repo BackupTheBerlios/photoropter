@@ -24,6 +24,8 @@ THE SOFTWARE.
 
 */
 
+#include <list>
+
 #include <photoropter/colour_correction_queue.h>
 #include <photoropter/model/geom_correction_model.h>
 
@@ -85,7 +87,10 @@ namespace phtr
     {
         model::IColourCorrectionModel* new_mod = model.clone();
 
-        correction_model_.push_back(new_mod);
+        std::list<model::IColourCorrectionModel*> tmp_list(correction_model_.begin(), correction_model_.end());
+        tmp_list.push_front(new_mod);
+
+        correction_model_.assign(tmp_list.begin(), tmp_list.end());
         ++n_models_;
 
         return *new_mod;

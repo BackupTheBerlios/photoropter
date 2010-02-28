@@ -48,6 +48,9 @@ struct Settings
     Settings()
             : ptlens_corr(false),
             ptlens_params(3, 0),
+            ptlens_tca_corr(false),
+            ptlens_r_params(4, 0),
+            ptlens_b_params(4, 0),
             vignetting_corr(false),
             vignetting_params(3, 0),
             x0(0),
@@ -66,11 +69,17 @@ struct Settings
             oversampling(1),
             interp_type(Interpolation::bilinear),
             lanczos_support(2)
-    {}
+    {
+        ptlens_r_params[3] = 1.0;
+        ptlens_b_params[3] = 1.0;
+    }
 
     // perform PTLens correction?
     bool ptlens_corr;
     std::vector<double> ptlens_params;
+    bool ptlens_tca_corr;
+    std::vector<double> ptlens_r_params;
+    std::vector<double> ptlens_b_params;
 
     // perform vignetting correction?
     bool vignetting_corr;
