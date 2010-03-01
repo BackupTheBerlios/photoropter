@@ -33,26 +33,32 @@ get_instance(const Settings& settings)
 
     if (storage_type == Storage::rgb_8_inter)
     {
+        log(settings, "8bit RGB data");
         return new TransformWrapper<Storage::rgb_8_inter>(settings);
     }
     else if (storage_type == Storage::rgb_16_inter)
     {
+        log(settings, "16bit RGB data");
         return new TransformWrapper<Storage::rgb_16_inter>(settings);
     }
     else if (storage_type == Storage::rgb_32_inter)
     {
+        log(settings, "32bit RGB data");
         return new TransformWrapper<Storage::rgb_32_inter>(settings);
     }
     else if (storage_type == Storage::rgba_8_inter)
     {
+        log(settings, "8bit RGBA data");
         return new TransformWrapper<Storage::rgba_8_inter>(settings);
     }
     else if (storage_type == Storage::rgba_16_inter)
     {
+        log(settings, "16bit RGBA data");
         return new TransformWrapper<Storage::rgba_16_inter>(settings);
     }
     else if (storage_type == Storage::rgba_32_inter)
     {
+        log(settings, "32bit RGBA data");
         return new TransformWrapper<Storage::rgba_32_inter>(settings);
     }
 
@@ -103,4 +109,14 @@ get_storage_type(const std::string inp_file)
     }
 
     return phtr_storage;
+}
+
+void
+TransformWrapperBase::
+log(const Settings& settings, const std::string& msg)
+{
+    if (settings.verbose)
+    {
+        std::cerr << msg << std::endl;
+    }
 }

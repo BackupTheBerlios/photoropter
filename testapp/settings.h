@@ -46,7 +46,8 @@ struct GainFunc
 struct Settings
 {
     Settings()
-            : ptlens_corr(false),
+            : verbose(false),
+            ptlens_corr(false),
             ptlens_params(3, 0),
             ptlens_tca_corr(false),
             ptlens_r_params(4, 0),
@@ -73,6 +74,8 @@ struct Settings
         ptlens_r_params[3] = 1.0;
         ptlens_b_params[3] = 1.0;
     }
+
+    bool verbose;
 
     // perform PTLens correction?
     bool ptlens_corr;

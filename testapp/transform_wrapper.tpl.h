@@ -50,6 +50,9 @@ load()
     img_height_ = loaded_img.nj();
     dst_width_ = img_width_;
     dst_height_ = img_height_;
+    std::stringstream sstr;
+    sstr << "Image dimensions: " << img_width_ << "x" << img_height_;
+    log(sstr.str());
 
     // 'sanity checks' on ROI settings
     size_t sub_rect_x0 = settings_.sub_rect_x0;
@@ -190,9 +193,11 @@ add_models()
         param_aspect = (image_aspect > 1) ? image_aspect : (1 / image_aspect);
     }
 
+    // calculate centre shift
     double x0 = settings_.x0 / input_view_->height();
     double y0 = settings_.y0 / input_view_->height();
 
+    // apply PTLens TCA correction (fulla style)
     if (settings_.ptlens_tca_corr)
     {
         model::PTLensGeomModel ptlens_tca_mod(param_aspect,
@@ -218,6 +223,7 @@ add_models()
         image_transform_->geom_queue().add_model(ptlens_tca_mod);
     }
 
+    // apply PTLens geometric correction
     if (settings_.ptlens_corr)
     {
         model::PTLensGeomModel ptlens_mod(param_aspect,
@@ -243,23 +249,25 @@ add_models()
         image_transform_->geom_queue().add_model(ptlens_mod);
     }
 
+    // apply vignetting correction
     if (settings_.vignetting_corr)
     {
         using model::HuginVignettingModel;
         // this time, the other way round. first add the model, then modify settings
-        HuginVignettingModel vign_mod(param_aspect,
-                                      image_aspect,
-                                      settings_.param_crop,
-                                      settings_.image_crop);
+        // (yes, this works, too)
+        HuginVignettingModel tmp_vign_mod(param_aspect,
+                                          image_aspect,
+                                          settings_.param_crop,
+                                          settings_.image_crop);
 
-        // add model to queue and get reference to the internal object
-        HuginVignettingModel& int_vign_mod = dynamic_cast<HuginVignettingModel&>(
-                                                 image_transform_->colour_queue().add_model(vign_mod));
+        // add the model to queue and get a reference to the internal object back
+        HuginVignettingModel& vign_mod = dynamic_cast<HuginVignettingModel&>(
+                                             image_transform_->colour_queue().add_model(tmp_vign_mod));
 
-        int_vign_mod.set_model_params(settings_.vignetting_params[0],
-                                      settings_.vignetting_params[1],
-                                      settings_.vignetting_params[2]);
-        int_vign_mod.set_centre_shift(x0, y0);
+        vign_mod.set_model_params(settings_.vignetting_params[0],
+                                  settings_.vignetting_params[1],
+                                  settings_.vignetting_params[2]);
+        vign_mod.set_centre_shift(x0, y0);
     }
 }
 
@@ -280,4 +288,15 @@ save()
     (static_cast<vil_pixel_t*>(output_buffer_->data()), dst_width_, dst_height_, 1, 1, dst_width_, 1);
 
     vil_save(vil_output_view, settings_.outp_file.c_str());
+}
+
+template <phtr::mem::Storage::type storage_T>
+void
+TransformWrapper<storage_T>::
+log(const std::string& msg)
+{
+    if (settings_.verbose)
+    {
+        std::cerr << msg << std::endl;
+    }
 }

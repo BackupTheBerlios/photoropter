@@ -1,7 +1,6 @@
 Todo:
 =====
 
--Lanczos interpolation
 -Correction model for chromatic abberations
 -More geometric models
 -Lens geometry conversion

@@ -38,9 +38,12 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
         po::options_description opt_desc("Allowed options");
         opt_desc.add_options()
         ("help,h", "show options")
+        ("verbose,v", "be verbose")
         ("ptlens,g", po::value<std::string>(), "Set PTLens correction model parameters: a:b:c[:d]")
-        ("ptlens-r,r", po::value<std::string>(), "Set PTLens correction model parameters (red channel shift, use for TCA): a:b:c[:d]")
-        ("ptlens-b,b", po::value<std::string>(), "Set PTLens correction model parameters (blue channel shift, use for TCA): a:b:c[:d]")
+        ("ptlens-r,r", po::value<std::string>(), "Set PTLens correction model parameters: a:b:c:d"
+         " (red channel shift, use for TCA)")
+        ("ptlens-b,b", po::value<std::string>(), "Set PTLens correction model parameters: a:b:c:d"
+         " (blue channel shift, use for TCA)")
         ("vignetting,c", po::value<std::string>(), "Set vignetting correction parameters: a:b:c")
         ("param-aspect", po::value<double>(), "Aspect ratio used for parameter calibration")
         ("param-crop", po::value<double>(), "Crop factor used for parameter calibration")
@@ -53,6 +56,11 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
          "  invemor - inverse EMOR.")
         ("gamma", po::value<double>(), "Gamma value (default: assume sRGB gamma)")
         ("emor-params", po::value<std::string>(), "EMOR parameters: h1[:h2[:h3...]]")
+        ("interpolation", po::value<std::string>(), "Interpolation type:\n"
+         "  nn      - Nearest Neighbour\n"
+         "  bilin   - Bilinear (default)\n"
+         "  lanczos - Lanczos.")
+        ("lanczos-supp", po::value<unsigned>(), "Lanczos interpolation kernel support (default: 2)")
         ("oversample", po::value<unsigned>(), "Sampling factor (>= 1)")
         ("centre-shift,x", po::value<std::string>(), "Centre shift: x0:y0")
         ("input-file", po::value<std::string>(), "Input file")
@@ -69,8 +77,13 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
 
         if (options_map.count("help"))
         {
-            std::cerr << opt_desc << std::endl;
+            std::cout << opt_desc << std::endl;
             return false;
+        }
+
+        if (options_map.count("verbose"))
+        {
+            settings.verbose = true;
         }
 
         if (options_map.count("param-crop"))
@@ -354,6 +367,28 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
                 settings.emor_coeffs.push_back(val);
             }
 
+        }
+
+        if (options_map.count("interpolation"))
+        {
+            std::string opt = options_map["interpolation"].as<std::string>();
+            if (opt == "nn")
+            {
+                settings.interp_type = Interpolation::nearest_neighbour;
+            }
+            else if (opt == "bilin")
+            {
+                settings.interp_type = Interpolation::bilinear;
+            }
+            else if (opt == "lanczos")
+            {
+                settings.interp_type = Interpolation::lanczos;
+            }
+        }
+
+        if (options_map.count("lanczos-supp"))
+        {
+            settings.lanczos_support = options_map["lanczos-supp"].as<unsigned>();
         }
 
         if (options_map.count("gamma"))

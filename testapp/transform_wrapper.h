@@ -62,9 +62,14 @@ class TransformWrapperBase
 
     private:
         /**
-            * @brief Determine a compatible storage type (i.e., check the bit depth of the given file)
-            */
+         * @brief Determine a compatible storage type (i.e., check the bit depth of the given file)
+         */
         static phtr::mem::Storage::type get_storage_type(const std::string inp_file);
+
+        /**
+         * @brief Log messages according to settings
+         */
+        static void log(const Settings& settings, const std::string& msg);
 
 };
 
@@ -98,6 +103,7 @@ class TransformWrapper : public TransformWrapperBase
         void setup_transform();
         void set_gainfunc();
         void add_models();
+        void log(const std::string& msg);
 
     private:
         static const unsigned int num_components_ = VILPixelType<storage_T>::num_components;
