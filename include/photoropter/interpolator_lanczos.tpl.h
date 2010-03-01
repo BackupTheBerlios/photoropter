@@ -83,11 +83,11 @@ namespace phtr
             return this->null_val_;
         }
 
-        coord_t xoffs = static_cast<coord_t>((x_scaled - std::floor(x_scaled)) * resolution_);
-        coord_t yoffs = static_cast<coord_t>((y_scaled - std::floor(y_scaled)) * resolution_);
+        long xoffs = static_cast<long>((x_scaled - std::floor(x_scaled)) * resolution_);
+        long yoffs = static_cast<long>((y_scaled - std::floor(y_scaled)) * resolution_);
 
-        long x0 = static_cast<coord_t>(x_scaled);
-        long y0 = static_cast<coord_t>(y_scaled);
+        long x0 = static_cast<long>(x_scaled);
+        long y0 = static_cast<long>(y_scaled);
 
         // determine interpolation area
         long x_left = x0 - support_ + 1;
