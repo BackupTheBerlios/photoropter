@@ -15,32 +15,38 @@ cmake -DVXL_DIR:string=<vxl-dir> -DCMAKE_BUILD_TYPE=Release <phtr-srcdir>
 -You can omit the VXL_DIR variable if you do not want to build the example
 application.
 -In the rare case that Boost is installed but cannot be found, try defining a
-variable BOOST_ROOT pointing to its location.
+CMake variable BOOST_ROOT pointing to its location.
+-You can ignore VXL and/or Boost if you do not want to build the example
+application.
 
 Windows (Microsoft Visual Studio 2008+):
 
 -Extract the archive to a location of your choice.
 -Create a build directory alongside it.
--Start the CMake GUI and choose both source and build directory locations.
--If you want to build the example application, you need to have both VXL and
-Boost installed and compiled.
--Click on "Add Entry" and define a string "VXL_DIR" pointing to the VXL build
-directory.
--You can omit the VXL_DIR variable if you do not want to build the example
-application.
--The VXL library has to be built using the same build type as Photoropter (i.e.,
-'Debug' or 'Release') .
--If you want to build the example application and should Boost be installed but
-not be found, add an entry "BOOST_ROOT" pointing to the boost base directory.
 -Copy a compatible version of 'stdint.h' either into the Photoropter include
 directory (alongside the 'photoropter' subdirectory) or anywhere into the
 include search path. There is a Google code project for this purpose at
 http://code.google.com/p/msinttypes/
+-Start the CMake GUI and choose both source and build directory locations.
+-If you want to build the example application, you need to have both VXL and
+Boost installed and compiled.
+-If you want to build the example application and should Boost be installed but
+not be found, add an entry "BOOST_ROOT" pointing to the Boost base directory:
+click on "Add Entry" and define a new path variable "BOOST_ROOT", then choose the
+correct directory.
+-Add the boolean variable "Boost_USE_STATIC_LIBS" to the CMake configuration
+and set it to 'true'.
+-Usually VXL is found automatically. If that is not the case, try adding a
+path variable "VXL_DIR" pointing to the VXL build directory.
+-The VXL library has to be built using the same build type as Photoropter (i.e.,
+'Debug' or 'Release'). You can build both, of course.
+-You can ignore VXL and/or Boost if you do not want to build the example
+application.
 
 Notes:
 
--The CMake gui is also available for Unix. However, I wanted to describe the
-command line usage of CMake as well.
+-The CMake GUI is also available for Unix. However, I wanted to describe both
+the command line and GUI usage of CMake.
 -There are several CMake variables that control the behaviour of the
 Photoropter build. These are:
 CMAKE_BUILD_TYPE (string): either 'Release' or 'Debug'; affects generated
@@ -48,8 +54,8 @@ Makefiles as well as Eclipse CDT and Code::Blocks projects
 CMAKE_INSTALL_PREFIX (string): the install prefix, important for manual
 installation on e.g. Unix systems
 PHTR_BUILD_DOCUMENTATION (bool): include Doxygen documentation in default build.
-Otherwise a build target 'doc' is created but not executed by default. You need
-doxygen for this to work.
+Otherwise a target 'doc' is created but not built by default. You need doxygen
+for this to work.
 PHTR_DOCUMENT_ALL (bool): document internals of Photoropter (including doxygen
 comments that might be inside .cpp files)
 PHTR_DOCUMENT_PRVATE (bool): include private members in the documentation;
