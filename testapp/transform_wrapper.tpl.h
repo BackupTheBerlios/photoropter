@@ -78,8 +78,10 @@ load()
     output_view_.reset(new view_w_t(output_buffer_->data(), dst_width_, dst_height_));
 
     // attach a VIL view to the buffer
+    unsigned int width = static_cast<unsigned int>(img_width_);
+    unsigned int height = static_cast<unsigned int>(img_height_);
     vil_image_view<vil_pixel_t> vil_input_view(
-        static_cast<vil_pixel_t*>(input_buffer_->data()), img_width_, img_height_, 1, 1, img_width_, 1
+        static_cast<vil_pixel_t*>(input_buffer_->data()), width, height, 1, 1, width, 1
     );
 
     // tell VIL to convert/copy data into the Photoropter buffer
@@ -336,8 +338,10 @@ void
 TransformWrapper<storage_T>::
 save()
 {
+    unsigned int width = static_cast<unsigned int>(dst_width_);
+    unsigned int height = static_cast<unsigned int>(dst_height_);
     vil_image_view<vil_pixel_t> vil_output_view
-    (static_cast<vil_pixel_t*>(output_buffer_->data()), dst_width_, dst_height_, 1, 1, dst_width_, 1);
+    (static_cast<vil_pixel_t*>(output_buffer_->data()), width, height, 1, 1, width, 1);
 
     vil_save(vil_output_view, settings_.outp_file.c_str());
 }

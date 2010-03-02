@@ -101,8 +101,8 @@ namespace phtr
             for (i = i0; i < i_limit; ++i) // pixel loop
             {
                 // current pixel position
-                interp_coord_t cur_pixel_x(i);
-                interp_coord_t cur_pixel_y(j);
+                interp_coord_t cur_pixel_x(static_cast<interp_coord_t>(i));
+                interp_coord_t cur_pixel_y(static_cast<interp_coord_t>(j));
 
                 /* scaled coordinates (in the interpolator coordinates system) */
                 interp_coord_t dst_x(0);
