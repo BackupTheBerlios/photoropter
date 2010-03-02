@@ -297,7 +297,7 @@ add_models()
                                           settings_.param_crop,
                                           settings_.image_crop);
 
-        scaler_mod.set_model_param(1.0 / settings_.scale_fact);
+        scaler_mod.set_model_param(settings_.scale_fact);
 
         image_transform_->geom_queue().add_model(scaler_mod);
     }

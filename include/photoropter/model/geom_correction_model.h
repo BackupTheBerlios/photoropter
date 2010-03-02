@@ -312,11 +312,10 @@ namespace phtr
         /**
         * @brief A simple scaling geometric correction %model.
         * @details The scaler %model implements the following formula: @f[
-        * r_{src} = k\,r_{dst}
+        * r_{src} = \frac{r_{dst}}{k}
         * @f]
         * @note Keep in mind that Photoropter defines image transformations in the
-        * "backward" direction; if you want to make the image larger by a factor c,
-        * then choose k=1/c as parameter for this class.
+        * "backward" direction, i.e. values k>1 lead to an enlargement of the image.
         * @note This class can also be used as a simple linear TCA correction %model.
         * For that purpose, one uses an additional instance of the %model for TCA. Use
         * @ref set_model_param_single() to set the coefficents for red and blue shift
@@ -461,7 +460,7 @@ namespace phtr
 
             private:
                 /**
-                * @brief The parameter 'a'.
+                * @brief The parameter 'k'.
                 */
                 double k_[mem::PHTR_MAX_CHANNELS];
 

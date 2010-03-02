@@ -303,8 +303,8 @@ namespace phtr
                 coords.x[i] -= x0_[i];
                 coords.y[i] -= y0_[i];
 
-                coords.x[i] *= k_[i];
-                coords.y[i] *= k_[i];
+                coords.x[i] /= k_[i];
+                coords.y[i] /= k_[i];
 
                 coords.x[i] += x0_[i];
                 coords.y[i] += y0_[i];
