@@ -52,6 +52,11 @@ struct Settings
             ptlens_tca_corr(false),
             ptlens_r_params(4, 0),
             ptlens_b_params(4, 0),
+            do_tca(false),
+            tca_r(1.0),
+            tca_b(1.0),
+            do_scale(false),
+            scale_fact(1.0),
             vignetting_corr(false),
             vignetting_params(3, 0),
             x0(0),
@@ -84,13 +89,22 @@ struct Settings
     std::vector<double> ptlens_r_params;
     std::vector<double> ptlens_b_params;
 
+    // linear TCA
+    bool do_tca;
+    double tca_r;
+    double tca_b;
+
+    // linear scale
+    bool do_scale;
+    double scale_fact;
+
     // perform vignetting correction?
     bool vignetting_corr;
     std::vector<double> vignetting_params;
 
     // centre shift
-    double x0;
-    double y0;
+    size_t x0;
+    size_t y0;
 
     // parameter aspect, crop factor etc.
     bool param_aspect_override;

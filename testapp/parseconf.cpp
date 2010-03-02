@@ -44,10 +44,12 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
          " (red channel shift, use for TCA)")
         ("ptlens-b,b", po::value<std::string>(), "Set PTLens correction model parameters: a:b:c:d"
          " (blue channel shift, use for TCA)")
+        ("tca", po::value<std::string>(), "Set linear TCA correction: kr:kb")
         ("vignetting,c", po::value<std::string>(), "Set vignetting correction parameters: a:b:c")
         ("param-aspect", po::value<double>(), "Aspect ratio used for parameter calibration")
         ("param-crop", po::value<double>(), "Crop factor used for parameter calibration")
         ("image-crop", po::value<double>(), "Diagonal image crop factor")
+        ("scale,s", po::value<double>(), "Linear scaling factor")
         ("sub-rect", po::value<std::string>(), "Clip a sub-rectangle from the image: x0:y0:width:height")
         ("gain-func", po::value<std::string>(), "Type of gain function:\n"
          "  srgb    - sRGB gamma (default)\n"
@@ -102,6 +104,12 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
             settings.image_crop = options_map["image-crop"].as<double>();
         }
 
+        if (options_map.count("scale"))
+        {
+            settings.do_scale = true;
+            settings.scale_fact = options_map["scale"].as<double>();
+        }
+
         if (options_map.count("input-file"))
         {
             settings.inp_file = options_map["input-file"].as<std::string>();
@@ -132,11 +140,11 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
             separator_t sep(":;");
             tokenizer_t tokens(param_string, sep);
 
-            std::list<double> tmp_list;
+            std::list<size_t> tmp_list;
             for (tokenizer_t::const_iterator it = tokens.begin(); it != tokens.end(); ++it)
             {
                 std::stringstream sstr(*it);
-                double tmp_val;
+                size_t tmp_val;
                 sstr >> tmp_val;
                 tmp_list.push_back(tmp_val);
             }
@@ -260,6 +268,41 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
 
         }
 
+        if (options_map.count("tca"))
+        {
+            settings.do_tca = true;
+
+            typedef boost::tokenizer<boost::char_separator<char> > tokenizer_t;
+            typedef boost::char_separator<char> separator_t;
+
+            std::string param_string = options_map["tca"].as<std::string>();
+
+            separator_t sep(":;");
+            tokenizer_t tokens(param_string, sep);
+
+            std::list<double> tmp_list;
+            for (tokenizer_t::const_iterator it = tokens.begin(); it != tokens.end(); ++it)
+            {
+                std::stringstream sstr(*it);
+                double tmp_val;
+                sstr >> tmp_val;
+                tmp_list.push_back(tmp_val);
+            }
+
+            size_t num_params = tmp_list.size();
+            if (num_params == 2)
+            {
+                settings.tca_r = tmp_list.front();
+                settings.tca_b = tmp_list.back();
+            }
+            else
+            {
+                std::cerr << "Error: incorrent number of parameters for centre shift" << std::endl;
+                return false;
+            }
+
+        }
+
         if (options_map.count("vignetting"))
         {
             settings.vignetting_corr = true;
@@ -309,7 +352,7 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
             for (tokenizer_t::const_iterator it = tokens.begin(); it != tokens.end(); ++it)
             {
                 std::stringstream sstr(*it);
-                double tmp_val;
+                size_t tmp_val;
                 sstr >> tmp_val;
                 tmp_list.push_back(tmp_val);
             }

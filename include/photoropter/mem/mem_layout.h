@@ -40,8 +40,6 @@ namespace phtr
     namespace mem
     {
 
-        ///@cond PROTECTED
-
         // necessary forward declarations
         template <typename channel_order_T, size_t num_vals_T>
         struct CoordTuple;
@@ -462,7 +460,7 @@ namespace phtr
         * @param storage_T The storage type (e.g. @ref Storage::rgb_8_inter).
         */
         template <Storage::type storage_T>
-        struct MemLayout;
+        struct MemLayout {};
 
         /**
         * @brief Specialisation of @ref MemLayout for @ref Storage::rgb_8_inter.
@@ -559,8 +557,6 @@ namespace phtr
         struct MemLayout<Storage::rgba_32_planar> : public GenericPlanarLayoutRGBA, public ChannelOrderRGBA
         {
         }; // template struct MemLayout<Storage::rgba_32_planar>
-
-        ///@endcond
 
     } // namespace phtr::mem
 

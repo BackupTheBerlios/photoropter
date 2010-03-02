@@ -28,8 +28,11 @@ TransformWrapper(const Settings& settings)
         dst_height_(0),
         settings_(settings)
 {
+    log("Load image data.");
     load();
+    log("Init transformation structures.");
     init_transform();
+    log("Setup transformation.");
     setup_transform();
 }
 
@@ -91,15 +94,20 @@ init_transform()
     switch (settings_.interp_type)
     {
         case Interpolation::nearest_neighbour:
+            log("Use nearest neighbour interpolation.");
             image_transform_.reset(new transform_nn_t(*input_view_, *output_view_));
             break;
 
         case Interpolation::bilinear:
+            log("Use bilinear interpolation.");
             image_transform_.reset(new transform_bilinear_t(*input_view_, *output_view_));
             break;
 
         case Interpolation::lanczos:
         default:
+            std::stringstream sstr;
+            sstr << "Use Lanczos interpolation, support = " << settings_.lanczos_support;
+            log(sstr.str());
             image_transform_.reset(new transform_lanczos_t(*input_view_, *output_view_));
             transform_lanczos_t& transform = dynamic_cast<transform_lanczos_t&>(*image_transform_);
             transform.interpolator().set_support(settings_.lanczos_support);
@@ -119,6 +127,9 @@ setup_transform()
     add_models();
 
     // set oversampling
+    std::stringstream sstr;
+    sstr << "Set (over-)sampling factor: " << settings_.oversampling;
+    log(sstr.str());
     image_transform_->set_sampling_fact(settings_.oversampling);
 }
 
@@ -132,6 +143,7 @@ set_gainfunc()
     switch (settings_.gainfunc)
     {
         case GainFunc::invemor:
+            log("Use inverse EMOR gain function.");
             {
                 gamma::GammaInvEMOR emor_func;
                 util::SetParam<gamma::GammaEMORBase::coeff_iter_t> coeff_iter = emor_func.set_params();
@@ -148,6 +160,7 @@ set_gainfunc()
             break;
 
         case GainFunc::emor:
+            log("Use EMOR gain function.");
             {
                 gamma::GammaEMOR emor_func;
                 util::SetParam<gamma::GammaEMORBase::coeff_iter_t> coeff_iter = emor_func.set_params();
@@ -164,11 +177,13 @@ set_gainfunc()
             break;
 
         case GainFunc::gamma:
+            log("Use generic gamma gain function.");
             image_transform_->set_gamma(gamma::GammaGeneric(settings_.gamma));
             break;
 
         case GainFunc::srgb:
         default:
+            log("Use sRGB gamma gain function.");
             image_transform_->set_gamma(gamma::GammaSRGB());
             break;
     }
@@ -186,27 +201,49 @@ add_models()
     if (settings_.param_aspect_override)
     {
         param_aspect = settings_.param_aspect;
+        std::stringstream sstr;
+        sstr << "Override parameter aspect: " << param_aspect;
+        log(sstr.str());
     }
     else
     {
         // if no aspect explicitely given, assume landscape aspect ratio of input image
         param_aspect = (image_aspect > 1) ? image_aspect : (1 / image_aspect);
+
+        std::stringstream sstr;
+        sstr << "Assume parameter aspect: " << param_aspect;
+        log(sstr.str());
     }
 
     // calculate centre shift
-    double x0 = settings_.x0 / input_view_->height();
-    double y0 = settings_.y0 / input_view_->height();
+    double x0 = static_cast<double>(settings_.x0) / static_cast<double>(input_view_->height());
+    double y0 = static_cast<double>(settings_.y0) / static_cast<double>(input_view_->height());
 
-    // apply PTLens TCA correction (fulla style)
-    if (settings_.ptlens_tca_corr)
+    size_t idx_red = view_r_t::storage_info_t::mem_layout_t::idx_red;
+    size_t idx_blue = view_r_t::storage_info_t::mem_layout_t::idx_blue;
+
+    if (settings_.do_tca)
     {
-        model::PTLensGeomModel ptlens_tca_mod(param_aspect,
+        log("Add model: linear TCA correction.");
+        model::ScalerGeomModel scaler_tca_mod(param_aspect,
                                               image_aspect,
                                               settings_.param_crop,
                                               settings_.image_crop);
 
-        size_t idx_red = view_r_t::storage_info_t::mem_layout_t::idx_red;
-        size_t idx_blue = view_r_t::storage_info_t::mem_layout_t::idx_blue;
+        scaler_tca_mod.set_model_param_single(idx_red, settings_.tca_r);
+        scaler_tca_mod.set_model_param_single(idx_blue, settings_.tca_b);
+
+        image_transform_->geom_queue().add_model(scaler_tca_mod);
+    }
+
+    // apply PTLens TCA correction (fulla style)
+    if (settings_.ptlens_tca_corr)
+    {
+        log("Add model: PTLens TCA correction.");
+        model::PTLensGeomModel ptlens_tca_mod(param_aspect,
+                                              image_aspect,
+                                              settings_.param_crop,
+                                              settings_.image_crop);
 
         ptlens_tca_mod.set_model_params(0, 0, 0);
         ptlens_tca_mod.set_model_params_single(idx_red, settings_.ptlens_r_params[0],
@@ -226,6 +263,7 @@ add_models()
     // apply PTLens geometric correction
     if (settings_.ptlens_corr)
     {
+        log("Add model: PTLens geometric correction.");
         model::PTLensGeomModel ptlens_mod(param_aspect,
                                           image_aspect,
                                           settings_.param_crop,
@@ -249,9 +287,23 @@ add_models()
         image_transform_->geom_queue().add_model(ptlens_mod);
     }
 
+    if (settings_.do_scale)
+    {
+        log("Add model: linear scaling factor.");
+        model::ScalerGeomModel scaler_mod(param_aspect,
+                                          image_aspect,
+                                          settings_.param_crop,
+                                          settings_.image_crop);
+
+        scaler_mod.set_model_param(1.0 / settings_.scale_fact);
+
+        image_transform_->geom_queue().add_model(scaler_mod);
+    }
+
     // apply vignetting correction
     if (settings_.vignetting_corr)
     {
+        log("Add model: vignetting correction.");
         using model::HuginVignettingModel;
         // this time, the other way round. first add the model, then modify settings
         // (yes, this works, too)

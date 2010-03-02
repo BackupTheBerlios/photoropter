@@ -46,7 +46,7 @@ namespace phtr
          * @param storage_T The storage type (e.g. @ref Storage::rgb_8_inter).
          */
         template <mem::Storage::type storage_T>
-        struct ChannelStorage;
+        struct ChannelStorage {};
 
         /**
         * @brief Specialisation of @ref ChannelStorage for @ref Storage::rgb_8_inter.
