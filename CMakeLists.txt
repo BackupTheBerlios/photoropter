@@ -11,7 +11,7 @@ project(photoropter)
 # version
 set(photoropter_VERSION_MAJOR "0")
 set(photoropter_VERSION_MINOR "0")
-set(photoropter_VERSION_PATCH "6b")
+set(photoropter_VERSION_PATCH "6")
 set(photoropter_VERSION 
   "${photoropter_VERSION_MAJOR}.${photoropter_VERSION_MINOR}.${photoropter_VERSION_PATCH}")
 

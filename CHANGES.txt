@@ -1,6 +1,19 @@
 List of changes
 ===============
 
+0.0.6
+-----
+
+-Rewrite of phtrtest: now allows to access a greater subset of Photoropter's
+functions (including runtime selection of interpolation type and oversampling);
+also much cleaner code structure
+-Command line syntax approximating the one of fulla: -r, -g, -b, -c and -x are
+the same now (so phtrtest can now replicate fulla's results in many cases)
+-PTLens TCA correction ('fulla-style') working and producing results identical
+to fulla
+-Linear scaler model implemented: can be used both for image scaling and for
+simple linear TCA correction (i.e., the same model lensfun supports)
+
 0.0.5
 -----
 
