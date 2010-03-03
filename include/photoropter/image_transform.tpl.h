@@ -27,10 +27,36 @@ THE SOFTWARE.
 namespace phtr
 {
 
+    template <typename inp_view_T, typename outp_view_T>
+    IImageTransform*
+    IImageTransform::
+    get_instance(Interpolation::type interp_type,
+                 const inp_view_T& inp_view,
+                 outp_view_T& outp_view)
+    {
+
+        switch (interp_type)
+        {
+            case Interpolation::nearest_neighbour:
+                return new ImageTransform<InterpolatorNN<inp_view_T>, outp_view_T >(inp_view, outp_view);
+                break;
+
+            case Interpolation::bilinear:
+            default:
+                return new ImageTransform<InterpolatorBilinear<inp_view_T>, outp_view_T >(inp_view, outp_view);
+                break;
+
+            case Interpolation::lanczos:
+                return new ImageTransform<InterpolatorLanczos<inp_view_T>, outp_view_T >(inp_view, outp_view);
+                break;
+        }
+
+    }
+
     template <typename interpolator_T, typename image_view_w_T>
     ImageTransform<interpolator_T, image_view_w_T>::
-    ImageTransform
-    (const typename ImageTransform::image_view_r_t& image_view_r, image_view_w_T& image_view_w)
+    ImageTransform(const typename ImageTransform::image_view_r_t& image_view_r,
+                   image_view_w_T& image_view_w)
             : interpolator_(image_view_r),
             image_view_w_(image_view_w),
             oversampling_(1),

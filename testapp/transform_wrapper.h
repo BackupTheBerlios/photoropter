@@ -32,9 +32,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <photoropter/image_buffer.h>
 #include <photoropter/mem_image_view_r.h>
 #include <photoropter/mem_image_view_w.h>
-#include <photoropter/interpolator_nn.h>
-#include <photoropter/interpolator_bilinear.h>
-#include <photoropter/interpolator_lanczos.h>
+#include <photoropter/interpolation_type.h>
 #include <photoropter/image_transform.h>
 
 #include <vil/vil_convert.h>
@@ -82,12 +80,7 @@ class TransformWrapper : public TransformWrapperBase
         typedef phtr::MemImageViewW<storage_T> view_w_t;
         typedef typename view_w_t::iter_t iter_t;
 
-        typedef phtr::InterpolatorNN<view_r_t> interp_nn_t;
-        typedef phtr::InterpolatorBilinear<view_r_t> interp_bilinear_t;
         typedef phtr::InterpolatorLanczos<view_r_t> interp_lanczos_t;
-
-        typedef phtr::ImageTransform<interp_nn_t, view_w_t> transform_nn_t;
-        typedef phtr::ImageTransform<interp_bilinear_t, view_w_t> transform_bilinear_t;
         typedef phtr::ImageTransform<interp_lanczos_t, view_w_t> transform_lanczos_t;
 
         typedef typename VILPixelType<storage_T>::vil_pixel_t vil_pixel_t;

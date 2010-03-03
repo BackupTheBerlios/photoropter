@@ -27,10 +27,10 @@ THE SOFTWARE.
 #ifndef PHTR_STORAGE_TYPE_H__
 #define PHTR_STORAGE_TYPE_H__
 
-    extern "C"
-    {
+extern "C"
+{
 #include <stdint.h>
-    }
+}
 
 namespace phtr
 {
@@ -38,8 +38,9 @@ namespace phtr
     {
 
         /**
-        * @brief Struct containing image storage types.
-        */
+         * @brief Struct listing image storage types.
+         * @note The struct contains an enum which defines the actual channels.
+         */
         struct Storage
         {
 

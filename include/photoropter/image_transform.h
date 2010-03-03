@@ -34,12 +34,20 @@ THE SOFTWARE.
 #include <photoropter/geom_correction_queue.h>
 #include <photoropter/colour_correction_queue.h>
 #include <photoropter/gamma_func.h>
+#include <photoropter/interpolator_nn.h>
+#include <photoropter/interpolator_bilinear.h>
+#include <photoropter/interpolator_lanczos.h>
+#include <photoropter/interpolation_type.h>
 
 namespace phtr
 {
+    template < typename interpolator_T, typename image_view_w_T>
+    class ImageTransform;
 
     /**
     * @brief Image transformation class interface.
+    * @details This abstract interface enables a calling application to manage
+    * @ref ImageTransform instances via pointers to a common base class.
     */
     class IImageTransform
     {
@@ -119,6 +127,22 @@ namespace phtr
              * @param[in] fact The sampling factor (must be at least 1).
              */
             virtual void set_sampling_fact(unsigned int fact) = 0;
+
+        public:
+            /**
+             * @brief Get an image transformation instance.
+             * @details This function template is a shortcut when the interpolation type is given
+             * at runtime (e.g. by a configuration value). It is also possible to instantiate the
+             * @ref ImageTransform template directly if the interpolation type is known beforehand.
+             * @param interp_type The interpolation type, e.g. @ref Interpolation::bilinear
+             * @param inp_view    The input view.
+             * @param outp_view   The output view.
+             */
+            template <typename inp_view_T, typename outp_view_T>
+            static IImageTransform* get_instance(Interpolation::type interp_type,
+                                                 const inp_view_T& inp_view,
+                                                 outp_view_T& outp_view);
+
     };
 
     /**

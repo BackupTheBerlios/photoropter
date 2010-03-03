@@ -93,16 +93,19 @@ void
 TransformWrapper<storage_T>::
 init_transform()
 {
+    using phtr::Interpolation;
+
+    image_transform_.reset(phtr::IImageTransform::get_instance(settings_.interp_type, *input_view_, *output_view_));
+
+    // the switch is mainly used for logging (and for setting the lanczos support)
     switch (settings_.interp_type)
     {
         case Interpolation::nearest_neighbour:
             log("Use nearest neighbour interpolation.");
-            image_transform_.reset(new transform_nn_t(*input_view_, *output_view_));
             break;
 
         case Interpolation::bilinear:
             log("Use bilinear interpolation.");
-            image_transform_.reset(new transform_bilinear_t(*input_view_, *output_view_));
             break;
 
         case Interpolation::lanczos:
@@ -110,7 +113,7 @@ init_transform()
             std::stringstream sstr;
             sstr << "Use Lanczos interpolation, support = " << settings_.lanczos_support;
             log(sstr.str());
-            image_transform_.reset(new transform_lanczos_t(*input_view_, *output_view_));
+
             transform_lanczos_t& transform = dynamic_cast<transform_lanczos_t&>(*image_transform_);
             transform.interpolator().set_support(settings_.lanczos_support);
             break;

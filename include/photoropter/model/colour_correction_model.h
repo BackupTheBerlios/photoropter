@@ -46,11 +46,11 @@ namespace phtr
         class IColourCorrectionModel
         {
 
-        public:
-        	/**
-        	 * @ brief (Dummy) Destructor.
-        	 */
-        	virtual ~IColourCorrectionModel() {};
+            public:
+                /**
+                 * @ brief (Dummy) Destructor.
+                 */
+                virtual ~IColourCorrectionModel() {};
 
             public:
                 /**

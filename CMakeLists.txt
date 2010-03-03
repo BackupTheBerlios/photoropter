@@ -167,6 +167,7 @@ set(PHTR_INCLUDES
   ${PHTR_INCLUDE_DIR}/image_buffer.tpl.h
   ${PHTR_INCLUDE_DIR}/image_transform.h
   ${PHTR_INCLUDE_DIR}/image_transform.tpl.h
+  ${PHTR_INCLUDE_DIR}/interpolation_type.h
   ${PHTR_INCLUDE_DIR}/interpolator_base.h
   ${PHTR_INCLUDE_DIR}/interpolator_base.tpl.h
   ${PHTR_INCLUDE_DIR}/interpolator_bilinear.h

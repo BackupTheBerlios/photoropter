@@ -24,41 +24,38 @@ THE SOFTWARE.
 
 */
 
+#ifndef PHTR_INTERPOLATION_TYPE_H__
+#define PHTR_INTERPOLATION_TYPE_H__
+
 namespace phtr
 {
 
-    namespace mem
+    /**
+     * @brief Struct listing the different interpolation types.
+     * @note The struct contains an enum which defines the actual channels.
+     */
+    struct Interpolation
     {
-
-        ///@cond PROTECTED
-
-        template <typename channel_order_T, size_t num_vals_T>
-        CoordTuple<channel_order_T, num_vals_T>::
-        CoordTuple(const CoordTuple<channel_order_T, num_vals_T>& orig)
+        /**
+         * @brief The enum holding the actual interpolation types.
+         */
+        enum type
         {
-            for (size_t i = 0; i < channel_order_T::num_vals_T; ++i)
-            {
-                x[i] = orig.x[i];
-                y[i] = orig.y[i];
-            }
-        }
-
-        template <typename channel_order_T, size_t num_vals_T>
-        CoordTuple<channel_order_T, num_vals_T>&
-        CoordTuple<channel_order_T, num_vals_T>::
-        operator=(const CoordTuple<channel_order_T, num_vals_T>& orig)
-        {
-            for (size_t i = 0; i < channel_order_T::num_vals_T; ++i)
-            {
-                x[i] = orig.x[i];
-                y[i] = orig.y[i];
-            }
-
-            return *this;
-        }
-
-        ///@endcond
-
-    } // namespace phtr::mem
+            /**
+             * @brief Nearest neighbour interpolation.
+             */
+            nearest_neighbour,
+            /**
+             * @brief Bilinear interpolation.
+             */
+            bilinear,
+            /**
+             * @brief Lanczos interpolation.
+             */
+            lanczos
+        };
+    };
 
 } // namespace phtr
+
+#endif // PHTR_INTERPOLATION_TYPE_H__

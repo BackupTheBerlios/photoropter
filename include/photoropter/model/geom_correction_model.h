@@ -44,13 +44,13 @@ namespace phtr
         class IGeomCorrectionModel
         {
 
-        public:
-        	/**
-        	 * @ brief (Dummy) Destructor.
-        	 */
-        	virtual ~IGeomCorrectionModel() {};
+            public:
+                /**
+                 * @ brief (Dummy) Destructor.
+                 */
+                virtual ~IGeomCorrectionModel() {};
 
-        public:
+            public:
                 /**
                 * @brief Get the corrected source image coordinates for the current position.
                 * @note This function changes the input tuple.

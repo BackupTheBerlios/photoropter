@@ -414,6 +414,8 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
 
         if (options_map.count("interpolation"))
         {
+            using phtr::Interpolation;
+
             std::string opt = options_map["interpolation"].as<std::string>();
             if (opt == "nn")
             {

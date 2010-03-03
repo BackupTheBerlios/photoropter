@@ -33,8 +33,8 @@ namespace phtr
     ///@cond PROTECTED
 
     /**
-    * @brief Struct containing channel designations.
-    * @note The class contains an enum which defines the actual channels.
+    * @brief Struct listing channel designations.
+    * @note The struct contains an enum which defines the actual channels.
     */
     struct Channel
     {

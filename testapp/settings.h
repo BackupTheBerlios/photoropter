@@ -22,15 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef PHTRTEST_SETTINGS_H__
 #define PHTRTEST_SETTINGS_H__
 
-struct Interpolation
-{
-    enum type
-    {
-        nearest_neighbour,
-        bilinear,
-        lanczos
-    };
-};
+#include <photoropter/interpolation_type.h>
 
 struct GainFunc
 {
@@ -73,7 +65,7 @@ struct Settings
             gainfunc(GainFunc::srgb),
             gamma(2.2),
             oversampling(1),
-            interp_type(Interpolation::bilinear),
+            interp_type(phtr::Interpolation::bilinear),
             lanczos_support(2)
     {
         ptlens_r_params[3] = 1.0;
@@ -130,7 +122,7 @@ struct Settings
 
     // interpolation / oversampling
     unsigned oversampling;
-    Interpolation::type interp_type;
+    phtr::Interpolation::type interp_type;
     unsigned lanczos_support;
 };
 
