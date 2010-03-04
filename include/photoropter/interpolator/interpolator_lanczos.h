@@ -33,7 +33,7 @@ THE SOFTWARE.
 
 #include <photoropter/mem/coord_tuple.h>
 #include <photoropter/mem/colour_tuple.h>
-#include <photoropter/interpolator_base.h>
+#include <photoropter/interpolator/interpolator_base.h>
 
 namespace phtr
 {
@@ -158,16 +158,10 @@ namespace phtr
              */
             std::vector<interp_channel_t> buf_;
 
-        private:
-            /**
-             * @brief The numerical constant 'pi'.
-             */
-            static const double pi_;
-
     }; // class InterpolatorLanczos<...>
 
 } // namespace phtr
 
-#include "interpolator_lanczos.tpl.h"
+#include <photoropter/interpolator/interpolator_lanczos.tpl.h>
 
 #endif // PHTR_INTERPOLATOR_LANCZOS_H__

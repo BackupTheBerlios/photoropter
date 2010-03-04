@@ -33,14 +33,14 @@ namespace phtr
     {
         typedef typename coord_tuple_T::channel_order_t::colour_tuple_t colour_tuple_t;
 
-        for (size_t i = 0; i < colour_tuple_t::num_vals; ++i)
+        for(size_t i = 0; i < colour_tuple_t::num_vals; ++i)
         {
             factors.value[i] = 1.0;
         }
 
         colour_tuple_t tmp_factors;
 
-        for (size_t i = 0; i < n_models_; ++i)
+        for(size_t i = 0; i < n_models_; ++i)
         {
             correction_model_[i]->get_correction_factors(coords, tmp_factors);
             factors *= tmp_factors;

@@ -24,28 +24,27 @@ THE SOFTWARE.
 
 */
 
-#ifndef PHTR_INTERPOLATOR_BILINEAR_H__
-#define PHTR_INTERPOLATOR_BILINEAR_H__
+#ifndef PHTR_INTERPOLATOR_NN_H__
+#define PHTR_INTERPOLATOR_NN_H__
 
-#include <cmath>
 #include <cassert>
 
 #include <photoropter/mem/coord_tuple.h>
 #include <photoropter/mem/colour_tuple.h>
-#include <photoropter/interpolator_base.h>
+#include <photoropter/interpolator/interpolator_base.h>
 
 namespace phtr
 {
 
     /**
-    * @brief Class template to facilitate bilinear image interpolation.
+    * @brief Class template to facilitate 'nearest neighbor' image interpolation.
     * @details The image is represented using floating-point coordinates ranging from
     * -1.0 to 1.0 on the y axis. (0.0, 0.0) represents the image's centre, (-aspect,-1.0)
     * the upper left corner.
     * @param view_T  The image view that is used for reading data.
     */
     template <typename view_T>
-    class InterpolatorBilinear : public InterpolatorBase<view_T>
+    class InterpolatorNN : public InterpolatorBase<view_T>
     {
             /* ****************************************
              * public interface
@@ -58,7 +57,7 @@ namespace phtr
             * image, i.e. square pixels are assumed.
             * @param[in] image_view The image view which will be used for reading image data.
             */
-            InterpolatorBilinear(const view_T& image_view);
+            InterpolatorNN(const view_T& image_view);
 
         public:
             /**
@@ -66,12 +65,12 @@ namespace phtr
             * @param[in] image_view   The image view which will be used for reading image data.
             * @param[in] aspect_ratio The aspect ratio of the image.
             */
-            InterpolatorBilinear(const view_T& image_view, interp_coord_t aspect_ratio);
+            InterpolatorNN(const view_T& image_view, interp_coord_t aspect_ratio);
 
         public:
             /**
             * @brief Get the value of the  given channel at the given coordinates.
-            * @param[in] chan The channel.
+            * @param chan The channel.
             * @param[in] x The x coordinate.
             * @param[in] y The y coordinate.
             * @return The channel value.
@@ -87,11 +86,10 @@ namespace phtr
             template <typename coord_tuple_T>
             inline typename coord_tuple_T::channel_order_t::colour_tuple_t get_px_vals(const coord_tuple_T& coords) const;
 
-
-    }; // class InterpolatorBilinear<...>
+    }; // class InterpolatorNN<...>
 
 } // namespace phtr
 
-#include "interpolator_bilinear.tpl.h"
+#include <photoropter/interpolator/interpolator_nn.tpl.h>
 
-#endif // PHTR_INTERPOLATOR_BILINEAR_H__
+#endif // PHTR_INTERPOLATOR_NN_H__

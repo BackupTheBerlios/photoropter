@@ -32,8 +32,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <photoropter/image_buffer.h>
 #include <photoropter/mem_image_view_r.h>
 #include <photoropter/mem_image_view_w.h>
-#include <photoropter/interpolation_type.h>
 #include <photoropter/image_transform.h>
+
+#include <photoropter/model/vignetting_colour_model.h>
+#include <photoropter/model/ptlens_geom_model.h>
+#include <photoropter/model/scaler_geom_model.h>
+#include <photoropter/model/geometry_convert_geom_model.h>
 
 #include <vil/vil_convert.h>
 #include <vil/vil_load.h>

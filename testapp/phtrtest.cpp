@@ -39,7 +39,7 @@ int main(int argc, char* argv[])
     std::cerr << "This is " << APP_NAME << std::endl;
     std::cerr << "Using Photoropter version " << phtr::PHTR_VERSION << std::endl;
 
-    if (!parse_command_line(argc, argv, settings))
+    if(!parse_command_line(argc, argv, settings))
     {
         std::cerr << "Command line error." << std::endl;
         return 1;

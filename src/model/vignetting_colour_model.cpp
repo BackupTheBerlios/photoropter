@@ -27,7 +27,7 @@ THE SOFTWARE.
 #include <cmath>
 
 #include <photoropter/mem/mem_layout.h>
-#include <photoropter/model/colour_correction_model.h>
+#include <photoropter/model/vignetting_colour_model.h>
 
 namespace phtr
 {
@@ -40,24 +40,24 @@ namespace phtr
         VignettingColourModel::
         VignettingColourModel(double param_aspect, double input_aspect,
                               double param_crop, double input_crop)
-                : CorrectionModelBase(param_aspect, input_aspect, param_crop, input_crop),
-                a_(0),
-                b_(0),
-                c_(0),
-                x0_(0),
-                y0_(0)
+            : CorrectionModelBase(param_aspect, input_aspect, param_crop, input_crop),
+              a_(0),
+              b_(0),
+              c_(0),
+              x0_(0),
+              y0_(0)
         {
             //NIL
         }
 
         VignettingColourModel::
         VignettingColourModel(double input_aspect)
-                : CorrectionModelBase(input_aspect),
-                a_(0),
-                b_(0),
-                c_(0),
-                x0_(0),
-                y0_(0)
+            : CorrectionModelBase(input_aspect),
+              a_(0),
+              b_(0),
+              c_(0),
+              x0_(0),
+              y0_(0)
         {
             //NIL
         }
@@ -153,14 +153,14 @@ namespace phtr
         HuginVignettingModel::
         HuginVignettingModel(double param_aspect, double input_aspect,
                              double param_crop, double input_crop)
-                : VignettingColourModel(param_aspect, input_aspect, param_crop, input_crop)
+            : VignettingColourModel(param_aspect, input_aspect, param_crop, input_crop)
         {
             //NIL
         }
 
         HuginVignettingModel::
         HuginVignettingModel(double input_aspect)
-                : VignettingColourModel(input_aspect)
+            : VignettingColourModel(input_aspect)
         {
             //NIL
         }

@@ -34,10 +34,10 @@ THE SOFTWARE.
 #include <photoropter/geom_correction_queue.h>
 #include <photoropter/colour_correction_queue.h>
 #include <photoropter/gamma_func.h>
-#include <photoropter/interpolator_nn.h>
-#include <photoropter/interpolator_bilinear.h>
-#include <photoropter/interpolator_lanczos.h>
 #include <photoropter/interpolation_type.h>
+#include <photoropter/interpolator/interpolator_nn.h>
+#include <photoropter/interpolator/interpolator_bilinear.h>
+#include <photoropter/interpolator/interpolator_lanczos.h>
 
 namespace phtr
 {

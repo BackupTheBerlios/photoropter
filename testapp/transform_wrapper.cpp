@@ -31,32 +31,32 @@ get_instance(const Settings& settings)
 
     Storage::type storage_type = get_storage_type(settings.inp_file);
 
-    if (storage_type == Storage::rgb_8_inter)
+    if(storage_type == Storage::rgb_8_inter)
     {
         log(settings, "8bit RGB data");
         return new TransformWrapper<Storage::rgb_8_inter>(settings);
     }
-    else if (storage_type == Storage::rgb_16_inter)
+    else if(storage_type == Storage::rgb_16_inter)
     {
         log(settings, "16bit RGB data");
         return new TransformWrapper<Storage::rgb_16_inter>(settings);
     }
-    else if (storage_type == Storage::rgb_32_inter)
+    else if(storage_type == Storage::rgb_32_inter)
     {
         log(settings, "32bit RGB data");
         return new TransformWrapper<Storage::rgb_32_inter>(settings);
     }
-    else if (storage_type == Storage::rgba_8_inter)
+    else if(storage_type == Storage::rgba_8_inter)
     {
         log(settings, "8bit RGBA data");
         return new TransformWrapper<Storage::rgba_8_inter>(settings);
     }
-    else if (storage_type == Storage::rgba_16_inter)
+    else if(storage_type == Storage::rgba_16_inter)
     {
         log(settings, "16bit RGBA data");
         return new TransformWrapper<Storage::rgba_16_inter>(settings);
     }
-    else if (storage_type == Storage::rgba_32_inter)
+    else if(storage_type == Storage::rgba_32_inter)
     {
         log(settings, "32bit RGBA data");
         return new TransformWrapper<Storage::rgba_32_inter>(settings);
@@ -77,32 +77,32 @@ get_storage_type(const std::string inp_file)
 
     unsigned int num_components = img_res->nplanes();
 
-    if (num_components == 3)
+    if(num_components == 3)
     {
-        if (vil_img_format == VIL_PIXEL_FORMAT_BYTE)
+        if(vil_img_format == VIL_PIXEL_FORMAT_BYTE)
         {
             phtr_storage = Storage::rgb_8_inter;
         }
-        else if (vil_img_format == VIL_PIXEL_FORMAT_UINT_16)
+        else if(vil_img_format == VIL_PIXEL_FORMAT_UINT_16)
         {
             phtr_storage = Storage::rgb_16_inter;
         }
-        else if (vil_img_format == VIL_PIXEL_FORMAT_UINT_32)
+        else if(vil_img_format == VIL_PIXEL_FORMAT_UINT_32)
         {
             phtr_storage = Storage::rgb_32_inter;
         }
     }
-    else if (num_components == 4)
+    else if(num_components == 4)
     {
-        if (vil_img_format == VIL_PIXEL_FORMAT_BYTE)
+        if(vil_img_format == VIL_PIXEL_FORMAT_BYTE)
         {
             phtr_storage = Storage::rgba_8_inter;
         }
-        else if (vil_img_format == VIL_PIXEL_FORMAT_UINT_16)
+        else if(vil_img_format == VIL_PIXEL_FORMAT_UINT_16)
         {
             phtr_storage = Storage::rgba_16_inter;
         }
-        else if (vil_img_format == VIL_PIXEL_FORMAT_UINT_32)
+        else if(vil_img_format == VIL_PIXEL_FORMAT_UINT_32)
         {
             phtr_storage = Storage::rgba_32_inter;
         }
@@ -115,7 +115,7 @@ void
 TransformWrapperBase::
 log(const Settings& settings, const std::string& msg)
 {
-    if (settings.verbose)
+    if(settings.verbose)
     {
         std::cerr << msg << std::endl;
     }

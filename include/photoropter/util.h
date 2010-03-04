@@ -61,7 +61,7 @@ namespace phtr
                 * @param[in] pos The current position.
                 */
                 SetParam(const iter_t& pos)
-                        : pos_(pos)
+                    : pos_(pos)
                 {
                     //NIL
                 }

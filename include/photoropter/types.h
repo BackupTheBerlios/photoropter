@@ -59,6 +59,12 @@ namespace phtr
     */
     typedef double interp_coord_t;
 
+    /**
+    * @brief The mathematical constant 'pi'.
+    */
+    static const double PHTR_PI = 3.14159265358979323846;
+
+
 } // namespace phtr
 
 #endif // PHTR_TYPES_H__

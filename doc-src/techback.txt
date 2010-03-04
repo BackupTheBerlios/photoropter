@@ -48,7 +48,7 @@ outweighing the obvious disadvantage of incompatibility.
 @image html coord.png "Coordinate system used by Photoropter"
 
 PTLens defines the length of the small side of the image to be always 2, with 0 marking the
-image center. The length of the other side is identical to twice the aspect ratio R. So a 3:2
+image center. The length of the other side is identical to twice the aspect ratio A. So a 3:2
 image has a e.g. width of 3 (ranging from -1.5 to 1.5), and a 4:3 image has a width of 2.67
 (-1.33 to 1.33). This convention makes use of the fact that usually one does not have to know
 the exact physical dimensions of the image sensor.
@@ -80,17 +80,16 @@ things are a bit more complex.
 
 Now consider two cameras of different diagonal crop factor and different aspect rations. Let the width
 of the first sensor be X<sub>1</sub> and its height be Y<sub>1</sub>, the diagonal D (full frame) and
-the aspect ratio X<sub>1</sub>/Y<sub>1</sub>=R<sub>1</sub>. Then the following holds true:
+the aspect ratio X<sub>1</sub>/Y<sub>1</sub>=A<sub>1</sub>. Then the following holds true:
 X<sub>1</sub><sup>2</sup>+Y<sub>1</sub><sup>2</sup>=D<sup>2</sup>, yielding
-Y<sub>1</sub>*sqrt(1+R<sub>1</sub><sup>2</sup>)=D. In case of the second camera, let the sensor's
+Y<sub>1</sub>*sqrt(1+A<sub>1</sub><sup>2</sup>)=D. In case of the second camera, let the sensor's
 diagonal length be D/c ('c' denoting the crop factor), and width and height be X<sub>2</sub> and
-Y<sub>2</sub>, accordingly. Here one gets Y<sub>2</sub>*sqrt(1+R<sub>2</sub><sup>2</sup>)=D/c.
+Y<sub>2</sub>, accordingly. Here one gets Y<sub>2</sub>*sqrt(1+A<sub>2</sub><sup>2</sup>)=D/c.
 So, a coordinate y<sub>2</sub> on the crop sensor can be translated (in the normalised system)
 to the full-frame case as
+@[y_1=\frac{1}{c}\cdot\frac{\sqrt{1+A_1^2}}{\sqrt{1+A_2^2}}\,y_2.@]
 
-y<sub>1</sub>=y<sub>2</sub>*sqrt(1+R<sub>1</sub><sup>2</sup>)/sqrt(1+R<sub>2</sub><sup>2</sup>)/c.
-
-In the special case of R<sub>1</sub>=R<sub>2</sub>, this reduces (as expected) to
+In the special case of A<sub>1</sub>=A<sub>2</sub>, this reduces (as expected) to
 y<sub>1</sub>=y<sub>2</sub>/c, meaning that in the example above, a normalised y coordinate of 1.0
 on the cropped sensor again corresponds to 0.625 on full-frame. In general, one only  needs
 the ratio of the crop factors of the sensors, so if a lens has been calibrated on a camera
@@ -110,9 +109,27 @@ conversion between landscape and portrait orientation is then just a special cas
 general principle described before.
 
 It is possible to translate between landscape and portrait images by choosing
-R<sub>2</sub>=1/R<sub>1</sub> and one gets y<sub>1</sub>=y<sub>2</sub>*R<sub>1</sub>,
+A<sub>2</sub>=1/R<sub>1</sub> and one gets y<sub>1</sub>=y<sub>2</sub>*R<sub>1</sub>,
 which means that a coordinate of 1.0 in a portrait image (e.g. R<sub>2</sub>=2/3) corresponds
 to 1.0*3/2=1.5 in the calibrated coordinate system (for aspect ratio 3:2).
+
+@subsection techback_physcoords Calculating physical coordinates
+
+If one defines a 'norm' sensor with fixed dimensions X and Y, one can adapt the
+considerations presented above to calculate the physical position on that sensor
+(i.e. in milli meters). This can be useful when doing geometry conversion
+(e.g. from rectilinear to fisheye or vice-versa). In that case, the absolute
+coordinates are given as
+
+@[y=y'\lambda\ \mathrm{and}\ x=x'\lambda,@]
+
+where (x,y) is the absolute (physical) coordinate and (x', y') the coordinate in the
+Photoropter normalised coordinate system on a sensor with aspect ratio A and crop
+factor c. The norm sensor shall be 35mm full-frame (i.e., 36mm x 24mm). In this
+setup, the crop factor of the full-frame sensor is defined as 1.0. One then gets
+a scaling factor of
+
+@[\lambda=\frac{12\mathrm{mm}}{c}\cdot\frac{\sqrt{13/4}}{\sqrt{1+A^2}}.@]
 
 @subsection techback_notes Notes
 

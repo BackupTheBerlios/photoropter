@@ -35,7 +35,7 @@ namespace phtr
                  outp_view_T& outp_view)
     {
 
-        switch (interp_type)
+        switch(interp_type)
         {
             case Interpolation::nearest_neighbour:
                 return new ImageTransform<InterpolatorNN<inp_view_T>, outp_view_T >(inp_view, outp_view);
@@ -57,18 +57,18 @@ namespace phtr
     ImageTransform<interpolator_T, image_view_w_T>::
     ImageTransform(const typename ImageTransform::image_view_r_t& image_view_r,
                    image_view_w_T& image_view_w)
-            : interpolator_(image_view_r),
-            image_view_w_(image_view_w),
-            oversampling_(1),
-            outp_img_width_(image_view_w.width()),
-            outp_img_height_(image_view_w.height()),
-            storage_info_(outp_img_width_, outp_img_height_),
-            min_chan_val_(static_cast<interp_channel_t>(storage_info_.min_val)),
-            max_chan_val_(static_cast<interp_channel_t>(storage_info_.max_val)),
-            do_gamma_(true),
-            do_inv_gamma_(true),
-            gam_point_new_num_(1023),
-            gam_point_cur_num_(0)
+        : interpolator_(image_view_r),
+          image_view_w_(image_view_w),
+          oversampling_(1),
+          outp_img_width_(image_view_w.width()),
+          outp_img_height_(image_view_w.height()),
+          storage_info_(outp_img_width_, outp_img_height_),
+          min_chan_val_(static_cast<interp_channel_t>(storage_info_.min_val)),
+          max_chan_val_(static_cast<interp_channel_t>(storage_info_.max_val)),
+          do_gamma_(true),
+          do_inv_gamma_(true),
+          gam_point_new_num_(1023),
+          gam_point_cur_num_(0)
     {
         // set default gamma to sRGB
         set_gamma(gamma::GammaSRGB());
@@ -118,13 +118,13 @@ namespace phtr
 #ifdef HAVE_OPENMP
 #pragma omp parallel for private (i)
 #endif
-        for (j = static_cast<omp_coord_t>(j0); j < static_cast<omp_coord_t>(j_limit); ++j) // line loop
+        for(j = static_cast<omp_coord_t>(j0); j < static_cast<omp_coord_t>(j_limit); ++j)  // line loop
         {
 
             // write-access iterator for this line
             typename image_view_w_T::iter_t iter(image_view_w_.get_iter(i0, j));
 
-            for (i = i0; i < i_limit; ++i) // pixel loop
+            for(i = i0; i < i_limit; ++i)  // pixel loop
             {
                 // current pixel position
                 interp_coord_t cur_pixel_x(static_cast<interp_coord_t>(i));
@@ -151,11 +151,11 @@ namespace phtr
                 unsigned int u(0);
                 unsigned int v(0);
 
-                for (v = 0; v < oversampling_; ++v)
+                for(v = 0; v < oversampling_; ++v)
                 {
                     cur_samp_x = ini_samp_x;
 
-                    for (u = 0; u < oversampling_; ++u)
+                    for(u = 0; u < oversampling_; ++u)
                     {
                         // get scaled coordinates (in the interpolator coordinates system)
                         dst_x = ((cur_samp_x + p_offs_x) * scale_x) - aspect_ratio;
@@ -228,7 +228,7 @@ namespace phtr
         gam_point_cur_num_ = gam_point_new_num_;
 
         // fill tables
-        for (unsigned int i = 0; i < gam_point_cur_num_; ++i)
+        for(unsigned int i = 0; i < gam_point_cur_num_; ++i)
         {
             double v1 = static_cast<double>(i) / (static_cast<double>(gam_point_new_num_) - 1.0);
             double v2 = static_cast<double>(i + 1) / (static_cast<double>(gam_point_new_num_) - 1.0);
@@ -296,11 +296,11 @@ namespace phtr
     {
         interp_channel_t ret(val);
 
-        if (ret > 1.0)
+        if(ret > 1.0)
         {
             ret = 1.0;
         }
-        else if (ret < 0.0)
+        else if(ret < 0.0)
         {
             ret = 0.0;
         }
@@ -324,7 +324,7 @@ namespace phtr
     {
         colour_tuple_T ret;
 
-        for (size_t i = 0; i < colour_tuple_T::num_vals; ++i)
+        for(size_t i = 0; i < colour_tuple_T::num_vals; ++i)
         {
             ret.value[i] = normalise(values.value[i]);
         }
@@ -348,7 +348,7 @@ namespace phtr
     {
         colour_tuple_T ret;
 
-        for (size_t i = 0; i < colour_tuple_T::num_vals; ++i)
+        for(size_t i = 0; i < colour_tuple_T::num_vals; ++i)
         {
             ret.value[i] = unnormalise(values.value[i]);
         }
@@ -362,19 +362,19 @@ namespace phtr
     gamma(double value) const
     {
 
-        if (!do_gamma_)
+        if(!do_gamma_)
         {
             return value;
         }
 
-        if (value <= 0.0)
+        if(value <= 0.0)
         {
             return 0.0;
         }
 
         unsigned int idx = static_cast<unsigned int>(value * (gam_point_cur_num_ - 1));
 
-        if (idx >= gam_point_cur_num_)
+        if(idx >= gam_point_cur_num_)
         {
             return 1.0;
         }
@@ -394,19 +394,19 @@ namespace phtr
     inv_gamma(double value) const
     {
 
-        if (!do_inv_gamma_)
+        if(!do_inv_gamma_)
         {
             return value;
         }
 
-        if (value <= 0.0)
+        if(value <= 0.0)
         {
             return 0.0;
         }
 
         unsigned int idx = static_cast<unsigned int>(value * (gam_point_cur_num_ - 1));
 
-        if (idx >= gam_point_cur_num_)
+        if(idx >= gam_point_cur_num_)
         {
             return 1.0;
         }

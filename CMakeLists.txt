@@ -144,6 +144,16 @@ set(PHTR_SRC_DIR "src")
 
 # set the Photoropter sources
 set(PHTR_INCLUDES
+  ${PHTR_INCLUDE_DIR}/geometry/fisheye_equisolid.h
+  ${PHTR_INCLUDE_DIR}/geometry/fisheye_equisolid.inl.h
+  ${PHTR_INCLUDE_DIR}/interpolator/interpolator_base.h
+  ${PHTR_INCLUDE_DIR}/interpolator/interpolator_base.tpl.h
+  ${PHTR_INCLUDE_DIR}/interpolator/interpolator_bilinear.h
+  ${PHTR_INCLUDE_DIR}/interpolator/interpolator_bilinear.tpl.h
+  ${PHTR_INCLUDE_DIR}/interpolator/interpolator_lanczos.h
+  ${PHTR_INCLUDE_DIR}/interpolator/interpolator_lanczos.tpl.h
+  ${PHTR_INCLUDE_DIR}/interpolator/interpolator_nn.h
+  ${PHTR_INCLUDE_DIR}/interpolator/interpolator_nn.tpl.h
   ${PHTR_INCLUDE_DIR}/mem/channel_range.h
   ${PHTR_INCLUDE_DIR}/mem/channel_storage.h
   ${PHTR_INCLUDE_DIR}/mem/channel_type.h
@@ -157,6 +167,10 @@ set(PHTR_INCLUDES
   ${PHTR_INCLUDE_DIR}/model/correction_model_base.h
   ${PHTR_INCLUDE_DIR}/model/colour_correction_model.h
   ${PHTR_INCLUDE_DIR}/model/geom_correction_model.h
+  ${PHTR_INCLUDE_DIR}/model/geometry_convert_geom_model.h
+  ${PHTR_INCLUDE_DIR}/model/ptlens_geom_model.h
+  ${PHTR_INCLUDE_DIR}/model/scaler_geom_model.h
+  ${PHTR_INCLUDE_DIR}/model/vignetting_colour_model.h
   ${PHTR_INCLUDE_DIR}/colour_correction_queue.h
   ${PHTR_INCLUDE_DIR}/colour_correction_queue.tpl.h
   ${PHTR_INCLUDE_DIR}/exception.h
@@ -168,14 +182,6 @@ set(PHTR_INCLUDES
   ${PHTR_INCLUDE_DIR}/image_transform.h
   ${PHTR_INCLUDE_DIR}/image_transform.tpl.h
   ${PHTR_INCLUDE_DIR}/interpolation_type.h
-  ${PHTR_INCLUDE_DIR}/interpolator_base.h
-  ${PHTR_INCLUDE_DIR}/interpolator_base.tpl.h
-  ${PHTR_INCLUDE_DIR}/interpolator_bilinear.h
-  ${PHTR_INCLUDE_DIR}/interpolator_bilinear.tpl.h
-  ${PHTR_INCLUDE_DIR}/interpolator_lanczos.h
-  ${PHTR_INCLUDE_DIR}/interpolator_lanczos.tpl.h
-  ${PHTR_INCLUDE_DIR}/interpolator_nn.h
-  ${PHTR_INCLUDE_DIR}/interpolator_nn.tpl.h
   ${PHTR_INCLUDE_DIR}/mem_image_iter_base.h
   ${PHTR_INCLUDE_DIR}/mem_image_iter_base.tpl.h
   ${PHTR_INCLUDE_DIR}/mem_image_iter_r.h
@@ -193,14 +199,16 @@ set(PHTR_INCLUDES
   )
 
 set(PHTR_SOURCES
-  ${PHTR_SRC_DIR}/colour_correction_model.cpp
+  ${PHTR_SRC_DIR}/mem/mem_layout.cpp
+  ${PHTR_SRC_DIR}/model/correction_model_base.cpp
+  ${PHTR_SRC_DIR}/model/geometry_convert_geom_model.cpp
+  ${PHTR_SRC_DIR}/model/ptlens_geom_model.cpp
+  ${PHTR_SRC_DIR}/model/scaler_geom_model.cpp
+  ${PHTR_SRC_DIR}/model/vignetting_colour_model.cpp
   ${PHTR_SRC_DIR}/colour_correction_queue.cpp
-  ${PHTR_SRC_DIR}/correction_model_base.cpp
   ${PHTR_SRC_DIR}/exception.cpp
   ${PHTR_SRC_DIR}/gamma_func.cpp
-  ${PHTR_SRC_DIR}/geom_correction_model.cpp
   ${PHTR_SRC_DIR}/geom_correction_queue.cpp
-  ${PHTR_SRC_DIR}/mem_layout.cpp
   ${PHTR_SRC_DIR}/modpar_emor.h
   ${PHTR_SRC_DIR}/modpar_invemor.h
   )

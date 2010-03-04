@@ -28,10 +28,6 @@ namespace phtr
 {
 
     template <typename view_T>
-    const double
-    InterpolatorLanczos<view_T>::pi_ = 3.14159265358979323846;
-
-    template <typename view_T>
     InterpolatorLanczos<view_T>::InterpolatorLanczos
     (const view_T& image_view)
             : InterpolatorBase<view_T>(image_view),
@@ -194,7 +190,7 @@ namespace phtr
         }
         else
         {
-            return std::sin(pi_ * x) / (pi_ * x);
+            return std::sin(PHTR_PI * x) / (PHTR_PI * x);
         }
     }
 

@@ -129,6 +129,6 @@ namespace phtr
 
 } // namespace phtr
 
-#include <photoropter/interpolator_base.tpl.h>
+#include <photoropter/interpolator/interpolator_base.tpl.h>
 
 #endif // PHTR_INTERPOLATOR_BASE_H__

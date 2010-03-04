@@ -37,7 +37,7 @@ namespace phtr
 
         size_t ChannelOrderRGB::get_channel_index(Channel::type chan_type)
         {
-            switch (chan_type)
+            switch(chan_type)
             {
                 case Channel::red:
                 default:
@@ -66,7 +66,7 @@ namespace phtr
 
         size_t ChannelOrderRGBA::get_channel_index(Channel::type chan_type)
         {
-            switch (chan_type)
+            switch(chan_type)
             {
                 case Channel::red:
                 default:

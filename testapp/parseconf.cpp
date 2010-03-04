@@ -77,40 +77,40 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
                   options(opt_desc).positional(pos_opts).run(), options_map);
         po::notify(options_map);
 
-        if (options_map.count("help"))
+        if(options_map.count("help"))
         {
             std::cout << opt_desc << std::endl;
             return false;
         }
 
-        if (options_map.count("verbose"))
+        if(options_map.count("verbose"))
         {
             settings.verbose = true;
         }
 
-        if (options_map.count("param-crop"))
+        if(options_map.count("param-crop"))
         {
             settings.param_crop = options_map["param-crop"].as<double>();
         }
 
-        if (options_map.count("param-aspect"))
+        if(options_map.count("param-aspect"))
         {
             settings.param_aspect_override = true;
             settings.param_aspect = options_map["param-aspect"].as<double>();
         }
 
-        if (options_map.count("image-crop"))
+        if(options_map.count("image-crop"))
         {
             settings.image_crop = options_map["image-crop"].as<double>();
         }
 
-        if (options_map.count("scale"))
+        if(options_map.count("scale"))
         {
             settings.do_scale = true;
             settings.scale_fact = options_map["scale"].as<double>();
         }
 
-        if (options_map.count("input-file"))
+        if(options_map.count("input-file"))
         {
             settings.inp_file = options_map["input-file"].as<std::string>();
         }
@@ -120,7 +120,7 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
             return false;
         }
 
-        if (options_map.count("output-file"))
+        if(options_map.count("output-file"))
         {
             settings.outp_file = options_map["output-file"].as<std::string>();
         }
@@ -130,7 +130,7 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
             return false;
         }
 
-        if (options_map.count("centre-shift"))
+        if(options_map.count("centre-shift"))
         {
             typedef boost::tokenizer<boost::char_separator<char> > tokenizer_t;
             typedef boost::char_separator<char> separator_t;
@@ -141,7 +141,7 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
             tokenizer_t tokens(param_string, sep);
 
             std::list<size_t> tmp_list;
-            for (tokenizer_t::const_iterator it = tokens.begin(); it != tokens.end(); ++it)
+            for(tokenizer_t::const_iterator it = tokens.begin(); it != tokens.end(); ++it)
             {
                 std::stringstream sstr(*it);
                 size_t tmp_val;
@@ -150,7 +150,7 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
             }
 
             size_t num_params = tmp_list.size();
-            if (num_params == 2)
+            if(num_params == 2)
             {
                 settings.x0 = tmp_list.front();
                 settings.y0 = tmp_list.back();
@@ -163,7 +163,7 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
 
         }
 
-        if (options_map.count("ptlens"))
+        if(options_map.count("ptlens"))
         {
             settings.ptlens_corr = true;
 
@@ -176,7 +176,7 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
             tokenizer_t tokens(param_string, sep);
 
             std::list<double> tmp_list;
-            for (tokenizer_t::const_iterator it = tokens.begin(); it != tokens.end(); ++it)
+            for(tokenizer_t::const_iterator it = tokens.begin(); it != tokens.end(); ++it)
             {
                 std::stringstream sstr(*it);
                 double tmp_val;
@@ -185,7 +185,7 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
             }
 
             size_t num_params = tmp_list.size();
-            if (num_params == 3 || num_params == 4)
+            if(num_params == 3 || num_params == 4)
             {
                 settings.ptlens_params.resize(num_params);
                 std::copy(tmp_list.begin(), tmp_list.end(), settings.ptlens_params.begin());
@@ -198,7 +198,7 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
 
         }
 
-        if (options_map.count("ptlens-r"))
+        if(options_map.count("ptlens-r"))
         {
             settings.ptlens_tca_corr = true;
 
@@ -211,7 +211,7 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
             tokenizer_t tokens(param_string, sep);
 
             std::list<double> tmp_list;
-            for (tokenizer_t::const_iterator it = tokens.begin(); it != tokens.end(); ++it)
+            for(tokenizer_t::const_iterator it = tokens.begin(); it != tokens.end(); ++it)
             {
                 std::stringstream sstr(*it);
                 double tmp_val;
@@ -220,7 +220,7 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
             }
 
             size_t num_params = tmp_list.size();
-            if (num_params == 4)
+            if(num_params == 4)
             {
                 settings.ptlens_r_params.resize(num_params);
                 std::copy(tmp_list.begin(), tmp_list.end(), settings.ptlens_r_params.begin());
@@ -233,7 +233,7 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
 
         }
 
-        if (options_map.count("ptlens-b"))
+        if(options_map.count("ptlens-b"))
         {
             settings.ptlens_tca_corr = true;
 
@@ -246,7 +246,7 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
             tokenizer_t tokens(param_string, sep);
 
             std::list<double> tmp_list;
-            for (tokenizer_t::const_iterator it = tokens.begin(); it != tokens.end(); ++it)
+            for(tokenizer_t::const_iterator it = tokens.begin(); it != tokens.end(); ++it)
             {
                 std::stringstream sstr(*it);
                 double tmp_val;
@@ -255,7 +255,7 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
             }
 
             size_t num_params = tmp_list.size();
-            if (num_params == 4)
+            if(num_params == 4)
             {
                 settings.ptlens_b_params.resize(num_params);
                 std::copy(tmp_list.begin(), tmp_list.end(), settings.ptlens_b_params.begin());
@@ -268,7 +268,7 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
 
         }
 
-        if (options_map.count("tca"))
+        if(options_map.count("tca"))
         {
             settings.do_tca = true;
 
@@ -281,7 +281,7 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
             tokenizer_t tokens(param_string, sep);
 
             std::list<double> tmp_list;
-            for (tokenizer_t::const_iterator it = tokens.begin(); it != tokens.end(); ++it)
+            for(tokenizer_t::const_iterator it = tokens.begin(); it != tokens.end(); ++it)
             {
                 std::stringstream sstr(*it);
                 double tmp_val;
@@ -290,7 +290,7 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
             }
 
             size_t num_params = tmp_list.size();
-            if (num_params == 2)
+            if(num_params == 2)
             {
                 settings.tca_r = tmp_list.front();
                 settings.tca_b = tmp_list.back();
@@ -303,7 +303,7 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
 
         }
 
-        if (options_map.count("vignetting"))
+        if(options_map.count("vignetting"))
         {
             settings.vignetting_corr = true;
 
@@ -316,7 +316,7 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
             tokenizer_t tokens(param_string, sep);
 
             std::list<double> tmp_list;
-            for (tokenizer_t::const_iterator it = tokens.begin(); it != tokens.end(); ++it)
+            for(tokenizer_t::const_iterator it = tokens.begin(); it != tokens.end(); ++it)
             {
                 std::stringstream sstr(*it);
                 double tmp_val;
@@ -325,7 +325,7 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
             }
 
             size_t num_params = tmp_list.size();
-            if (num_params == 3)
+            if(num_params == 3)
             {
                 settings.vignetting_params.resize(num_params);
                 std::copy(tmp_list.begin(), tmp_list.end(), settings.vignetting_params.begin());
@@ -338,7 +338,7 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
 
         }
 
-        if (options_map.count("sub-rect"))
+        if(options_map.count("sub-rect"))
         {
             typedef boost::tokenizer<boost::char_separator<char> > tokenizer_t;
             typedef boost::char_separator<char> separator_t;
@@ -349,7 +349,7 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
             tokenizer_t tokens(param_string, sep);
 
             std::vector<size_t> tmp_list;
-            for (tokenizer_t::const_iterator it = tokens.begin(); it != tokens.end(); ++it)
+            for(tokenizer_t::const_iterator it = tokens.begin(); it != tokens.end(); ++it)
             {
                 std::stringstream sstr(*it);
                 size_t tmp_val;
@@ -358,7 +358,7 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
             }
 
             size_t num_params = tmp_list.size();
-            if (num_params != 4)
+            if(num_params != 4)
             {
                 std::cerr << "Error: incorrent number of parameters for sub rectangle" << std::endl;
                 return false;
@@ -371,28 +371,28 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
             settings.sub_rect = true;
         }
 
-        if (options_map.count("gain-func"))
+        if(options_map.count("gain-func"))
         {
             std::string opt = options_map["gain-func"].as<std::string>();
-            if (opt == "srgb")
+            if(opt == "srgb")
             {
                 settings.gainfunc = GainFunc::srgb;
             }
-            else if (opt == "gamma")
+            else if(opt == "gamma")
             {
                 settings.gainfunc = GainFunc::gamma;
             }
-            else if (opt == "emor")
+            else if(opt == "emor")
             {
                 settings.gainfunc = GainFunc::emor;
             }
-            if (opt == "invemor")
+            if(opt == "invemor")
             {
                 settings.gainfunc = GainFunc::invemor;
             }
         }
 
-        if (options_map.count("emor-params"))
+        if(options_map.count("emor-params"))
         {
             typedef boost::tokenizer<boost::char_separator<char> > tokenizer_t;
             typedef boost::char_separator<char> separator_t;
@@ -402,7 +402,7 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
             separator_t sep(":;");
             tokenizer_t tokens(param_string, sep);
 
-            for (tokenizer_t::const_iterator it = tokens.begin(); it != tokens.end(); ++it)
+            for(tokenizer_t::const_iterator it = tokens.begin(); it != tokens.end(); ++it)
             {
                 double val;
                 std::stringstream sstr(*it);
@@ -412,48 +412,48 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
 
         }
 
-        if (options_map.count("interpolation"))
+        if(options_map.count("interpolation"))
         {
             using phtr::Interpolation;
 
             std::string opt = options_map["interpolation"].as<std::string>();
-            if (opt == "nn")
+            if(opt == "nn")
             {
                 settings.interp_type = Interpolation::nearest_neighbour;
             }
-            else if (opt == "bilin")
+            else if(opt == "bilin")
             {
                 settings.interp_type = Interpolation::bilinear;
             }
-            else if (opt == "lanczos")
+            else if(opt == "lanczos")
             {
                 settings.interp_type = Interpolation::lanczos;
             }
         }
 
-        if (options_map.count("lanczos-supp"))
+        if(options_map.count("lanczos-supp"))
         {
             settings.lanczos_support = options_map["lanczos-supp"].as<unsigned>();
         }
 
-        if (options_map.count("gamma"))
+        if(options_map.count("gamma"))
         {
             settings.gamma = options_map["gamma"].as<double>();
         }
 
-        if (options_map.count("oversample"))
+        if(options_map.count("oversample"))
         {
             settings.oversampling = options_map["oversample"].as<unsigned>();
         }
 
     }
-    catch (po::unknown_option& e)
+    catch(po::unknown_option& e)
     {
         std::cerr << e.what() << std::endl;
         std::cerr << "Try option '--help'" << std::endl;
         return false;
     }
-    catch (po::invalid_command_line_syntax& e)
+    catch(po::invalid_command_line_syntax& e)
     {
         std::cerr << "Error: " << e.what() << std::endl;
         return false;

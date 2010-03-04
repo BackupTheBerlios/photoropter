@@ -32,18 +32,18 @@ namespace phtr
     template <mem::Storage::type storage_T>
     ImageBuffer<storage_T>::ImageBuffer
     (coord_t width, coord_t height, bool zero)
-            : storage_info_(width, height),
-            data_(0),
-            width_(width),
-            height_(height),
-            num_channels_(storage_info_.num_channels)
+        : storage_info_(width, height),
+          data_(0),
+          width_(width),
+          height_(height),
+          num_channels_(storage_info_.num_channels)
     {
         num_pixels_ = width_ * height_;
         num_bytes_ = num_pixels_ * num_channels_ * sizeof(channel_storage_t);
 
         data_ = new channel_storage_t[num_pixels_ * num_channels_];
 
-        if (zero)
+        if(zero)
         {
             memset(static_cast<void*>(data_), 0, num_bytes_);
         }

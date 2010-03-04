@@ -38,7 +38,7 @@ namespace phtr
         ///@cond PROTECTED
 
         GammaGeneric::GammaGeneric(double gam)
-                : gamma_(gam)
+            : gamma_(gam)
         {
             //NIL
         }
@@ -64,7 +64,7 @@ namespace phtr
         }
 
         GammaEMORBase::GammaEMORBase()
-                : precalc_done_(false)
+            : precalc_done_(false)
         {
             coeff_.clear();
             coeff_.resize(coeff_num_, 0);
@@ -94,7 +94,7 @@ namespace phtr
             coeff_iter_t coeff_iter;
             typename iterable_t::const_iterator param_iter;
 
-            for (coeff_iter = coeff_.begin(), param_iter = params.begin();
+            for(coeff_iter = coeff_.begin(), param_iter = params.begin();
                     coeff_iter != coeff_.end() && param_iter != params.end();
                     ++coeff_iter, ++param_iter)
             {
@@ -106,11 +106,11 @@ namespace phtr
         double GammaEMORBase::get_function_value(double inp_val, const value_vect_t& xval, const value_vect_t& yval) const
         {
 
-            if (inp_val <= 0.0)
+            if(inp_val <= 0.0)
             {
                 return 0.0;
             }
-            else if (inp_val >= 1.0)
+            else if(inp_val >= 1.0)
             {
                 return 1.0;
             }
@@ -162,7 +162,7 @@ namespace phtr
 
         void GammaEMOR::precalc_func() const
         {
-            if (precalc_done_)
+            if(precalc_done_)
             {
                 return;
             }
@@ -174,12 +174,12 @@ namespace phtr
             yval_.resize(sample_num_, 0);
 
             double ytmp;
-            for (size_t i = 0; i < sample_num_; ++i)
+            for(size_t i = 0; i < sample_num_; ++i)
             {
                 xval_[i] = E_[i];
 
                 ytmp = f0_[i];
-                for (size_t j = 0; j < coeff_num_; ++j)
+                for(size_t j = 0; j < coeff_num_; ++j)
                 {
                     ytmp += coeff_[j] * h_[j][i];
                 }
@@ -202,7 +202,7 @@ namespace phtr
 
         void GammaInvEMOR::precalc_func() const
         {
-            if (precalc_done_)
+            if(precalc_done_)
             {
                 return;
             }
@@ -215,18 +215,18 @@ namespace phtr
 
             double ytmp;
             double lasty(0.0);
-            for (size_t i = 0; i < sample_num_; ++i)
+            for(size_t i = 0; i < sample_num_; ++i)
             {
                 xval_[i] = B_[i];
 
                 ytmp = g0_[i];
-                for (size_t j = 0; j < coeff_num_; ++j)
+                for(size_t j = 0; j < coeff_num_; ++j)
                 {
                     ytmp += coeff_[j] * hinv_[j][i];
                 }
 
                 // enforce monotonicity
-                if (ytmp < lasty)
+                if(ytmp < lasty)
                 {
                     ytmp = lasty;
                 }

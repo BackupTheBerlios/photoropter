@@ -32,19 +32,19 @@ namespace phtr
     template <mem::Storage::type T>
     MemImageViewBase<T>::MemImageViewBase
     (void* base_addr, coord_t width, coord_t height)
-            : storage_type_(T),
-            storage_info_(width, height),
-            base_addr_(static_cast<MemImageViewBase::channel_storage_t*>(base_addr)),
-            width_(width),
-            height_(height),
-            min_chan_val_(storage_info_.min_val),
-            max_chan_val_(storage_info_.max_val),
-            step_(storage_info_.step),
-            line_step_(storage_info_.line_step),
-            r_offs_(storage_info_.r_offs),
-            g_offs_(storage_info_.g_offs),
-            b_offs_(storage_info_.b_offs),
-            a_offs_(storage_info_.a_offs)
+        : storage_type_(T),
+          storage_info_(width, height),
+          base_addr_(static_cast<MemImageViewBase::channel_storage_t*>(base_addr)),
+          width_(width),
+          height_(height),
+          min_chan_val_(storage_info_.min_val),
+          max_chan_val_(storage_info_.max_val),
+          step_(storage_info_.step),
+          line_step_(storage_info_.line_step),
+          r_offs_(storage_info_.r_offs),
+          g_offs_(storage_info_.g_offs),
+          b_offs_(storage_info_.b_offs),
+          a_offs_(storage_info_.a_offs)
     {
         //NIL
     }
