@@ -48,6 +48,12 @@ class TransformWrapperBase
 
     public:
         /**
+         * @ brief (Dummy) Destructor.
+         */
+        virtual ~TransformWrapperBase() {};
+
+    public:
+        /**
          * @brief Initialise and return a transformation object compatible with the given settings.
          */
         static TransformWrapperBase* get_instance(const Settings& settings);
