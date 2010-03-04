@@ -31,7 +31,7 @@ namespace phtr
     MemImageViewR<storage_T>::
     MemImageViewR
     (const void* base_addr, coord_t width, coord_t height)
-        : MemImageViewBase<storage_T>(const_cast<void*>(base_addr), width, height)
+            : MemImageViewBase<storage_T>(const_cast<void*>(base_addr), width, height)
     {
         aspect_ratio_ = static_cast<interp_coord_t>(this->width()) /
                         static_cast<interp_coord_t>(this->height());
@@ -43,7 +43,7 @@ namespace phtr
     get_px_val
     (Channel::type chan, coord_t x, coord_t y) const
     {
-        switch(chan)
+        switch (chan)
         {
             case Channel::red:
             default:

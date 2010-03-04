@@ -31,15 +31,15 @@ namespace phtr
     MemImageViewW<storage_T>::
     MemImageViewW
     (void* base_addr, coord_t width, coord_t height)
-        : MemImageViewBase<storage_T>(base_addr, width, height),
-          roi_x_min_(0),
-          roi_x_limit_(width),
-          roi_y_min_(0),
-          roi_y_limit_(height),
-          parent_offs_x_(0),
-          parent_offs_y_(0),
-          parent_width_(width),
-          parent_height_(height)
+            : MemImageViewBase<storage_T>(base_addr, width, height),
+            roi_x_min_(0),
+            roi_x_limit_(width),
+            roi_y_min_(0),
+            roi_y_limit_(height),
+            parent_offs_x_(0),
+            parent_offs_y_(0),
+            parent_width_(width),
+            parent_height_(height)
     {
         //NIL
     }
@@ -50,7 +50,7 @@ namespace phtr
     write_px_val
     (Channel::type chan, coord_t x, coord_t y, channel_storage_t val)
     {
-        switch(chan)
+        switch (chan)
         {
             case Channel::red:
             default:
@@ -80,7 +80,7 @@ namespace phtr
         typedef typename coord_tuple_T::channel_order_t channel_order_t;
         typedef typename channel_order_t::colour_tuple_t colour_tuple_t;
 
-        for(size_t i = 0; i < colour_tuple_t::num_vals; ++i)
+        for (size_t i = 0; i < colour_tuple_t::num_vals; ++i)
         {
             write_px_val(channel_order_t::channel_type[i], coords.x[i], coords.y[i],
                          static_cast<channel_storage_t>(values.value[i] + 0.5));

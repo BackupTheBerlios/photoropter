@@ -34,13 +34,13 @@ namespace phtr
     {
         typedef typename coord_tuple_T::channel_order_t::colour_tuple_t colour_tuple_t;
 
-        for(size_t i = 0; i < colour_tuple_t::num_vals; ++i)
+        for (size_t i = 0; i < colour_tuple_t::num_vals; ++i)
         {
             coords.x[i] = dst_x;
             coords.y[i] = dst_y;
         }
 
-        for(size_t i = 0; i < n_models_; ++i)
+        for (size_t i = 0; i < n_models_; ++i)
         {
             correction_model_[i]->get_src_coords(coords);
         }

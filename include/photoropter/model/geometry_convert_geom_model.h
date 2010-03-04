@@ -57,12 +57,10 @@ namespace phtr
 
             public:
                 /**
-                * @brief Set the %model parameter (single channel).
-                * @note This function is mainly useful for TCA corrections.
-                * @param[in] chan_idx The channel index.
-                * The correct way to determine this value is via the
+                * @brief Set the lens focal lengths.
                 * @ref mem::MemLayout template, e.g. mem::MemLayout<mem::Storage::rgb_8_inter>::idx_red
-                * @param[in] k The scaling parameter.
+                * @param[in] src_focal_length The source focal length.
+                * @param[in] dst_focal_length The destination focal length.
                 */
                 void set_focal_lengths(double src_focal_length, double dst_focal_length);
 

@@ -87,7 +87,7 @@ diagonal length be D/c ('c' denoting the crop factor), and width and height be X
 Y<sub>2</sub>, accordingly. Here one gets Y<sub>2</sub>*sqrt(1+A<sub>2</sub><sup>2</sup>)=D/c.
 So, a coordinate y<sub>2</sub> on the crop sensor can be translated (in the normalised system)
 to the full-frame case as
-@[y_1=\frac{1}{c}\cdot\frac{\sqrt{1+A_1^2}}{\sqrt{1+A_2^2}}\,y_2.@]
+@f[y_1=\frac{1}{c}\cdot\frac{\sqrt{1+A_1^2}}{\sqrt{1+A_2^2}}\,y_2.@f]
 
 In the special case of A<sub>1</sub>=A<sub>2</sub>, this reduces (as expected) to
 y<sub>1</sub>=y<sub>2</sub>/c, meaning that in the example above, a normalised y coordinate of 1.0
@@ -121,7 +121,7 @@ considerations presented above to calculate the physical position on that sensor
 (e.g. from rectilinear to fisheye or vice-versa). In that case, the absolute
 coordinates are given as
 
-@[y=y'\lambda\ \mathrm{and}\ x=x'\lambda,@]
+@f[y=y'\lambda\ \mathrm{and}\ x=x'\lambda,@f]
 
 where (x,y) is the absolute (physical) coordinate and (x', y') the coordinate in the
 Photoropter normalised coordinate system on a sensor with aspect ratio A and crop
@@ -129,7 +129,7 @@ factor c. The norm sensor shall be 35mm full-frame (i.e., 36mm x 24mm). In this
 setup, the crop factor of the full-frame sensor is defined as 1.0. One then gets
 a scaling factor of
 
-@[\lambda=\frac{12\mathrm{mm}}{c}\cdot\frac{\sqrt{13/4}}{\sqrt{1+A^2}}.@]
+@f[\lambda=\frac{12\mathrm{mm}}{c}\cdot\frac{\sqrt{13/4}}{\sqrt{1+A^2}}.@f]
 
 @subsection techback_notes Notes
 

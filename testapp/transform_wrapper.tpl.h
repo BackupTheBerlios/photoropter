@@ -22,11 +22,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 template <phtr::mem::Storage::type storage_T>
 TransformWrapper<storage_T>::
 TransformWrapper(const Settings& settings)
-    : img_width_(0),
-      img_height_(0),
-      dst_width_(0),
-      dst_height_(0),
-      settings_(settings)
+        : img_width_(0),
+        img_height_(0),
+        dst_width_(0),
+        dst_height_(0),
+        settings_(settings)
 {
     log("Load image data.");
     load();
@@ -60,12 +60,12 @@ load()
     // 'sanity checks' on ROI settings
     size_t sub_rect_x0 = settings_.sub_rect_x0;
     size_t sub_rect_y0 = settings_.sub_rect_y0;
-    if(settings_.sub_rect && settings_.sub_rect_w <= img_height_ && settings_.sub_rect_h <= img_height_)
+    if (settings_.sub_rect && settings_.sub_rect_w <= img_height_ && settings_.sub_rect_h <= img_height_)
     {
         dst_width_ = settings_.sub_rect_w;
         dst_height_ = settings_.sub_rect_h;
     }
-    if(sub_rect_x0 > img_height_ - dst_width_ || sub_rect_y0 > img_height_ - dst_height_)
+    if (sub_rect_x0 > img_height_ - dst_width_ || sub_rect_y0 > img_height_ - dst_height_)
     {
         sub_rect_x0 = 0;
         sub_rect_y0 = 0;
@@ -98,7 +98,7 @@ init_transform()
     image_transform_.reset(phtr::IImageTransform::get_instance(settings_.interp_type, *input_view_, *output_view_));
 
     // the switch is mainly used for logging (and for setting the lanczos support)
-    switch(settings_.interp_type)
+    switch (settings_.interp_type)
     {
         case Interpolation::nearest_neighbour:
             log("Use nearest neighbour interpolation.");
@@ -145,7 +145,7 @@ set_gainfunc()
 {
     using namespace phtr;
 
-    switch(settings_.gainfunc)
+    switch (settings_.gainfunc)
     {
         case GainFunc::invemor:
             log("Use inverse EMOR gain function.");
@@ -153,7 +153,7 @@ set_gainfunc()
                 gamma::GammaInvEMOR emor_func;
                 util::SetParam<gamma::GammaEMORBase::coeff_iter_t> coeff_iter = emor_func.set_params();
 
-                for(size_t i = 0; i < settings_.emor_coeffs.size(); ++i)
+                for (size_t i = 0; i < settings_.emor_coeffs.size(); ++i)
                 {
                     double coeff = settings_.emor_coeffs[i];
                     coeff_iter = coeff_iter(coeff);
@@ -170,7 +170,7 @@ set_gainfunc()
                 gamma::GammaEMOR emor_func;
                 util::SetParam<gamma::GammaEMORBase::coeff_iter_t> coeff_iter = emor_func.set_params();
 
-                for(size_t i = 0; i < settings_.emor_coeffs.size(); ++i)
+                for (size_t i = 0; i < settings_.emor_coeffs.size(); ++i)
                 {
                     double coeff = settings_.emor_coeffs[i];
                     coeff_iter = coeff_iter(coeff);
@@ -203,7 +203,7 @@ add_models()
 
     double image_aspect = input_view_->aspect_ratio();
     double param_aspect(0);
-    if(settings_.param_aspect_override)
+    if (settings_.param_aspect_override)
     {
         param_aspect = settings_.param_aspect;
         std::stringstream sstr;
@@ -227,7 +227,7 @@ add_models()
     size_t idx_red = view_r_t::storage_info_t::mem_layout_t::idx_red;
     size_t idx_blue = view_r_t::storage_info_t::mem_layout_t::idx_blue;
 
-    if(settings_.do_tca)
+    if (settings_.do_tca)
     {
         log("Add model: linear TCA correction.");
         model::ScalerGeomModel scaler_tca_mod(param_aspect,
@@ -242,7 +242,7 @@ add_models()
     }
 
     // apply PTLens TCA correction (fulla style)
-    if(settings_.ptlens_tca_corr)
+    if (settings_.ptlens_tca_corr)
     {
         log("Add model: PTLens TCA correction.");
         model::PTLensGeomModel ptlens_tca_mod(param_aspect,
@@ -266,14 +266,14 @@ add_models()
     }
 
     // apply PTLens geometric correction
-    if(settings_.ptlens_corr)
+    if (settings_.ptlens_corr)
     {
         log("Add model: PTLens geometric correction.");
         model::PTLensGeomModel ptlens_mod(param_aspect,
                                           image_aspect,
                                           settings_.param_crop,
                                           settings_.image_crop);
-        if(settings_.ptlens_params.size() == 4)
+        if (settings_.ptlens_params.size() == 4)
         {
             ptlens_mod.set_model_params(settings_.ptlens_params[0],
                                         settings_.ptlens_params[1],
@@ -292,11 +292,11 @@ add_models()
         image_transform_->geom_queue().add_model(ptlens_mod);
     }
 
-    //model::GeometryConvertGeomModel geom_conv_mod(image_aspect, settings_.image_crop);
-    //geom_conv_mod.set_focal_lengths(8, 8);
-    //image_transform_->geom_queue().add_model(geom_conv_mod);
+//    model::GeometryConvertGeomModel geom_conv_mod(image_aspect, settings_.image_crop);
+//    geom_conv_mod.set_focal_lengths(9, 12);
+//    image_transform_->geom_queue().add_model(geom_conv_mod);
 
-    if(settings_.do_scale)
+    if (settings_.do_scale)
     {
         log("Add model: linear scaling factor.");
         model::ScalerGeomModel scaler_mod(param_aspect,
@@ -310,7 +310,7 @@ add_models()
     }
 
     // apply vignetting correction
-    if(settings_.vignetting_corr)
+    if (settings_.vignetting_corr)
     {
         log("Add model: vignetting correction.");
         using model::HuginVignettingModel;
@@ -358,7 +358,7 @@ void
 TransformWrapper<storage_T>::
 log(const std::string& msg)
 {
-    if(settings_.verbose)
+    if (settings_.verbose)
     {
         std::cerr << msg << std::endl;
     }

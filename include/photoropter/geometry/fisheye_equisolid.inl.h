@@ -31,7 +31,7 @@ namespace phtr
 
         FisheyeEquisolid::
         FisheyeEquisolid()
-            : focal_length_(10.0)
+                : focal_length_(10.0)
         {
         }
 
@@ -51,10 +51,10 @@ namespace phtr
         {
             double r = std::sqrt(x * x + y * y);
 
-            phi = std::asin(y / r);
-            if(x < 0)
+            phi = std::acos(x / r);
+            if (y > 0)
             {
-                phi += PHTR_PI;
+                phi = 2 * PHTR_PI - phi;
             }
 
             theta = std::atan(r / focal_length_);
@@ -69,7 +69,7 @@ namespace phtr
                             double& x,
                             double& y) const
         {
-            if(theta >= PHTR_PI / 2.0)
+            if (theta >= PHTR_PI / 2.0)
             {
                 return false;
             }
@@ -77,7 +77,7 @@ namespace phtr
             double r = std::tan(theta) * focal_length_;
 
             x = std::cos(phi) * r;
-            y = std::sin(phi) * r;
+            y = -std::sin(phi) * r;
 
             return true;
         }

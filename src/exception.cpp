@@ -7,9 +7,9 @@ namespace phtr
     {
 
         base_exception::base_exception(const std::string& msg)
-            : std::exception(),
-              prefix_("Exception"),
-              msg_(msg)
+                : std::exception(),
+                prefix_("Exception"),
+                msg_(msg)
         {
         }
 
@@ -26,7 +26,7 @@ namespace phtr
         const char* base_exception::what() const throw()
         {
             std::string tmp = prefix_;
-            if(!msg_.empty())
+            if (!msg_.empty())
             {
                 tmp += ": " + msg_;
             }
@@ -40,7 +40,7 @@ namespace phtr
         }
 
         not_implemented::not_implemented(const std::string& msg)
-            : base_exception(msg)
+                : base_exception(msg)
         {
             prefix_ = "Feature not implemented";
         }
@@ -51,7 +51,7 @@ namespace phtr
         }
 
         illegal_argument::illegal_argument(const std::string& msg)
-            : base_exception(msg)
+                : base_exception(msg)
         {
             prefix_ = "Illegal argument";
         }

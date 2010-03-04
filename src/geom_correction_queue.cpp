@@ -33,18 +33,18 @@ namespace phtr
 {
 
     GeomCorrectionQueue::GeomCorrectionQueue()
-        : n_models_(0)
+            : n_models_(0)
     {
         //NIL
     }
 
     GeomCorrectionQueue::GeomCorrectionQueue(const GeomCorrectionQueue& orig)
-        : n_models_(0)
+            : n_models_(0)
     {
         n_models_ = static_cast<unsigned short>(orig.correction_model_.size());
         correction_model_.resize(n_models_);
 
-        for(size_t i = 0; i < n_models_; ++i)
+        for (size_t i = 0; i < n_models_; ++i)
         {
             correction_model_[i] = orig.correction_model_[i]->clone();
         }
@@ -62,7 +62,7 @@ namespace phtr
         n_models_ = static_cast<unsigned short>(orig.correction_model_.size());
         correction_model_.resize(n_models_);
 
-        for(size_t i = 0; i < n_models_; ++i)
+        for (size_t i = 0; i < n_models_; ++i)
         {
             correction_model_[i] = orig.correction_model_[i]->clone();
         }
@@ -74,7 +74,7 @@ namespace phtr
     {
         n_models_ = static_cast<unsigned short>(correction_model_.size());
 
-        for(size_t i = 0; i < n_models_; ++i)
+        for (size_t i = 0; i < n_models_; ++i)
         {
             delete correction_model_[i];
         }
