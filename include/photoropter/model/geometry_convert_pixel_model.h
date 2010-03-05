@@ -27,9 +27,11 @@ THE SOFTWARE.
 #ifndef PHTR_GEOMETRY_CONVERT_PIXEL_MODEL_H__
 #define PHTR_GEOMETRY_CONVERT_PIXEL_MODEL_H__
 
+#include <photoropter/model/pixel_correction_model.h>
 #include <photoropter/model/subpixel_correction_model.h>
 #include <photoropter/model/correction_model_base.h>
 #include <photoropter/geometry/fisheye_equisolid.h>
+#include <photoropter/geometry/rectilinear.h>
 
 namespace phtr
 {
@@ -41,8 +43,8 @@ namespace phtr
         * @brief A geometric %model to perform geometry conversion.
         */
         class GeometryConvertPixelModel
-                    : public ISubpixelCorrectionModel,
-                    private CorrectionModelBase
+                    : private CorrectionModelBase,
+                    public IPixelCorrectionModel
         {
 
                 /* ****************************************
@@ -83,8 +85,8 @@ namespace phtr
                 * @note Both x0 and y0 are not considered 'lens parameters' but rather camera/sensor
                 * parameters. They are therefore @em not transformed in any way, but always interpreted
                 * in the normalised Photoropter coordinate system.
-                * @param[out] x0       The 'x0' parameter (horizontal centre shift).
-                * @param[out] y0       The 'y0' parameter (vertical centre shift).
+                * @param[out] x0 The 'x0' parameter (horizontal centre shift).
+                * @param[out] y0 The 'y0' parameter (vertical centre shift).
                 */
                 void get_centre_shift(interp_coord_t& x0, interp_coord_t& y0) const;
 
@@ -94,35 +96,18 @@ namespace phtr
                 * @note This function changes the input tuple.
                 * @param[in,out] coords The coordinates tuple.
                 */
-                void get_src_coords(mem::CoordTupleRGB& coords) const;
-
-            public:
-                /**
-                * @brief Get the corrected source image coordinates for the current position.
-                * @note This function changes the input tuple.
-                * @param[in,out] coords The coordinates tuple.
-                */
-                void get_src_coords(mem::CoordTupleRGBA& coords) const;
+                void get_src_coords(mem::CoordTupleMono& coords) const;
 
             public:
                 /**
                 * @brief Create a clone of the correction %model functionoid.
                 * @return The clone.
                 */
-                ISubpixelCorrectionModel* clone() const;
+                GeometryConvertPixelModel* clone() const;
 
                 /* ****************************************
                 * internals
                 * **************************************** */
-
-            private:
-                /**
-                * @brief Get the corrected source image coordinates for the current position (implementation).
-                * @note This function changes the input tuple.
-                * @param[in,out] coords The coordinates tuple.
-                */
-                template <typename coord_tuple_T>
-                inline void get_src_coords_impl(coord_tuple_T& coords) const;
 
             private:
                 /**
@@ -143,7 +128,7 @@ namespace phtr
                 double y0_;
 
                 typedef geometry::FisheyeEquisolid src_model_T;
-                typedef geometry::FisheyeEquisolid dst_model_T;
+                typedef geometry::Rectilinear dst_model_T;
                 src_model_T src_model_;
                 dst_model_T dst_model_;
 

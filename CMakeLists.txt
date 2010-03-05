@@ -150,6 +150,8 @@ set(PHTR_SRC_DIR "src")
 set(PHTR_INCLUDES
   ${PHTR_INCLUDE_DIR}/geometry/fisheye_equisolid.h
   ${PHTR_INCLUDE_DIR}/geometry/fisheye_equisolid.inl.h
+  ${PHTR_INCLUDE_DIR}/geometry/rectilinear.h
+  ${PHTR_INCLUDE_DIR}/geometry/rectilinear.inl.h
   ${PHTR_INCLUDE_DIR}/interpolator/interpolator_base.h
   ${PHTR_INCLUDE_DIR}/interpolator/interpolator_base.tpl.h
   ${PHTR_INCLUDE_DIR}/interpolator/interpolator_bilinear.h
@@ -197,6 +199,8 @@ set(PHTR_INCLUDES
   ${PHTR_INCLUDE_DIR}/mem_image_view_r.tpl.h
   ${PHTR_INCLUDE_DIR}/mem_image_view_w.h
   ${PHTR_INCLUDE_DIR}/mem_image_view_w.tpl.h
+  ${PHTR_INCLUDE_DIR}/pixel_correction_queue.h
+  ${PHTR_INCLUDE_DIR}/pixel_correction_queue.inl.h
   ${PHTR_INCLUDE_DIR}/subpixel_correction_queue.h
   ${PHTR_INCLUDE_DIR}/subpixel_correction_queue.tpl.h
   ${PHTR_INCLUDE_DIR}/types.h
@@ -215,6 +219,7 @@ set(PHTR_SOURCES
   ${PHTR_SRC_DIR}/gamma_func.cpp
   ${PHTR_SRC_DIR}/modpar_emor.h
   ${PHTR_SRC_DIR}/modpar_invemor.h
+  ${PHTR_SRC_DIR}/pixel_correction_queue.cpp
   ${PHTR_SRC_DIR}/subpixel_correction_queue.cpp
   )
 

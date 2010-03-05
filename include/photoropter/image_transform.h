@@ -31,6 +31,7 @@ THE SOFTWARE.
 #include <cassert>
 
 #include <photoropter/mem/colour_tuple.h>
+#include <photoropter/pixel_correction_queue.h>
 #include <photoropter/subpixel_correction_queue.h>
 #include <photoropter/colour_correction_queue.h>
 #include <photoropter/gamma_func.h>
@@ -71,7 +72,14 @@ namespace phtr
             * @brief Access the geometry correction queue.
             * @return Reference to the queue object.
             */
-            virtual SubpixelCorrectionQueue& geom_queue() = 0;
+            virtual PixelCorrectionQueue& pixel_queue() = 0;
+
+        public:
+            /**
+            * @brief Access the geometry correction queue.
+            * @return Reference to the queue object.
+            */
+            virtual SubpixelCorrectionQueue& subpixel_queue() = 0;
 
         public:
             /**
@@ -192,7 +200,14 @@ namespace phtr
             * @brief Access the geometry correction queue.
             * @return Reference to the queue object.
             */
-            SubpixelCorrectionQueue& geom_queue();
+            PixelCorrectionQueue& pixel_queue();
+
+        public:
+            /**
+            * @brief Access the geometry correction queue.
+            * @return Reference to the queue object.
+            */
+            SubpixelCorrectionQueue& subpixel_queue();
 
         public:
             /**
@@ -351,7 +366,13 @@ namespace phtr
             /**
             * @brief The internal queue of geometrical correction models to be applied.
             */
-            SubpixelCorrectionQueue geom_queue_;
+            PixelCorrectionQueue pixel_queue_;
+
+        private:
+            /**
+            * @brief The internal queue of geometrical correction models to be applied.
+            */
+            SubpixelCorrectionQueue subpixel_queue_;
 
         private:
             /**

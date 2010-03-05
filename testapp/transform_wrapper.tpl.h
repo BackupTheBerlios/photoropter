@@ -238,7 +238,7 @@ add_models()
         scaler_tca_mod.set_model_param_single(idx_red, settings_.tca_r);
         scaler_tca_mod.set_model_param_single(idx_blue, settings_.tca_b);
 
-        image_transform_->geom_queue().add_model(scaler_tca_mod);
+        image_transform_->subpixel_queue().add_model(scaler_tca_mod);
     }
 
     // apply PTLens TCA correction (fulla style)
@@ -262,7 +262,7 @@ add_models()
 
         ptlens_tca_mod.set_centre_shift(x0, y0);
 
-        image_transform_->geom_queue().add_model(ptlens_tca_mod);
+        image_transform_->subpixel_queue().add_model(ptlens_tca_mod);
     }
 
     // apply PTLens geometric correction
@@ -289,12 +289,12 @@ add_models()
         }
         ptlens_mod.set_centre_shift(x0, y0);
 
-        image_transform_->geom_queue().add_model(ptlens_mod);
+        image_transform_->pixel_queue().add_model(ptlens_mod);
     }
 
 //    model::GeometryConvertPixelModel geom_conv_mod(image_aspect, settings_.image_crop);
-//    geom_conv_mod.set_focal_lengths(9, 12);
-//    image_transform_->geom_queue().add_model(geom_conv_mod);
+//    geom_conv_mod.set_focal_lengths(10, 7.4);
+//    image_transform_->pixel_queue().add_model(geom_conv_mod);
 
     if (settings_.do_scale)
     {
@@ -306,7 +306,7 @@ add_models()
 
         scaler_mod.set_model_param(settings_.scale_fact);
 
-        image_transform_->geom_queue().add_model(scaler_mod);
+        image_transform_->pixel_queue().add_model(scaler_mod);
     }
 
     // apply vignetting correction

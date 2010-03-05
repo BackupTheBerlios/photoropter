@@ -29,22 +29,22 @@ namespace phtr
     namespace geometry
     {
 
-        FisheyeEquisolid::
-        FisheyeEquisolid()
+        Rectilinear::
+        Rectilinear()
                 : focal_length_(10.0)
         {
             //NIL
         }
 
         void
-        FisheyeEquisolid::
+        Rectilinear::
         set_focal_length(double focal_length)
         {
             focal_length_ = focal_length;
         }
 
         bool
-        FisheyeEquisolid::
+        Rectilinear::
         to_spherical_coords(const double& x,
                             const double& y,
                             double& phi,
@@ -58,30 +58,24 @@ namespace phtr
                 phi = 2 * PHTR_PI - phi;
             }
 
-            double asin_arg = r / (2.0 * focal_length_);
-            if (asin_arg >= 1.0)
-            {
-                return false;
-            }
-
-            theta = 2.0 * std::asin(asin_arg);
+            theta = std::atan(r / focal_length_);
 
             return true;
         }
 
         bool
-        FisheyeEquisolid::
+        Rectilinear::
         to_cartesian_coords(const double& phi,
                             const double& theta,
                             double& x,
                             double& y) const
         {
-            if (theta >= PHTR_PI)
+            if (theta >= PHTR_PI / 2.0)
             {
                 return false;
             }
 
-            double r = std::sin(theta / 2) * 2.0 * focal_length_;
+            double r = std::tan(theta) * focal_length_;
 
             x = std::cos(phi) * r;
             y = -std::sin(phi) * r;

@@ -42,6 +42,7 @@ namespace phtr
         {
             x0_ = 0.0;
             y0_ = 0.0;
+            calc_coord_fact();
         }
 
         void
@@ -70,35 +71,13 @@ namespace phtr
 
         void
         GeometryConvertPixelModel::
-        get_src_coords(mem::CoordTupleRGB& coords) const
+        get_src_coords(mem::CoordTupleMono& coords) const
         {
-            get_src_coords_impl(coords);
-        }
+            typedef mem::CoordTupleMono::channel_order_t channel_order_t;
+            typedef channel_order_t::colour_tuple_t colour_tuple_t;
 
-        void
-        GeometryConvertPixelModel::
-        get_src_coords(mem::CoordTupleRGBA& coords) const
-        {
-            get_src_coords_impl(coords);
-        }
-
-        ISubpixelCorrectionModel* GeometryConvertPixelModel::clone() const
-        {
-            return new GeometryConvertPixelModel(*this);
-        }
-
-        template <typename coord_tuple_T>
-        void
-        GeometryConvertPixelModel::
-        get_src_coords_impl(coord_tuple_T& coords) const
-        {
-            typedef typename coord_tuple_T::channel_order_t channel_order_t;
-            typedef typename channel_order_t::colour_tuple_t colour_tuple_t;
-
-            for(size_t i = 0; i < colour_tuple_t::num_vals; ++i)
-            {
-                double x = (coords.x[i] - x0_) * coord_fact_;
-                double y = (coords.y[i] - y0_) * coord_fact_;
+                double x = (coords.x[0] - x0_) * coord_fact_;
+                double y = (coords.y[0] - y0_) * coord_fact_;
                 double phi(0.0);
                 double theta(0.0);
 
@@ -107,17 +86,20 @@ namespace phtr
 
                 if(success)
                 {
-                    coords.x[i] = (x / coord_fact_) + x0_;
-                    coords.y[i] = (y / coord_fact_) + y0_;
+                    coords.x[0] = (x / coord_fact_) + x0_;
+                    coords.y[0] = (y / coord_fact_) + y0_;
                 }
                 else
                 {
                     // set to illegal coordinates (i.e., outside the image area)
-                    coords.x[i] = -2.0 * input_aspect_;
-                    coords.y[i] = -2.0;
+                    coords.x[0] = -2.0 * input_aspect_;
+                    coords.y[0] = -2.0;
                 }
-            }
+        }
 
+        GeometryConvertPixelModel* GeometryConvertPixelModel::clone() const
+        {
+            return new GeometryConvertPixelModel(*this);
         }
 
         void

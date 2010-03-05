@@ -27,31 +27,19 @@ THE SOFTWARE.
 namespace phtr
 {
 
-    template <typename coord_tuple_T>
     void
-    SubpixelCorrectionQueue::
-    get_src_coords(interp_coord_t dst_x, interp_coord_t dst_y, coord_tuple_T& coords) const
+    PixelCorrectionQueue::
+    get_src_coords(interp_coord_t dst_x, interp_coord_t dst_y, mem::CoordTupleMono& coords) const
     {
-        typedef typename coord_tuple_T::channel_order_t::colour_tuple_t colour_tuple_t;
+        typedef mem::CoordTupleMono::channel_order_t::colour_tuple_t colour_tuple_t;
 
-        for (size_t i = 0; i < colour_tuple_t::num_vals; ++i)
-        {
-            coords.x[i] = dst_x;
-            coords.y[i] = dst_y;
-        }
+        coords.x[0] = dst_x;
+        coords.y[0] = dst_y;
 
         for (size_t i = 0; i < n_models_; ++i)
         {
             correction_model_[i]->get_src_coords(coords);
         }
-    }
-
-    template <typename coord_tuple_T>
-    void
-    SubpixelCorrectionQueue::
-    get_src_coords(const mem::CoordTupleMono& dst_coords, coord_tuple_T& coords) const
-    {
-        get_src_coords(dst_coords.x[0], dst_coords.y[0], coords);
     }
 
 } // namespace phtr

@@ -135,7 +135,8 @@ namespace phtr
                 interp_coord_t dst_y(0);
 
                 // coordinates transformed to source image
-                coord_tuple_t src_coords;
+                mem::CoordTupleMono pixel_coords;
+                coord_tuple_t subpixel_coords;
 
                 // channel value tuple (sum over oversampling steps)
                 colour_tuple_t value_sum;
@@ -162,12 +163,13 @@ namespace phtr
                         dst_y = ((cur_samp_y + p_offs_y) * scale_y) - 1.0;
 
                         // get coordinates transformed to source image
-                        geom_queue_.get_src_coords(dst_x, dst_y, src_coords);
+                        pixel_queue_.get_src_coords(dst_x, dst_y, pixel_coords);
+                        subpixel_queue_.get_src_coords(pixel_coords, subpixel_coords);
 
                         // get channel values and correction factors
-                        colour_queue_.get_correction_factors(src_coords, factors);
+                        colour_queue_.get_correction_factors(subpixel_coords, factors);
 
-                        value_sum += normalise(interpolator_.get_px_vals(src_coords)) * factors;
+                        value_sum += normalise(interpolator_.get_px_vals(subpixel_coords)) * factors;
 
                         cur_samp_x += sampling_step_x;
                     } // (inner) oversampling loop
@@ -191,11 +193,19 @@ namespace phtr
     } //  ImageTransform<...>::do_transform()
 
     template <typename interpolator_T, typename image_view_w_T>
+    PixelCorrectionQueue&
+    ImageTransform<interpolator_T, image_view_w_T>::
+    pixel_queue()
+    {
+        return pixel_queue_;
+    }
+
+    template <typename interpolator_T, typename image_view_w_T>
     SubpixelCorrectionQueue&
     ImageTransform<interpolator_T, image_view_w_T>::
-    geom_queue()
+    subpixel_queue()
     {
-        return geom_queue_;
+        return subpixel_queue_;
     }
 
     template <typename interpolator_T, typename image_view_w_T>
