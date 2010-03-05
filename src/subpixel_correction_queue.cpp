@@ -26,19 +26,19 @@ THE SOFTWARE.
 
 #include <list>
 
-#include <photoropter/geom_correction_queue.h>
-#include <photoropter/model/geom_correction_model.h>
+#include <photoropter/subpixel_correction_queue.h>
+#include <photoropter/model/subpixel_correction_model.h>
 
 namespace phtr
 {
 
-    GeomCorrectionQueue::GeomCorrectionQueue()
+    SubpixelCorrectionQueue::SubpixelCorrectionQueue()
             : n_models_(0)
     {
         //NIL
     }
 
-    GeomCorrectionQueue::GeomCorrectionQueue(const GeomCorrectionQueue& orig)
+    SubpixelCorrectionQueue::SubpixelCorrectionQueue(const SubpixelCorrectionQueue& orig)
             : n_models_(0)
     {
         n_models_ = static_cast<unsigned short>(orig.correction_model_.size());
@@ -50,12 +50,12 @@ namespace phtr
         }
     }
 
-    GeomCorrectionQueue::~GeomCorrectionQueue()
+    SubpixelCorrectionQueue::~SubpixelCorrectionQueue()
     {
         this->clear();
     }
 
-    GeomCorrectionQueue& GeomCorrectionQueue::operator=(const GeomCorrectionQueue& orig)
+    SubpixelCorrectionQueue& SubpixelCorrectionQueue::operator=(const SubpixelCorrectionQueue& orig)
     {
         this->clear();
 
@@ -70,7 +70,7 @@ namespace phtr
         return *this;
     }
 
-    void GeomCorrectionQueue::clear()
+    void SubpixelCorrectionQueue::clear()
     {
         n_models_ = static_cast<unsigned short>(correction_model_.size());
 
@@ -83,11 +83,11 @@ namespace phtr
         n_models_ = 0;
     }
 
-    model::IGeomCorrectionModel& GeomCorrectionQueue::add_model(const model::IGeomCorrectionModel& model)
+    model::ISubpixelCorrectionModel& SubpixelCorrectionQueue::add_model(const model::ISubpixelCorrectionModel& model)
     {
-        model::IGeomCorrectionModel* new_mod = model.clone();
+        model::ISubpixelCorrectionModel* new_mod = model.clone();
 
-        std::list<model::IGeomCorrectionModel*> tmp_list(correction_model_.begin(), correction_model_.end());
+        std::list<model::ISubpixelCorrectionModel*> tmp_list(correction_model_.begin(), correction_model_.end());
         tmp_list.push_front(new_mod);
 
         correction_model_.assign(tmp_list.begin(), tmp_list.end());

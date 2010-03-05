@@ -29,7 +29,7 @@ namespace phtr
 
     template <typename coord_tuple_T>
     void
-    GeomCorrectionQueue::
+    SubpixelCorrectionQueue::
     get_src_coords(interp_coord_t dst_x, interp_coord_t dst_y, coord_tuple_T& coords) const
     {
         typedef typename coord_tuple_T::channel_order_t::colour_tuple_t colour_tuple_t;

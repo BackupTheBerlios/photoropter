@@ -49,6 +49,58 @@ namespace phtr
         /**
          * @brief Struct describing the order of channels. Used as base by
          * specialisations of @ref MemLayout.
+         * @note: This describes a (i.e., monochrome) single-channel structure.
+         */
+        struct ChannelOrderMono
+        {
+
+            /**
+                * @brief The type of coordinate tuples (i.e., mem::CoordTupleRGB or mem::CoordTupleRGBA).
+                */
+            typedef CoordTuple<ChannelOrderMono, 1> coord_tuple_t;
+
+            /**
+             * @brief The type of colour tuples (i.e., mem::ColourTupleRGB or mem::ColourTupleRGBA).
+             */
+            typedef ColourTuple<ChannelOrderMono, 1> colour_tuple_t;
+
+            /**
+            * @brief Return the channel order for this layout type.
+            * @param chan_type The channel type.
+            * @return The index (i.e., 0).
+            */
+            static size_t get_channel_index(Channel::type chan_type);
+
+            /**
+             * @brief The channel types.
+             */
+            static const Channel::type channel_type[];
+
+            /**
+             * @brief The index of the red channel.
+             */
+            static const size_t idx_red;
+
+            /**
+             * @brief The index of the green channel.
+             */
+            static const size_t idx_green;
+
+            /**
+             * @brief The index of the blue channel.
+             */
+            static const size_t idx_blue;
+
+            /**
+             * @brief The index of the alpha channel.
+             */
+            static const size_t idx_alpha;
+
+        };
+
+        /**
+         * @brief Struct describing the order of channels. Used as base by
+         * specialisations of @ref MemLayout.
          * @note: This describes the 3-channel (RGB) case.
          */
         struct ChannelOrderRGB

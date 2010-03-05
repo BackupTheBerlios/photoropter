@@ -24,8 +24,8 @@ THE SOFTWARE.
 
 */
 
-#ifndef PHTR_GEOM_CORRECTION_MODEL_H__
-#define PHTR_GEOM_CORRECTION_MODEL_H__
+#ifndef PHTR_SUBPIXEL_CORRECTION_MODEL_H__
+#define PHTR_SUBPIXEL_CORRECTION_MODEL_H__
 
 #include <photoropter/types.h>
 #include <photoropter/mem/coord_tuple.h>
@@ -40,14 +40,14 @@ namespace phtr
         * @brief Interface base class for geometrical lens correction models.
         * @details The corrections models are implemented using a 'functionid' pattern.
         */
-        class IGeomCorrectionModel
+        class ISubpixelCorrectionModel
         {
 
             public:
                 /**
                  * @ brief (Dummy) Destructor.
                  */
-                virtual ~IGeomCorrectionModel() {};
+                virtual ~ISubpixelCorrectionModel() {};
 
             public:
                 /**
@@ -70,12 +70,12 @@ namespace phtr
                 * @brief Create a clone of the correction %model functionoid.
                 * @return The clone.
                 */
-                virtual IGeomCorrectionModel* clone() const = 0;
+                virtual ISubpixelCorrectionModel* clone() const = 0;
 
-        }; // class IGeomCorrectionModel
+        }; // class ISubpixelCorrectionModel
 
     } // namespace phtr::model
 
 } // namespace phtr
 
-#endif // PHTR_GEOM_CORRECTION_MODEL_H__
+#endif // PHTR_SUBPIXEL_CORRECTION_MODEL_H__

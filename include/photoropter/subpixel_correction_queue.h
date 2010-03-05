@@ -24,15 +24,15 @@ THE SOFTWARE.
 
 */
 
-#ifndef PHTR_GEOM_CORRECTION_QUEUE_H__
-#define PHTR_GEOM_CORRECTION_QUEUE_H__
+#ifndef PHTR_SUBPIXEL_CORRECTION_QUEUE_H__
+#define PHTR_SUBPIXEL_CORRECTION_QUEUE_H__
 
 #include <vector>
 
 #include <photoropter/types.h>
 #include <photoropter/mem/coord_tuple.h>
 #include <photoropter/mem/colour_tuple.h>
-#include <photoropter/model/geom_correction_model.h>
+#include <photoropter/model/subpixel_correction_model.h>
 
 namespace phtr
 {
@@ -40,7 +40,7 @@ namespace phtr
     /**
     * @brief Class holding a queue of geometrical correction model functions.
     */
-    class GeomCorrectionQueue
+    class SubpixelCorrectionQueue
     {
             /* ****************************************
              * public interface
@@ -51,13 +51,13 @@ namespace phtr
             * @brief Standard constructor.
             * @details This will construct an empty queue.
             */
-            GeomCorrectionQueue();
+            SubpixelCorrectionQueue();
 
         public:
             /**
             * @brief Destructor.
             */
-            virtual ~GeomCorrectionQueue();
+            virtual ~SubpixelCorrectionQueue();
 
         public:
             /**
@@ -78,7 +78,7 @@ namespace phtr
             * @param model The geometry correction model to be added.
             * @return Reference to the new correction model copy.
             */
-            model::IGeomCorrectionModel& add_model(const model::IGeomCorrectionModel& model);
+            model::ISubpixelCorrectionModel& add_model(const model::ISubpixelCorrectionModel& model);
 
         public:
             /**
@@ -97,7 +97,7 @@ namespace phtr
             * @param orig The original queue.
             * @details This will copy the given queue, duplicating the functionid objects.
             */
-            GeomCorrectionQueue(const GeomCorrectionQueue& orig);
+            SubpixelCorrectionQueue(const SubpixelCorrectionQueue& orig);
 
         private:
             /**
@@ -106,13 +106,13 @@ namespace phtr
             * @param orig The original queue.
             * @return Reference to the current instance.
             */
-            GeomCorrectionQueue& operator=(const GeomCorrectionQueue& orig);
+            SubpixelCorrectionQueue& operator=(const SubpixelCorrectionQueue& orig);
 
         private:
             /**
             * @brief The internal list of correction models.
             */
-            std::vector<model::IGeomCorrectionModel*> correction_model_;
+            std::vector<model::ISubpixelCorrectionModel*> correction_model_;
 
         private:
             /**
@@ -120,10 +120,10 @@ namespace phtr
             */
             unsigned short n_models_;
 
-    };
+    }; // class SubpixelCorrectionQueue
 
 } // namespace phtr
 
-#include <photoropter/geom_correction_queue.tpl.h>
+#include <photoropter/subpixel_correction_queue.tpl.h>
 
-#endif // PHTR_GEOM_CORRECTION_QUEUE_H__
+#endif // PHTR_SUBPIXEL_CORRECTION_QUEUE_H__

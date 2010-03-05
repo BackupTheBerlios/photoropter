@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 */
 
-#include <photoropter/model/geometry_convert_geom_model.h>
+#include <photoropter/model/geometry_convert_pixel_model.h>
 
 namespace phtr
 {
@@ -33,11 +33,11 @@ namespace phtr
     {
 
         /* ****************************************
-        * GeometryConvertGeomModel
+        * GeometryConvertPixelModel
         * **************************************** */
 
-        GeometryConvertGeomModel::
-        GeometryConvertGeomModel(double input_aspect, double input_crop)
+        GeometryConvertPixelModel::
+        GeometryConvertPixelModel(double input_aspect, double input_crop)
             : CorrectionModelBase(1.5, input_aspect, 1.0, input_crop)
         {
             x0_ = 0.0;
@@ -45,7 +45,7 @@ namespace phtr
         }
 
         void
-        GeometryConvertGeomModel::
+        GeometryConvertPixelModel::
         set_focal_lengths(double src_focal_length, double dst_focal_length)
         {
             src_model_.set_focal_length(src_focal_length);
@@ -53,7 +53,7 @@ namespace phtr
         }
 
         void
-        GeometryConvertGeomModel::
+        GeometryConvertPixelModel::
         set_centre_shift(interp_coord_t x0, interp_coord_t y0)
         {
             x0_ = x0;
@@ -61,7 +61,7 @@ namespace phtr
         }
 
         void
-        GeometryConvertGeomModel::
+        GeometryConvertPixelModel::
         get_centre_shift(interp_coord_t& x0, interp_coord_t& y0) const
         {
             x0 = x0_;
@@ -69,27 +69,27 @@ namespace phtr
         }
 
         void
-        GeometryConvertGeomModel::
+        GeometryConvertPixelModel::
         get_src_coords(mem::CoordTupleRGB& coords) const
         {
             get_src_coords_impl(coords);
         }
 
         void
-        GeometryConvertGeomModel::
+        GeometryConvertPixelModel::
         get_src_coords(mem::CoordTupleRGBA& coords) const
         {
             get_src_coords_impl(coords);
         }
 
-        IGeomCorrectionModel* GeometryConvertGeomModel::clone() const
+        ISubpixelCorrectionModel* GeometryConvertPixelModel::clone() const
         {
-            return new GeometryConvertGeomModel(*this);
+            return new GeometryConvertPixelModel(*this);
         }
 
         template <typename coord_tuple_T>
         void
-        GeometryConvertGeomModel::
+        GeometryConvertPixelModel::
         get_src_coords_impl(coord_tuple_T& coords) const
         {
             typedef typename coord_tuple_T::channel_order_t channel_order_t;
@@ -121,7 +121,7 @@ namespace phtr
         }
 
         void
-        GeometryConvertGeomModel::
+        GeometryConvertPixelModel::
         calc_coord_fact()
         {
             CorrectionModelBase::calc_coord_fact();

@@ -24,10 +24,10 @@ THE SOFTWARE.
 
 */
 
-#ifndef PHTR_GEMETRY_CONVERT_GEOM_MODEL_H__
-#define PHTR_GEMETRY_CONVERT_GEOM_MODEL_H__
+#ifndef PHTR_GEOMETRY_CONVERT_PIXEL_MODEL_H__
+#define PHTR_GEOMETRY_CONVERT_PIXEL_MODEL_H__
 
-#include <photoropter/model/geom_correction_model.h>
+#include <photoropter/model/subpixel_correction_model.h>
 #include <photoropter/model/correction_model_base.h>
 #include <photoropter/geometry/fisheye_equisolid.h>
 
@@ -40,7 +40,9 @@ namespace phtr
         /**
         * @brief A geometric %model to perform geometry conversion.
         */
-        class GeometryConvertGeomModel : public IGeomCorrectionModel, private CorrectionModelBase
+        class GeometryConvertPixelModel
+                    : public ISubpixelCorrectionModel,
+                    private CorrectionModelBase
         {
 
                 /* ****************************************
@@ -53,7 +55,7 @@ namespace phtr
                 * @param[in] input_aspect The aspect ratio of the input image.
                 * @param[in] input_crop The crop factor of the input image.
                 */
-                GeometryConvertGeomModel(double input_aspect, double input_crop);
+                GeometryConvertPixelModel(double input_aspect, double input_crop);
 
             public:
                 /**
@@ -107,7 +109,7 @@ namespace phtr
                 * @brief Create a clone of the correction %model functionoid.
                 * @return The clone.
                 */
-                IGeomCorrectionModel* clone() const;
+                ISubpixelCorrectionModel* clone() const;
 
                 /* ****************************************
                 * internals
@@ -145,10 +147,10 @@ namespace phtr
                 src_model_T src_model_;
                 dst_model_T dst_model_;
 
-        }; // class GeometryConvertGeomModel
+        }; // class GeometryConvertPixelModel
 
     } // namespace phtr::model
 
 } // namespace phtr
 
-#endif // PHTR_GEMETRY_CONVERT_GEOM_MODEL_H__
+#endif // PHTR_GEOMETRY_CONVERT_PIXEL_MODEL_H__

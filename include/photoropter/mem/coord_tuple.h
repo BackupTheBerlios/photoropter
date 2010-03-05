@@ -86,6 +86,11 @@ namespace phtr
         };
 
         /**
+         * @brief A 'tuple' containing a single coordinate pair.
+         */
+        typedef CoordTuple<ChannelOrderMono, 1> CoordTupleMono;
+
+        /**
          * @brief A tuple containing 3 coordinate pairs.
          */
         typedef CoordTuple<ChannelOrderRGB, 3> CoordTupleRGB;

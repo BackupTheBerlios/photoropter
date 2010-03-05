@@ -35,34 +35,49 @@ namespace phtr
 
         ///@cond PROTECTED
 
-        size_t ChannelOrderRGB::get_channel_index(Channel::type chan_type)
+    size_t ChannelOrderMono::get_channel_index(Channel::type)
+    {
+    	return 0;
+    }
+
+    const Channel::type ChannelOrderMono::channel_type[] = {Channel::green};
+
+    const size_t ChannelOrderMono::idx_red = 0;
+
+    const size_t ChannelOrderMono::idx_green = 0;
+
+    const size_t ChannelOrderMono::idx_blue = 0;
+
+    const size_t ChannelOrderMono::idx_alpha = 0;
+
+    size_t ChannelOrderRGB::get_channel_index(Channel::type chan_type)
+    {
+        switch(chan_type)
         {
-            switch(chan_type)
-            {
-                case Channel::red:
-                default:
-                    return 0;
-                    break;
+            case Channel::red:
+            default:
+                return 0;
+                break;
 
-                case Channel::green:
-                    return 1;
-                    break;
+            case Channel::green:
+                return 1;
+                break;
 
-                case Channel::blue:
-                    return 2;
-                    break;
-            }
+            case Channel::blue:
+                return 2;
+                break;
         }
+    }
 
-        const Channel::type ChannelOrderRGB::channel_type[] = {Channel::red, Channel::green, Channel::blue};
+    const Channel::type ChannelOrderRGB::channel_type[] = {Channel::red, Channel::green, Channel::blue};
 
-        const size_t ChannelOrderRGB::idx_red = 0;
+    const size_t ChannelOrderRGB::idx_red = 0;
 
-        const size_t ChannelOrderRGB::idx_green = 1;
+    const size_t ChannelOrderRGB::idx_green = 1;
 
-        const size_t ChannelOrderRGB::idx_blue = 2;
+    const size_t ChannelOrderRGB::idx_blue = 2;
 
-        const size_t ChannelOrderRGB::idx_alpha = 0;
+    const size_t ChannelOrderRGB::idx_alpha = 0;
 
         size_t ChannelOrderRGBA::get_channel_index(Channel::type chan_type)
         {

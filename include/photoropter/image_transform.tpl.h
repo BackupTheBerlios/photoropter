@@ -191,7 +191,7 @@ namespace phtr
     } //  ImageTransform<...>::do_transform()
 
     template <typename interpolator_T, typename image_view_w_T>
-    GeomCorrectionQueue&
+    SubpixelCorrectionQueue&
     ImageTransform<interpolator_T, image_view_w_T>::
     geom_queue()
     {

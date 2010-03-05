@@ -230,10 +230,10 @@ add_models()
     if (settings_.do_tca)
     {
         log("Add model: linear TCA correction.");
-        model::ScalerGeomModel scaler_tca_mod(param_aspect,
-                                              image_aspect,
-                                              settings_.param_crop,
-                                              settings_.image_crop);
+        model::ScalerPixelModel scaler_tca_mod(param_aspect,
+                                               image_aspect,
+                                               settings_.param_crop,
+                                               settings_.image_crop);
 
         scaler_tca_mod.set_model_param_single(idx_red, settings_.tca_r);
         scaler_tca_mod.set_model_param_single(idx_blue, settings_.tca_b);
@@ -245,10 +245,10 @@ add_models()
     if (settings_.ptlens_tca_corr)
     {
         log("Add model: PTLens TCA correction.");
-        model::PTLensGeomModel ptlens_tca_mod(param_aspect,
-                                              image_aspect,
-                                              settings_.param_crop,
-                                              settings_.image_crop);
+        model::PTLensPixelModel ptlens_tca_mod(param_aspect,
+                                               image_aspect,
+                                               settings_.param_crop,
+                                               settings_.image_crop);
 
         ptlens_tca_mod.set_model_params(0, 0, 0);
         ptlens_tca_mod.set_model_params_single(idx_red, settings_.ptlens_r_params[0],
@@ -269,10 +269,10 @@ add_models()
     if (settings_.ptlens_corr)
     {
         log("Add model: PTLens geometric correction.");
-        model::PTLensGeomModel ptlens_mod(param_aspect,
-                                          image_aspect,
-                                          settings_.param_crop,
-                                          settings_.image_crop);
+        model::PTLensPixelModel ptlens_mod(param_aspect,
+                                           image_aspect,
+                                           settings_.param_crop,
+                                           settings_.image_crop);
         if (settings_.ptlens_params.size() == 4)
         {
             ptlens_mod.set_model_params(settings_.ptlens_params[0],
@@ -292,17 +292,17 @@ add_models()
         image_transform_->geom_queue().add_model(ptlens_mod);
     }
 
-    model::GeometryConvertGeomModel geom_conv_mod(image_aspect, settings_.image_crop);
-    geom_conv_mod.set_focal_lengths(9, 12);
-    image_transform_->geom_queue().add_model(geom_conv_mod);
+//    model::GeometryConvertPixelModel geom_conv_mod(image_aspect, settings_.image_crop);
+//    geom_conv_mod.set_focal_lengths(9, 12);
+//    image_transform_->geom_queue().add_model(geom_conv_mod);
 
     if (settings_.do_scale)
     {
         log("Add model: linear scaling factor.");
-        model::ScalerGeomModel scaler_mod(param_aspect,
-                                          image_aspect,
-                                          settings_.param_crop,
-                                          settings_.image_crop);
+        model::ScalerPixelModel scaler_mod(param_aspect,
+                                           image_aspect,
+                                           settings_.param_crop,
+                                           settings_.image_crop);
 
         scaler_mod.set_model_param(settings_.scale_fact);
 

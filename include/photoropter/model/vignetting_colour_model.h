@@ -51,7 +51,7 @@ namespace phtr
         * vignetting. Please use @ref HuginVignettingModel to deal with parameters
         * produced by Hugin.
         */
-        class VignettingColourModel : public IColourCorrectionModel, protected CorrectionModelBase
+        class VignettingColourModel : protected CorrectionModelBase, public IColourCorrectionModel
         {
 
                 /* ****************************************

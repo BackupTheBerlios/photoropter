@@ -24,10 +24,11 @@ THE SOFTWARE.
 
 */
 
-#ifndef PHTR_SCALER_GEOM_MODEL_H__
-#define PHTR_SCALER_GEOM_MODEL_H__
+#ifndef PHTR_SCALER_PIXEL_MODEL_H__
+#define PHTR_SCALER_PIXEL_MODEL_H__
 
-#include <photoropter/model/geom_correction_model.h>
+#include <photoropter/model/subpixel_correction_model.h>
+#include <photoropter/model/pixel_correction_model.h>
 #include <photoropter/model/correction_model_base.h>
 
 namespace phtr
@@ -48,7 +49,10 @@ namespace phtr
         * @ref set_model_param_single() to set the coefficents for red and blue shift
         * in the TCA %model.
         */
-        class ScalerGeomModel : public IGeomCorrectionModel, private CorrectionModelBase
+        class ScalerPixelModel
+                    : private CorrectionModelBase,
+                    public ISubpixelCorrectionModel,
+                    public IPixelCorrectionModel
         {
 
                 /* ****************************************
@@ -65,8 +69,8 @@ namespace phtr
                 * @param[in] param_crop The crop factor that was used when determining the %model parameters.
                 * @param[in] input_crop The crop factor of the input image.
                 */
-                ScalerGeomModel(double param_aspect, double input_aspect,
-                                double param_crop, double input_crop);
+                ScalerPixelModel(double param_aspect, double input_aspect,
+                                 double param_crop, double input_crop);
 
             public:
                 /**
@@ -80,7 +84,7 @@ namespace phtr
                 * set to 1.0).</li></ol>
                 * @param[in] input_aspect The aspect ratio of the input image.
                 */
-                explicit ScalerGeomModel(double input_aspect);
+                explicit ScalerPixelModel(double input_aspect);
 
             public:
                 /**
@@ -155,6 +159,14 @@ namespace phtr
                 * @note This function changes the input tuple.
                 * @param[in,out] coords The coordinates tuple.
                 */
+                void get_src_coords(mem::CoordTupleMono& coords) const;
+
+            public:
+                /**
+                * @brief Get the corrected source image coordinates for the current position.
+                * @note This function changes the input tuple.
+                * @param[in,out] coords The coordinates tuple.
+                */
                 void get_src_coords(mem::CoordTupleRGB& coords) const;
 
             public:
@@ -170,7 +182,7 @@ namespace phtr
                 * @brief Create a clone of the correction %model functionoid.
                 * @return The clone.
                 */
-                IGeomCorrectionModel* clone() const;
+                ScalerPixelModel* clone() const;
 
                 /* ****************************************
                 * internals
@@ -203,10 +215,10 @@ namespace phtr
                 */
                 double y0_[mem::PHTR_MAX_CHANNELS];
 
-        }; // class ScalerGeomModel
+        }; // class ScalerPixelModel
 
     } // namespace phtr::model
 
 } // namespace phtr
 
-#endif // PHTR_SCALER_GEOM_MODEL_H__
+#endif // PHTR_SCALER_PIXEL_MODEL_H__

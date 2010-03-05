@@ -168,19 +168,18 @@ set(PHTR_INCLUDES
   ${PHTR_INCLUDE_DIR}/mem/mem_layout.h
   ${PHTR_INCLUDE_DIR}/mem/mem_storage_info.h
   ${PHTR_INCLUDE_DIR}/mem/storage_type.h
-  ${PHTR_INCLUDE_DIR}/model/correction_model_base.h
   ${PHTR_INCLUDE_DIR}/model/colour_correction_model.h
-  ${PHTR_INCLUDE_DIR}/model/geom_correction_model.h
-  ${PHTR_INCLUDE_DIR}/model/geometry_convert_geom_model.h
-  ${PHTR_INCLUDE_DIR}/model/ptlens_geom_model.h
-  ${PHTR_INCLUDE_DIR}/model/scaler_geom_model.h
+  ${PHTR_INCLUDE_DIR}/model/correction_model_base.h
+  ${PHTR_INCLUDE_DIR}/model/geometry_convert_pixel_model.h
+  ${PHTR_INCLUDE_DIR}/model/pixel_correction_model.h
+  ${PHTR_INCLUDE_DIR}/model/ptlens_pixel_model.h
+  ${PHTR_INCLUDE_DIR}/model/scaler_pixel_model.h
+  ${PHTR_INCLUDE_DIR}/model/subpixel_correction_model.h
   ${PHTR_INCLUDE_DIR}/model/vignetting_colour_model.h
   ${PHTR_INCLUDE_DIR}/colour_correction_queue.h
   ${PHTR_INCLUDE_DIR}/colour_correction_queue.tpl.h
   ${PHTR_INCLUDE_DIR}/exception.h
   ${PHTR_INCLUDE_DIR}/gamma_func.h
-  ${PHTR_INCLUDE_DIR}/geom_correction_queue.h
-  ${PHTR_INCLUDE_DIR}/geom_correction_queue.tpl.h
   ${PHTR_INCLUDE_DIR}/image_buffer.h
   ${PHTR_INCLUDE_DIR}/image_buffer.tpl.h
   ${PHTR_INCLUDE_DIR}/image_transform.h
@@ -198,6 +197,8 @@ set(PHTR_INCLUDES
   ${PHTR_INCLUDE_DIR}/mem_image_view_r.tpl.h
   ${PHTR_INCLUDE_DIR}/mem_image_view_w.h
   ${PHTR_INCLUDE_DIR}/mem_image_view_w.tpl.h
+  ${PHTR_INCLUDE_DIR}/subpixel_correction_queue.h
+  ${PHTR_INCLUDE_DIR}/subpixel_correction_queue.tpl.h
   ${PHTR_INCLUDE_DIR}/types.h
   ${PHTR_INCLUDE_DIR}/util.h
   )
@@ -205,16 +206,16 @@ set(PHTR_INCLUDES
 set(PHTR_SOURCES
   ${PHTR_SRC_DIR}/mem/mem_layout.cpp
   ${PHTR_SRC_DIR}/model/correction_model_base.cpp
-  ${PHTR_SRC_DIR}/model/geometry_convert_geom_model.cpp
-  ${PHTR_SRC_DIR}/model/ptlens_geom_model.cpp
-  ${PHTR_SRC_DIR}/model/scaler_geom_model.cpp
+  ${PHTR_SRC_DIR}/model/geometry_convert_pixel_model.cpp
+  ${PHTR_SRC_DIR}/model/ptlens_pixel_model.cpp
+  ${PHTR_SRC_DIR}/model/scaler_pixel_model.cpp
   ${PHTR_SRC_DIR}/model/vignetting_colour_model.cpp
   ${PHTR_SRC_DIR}/colour_correction_queue.cpp
   ${PHTR_SRC_DIR}/exception.cpp
   ${PHTR_SRC_DIR}/gamma_func.cpp
-  ${PHTR_SRC_DIR}/geom_correction_queue.cpp
   ${PHTR_SRC_DIR}/modpar_emor.h
   ${PHTR_SRC_DIR}/modpar_invemor.h
+  ${PHTR_SRC_DIR}/subpixel_correction_queue.cpp
   )
 
 configure_file(${PHTR_INCLUDE_DIR}/version.h.in

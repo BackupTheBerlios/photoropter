@@ -24,7 +24,9 @@ THE SOFTWARE.
 
 */
 
-#include <photoropter/model/scaler_geom_model.h>
+#include <cmath>
+
+#include <photoropter/model/ptlens_pixel_model.h>
 
 namespace phtr
 {
@@ -33,60 +35,90 @@ namespace phtr
     {
 
         /* ****************************************
-        * ScalerGeomModel
-        * **************************************** */
+         * PTLensGeomModel
+         * **************************************** */
 
-        ScalerGeomModel::
-        ScalerGeomModel(double param_aspect, double input_aspect,
+        PTLensPixelModel::
+        PTLensPixelModel(double param_aspect, double input_aspect,
                         double param_crop, double input_crop)
             : CorrectionModelBase(param_aspect, input_aspect, param_crop, input_crop)
         {
             for(size_t i = 0; i < mem::PHTR_MAX_CHANNELS; ++i)
             {
-                k_[i] = 1.0;
+                a_[i] = 0;
+                b_[i] = 0;
+                c_[i] = 0;
+                d_[i] = 1.0;
                 x0_[i] = 0;
                 y0_[i] = 0;
             }
         }
 
-        ScalerGeomModel::
-        ScalerGeomModel(double input_aspect)
+        PTLensPixelModel::
+        PTLensPixelModel(double input_aspect)
             : CorrectionModelBase(input_aspect)
         {
             for(size_t i = 0; i < mem::PHTR_MAX_CHANNELS; ++i)
             {
-                k_[i] = 1.0;
+                a_[i] = 0;
+                b_[i] = 0;
+                c_[i] = 0;
+                d_[i] = 1.0;
                 x0_[i] = 0;
                 y0_[i] = 0;
             }
         }
 
         void
-        ScalerGeomModel::
-        set_model_param_single(size_t chan_idx, double k)
+        PTLensPixelModel::
+        set_model_params_single(size_t chan_idx, double a, double b, double c, double d)
         {
-            k_[chan_idx] = k;
+            a_[chan_idx] = a * std::pow(coord_fact_, 3);
+            b_[chan_idx] = b * std::pow(coord_fact_, 2);
+            c_[chan_idx] = c * coord_fact_;
+            d_[chan_idx] = d;
         }
 
         void
-        ScalerGeomModel::
-        set_model_param(double k)
+        PTLensPixelModel::
+        set_model_params(double a, double b, double c, double d)
         {
             for(size_t i = 0; i < mem::PHTR_MAX_CHANNELS; ++i)
             {
-                set_model_param_single(i, k);
+                set_model_params_single(i, a, b, c, d);
             }
         }
 
         void
-        ScalerGeomModel::
-        get_model_param(size_t chan_idx, double& k) const
+        PTLensPixelModel::
+        set_model_params_single(size_t chan_idx, double a, double b, double c)
         {
-            k = k_[chan_idx];
+            double d = 1.0 - (a + b + c);
+            set_model_params_single(chan_idx, a, b, c, d);
         }
 
         void
-        ScalerGeomModel::
+        PTLensPixelModel::
+        set_model_params(double a, double b, double c)
+        {
+            for(size_t i = 0; i < mem::PHTR_MAX_CHANNELS; ++i)
+            {
+                set_model_params_single(i, a, b, c);
+            }
+        }
+
+        void
+        PTLensPixelModel::
+        get_model_params(size_t chan_idx, double& a, double& b, double& c, double& d) const
+        {
+            a = a_[chan_idx] / std::pow(coord_fact_, 3);
+            b = b_[chan_idx] / std::pow(coord_fact_, 2);
+            c = c_[chan_idx] / coord_fact_;
+            d = d_[chan_idx];
+        }
+
+        void
+        PTLensPixelModel::
         set_centre_shift_single(size_t chan_idx, interp_coord_t x0, interp_coord_t y0)
         {
             x0_[chan_idx] = x0;
@@ -94,7 +126,7 @@ namespace phtr
         }
 
         void
-        ScalerGeomModel::
+        PTLensPixelModel::
         set_centre_shift(interp_coord_t x0, interp_coord_t y0)
         {
             for(size_t i = 0; i < mem::PHTR_MAX_CHANNELS; ++i)
@@ -105,7 +137,7 @@ namespace phtr
         }
 
         void
-        ScalerGeomModel::
+        PTLensPixelModel::
         get_centre_shift(size_t chan_idx, interp_coord_t& x0, interp_coord_t& y0) const
         {
             x0 = x0_[chan_idx];
@@ -113,27 +145,34 @@ namespace phtr
         }
 
         void
-        ScalerGeomModel::
+        PTLensPixelModel::
+        get_src_coords(mem::CoordTupleMono& coords) const
+        {
+            get_src_coords_impl(coords);
+        }
+
+        void
+        PTLensPixelModel::
         get_src_coords(mem::CoordTupleRGB& coords) const
         {
             get_src_coords_impl(coords);
         }
 
         void
-        ScalerGeomModel::
+        PTLensPixelModel::
         get_src_coords(mem::CoordTupleRGBA& coords) const
         {
             get_src_coords_impl(coords);
         }
 
-        IGeomCorrectionModel* ScalerGeomModel::clone() const
+        PTLensPixelModel* PTLensPixelModel::clone() const
         {
-            return new ScalerGeomModel(*this);
+            return new PTLensPixelModel(*this);
         }
 
         template <typename coord_tuple_T>
         void
-        ScalerGeomModel::
+        PTLensPixelModel::
         get_src_coords_impl(coord_tuple_T& coords) const
         {
             typedef typename coord_tuple_T::channel_order_t channel_order_t;
@@ -143,12 +182,14 @@ namespace phtr
             {
                 coords.x[i] -= x0_[i];
                 coords.y[i] -= y0_[i];
+                double r_r = std::sqrt(coords.x[i] * coords.x[i] +
+                                       coords.y[i] * coords.y[i]);
+                double cos_phi_r = coords.x[i] / r_r;
+                double sin_phi_r = coords.y[i] / r_r;
+                r_r = (((a_[i] * r_r + b_[i]) * r_r + c_[i]) * r_r + d_[i]) * r_r;
 
-                coords.x[i] /= k_[i];
-                coords.y[i] /= k_[i];
-
-                coords.x[i] += x0_[i];
-                coords.y[i] += y0_[i];
+                coords.x[i] = cos_phi_r * r_r + x0_[i];
+                coords.y[i] = sin_phi_r * r_r + y0_[i];
             }
 
         }
