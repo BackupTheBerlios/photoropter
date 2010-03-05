@@ -292,9 +292,9 @@ add_models()
         image_transform_->geom_queue().add_model(ptlens_mod);
     }
 
-//    model::GeometryConvertGeomModel geom_conv_mod(image_aspect, settings_.image_crop);
-//    geom_conv_mod.set_focal_lengths(9, 12);
-//    image_transform_->geom_queue().add_model(geom_conv_mod);
+    model::GeometryConvertGeomModel geom_conv_mod(image_aspect, settings_.image_crop);
+    geom_conv_mod.set_focal_lengths(9, 12);
+    image_transform_->geom_queue().add_model(geom_conv_mod);
 
     if (settings_.do_scale)
     {

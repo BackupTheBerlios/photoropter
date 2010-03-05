@@ -30,9 +30,13 @@ if(NOT CMAKE_BUILD_TYPE)
 
   # set default compiler options
   if(CMAKE_COMPILER_IS_GNUCXX)
-    set(CMAKE_CXX_FLAGS_DEBUG "-O0 -g -ansi -pedantic -Wall -Wextra -Werror -Wno-long-long -DDEBUG")
-    set(CMAKE_CXX_FLAGS_RELEASE "-O3 -ffast-math -fomit-frame-pointer -ansi -Wno-long-long -DNDEBUG")
+    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -O0 -g -Wall -Wextra -Werror -pedantic -ansi -Wno-long-long")
+    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3 -ffast-math -fomit-frame-pointer -ansi -Wno-long-long")
   endif(CMAKE_COMPILER_IS_GNUCXX)
+  
+  if(MSVC)
+    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /Ox /Ot /Oy /GT /Ob2")
+  endif(MSVC)
 
   # override default cache values set by CMake
   set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG}"

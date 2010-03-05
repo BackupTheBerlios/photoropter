@@ -33,6 +33,7 @@ namespace phtr
         FisheyeEquisolid()
                 : focal_length_(10.0)
         {
+        	//NIL
         }
 
         void
