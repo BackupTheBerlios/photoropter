@@ -1,6 +1,6 @@
 /*
 
-  phtrtest: Photoropter demo application
+  phtrx: Photoropter demo application
 
   Copyright (C) 2010 Robert Fendt
 
@@ -19,8 +19,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-#ifndef PHTRTEST_TRANSFORM_WRAPPER_H__
-#define PHTRTEST_TRANSFORM_WRAPPER_H__
+#ifndef PHTRX_TRANSFORM_WRAPPER_H__
+#define PHTRX_TRANSFORM_WRAPPER_H__
 
 #include <string>
 #include <memory>
@@ -128,4 +128,4 @@ class TransformWrapper : public TransformWrapperBase
 
 #include "transform_wrapper.tpl.h"
 
-#endif // PHTRTEST_TRANSFORM_WRAPPER_H__
+#endif // PHTRX_TRANSFORM_WRAPPER_H__

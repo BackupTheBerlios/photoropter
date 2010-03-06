@@ -1,6 +1,6 @@
 /*
 
-  phtrtest: Photoropter demo application
+  phtrx: Photoropter demo application
 
   Copyright (C) 2010 Robert Fendt
 

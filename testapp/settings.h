@@ -1,6 +1,6 @@
 /*
 
-  phtrtest: Photoropter demo application
+  phtrx: Photoropter demo application
 
   Copyright (C) 2010 Robert Fendt
 
@@ -19,8 +19,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-#ifndef PHTRTEST_SETTINGS_H__
-#define PHTRTEST_SETTINGS_H__
+#ifndef PHTRX_SETTINGS_H__
+#define PHTRX_SETTINGS_H__
 
 #include <photoropter/interpolation_type.h>
 #include <photoropter/geometry_type.h>
@@ -139,4 +139,4 @@ struct Settings
     double dst_focal_length;
 };
 
-#endif // PHTRTEST_SETTINGS_H__
+#endif // PHTRX_SETTINGS_H__

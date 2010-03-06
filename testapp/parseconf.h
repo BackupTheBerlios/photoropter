@@ -1,6 +1,6 @@
 /*
 
-  phtrtest: Photoropter demo application
+  phtrx: Photoropter demo application
 
   Copyright (C) 2010 Robert Fendt
 
@@ -19,8 +19,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-#ifndef PHTRTEST_PARSECONF_H__
-#define PHTRTEST_PARSECONF_H__
+#ifndef PHTRX_PARSECONF_H__
+#define PHTRX_PARSECONF_H__
 
 #include <string>
 #include <vector>
@@ -29,4 +29,4 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 bool parse_command_line(int argc, char* argv[], Settings& settings);
 
-#endif // PHTRTEST_PARSECONF_H__
+#endif // PHTRX_PARSECONF_H__

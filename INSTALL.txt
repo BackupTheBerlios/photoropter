@@ -75,7 +75,7 @@ can also be used by package generators, so it is described here.
  
 After Photoropter is configured and built, the complete package can be
 installed by means of the standard 'make install'. This will install the
-phtrtest demo application as well (if it was built). The install prefix
+phtrx demo application as well (if it was built). The install prefix
 can be configured by setting the CMake variable CMAKE_INSTALL_PREFIX
 accordingly when configuring Photoropter.
 
@@ -89,4 +89,4 @@ cmake -DCMAKE_INSTALL_COMPONENT=bin -P cmake_install.cmake
 
 This selects just the 'bin' component for installation. Other possible
 components are 'dev' (static library and headers) and 'testapp' (the
-phtrtest demo application).
+phtrx demo application).

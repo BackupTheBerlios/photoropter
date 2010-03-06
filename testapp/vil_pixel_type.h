@@ -1,6 +1,6 @@
 /*
 
-  phtrtest: Photoropter demo application
+  phtrx: Photoropter demo application
 
   Copyright (C) 2010 Robert Fendt
 
@@ -19,8 +19,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-#ifndef PHTRTEST_VIL_PIXEL_TYPE_H__
-#define PHTRTEST_VIL_PIXEL_TYPE_H__
+#ifndef PHTRX_VIL_PIXEL_TYPE_H__
+#define PHTRX_VIL_PIXEL_TYPE_H__
 
 #include <photoropter/mem/storage_type.h>
 
@@ -114,4 +114,4 @@ struct VILPixelType<phtr::mem::Storage::rgba_32_planar>
     static const unsigned int num_components = 4;
 };
 
-#endif // PHTRTEST_VIL_PIXEL_TYPE_H__
+#endif // PHTRX_VIL_PIXEL_TYPE_H__

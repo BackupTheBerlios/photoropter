@@ -1,6 +1,16 @@
 List of changes
 ===============
 
+0.0.7
+-----
+
+-phtrtest renamed to phtrx.
+-Lens geometry conversion.
+-Lots of refactoring and namespace restructuring.
+-The image transform has now distinct 'pixel' and 'subpixel' queues. Some
+models work with both (e.g. PTLens), while others only will work in the pixel
+queue (e.g. geometry conversion).
+
 0.0.6
 -----
 

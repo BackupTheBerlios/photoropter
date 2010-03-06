@@ -1,4 +1,4 @@
-project(phtrtest)
+project(phtrx)
 
 # search for VXL
 find_package(VXL QUIET)
@@ -23,8 +23,8 @@ if(PHTR_BUILD_TESTAPP)
   include_directories(../include ${VXL_VCL_INCLUDE_DIR} ${VXL_CORE_INCLUDE_DIR} ${Boost_INCLUDE_DIRS})
   link_directories(${VXL_LIBRARY_DIR} ${Boost_LIBRARY_DIRS})
 
-  add_executable(phtrtest
-    phtrtest.cpp
+  add_executable(phtrx
+    phtrx.cpp
     settings.h
     vil_pixel_type.h
     parseconf.h
@@ -34,7 +34,7 @@ if(PHTR_BUILD_TESTAPP)
     transform_wrapper.cpp
     )
 
-  target_link_libraries(phtrtest
+  target_link_libraries(phtrx
     phtr-static
     vil
     vil_io
@@ -42,7 +42,7 @@ if(PHTR_BUILD_TESTAPP)
     )
 
   install(TARGETS
-    phtrtest
+    phtrx
     DESTINATION bin
     COMPONENT testapp
     )

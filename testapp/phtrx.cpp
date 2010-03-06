@@ -1,11 +1,11 @@
 /*
 
-  phtrtest: Photoropter demo application
+  phtrx: Photoropter demo application
 
   Copyright (C) 2010 Robert Fendt
 
   Usage example :
-  phtrtest --gain-func emor --param-aspect 1.5333 --vignetting 0:0:-0.3 --ptlens 0:0.00987:-0.05127 in.jpg out.jpg
+  phtrx --gain-func emor --param-aspect 1.5333 --vignetting 0:0:-0.3 --ptlens 0:0.00987:-0.05127 in.jpg out.jpg
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <iostream>
 #include <memory>
 
-const char APP_NAME[] = "phtrtest";
+const char APP_NAME[] = "phtrx";
 
 int main(int argc, char* argv[])
 {

@@ -100,8 +100,7 @@ And that's it, actually. The transformation loop is highly optimised (making use
 even of multiple CPU cores), so it should be done quite quickly. Of course,
 there's much more that Photoropter can do, e.g. dealing with different forms of
 regions of interest (ROI), gamma handling, colour corrections... this was just a
-first example. If you want to see a bit more, have a look inside 'phtrtest.cpp'.
-It is a quick&dirty command-line application, but it shows a larger subset of
-Photoropters abilities.
+first example. If you want to see a bit more, have a look inside the 'phtrx'
+demo application: it shows a larger subset of Photoropters abilities.
 
 */
