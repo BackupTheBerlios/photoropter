@@ -60,7 +60,7 @@ load()
     // 'sanity checks' on ROI settings
     size_t sub_rect_x0 = settings_.sub_rect_x0;
     size_t sub_rect_y0 = settings_.sub_rect_y0;
-    if (settings_.sub_rect && settings_.sub_rect_w <= img_height_ && settings_.sub_rect_h <= img_height_)
+    if (settings_.sub_rect && settings_.sub_rect_w <= img_width_ && settings_.sub_rect_h <= img_height_)
     {
         dst_width_ = settings_.sub_rect_w;
         dst_height_ = settings_.sub_rect_h;
@@ -69,6 +69,11 @@ load()
     {
         sub_rect_x0 = 0;
         sub_rect_y0 = 0;
+    }
+    {
+        std::stringstream sstr;
+        sstr << "Clip rectangle: " << dst_width_ << "x" << dst_height_ << " " << sub_rect_x0 << ":" << sub_rect_y0;
+        log(sstr.str());
     }
 
     // allocate transfer buffers & attach views
