@@ -31,6 +31,10 @@ THE SOFTWARE.
 
 namespace phtr
 {
+
+    /**
+     * @brief geometric models.
+     */
     namespace geom
     {
 
