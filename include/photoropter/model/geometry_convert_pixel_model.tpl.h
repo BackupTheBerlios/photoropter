@@ -134,7 +134,7 @@ namespace phtr
                 default:
                     return new GeometryConvertPixelModel<src_geom_T, geom::Rectilinear>(input_aspect, input_crop);
 
-                case Geometry::fisheye_equidistant:
+                case Geometry::fisheye_equidist:
                     return new GeometryConvertPixelModel<src_geom_T, geom::FisheyeEquidist>(input_aspect, input_crop);
 
                 case Geometry::fisheye_equisolid:
@@ -142,6 +142,9 @@ namespace phtr
 
                 case Geometry::fisheye_stereo:
                     return new GeometryConvertPixelModel<src_geom_T, geom::FisheyeStereo>(input_aspect, input_crop);
+
+                case Geometry::fisheye_ortho:
+                    return new GeometryConvertPixelModel<src_geom_T, geom::FisheyeOrtho>(input_aspect, input_crop);
             }
         }
 

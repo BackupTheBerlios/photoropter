@@ -152,6 +152,8 @@ set(PHTR_INCLUDES
   ${PHTR_INCLUDE_DIR}/geom/fisheye_equidist.inl.h
   ${PHTR_INCLUDE_DIR}/geom/fisheye_equisolid.h
   ${PHTR_INCLUDE_DIR}/geom/fisheye_equisolid.inl.h
+  ${PHTR_INCLUDE_DIR}/geom/fisheye_ortho.h
+  ${PHTR_INCLUDE_DIR}/geom/fisheye_ortho.inl.h
   ${PHTR_INCLUDE_DIR}/geom/fisheye_stereo.h
   ${PHTR_INCLUDE_DIR}/geom/fisheye_stereo.inl.h
   ${PHTR_INCLUDE_DIR}/geom/rectilinear.h

@@ -29,6 +29,36 @@ namespace po = boost::program_options;
 
 #include "parseconf.h"
 
+phtr::Geometry::type parse_geometry(const std::string& str)
+{
+    using phtr::Geometry;
+
+    if (str == "rect")
+    {
+        return Geometry::rectilinear;
+    }
+    else if (str == "fish_equidist")
+    {
+        return Geometry::fisheye_equidist;
+    }
+    else if (str == "fish_equisolid")
+    {
+        return Geometry::fisheye_equisolid;
+    }
+    else if (str == "fish_stereo")
+    {
+        return Geometry::fisheye_stereo;
+    }
+    else if (str == "fish_ortho")
+    {
+        return Geometry::fisheye_ortho;
+    }
+    else
+    {
+        return Geometry::unknown;
+    }
+}
+
 bool parse_command_line(int argc, char* argv[], Settings& settings)
 {
 
@@ -65,6 +95,13 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
         ("lanczos-supp", po::value<unsigned>(), "Lanczos interpolation kernel support (default: 2)")
         ("oversample", po::value<unsigned>(), "Sampling factor (>= 1)")
         ("centre-shift,x", po::value<std::string>(), "Centre shift: x0:y0")
+        ("geom", po::value<std::string>(), "Geometry conversion: 'geom1':'geom2'. Supported values:\n"
+         "  rect           rectilinear\n"
+         "  fish_equidist  equidistant fisheye\n"
+         "  fish_equisolid equisolid fisheye\n"
+         "  fish_stereo    stereographic fisheye\n"
+         "  fish_ortho     orthographic fisheye")
+        ("flen", po::value<std::string>(), "Focal lengths: f1:f2 (used for geometry conversion)")
         ("input-file", po::value<std::string>(), "Input file")
         ("output-file", po::value<std::string>(), "Output file");
 
@@ -444,6 +481,79 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
         if (options_map.count("oversample"))
         {
             settings.oversampling = options_map["oversample"].as<unsigned>();
+        }
+
+        if (options_map.count("geom"))
+        {
+            settings.geom_convert = true;
+
+            typedef boost::tokenizer<boost::char_separator<char> > tokenizer_t;
+            typedef boost::char_separator<char> separator_t;
+
+            std::string param_string = options_map["geom"].as<std::string>();
+
+            separator_t sep(":;");
+            tokenizer_t tokens(param_string, sep);
+
+            std::list<std::string> tmp_list;
+            for (tokenizer_t::const_iterator it = tokens.begin(); it != tokens.end(); ++it)
+            {
+                tmp_list.push_back(*it);
+            }
+
+            size_t num_params = tmp_list.size();
+            if (num_params == 2)
+            {
+                settings.src_geom = parse_geometry(tmp_list.front());
+                settings.dst_geom = parse_geometry(tmp_list.back());
+            }
+            else
+            {
+                std::cerr << "Error: incorrent number of parameters for geometry conversion" << std::endl;
+                return false;
+            }
+
+            if (settings.src_geom == phtr::Geometry::unknown || settings.dst_geom == phtr::Geometry::unknown)
+            {
+                std::cerr << "Error: unknown geometry" << std::endl;
+                return false;
+            }
+
+        }
+
+        if (options_map.count("flen"))
+        {
+            settings.geom_convert = true;
+
+            typedef boost::tokenizer<boost::char_separator<char> > tokenizer_t;
+            typedef boost::char_separator<char> separator_t;
+
+            std::string param_string = options_map["flen"].as<std::string>();
+
+            separator_t sep(":;");
+            tokenizer_t tokens(param_string, sep);
+
+            std::list<double> tmp_list;
+            for (tokenizer_t::const_iterator it = tokens.begin(); it != tokens.end(); ++it)
+            {
+                std::stringstream sstr(*it);
+                double tmp_val;
+                sstr >> tmp_val;
+                tmp_list.push_back(tmp_val);
+            }
+
+            size_t num_params = tmp_list.size();
+            if (num_params == 2)
+            {
+                settings.src_focal_length = tmp_list.front();
+                settings.dst_focal_length = tmp_list.back();
+            }
+            else
+            {
+                std::cerr << "Error: incorrent number of parameters for focal length specification" << std::endl;
+                return false;
+            }
+
         }
 
     }

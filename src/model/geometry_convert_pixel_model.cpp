@@ -44,7 +44,7 @@ namespace phtr
                     return do_get_geometry_conversion<geom::Rectilinear>(dst_geom, input_aspect, input_crop);
                     break;
 
-                case Geometry::fisheye_equidistant:
+                case Geometry::fisheye_equidist:
                     return do_get_geometry_conversion<geom::FisheyeEquidist>(dst_geom, input_aspect, input_crop);
                     break;
 
@@ -54,6 +54,10 @@ namespace phtr
 
                 case Geometry::fisheye_stereo:
                     return do_get_geometry_conversion<geom::FisheyeStereo>(dst_geom, input_aspect, input_crop);
+                    break;
+
+                case Geometry::fisheye_ortho:
+                    return do_get_geometry_conversion<geom::FisheyeOrtho>(dst_geom, input_aspect, input_crop);
                     break;
             }
         }

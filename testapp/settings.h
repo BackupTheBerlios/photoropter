@@ -68,11 +68,11 @@ struct Settings
             oversampling(1),
             interp_type(phtr::Interpolation::bilinear),
             lanczos_support(2),
-            geom_convert(true),
-            src_geom(phtr::Geometry::fisheye_stereo),
+            geom_convert(false),
+            src_geom(phtr::Geometry::rectilinear),
             dst_geom(phtr::Geometry::rectilinear),
-            src_focal_length(8.0),
-            dst_focal_length(6.0)
+            src_focal_length(10.0),
+            dst_focal_length(10.0)
     {
         ptlens_r_params[3] = 1.0;
         ptlens_b_params[3] = 1.0;

@@ -42,6 +42,11 @@ namespace phtr
         enum type
         {
             /**
+             * @brief Unknown geometry.
+             */
+            unknown,
+
+            /**
              * @brief Rectilinear geometry.
              */
             rectilinear,
@@ -49,7 +54,7 @@ namespace phtr
             /**
              * @brief 'Equidistant' fisheye geometry.
              */
-            fisheye_equidistant,
+            fisheye_equidist,
 
             /**
              * @brief 'Equisolid' fisheye geometry.
@@ -59,7 +64,13 @@ namespace phtr
             /**
              * @brief 'Stereographic' fisheye geometry.
              */
-            fisheye_stereo
+            fisheye_stereo,
+
+            /**
+             * @brief 'Orthographic' fisheye geometry.
+             */
+            fisheye_ortho
+
         };
     };
 

@@ -35,6 +35,7 @@ THE SOFTWARE.
 #include <photoropter/geom/fisheye_equidist.h>
 #include <photoropter/geom/fisheye_equisolid.h>
 #include <photoropter/geom/fisheye_stereo.h>
+#include <photoropter/geom/fisheye_ortho.h>
 
 namespace phtr
 {
