@@ -95,7 +95,7 @@ init_transform()
 {
     using phtr::Interpolation;
 
-    image_transform_.reset(phtr::IImageTransform::get_instance(settings_.interp_type, *input_view_, *output_view_));
+    image_transform_.reset(phtr::get_image_transform(settings_.interp_type, *input_view_, *output_view_));
 
     // the switch is mainly used for logging (and for setting the lanczos support)
     switch (settings_.interp_type)
@@ -292,9 +292,11 @@ add_models()
         image_transform_->pixel_queue().add_model(ptlens_mod);
     }
 
-//    model::GeometryConvertPixelModel geom_conv_mod(image_aspect, settings_.image_crop);
-//    geom_conv_mod.set_focal_lengths(10, 7.4);
-//    image_transform_->pixel_queue().add_model(geom_conv_mod);
+    std::auto_ptr<model::IGeometryConvertPixelModel> geom_conv_mod(
+        model::get_geometry_conversion(Geometry::rectilinear, Geometry::fisheye_equisolid,
+                                       image_aspect, settings_.image_crop));
+    geom_conv_mod->set_focal_lengths(10, 7.4);
+    image_transform_->pixel_queue().add_model(*geom_conv_mod);
 
     if (settings_.do_scale)
     {

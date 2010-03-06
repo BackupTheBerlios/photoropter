@@ -42,9 +42,6 @@ THE SOFTWARE.
 
 namespace phtr
 {
-    template < typename interpolator_T, typename image_view_w_T>
-    class ImageTransform;
-
     /**
     * @brief Image transformation class interface.
     * @details This abstract interface enables a calling application to manage
@@ -135,21 +132,6 @@ namespace phtr
              * @param[in] fact The sampling factor (must be at least 1).
              */
             virtual void set_sampling_fact(unsigned int fact) = 0;
-
-        public:
-            /**
-             * @brief Get an image transformation instance.
-             * @details This function template is a shortcut when the interpolation type is given
-             * at runtime (e.g. by a configuration value). It is also possible to instantiate the
-             * @ref ImageTransform template directly if the interpolation type is known beforehand.
-             * @param interp_type The interpolation type, e.g. @ref Interpolation::bilinear
-             * @param inp_view    The input view.
-             * @param outp_view   The output view.
-             */
-            template <typename inp_view_T, typename outp_view_T>
-            static IImageTransform* get_instance(Interpolation::type interp_type,
-                                                 const inp_view_T& inp_view,
-                                                 outp_view_T& outp_view);
 
     };
 
@@ -467,6 +449,20 @@ namespace phtr
             std::vector<double> inv_gam_val_b_;
 
     }; // class ImageTransform
+
+    /**
+     * @brief Get an image transformation instance.
+     * @details This function template is a shortcut when the interpolation type is given
+     * at runtime (e.g. by a configuration value). It is also possible to instantiate the
+     * @ref ImageTransform template directly if the interpolation type is known beforehand.
+     * @param interp_type The interpolation type, e.g. @ref Interpolation::bilinear
+     * @param inp_view    The input view.
+     * @param outp_view   The output view.
+     */
+    template <typename inp_view_T, typename outp_view_T>
+    static IImageTransform* get_image_transform(Interpolation::type interp_type,
+            const inp_view_T& inp_view,
+            outp_view_T& outp_view);
 
 } // namespace phtr
 

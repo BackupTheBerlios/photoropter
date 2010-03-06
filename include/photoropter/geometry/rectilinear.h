@@ -31,7 +31,7 @@ THE SOFTWARE.
 
 namespace phtr
 {
-    namespace geometry
+    namespace geom
     {
 
         /**

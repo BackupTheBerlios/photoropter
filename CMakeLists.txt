@@ -173,6 +173,7 @@ set(PHTR_INCLUDES
   ${PHTR_INCLUDE_DIR}/model/colour_correction_model.h
   ${PHTR_INCLUDE_DIR}/model/correction_model_base.h
   ${PHTR_INCLUDE_DIR}/model/geometry_convert_pixel_model.h
+  ${PHTR_INCLUDE_DIR}/model/geometry_convert_pixel_model.tpl.h
   ${PHTR_INCLUDE_DIR}/model/pixel_correction_model.h
   ${PHTR_INCLUDE_DIR}/model/ptlens_pixel_model.h
   ${PHTR_INCLUDE_DIR}/model/scaler_pixel_model.h
@@ -182,6 +183,7 @@ set(PHTR_INCLUDES
   ${PHTR_INCLUDE_DIR}/colour_correction_queue.tpl.h
   ${PHTR_INCLUDE_DIR}/exception.h
   ${PHTR_INCLUDE_DIR}/gamma_func.h
+  ${PHTR_INCLUDE_DIR}/geometry_type.h
   ${PHTR_INCLUDE_DIR}/image_buffer.h
   ${PHTR_INCLUDE_DIR}/image_buffer.tpl.h
   ${PHTR_INCLUDE_DIR}/image_transform.h

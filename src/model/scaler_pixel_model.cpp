@@ -38,10 +38,10 @@ namespace phtr
 
         ScalerPixelModel::
         ScalerPixelModel(double param_aspect, double input_aspect,
-                        double param_crop, double input_crop)
-            : CorrectionModelBase(param_aspect, input_aspect, param_crop, input_crop)
+                         double param_crop, double input_crop)
+                : CorrectionModelBase(param_aspect, input_aspect, param_crop, input_crop)
         {
-            for(size_t i = 0; i < mem::PHTR_MAX_CHANNELS; ++i)
+            for (size_t i = 0; i < mem::PHTR_MAX_CHANNELS; ++i)
             {
                 k_[i] = 1.0;
                 x0_[i] = 0;
@@ -51,9 +51,9 @@ namespace phtr
 
         ScalerPixelModel::
         ScalerPixelModel(double input_aspect)
-            : CorrectionModelBase(input_aspect)
+                : CorrectionModelBase(input_aspect)
         {
-            for(size_t i = 0; i < mem::PHTR_MAX_CHANNELS; ++i)
+            for (size_t i = 0; i < mem::PHTR_MAX_CHANNELS; ++i)
             {
                 k_[i] = 1.0;
                 x0_[i] = 0;
@@ -72,7 +72,7 @@ namespace phtr
         ScalerPixelModel::
         set_model_param(double k)
         {
-            for(size_t i = 0; i < mem::PHTR_MAX_CHANNELS; ++i)
+            for (size_t i = 0; i < mem::PHTR_MAX_CHANNELS; ++i)
             {
                 set_model_param_single(i, k);
             }
@@ -97,7 +97,7 @@ namespace phtr
         ScalerPixelModel::
         set_centre_shift(interp_coord_t x0, interp_coord_t y0)
         {
-            for(size_t i = 0; i < mem::PHTR_MAX_CHANNELS; ++i)
+            for (size_t i = 0; i < mem::PHTR_MAX_CHANNELS; ++i)
             {
                 x0_[i] = x0;
                 y0_[i] = y0;
@@ -146,7 +146,7 @@ namespace phtr
             typedef typename coord_tuple_T::channel_order_t channel_order_t;
             typedef typename channel_order_t::colour_tuple_t colour_tuple_t;
 
-            for(size_t i = 0; i < colour_tuple_t::num_vals; ++i)
+            for (size_t i = 0; i < colour_tuple_t::num_vals; ++i)
             {
                 coords.x[i] -= x0_[i];
                 coords.y[i] -= y0_[i];

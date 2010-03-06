@@ -29,10 +29,9 @@ namespace phtr
 
     template <typename inp_view_T, typename outp_view_T>
     IImageTransform*
-    IImageTransform::
-    get_instance(Interpolation::type interp_type,
-                 const inp_view_T& inp_view,
-                 outp_view_T& outp_view)
+    get_image_transform(Interpolation::type interp_type,
+                        const inp_view_T& inp_view,
+                        outp_view_T& outp_view)
     {
 
         switch (interp_type)

@@ -30,6 +30,7 @@ THE SOFTWARE.
 #include <photoropter/model/pixel_correction_model.h>
 #include <photoropter/model/subpixel_correction_model.h>
 #include <photoropter/model/correction_model_base.h>
+#include <photoropter/geometry_type.h>
 #include <photoropter/geometry/fisheye_equisolid.h>
 #include <photoropter/geometry/rectilinear.h>
 
@@ -40,11 +41,33 @@ namespace phtr
     {
 
         /**
+         * @brief Interface class for the geometry conversion %model class template.
+         */
+        class IGeometryConvertPixelModel : public IPixelCorrectionModel
+        {
+            public:
+                /**
+                 * @brief (Dummy) destructor.
+                 */
+                virtual ~IGeometryConvertPixelModel() {}
+
+            public:
+                /**
+                * @brief Set the lens focal lengths.
+                * @ref mem::MemLayout template, e.g. mem::MemLayout<mem::Storage::rgb_8_inter>::idx_red
+                * @param[in] src_focal_length The source focal length.
+                * @param[in] dst_focal_length The destination focal length.
+                */
+                void set_focal_lengths(double src_focal_length, double dst_focal_length);
+        };
+
+        /**
         * @brief A geometric %model to perform geometry conversion.
         */
+        template <typename src_model_T, typename dst_model_T>
         class GeometryConvertPixelModel
                     : private CorrectionModelBase,
-                    public IPixelCorrectionModel
+                    public IGeometryConvertPixelModel
         {
 
                 /* ****************************************
@@ -127,15 +150,46 @@ namespace phtr
                 */
                 double y0_;
 
-                typedef geometry::FisheyeEquisolid src_model_T;
-                typedef geometry::Rectilinear dst_model_T;
-                src_model_T src_model_;
-                dst_model_T dst_model_;
+                /**
+                 * @brief The source geometry.
+                 */
+                src_model_T src_geom_;
+
+                /**
+                 * @brief The destination geometry.
+                 */
+                dst_model_T dst_geom_;
 
         }; // class GeometryConvertPixelModel
+
+        /**
+         * @brief Internal function template to instantiate a matching geometry conversion object.
+         * @private
+         * @note This template is not supposed to be used 'from the outside'.
+         * @param src_geom_T   The source geometry.
+         * @param dst_geom     The destination geometry.
+         * @param input_aspect The aspect ratio of the image.
+         * @param input_crop   The crop factor of the image.
+         */
+        template <typename src_geom_T>
+        IGeometryConvertPixelModel* do_get_geometry_conversion(Geometry::type dst_geom,
+                double input_aspect,
+                double input_crop);
+
+        /**
+         * @brief Function to instantiate a matching geometry conversion object.
+         * @param src_geom     The source geometry.
+         * @param dst_geom     The destination geometry.
+         * @param input_aspect The aspect ratio of the image.
+         * @param input_crop   The crop factor of the image.
+         */
+        IGeometryConvertPixelModel* get_geometry_conversion(Geometry::type src_geom, Geometry::type dst_geom,
+                double input_aspect, double input_crop);
 
     } // namespace phtr::model
 
 } // namespace phtr
+
+#include <photoropter/model/geometry_convert_pixel_model.tpl.h>
 
 #endif // PHTR_GEOMETRY_CONVERT_PIXEL_MODEL_H__

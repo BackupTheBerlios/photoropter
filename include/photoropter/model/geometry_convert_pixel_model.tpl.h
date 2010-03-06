@@ -36,74 +36,83 @@ namespace phtr
         * GeometryConvertPixelModel
         * **************************************** */
 
-        GeometryConvertPixelModel::
+        template <typename src_model_T, typename dst_model_T>
+        GeometryConvertPixelModel<src_model_T, dst_model_T>::
         GeometryConvertPixelModel(double input_aspect, double input_crop)
-            : CorrectionModelBase(1.5, input_aspect, 1.0, input_crop)
+                : CorrectionModelBase(1.5, input_aspect, 1.0, input_crop)
         {
             x0_ = 0.0;
             y0_ = 0.0;
             calc_coord_fact();
         }
 
+        template <typename src_model_T, typename dst_model_T>
         void
-        GeometryConvertPixelModel::
+        GeometryConvertPixelModel<src_model_T, dst_model_T>::
         set_focal_lengths(double src_focal_length, double dst_focal_length)
         {
-            src_model_.set_focal_length(src_focal_length);
-            dst_model_.set_focal_length(dst_focal_length);
+            src_geom_.set_focal_length(src_focal_length);
+            dst_geom_.set_focal_length(dst_focal_length);
         }
 
+        template <typename src_model_T, typename dst_model_T>
         void
-        GeometryConvertPixelModel::
+        GeometryConvertPixelModel<src_model_T, dst_model_T>::
         set_centre_shift(interp_coord_t x0, interp_coord_t y0)
         {
             x0_ = x0;
             y0_ = y0;
         }
 
+        template <typename src_model_T, typename dst_model_T>
         void
-        GeometryConvertPixelModel::
+        GeometryConvertPixelModel<src_model_T, dst_model_T>::
         get_centre_shift(interp_coord_t& x0, interp_coord_t& y0) const
         {
             x0 = x0_;
             y0 = y0_;
         }
 
+        template <typename src_model_T, typename dst_model_T>
         void
-        GeometryConvertPixelModel::
+        GeometryConvertPixelModel<src_model_T, dst_model_T>::
         get_src_coords(mem::CoordTupleMono& coords) const
         {
             typedef mem::CoordTupleMono::channel_order_t channel_order_t;
             typedef channel_order_t::colour_tuple_t colour_tuple_t;
 
-                double x = (coords.x[0] - x0_) * coord_fact_;
-                double y = (coords.y[0] - y0_) * coord_fact_;
-                double phi(0.0);
-                double theta(0.0);
+            double x = (coords.x[0] - x0_) * coord_fact_;
+            double y = (coords.y[0] - y0_) * coord_fact_;
+            double phi(0.0);
+            double theta(0.0);
 
-                bool success = dst_model_.to_spherical_coords(x, y, phi, theta)
-                               && src_model_.to_cartesian_coords(phi, theta, x, y);
+            bool success = dst_geom_.to_spherical_coords(x, y, phi, theta)
+                           && src_geom_.to_cartesian_coords(phi, theta, x, y);
 
-                if(success)
-                {
-                    coords.x[0] = (x / coord_fact_) + x0_;
-                    coords.y[0] = (y / coord_fact_) + y0_;
-                }
-                else
-                {
-                    // set to illegal coordinates (i.e., outside the image area)
-                    coords.x[0] = -2.0 * input_aspect_;
-                    coords.y[0] = -2.0;
-                }
+            if (success)
+            {
+                coords.x[0] = (x / coord_fact_) + x0_;
+                coords.y[0] = (y / coord_fact_) + y0_;
+            }
+            else
+            {
+                // set to illegal coordinates (i.e., outside the image area)
+                coords.x[0] = -2.0 * input_aspect_;
+                coords.y[0] = -2.0;
+            }
         }
 
-        GeometryConvertPixelModel* GeometryConvertPixelModel::clone() const
+        template <typename src_model_T, typename dst_model_T>
+        GeometryConvertPixelModel<src_model_T, dst_model_T>*
+        GeometryConvertPixelModel<src_model_T, dst_model_T>::
+        clone() const
         {
             return new GeometryConvertPixelModel(*this);
         }
 
+        template <typename src_model_T, typename dst_model_T>
         void
-        GeometryConvertPixelModel::
+        GeometryConvertPixelModel<src_model_T, dst_model_T>::
         calc_coord_fact()
         {
             CorrectionModelBase::calc_coord_fact();
@@ -112,6 +121,21 @@ namespace phtr
             // 24mm/2 == 12mm
             // (== half the height of a 35mm full-frame image)
             coord_fact_ *= 12;
+        }
+
+        template <typename src_geom_T>
+        IGeometryConvertPixelModel* do_get_geometry_conversion(Geometry::type dst_geom,
+                double input_aspect,
+                double input_crop)
+        {
+            switch (dst_geom)
+            {
+                case Geometry::rectilinear:
+                    return new GeometryConvertPixelModel<src_geom_T, geom::Rectilinear>(input_aspect, input_crop);
+
+                case Geometry::fisheye_equisolid:
+                    return new GeometryConvertPixelModel<src_geom_T, geom::FisheyeEquisolid>(input_aspect, input_crop);
+            }
         }
 
     } // namespace phtr::model
