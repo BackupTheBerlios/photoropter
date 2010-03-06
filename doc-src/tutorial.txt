@@ -45,7 +45,6 @@ decide the interpolation method Photoropter shall use (at the moment, only
 bilinear interpolation is supported, but that will change).
 
 @code
-#include <photoropter/interpolator_bilinear.h>
 #include <photoropter/image_transform.h>
 [...]
 
@@ -55,12 +54,22 @@ typedef ImageTransform<interp_t, view_w_t> transform_t;
 transform_t transform(src_img_view, dst_img_view);
 @endcode
 
+An even easier way to set up the transformation object would be through
+a factory function:
+
+@code
+#include <photoropter/image_transform.h>
+[...]
+
+std::auto_ptr<IImageTransform> transform(get_image_transform(Interpolation::Bilinear, src_img_view, dst_img_view));
+@endcode
+
 Now we have a transformation object which works on the two views we created
 earlier. The latter holds two transformation queues: one for geometrical and one
 for colour transformations. Of course, the PTLens model is a geometrical one.
 
 @code
-#include <photoropter/model/geom_correction_model.h>
+#include <photoropter/model/pixel_correction_model.h>
 [...]
 
 double aspect = static_cast<double>(img_width) /
@@ -69,7 +78,7 @@ model::PTLensGeomModel ptlens_mod(aspect);
 
 ptlens_mod.set_model_params(0.0, 0.00987, -0.05127);
 
-transform.geom_queue().add_model(ptlens_mod);
+transform.pixel_queue().add_model(ptlens_mod);
 @endcode
 
 The PTLens model requires an aspect ratio parameter, because (in theory at

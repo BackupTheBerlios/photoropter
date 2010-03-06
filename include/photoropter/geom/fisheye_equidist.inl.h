@@ -24,41 +24,60 @@ THE SOFTWARE.
 
 */
 
-#include <photoropter/model/geometry_convert_pixel_model.h>
-
 namespace phtr
 {
-
-    namespace model
+    namespace geom
     {
 
-        IGeometryConvertPixelModel* get_geometry_conversion(Geometry::type src_geom,
-                Geometry::type dst_geom,
-                double input_aspect,
-                double input_crop)
+        FisheyeEquidist::
+        FisheyeEquidist()
+                : focal_length_(10.0)
         {
-            switch (src_geom)
-            {
-                case Geometry::rectilinear:
-                default:
-                    return do_get_geometry_conversion<geom::Rectilinear>(dst_geom, input_aspect, input_crop);
-                    break;
-
-                case Geometry::fisheye_equidistant:
-                    return do_get_geometry_conversion<geom::FisheyeEquidist>(dst_geom, input_aspect, input_crop);
-                    break;
-
-                case Geometry::fisheye_equisolid:
-                    return do_get_geometry_conversion<geom::FisheyeEquisolid>(dst_geom, input_aspect, input_crop);
-                    break;
-
-                case Geometry::fisheye_stereo:
-                    return do_get_geometry_conversion<geom::FisheyeStereo>(dst_geom, input_aspect, input_crop);
-                    break;
-            }
+            //NIL
         }
 
-    } // namespace phtr::model
+        void
+        FisheyeEquidist::
+        set_focal_length(double focal_length)
+        {
+            focal_length_ = focal_length;
+        }
+
+        bool
+        FisheyeEquidist::
+        to_spherical_coords(const double& x,
+                            const double& y,
+                            double& phi,
+                            double& theta) const
+        {
+            double r = std::sqrt(x * x + y * y);
+
+            phi = std::acos(x / r);
+            if (y > 0)
+            {
+                phi = 2 * PHTR_PI - phi;
+            }
+
+            theta = r / focal_length_;
+
+            return true;
+        }
+
+        bool
+        FisheyeEquidist::
+        to_cartesian_coords(const double& phi,
+                            const double& theta,
+                            double& x,
+                            double& y) const
+        {
+            double r = theta * focal_length_;
+
+            x = std::cos(phi) * r;
+            y = -std::sin(phi) * r;
+
+            return true;
+        }
+
+    } // namespace phtr::geometry
 
 } // namespace phtr
-

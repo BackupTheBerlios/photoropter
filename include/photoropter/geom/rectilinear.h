@@ -24,27 +24,41 @@ THE SOFTWARE.
 
 */
 
-#ifndef PHTR_FISHEYE_EQUISOLID_H__
-#define PHTR_FISHEYE_EQUISOLID_H__
+#ifndef PHTR_RECTILINEAR_H__
+#define PHTR_RECTILINEAR_H__
 
 #include <cmath>
 
 namespace phtr
 {
+
+    /**
+     * @brief geometric models.
+     */
     namespace geom
     {
 
         /**
-         * @brief Fisheye lens geometry ('equisolid angle') variant.
+         * @brief %Rectilinear ('gnomonic') lens geometry.
+         * @details The rectilinear or 'gnomonic' projection is the one
+         * realised (to a greater or lesser degree) by most standard lenses.
+         * It is the same as produced by pinhole cameras, and preserves straight
+         * lines. Because of this, rectilinear projections are sometimes referred to
+         * as 'distortion-free', although this is not strictly the case, since
+         * surface areas and proportions near the image border can appear quite
+         * strongly stretched.
+         *
+         * The rectilinear projection uses the following mapping function:
+         * @f[r=f\tan(\theta)@f]
          */
-        class FisheyeEquisolid
+        class Rectilinear
         {
 
             public:
                 /**
                 * @brief Constructor.
                 */
-                inline FisheyeEquisolid();
+                inline Rectilinear();
 
             public:
                 /**
@@ -87,12 +101,12 @@ namespace phtr
                 */
                 double focal_length_;
 
-        }; // class FisheyeEquisolid
+        }; // class Rectilinear
 
     } // namespace phtr::geometry
 
 } // namespace phtr
 
-#include <photoropter/geometry/fisheye_equisolid.inl.h>
+#include <photoropter/geom/rectilinear.inl.h>
 
-#endif // PHTR_FISHEYE_EQUISOLID_H__
+#endif // PHTR_RECTILINEAR_H__

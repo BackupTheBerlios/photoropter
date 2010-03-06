@@ -47,9 +47,19 @@ namespace phtr
             rectilinear,
 
             /**
+             * @brief 'Equidistant' fisheye geometry.
+             */
+            fisheye_equidistant,
+
+            /**
              * @brief 'Equisolid' fisheye geometry.
              */
-            fisheye_equisolid
+            fisheye_equisolid,
+
+            /**
+             * @brief 'Stereographic' fisheye geometry.
+             */
+            fisheye_stereo
         };
     };
 

@@ -131,10 +131,17 @@ namespace phtr
             switch (dst_geom)
             {
                 case Geometry::rectilinear:
+                default:
                     return new GeometryConvertPixelModel<src_geom_T, geom::Rectilinear>(input_aspect, input_crop);
+
+                case Geometry::fisheye_equidistant:
+                    return new GeometryConvertPixelModel<src_geom_T, geom::FisheyeEquidist>(input_aspect, input_crop);
 
                 case Geometry::fisheye_equisolid:
                     return new GeometryConvertPixelModel<src_geom_T, geom::FisheyeEquisolid>(input_aspect, input_crop);
+
+                case Geometry::fisheye_stereo:
+                    return new GeometryConvertPixelModel<src_geom_T, geom::FisheyeStereo>(input_aspect, input_crop);
             }
         }
 

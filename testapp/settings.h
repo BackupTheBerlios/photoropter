@@ -23,6 +23,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define PHTRTEST_SETTINGS_H__
 
 #include <photoropter/interpolation_type.h>
+#include <photoropter/geometry_type.h>
 
 struct GainFunc
 {
@@ -66,7 +67,12 @@ struct Settings
             gamma(2.2),
             oversampling(1),
             interp_type(phtr::Interpolation::bilinear),
-            lanczos_support(2)
+            lanczos_support(2),
+            geom_convert(true),
+            src_geom(phtr::Geometry::fisheye_stereo),
+            dst_geom(phtr::Geometry::rectilinear),
+            src_focal_length(8.0),
+            dst_focal_length(6.0)
     {
         ptlens_r_params[3] = 1.0;
         ptlens_b_params[3] = 1.0;
@@ -124,6 +130,13 @@ struct Settings
     unsigned oversampling;
     phtr::Interpolation::type interp_type;
     unsigned lanczos_support;
+
+    // lens geometry
+    bool geom_convert;
+    phtr::Geometry::type src_geom;
+    phtr::Geometry::type dst_geom;
+    double src_focal_length;
+    double dst_focal_length;
 };
 
 #endif // PHTRTEST_SETTINGS_H__

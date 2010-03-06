@@ -2,6 +2,5 @@ Todo:
 =====
 
 -More geometric models
--Lens geometry conversion
 -Exposure correction
 -Dummy image views e.g. for manual looping

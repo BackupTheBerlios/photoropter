@@ -148,10 +148,14 @@ set(PHTR_SRC_DIR "src")
 
 # set the Photoropter sources
 set(PHTR_INCLUDES
-  ${PHTR_INCLUDE_DIR}/geometry/fisheye_equisolid.h
-  ${PHTR_INCLUDE_DIR}/geometry/fisheye_equisolid.inl.h
-  ${PHTR_INCLUDE_DIR}/geometry/rectilinear.h
-  ${PHTR_INCLUDE_DIR}/geometry/rectilinear.inl.h
+  ${PHTR_INCLUDE_DIR}/geom/fisheye_equidist.h
+  ${PHTR_INCLUDE_DIR}/geom/fisheye_equidist.inl.h
+  ${PHTR_INCLUDE_DIR}/geom/fisheye_equisolid.h
+  ${PHTR_INCLUDE_DIR}/geom/fisheye_equisolid.inl.h
+  ${PHTR_INCLUDE_DIR}/geom/fisheye_stereo.h
+  ${PHTR_INCLUDE_DIR}/geom/fisheye_stereo.inl.h
+  ${PHTR_INCLUDE_DIR}/geom/rectilinear.h
+  ${PHTR_INCLUDE_DIR}/geom/rectilinear.inl.h
   ${PHTR_INCLUDE_DIR}/interpolator/interpolator_base.h
   ${PHTR_INCLUDE_DIR}/interpolator/interpolator_base.tpl.h
   ${PHTR_INCLUDE_DIR}/interpolator/interpolator_bilinear.h

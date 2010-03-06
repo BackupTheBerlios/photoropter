@@ -24,31 +24,35 @@ THE SOFTWARE.
 
 */
 
-#ifndef PHTR_RECTILINEAR_H__
-#define PHTR_RECTILINEAR_H__
+#ifndef PHTR_FISHEYE_EQUIDIST_H__
+#define PHTR_FISHEYE_EQUIDIST_H__
 
 #include <cmath>
 
 namespace phtr
 {
-
-    /**
-     * @brief geometric models.
-     */
     namespace geom
     {
 
         /**
-         * @brief Rectilinear ('gnomonic') lens geometry.
+         * @brief Fisheye lens geometry ('equidistant' variant).
+         * @details The equidistant projection just maps the distance from the
+         * image centre to a proportional spatial angle. This fisheye geometry
+         * is the simplest possibility and is also the one used by the PanoTools
+         * and Hugin when the input lens geometry is set to 'fisheye'. It is
+         * also on of the most popular projection.
+         *
+         * Equidistant fisheye projection uses the following mapping function:
+         * @f[r=f\theta@f]
          */
-        class Rectilinear
+        class FisheyeEquidist
         {
 
             public:
                 /**
                 * @brief Constructor.
                 */
-                inline Rectilinear();
+                inline FisheyeEquidist();
 
             public:
                 /**
@@ -91,12 +95,12 @@ namespace phtr
                 */
                 double focal_length_;
 
-        }; // class Rectilinear
+        }; // class FisheyeEquidist
 
     } // namespace phtr::geometry
 
 } // namespace phtr
 
-#include <photoropter/geometry/rectilinear.inl.h>
+#include <photoropter/geom/fisheye_equidist.inl.h>
 
-#endif // PHTR_RECTILINEAR_H__
+#endif // PHTR_FISHEYE_EQUIDIST_H__

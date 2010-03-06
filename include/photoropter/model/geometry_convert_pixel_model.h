@@ -31,8 +31,10 @@ THE SOFTWARE.
 #include <photoropter/model/subpixel_correction_model.h>
 #include <photoropter/model/correction_model_base.h>
 #include <photoropter/geometry_type.h>
-#include <photoropter/geometry/fisheye_equisolid.h>
-#include <photoropter/geometry/rectilinear.h>
+#include <photoropter/geom/rectilinear.h>
+#include <photoropter/geom/fisheye_equidist.h>
+#include <photoropter/geom/fisheye_equisolid.h>
+#include <photoropter/geom/fisheye_stereo.h>
 
 namespace phtr
 {
@@ -58,7 +60,7 @@ namespace phtr
                 * @param[in] src_focal_length The source focal length.
                 * @param[in] dst_focal_length The destination focal length.
                 */
-                void set_focal_lengths(double src_focal_length, double dst_focal_length);
+                virtual void set_focal_lengths(double src_focal_length, double dst_focal_length) = 0;
         };
 
         /**
