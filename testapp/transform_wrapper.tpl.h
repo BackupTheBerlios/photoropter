@@ -321,6 +321,12 @@ add_models()
         image_transform_->pixel_queue().add_model(scaler_mod);
     }
 
+    AutoScalerImpl scaler(*image_transform_);
+    double scale = scaler.find_scale(4000);
+    std::stringstream sstr;
+    sstr << "Autoscale: " << 1.0 / scale;
+    log(sstr.str());
+
     // apply vignetting correction
     if (settings_.vignetting_corr)
     {

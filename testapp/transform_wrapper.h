@@ -33,6 +33,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <photoropter/mem_image_view_r.h>
 #include <photoropter/mem_image_view_w.h>
 #include <photoropter/image_transform.h>
+#include <photoropter/auto_scaler.h>
 
 #include <photoropter/model/vignetting_colour_model.h>
 #include <photoropter/model/ptlens_pixel_model.h>

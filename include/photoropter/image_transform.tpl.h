@@ -200,6 +200,14 @@ namespace phtr
     }
 
     template <typename interpolator_T, typename image_view_w_T>
+    const PixelCorrectionQueue&
+    ImageTransform<interpolator_T, image_view_w_T>::
+    pixel_queue() const
+    {
+        return pixel_queue_;
+    }
+
+    template <typename interpolator_T, typename image_view_w_T>
     SubpixelCorrectionQueue&
     ImageTransform<interpolator_T, image_view_w_T>::
     subpixel_queue()
@@ -208,9 +216,25 @@ namespace phtr
     }
 
     template <typename interpolator_T, typename image_view_w_T>
+    const SubpixelCorrectionQueue&
+    ImageTransform<interpolator_T, image_view_w_T>::
+    subpixel_queue() const
+    {
+        return subpixel_queue_;
+    }
+
+    template <typename interpolator_T, typename image_view_w_T>
     ColourCorrectionQueue&
     ImageTransform<interpolator_T, image_view_w_T>::
     colour_queue()
+    {
+        return colour_queue_;
+    }
+
+    template <typename interpolator_T, typename image_view_w_T>
+    const ColourCorrectionQueue&
+    ImageTransform<interpolator_T, image_view_w_T>::
+    colour_queue() const
     {
         return colour_queue_;
     }

@@ -70,12 +70,15 @@ namespace phtr
                             double& x,
                             double& y) const
         {
-            if (theta >= PHTR_PI)
+            double r(0.0);
+            if (theta >= PHTR_PI / 2.0)
             {
-                return false;
+                r = 4.0 * theta * focal_length_;
             }
-
-            double r = std::tan(theta / 2) * 2.0 * focal_length_;
+            else
+            {
+                r = std::tan(theta / 2) * 2.0 * focal_length_;
+            }
 
             x = std::cos(phi) * r;
             y = -std::sin(phi) * r;

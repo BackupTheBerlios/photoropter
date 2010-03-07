@@ -61,10 +61,12 @@ namespace phtr
             double asin_arg = r / focal_length_;
             if (asin_arg >= 1.0)
             {
-                return false;
+                theta = PHTR_PI / 2.0 * asin_arg;
             }
-
-            theta = std::asin(asin_arg);
+            else
+            {
+                theta = std::asin(asin_arg);
+            }
 
             return true;
         }
@@ -76,12 +78,16 @@ namespace phtr
                             double& x,
                             double& y) const
         {
+            double r;
+
             if (theta >= PHTR_PI / 2)
             {
-                return false;
+                r = 2.0 * theta / PHTR_PI * focal_length_;
             }
-
-            double r = std::sin(theta) * focal_length_;
+            else
+            {
+                r = std::sin(theta) * focal_length_;
+            }
 
             x = std::cos(phi) * r;
             y = -std::sin(phi) * r;

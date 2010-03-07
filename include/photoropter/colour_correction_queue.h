@@ -56,9 +56,25 @@ namespace phtr
 
         public:
             /**
+            * @brief Copy constructor.
+            * @param orig The original queue.
+            * @details This will copy the given queue, duplicating the functionid objects.
+            */
+            ColourCorrectionQueue(const ColourCorrectionQueue& orig);
+
+        public:
+            /**
             * @brief Destructor.
             */
             virtual ~ColourCorrectionQueue();
+
+        public:
+            /**
+            * @brief Assignment operator.
+            * @param orig The original queue.
+            * @return Reference to the current instance.
+            */
+            ColourCorrectionQueue& operator=(const ColourCorrectionQueue& orig);
 
         public:
             /**
@@ -88,24 +104,6 @@ namespace phtr
             /* ****************************************
              * internals
              * **************************************** */
-
-        private:
-            /**
-            * @brief Copy constructor.
-            * @note Currently deactivated (==private).
-            * @param orig The original queue.
-            * @details This will copy the given queue, duplicating the functionid objects.
-            */
-            ColourCorrectionQueue(const ColourCorrectionQueue& orig);
-
-        private:
-            /**
-            * @brief Assignment operator.
-            * @note Currently deactivated (==private).
-            * @param orig The original queue.
-            * @return Reference to the current instance.
-            */
-            ColourCorrectionQueue& operator=(const ColourCorrectionQueue& orig);
 
         private:
             /**

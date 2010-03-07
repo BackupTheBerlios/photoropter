@@ -27,6 +27,8 @@ THE SOFTWARE.
 #ifndef PHTR_GEOMETRY_CONVERT_PIXEL_MODEL_H__
 #define PHTR_GEOMETRY_CONVERT_PIXEL_MODEL_H__
 
+#include <cmath>
+
 #include <photoropter/model/pixel_correction_model.h>
 #include <photoropter/model/subpixel_correction_model.h>
 #include <photoropter/model/correction_model_base.h>

@@ -76,7 +76,21 @@ namespace phtr
             * @brief Access the geometry correction queue.
             * @return Reference to the queue object.
             */
+            virtual const PixelCorrectionQueue& pixel_queue() const = 0;
+
+        public:
+            /**
+            * @brief Access the geometry correction queue.
+            * @return Reference to the queue object.
+            */
             virtual SubpixelCorrectionQueue& subpixel_queue() = 0;
+
+        public:
+            /**
+            * @brief Access the geometry correction queue.
+            * @return Reference to the queue object.
+            */
+            virtual const SubpixelCorrectionQueue& subpixel_queue() const = 0;
 
         public:
             /**
@@ -84,6 +98,13 @@ namespace phtr
             * @return Reference to the queue object.
             */
             virtual ColourCorrectionQueue& colour_queue() = 0;
+
+        public:
+            /**
+            * @brief Access the colour correction queue.
+            * @return Reference to the queue object.
+            */
+            virtual const ColourCorrectionQueue& colour_queue() const = 0;
 
         public:
             /**
@@ -189,7 +210,21 @@ namespace phtr
             * @brief Access the geometry correction queue.
             * @return Reference to the queue object.
             */
+            const PixelCorrectionQueue& pixel_queue() const;
+
+        public:
+            /**
+            * @brief Access the geometry correction queue.
+            * @return Reference to the queue object.
+            */
             SubpixelCorrectionQueue& subpixel_queue();
+
+        public:
+            /**
+            * @brief Access the geometry correction queue.
+            * @return Reference to the queue object.
+            */
+            const SubpixelCorrectionQueue& subpixel_queue() const;
 
         public:
             /**
@@ -197,6 +232,13 @@ namespace phtr
             * @return Reference to the queue object.
             */
             ColourCorrectionQueue& colour_queue();
+
+        public:
+            /**
+            * @brief Access the colour correction queue.
+            * @return Reference to the queue object.
+            */
+            const ColourCorrectionQueue& colour_queue() const;
 
         public:
             /**

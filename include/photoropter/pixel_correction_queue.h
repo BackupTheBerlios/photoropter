@@ -55,9 +55,25 @@ namespace phtr
 
         public:
             /**
+            * @brief Copy constructor.
+            * @param orig The original queue.
+            * @details This will copy the given queue, duplicating the functionid objects.
+            */
+            PixelCorrectionQueue(const PixelCorrectionQueue& orig);
+
+        public:
+            /**
             * @brief Destructor.
             */
             virtual ~PixelCorrectionQueue();
+
+        public:
+            /**
+            * @brief Assignment operator.
+            * @param orig The original queue.
+            * @return Reference to the current instance.
+            */
+            PixelCorrectionQueue& operator=(const PixelCorrectionQueue& orig);
 
         public:
             /**
@@ -88,24 +104,6 @@ namespace phtr
             /* ****************************************
              * internals
              * **************************************** */
-
-        private:
-            /**
-            * @brief Copy constructor.
-            * @note Currently deactivated (==private).
-            * @param orig The original queue.
-            * @details This will copy the given queue, duplicating the functionid objects.
-            */
-            PixelCorrectionQueue(const PixelCorrectionQueue& orig);
-
-        private:
-            /**
-            * @brief Assignment operator.
-            * @note Currently deactivated (==private).
-            * @param orig The original queue.
-            * @return Reference to the current instance.
-            */
-            PixelCorrectionQueue& operator=(const PixelCorrectionQueue& orig);
 
         private:
             /**
