@@ -108,7 +108,7 @@ namespace phtr
                 double factor(1.0);
                 double next_factor(1.0);
 
-                size_t step_fact = static_cast<double>(precision / 20);
+                double step_fact = static_cast<double>(precision / 20);
 
                 size_t iter = 0;
                 while (iter < precision && diff > max_diff * factor)
