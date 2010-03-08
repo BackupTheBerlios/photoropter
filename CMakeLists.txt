@@ -185,6 +185,7 @@ set(PHTR_INCLUDES
   ${PHTR_INCLUDE_DIR}/model/scaler_pixel_model.h
   ${PHTR_INCLUDE_DIR}/model/subpixel_correction_model.h
   ${PHTR_INCLUDE_DIR}/model/vignetting_colour_model.h
+  ${PHTR_INCLUDE_DIR}/auto_scaler.h
   ${PHTR_INCLUDE_DIR}/colour_correction_queue.h
   ${PHTR_INCLUDE_DIR}/colour_correction_queue.tpl.h
   ${PHTR_INCLUDE_DIR}/exception.h

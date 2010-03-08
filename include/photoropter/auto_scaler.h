@@ -38,20 +38,54 @@ THE SOFTWARE.
 namespace phtr
 {
 
+    /**
+    * @brief Automatic image scaler interface.
+    * @brief The scaling implementation tries to find the 'minimal' scaling factor
+    * of the image, so that scaling the image by 1/result should lead to an image
+    * without black borders.
+    */
     class IAutoScaler
     {
         public:
+            /**
+            * @brief (Dummy) destructor.
+            */
             virtual ~IAutoScaler() {}
 
         public:
+            /**
+            * @brief Try to find the minimal image scale.
+            * @details Scaling the image by 1/result should lead to an image without black borders.
+            * @param precision The desired reciprocal precision (usually the number of pixels).
+            * @return The scale.
+            */
             virtual double find_scale(size_t precision) const = 0;
     };
 
+    /**
+    * @brief Automatic image scaler.
+    * @brief The scaling implementation tries to find the 'minimal' scaling factor
+    * of the image, so that scaling the image by 1/result should lead to an image
+    * without black borders.
+    * @note The algorithm is experimental and not strictly guaranteed to converge
+    * under all circumstances.
+    */
     class AutoScalerImpl : public IAutoScaler
     {
-            typedef mem::CoordTupleRGB coord_tuple_t;
+
+            /* ****************************************
+             * public interface
+             * **************************************** */
+
+        typedef mem::CoordTupleRGB coord_tuple_t;
 
         public:
+            /**
+            * @brief Constructor.
+            * @details Copies the geometric transformation queues of a given
+            * transformation object.
+            * @param image_transform The image transformation object.
+            */
             AutoScalerImpl(const IImageTransform& image_transform)
                     : image_transform_(image_transform)
             {
@@ -60,6 +94,12 @@ namespace phtr
             }
 
         public:
+            /**
+            * @brief Try to find the minimal image scale.
+            * @details Scaling the image by 1/result should lead to an image without black borders.
+            * @param precision The desired reciprocal precision (usually the number of pixels).
+            * @return The scale.
+            */
             double find_scale(size_t precision) const
             {
                 const double max_diff = 0.01 / static_cast<double>(precision);
@@ -86,7 +126,16 @@ namespace phtr
                 return 1.0 / (1.0 / factor + 2.0 / static_cast<double>(precision));
             }
 
+            /* ****************************************
+             * internals
+             * **************************************** */
+
         private:
+            /**
+            * @brief Perform iteration step.
+            * @param precision The desired reciprocal precision (usually the number of pixels).
+            * @param pre_scale Scaling factor from previous iterations.
+            */
             double find_scale_step(size_t precision, double pre_scale) const
             {
 
@@ -104,6 +153,15 @@ namespace phtr
             }
 
         private:
+            /**
+            * @brief Perform horizontal search.
+            * @details The top and bottom borders of the destination image are
+            * 'scanned' fo the minimal scaling factor.
+            * @param aspect_ratio The image aspect ratio.
+            * @param px_width The image's pixel width to be assumed.
+            * @param pre_scale Scaling factor from previous iterations.
+            * @return The factor (squared).
+            */
             double search_horizontal(double aspect_ratio, size_t px_width, double pre_scale) const
             {
                 interp_coord_t dst_top = -1.0;
@@ -139,6 +197,15 @@ namespace phtr
             }
 
         private:
+            /**
+            * @brief Perform vertical search.
+            * @details The left and right borders of the destination image are
+            * 'scanned' fo the minimal scaling factor.
+            * @param aspect_ratio The image aspect ratio.
+            * @param px_width The image's pixel width to be assumed.
+            * @param pre_scale Scaling factor from previous iterations.
+            * @return The factor (squared).
+            */
             double search_vertical(double aspect_ratio, size_t px_height, double pre_scale) const
             {
                 interp_coord_t dst_left = -aspect_ratio;
@@ -174,6 +241,12 @@ namespace phtr
             }
 
         private:
+            /**
+            * @brief Auxiliary function: minimum of two values.
+            * @param x1 First value.
+            * @param x2 Second value.
+            * @return The minimal value.
+            */
             double min(double x1, double x2) const
             {
                 if (x1 < x2)
@@ -187,6 +260,16 @@ namespace phtr
             }
 
         private:
+            /**
+            * @brief Get the 'scaling factor' for a border point.
+            * @brief This determines (for a given border point in the destination image) the distance of the
+            * corresponding point to the image centre in the source image (squared) and calculates the ratio to
+            * the corresponding distance in the destination image.
+            * @param dest_x Horizontal coordinate in the destination image.
+            * @param dest_y Vertical coordinate in the destination image.
+            * @param pre_scale Scaling factor from previous iterations.
+            * @return The scaling factor (squared).
+            */
             double get_factor(interp_coord_t dest_x, interp_coord_t dest_y, double pre_scale) const
             {
                 // distance of the border point to the center (squared)
@@ -205,6 +288,12 @@ namespace phtr
             }
 
         private:
+            /**
+            * @brief Calculate the distance of the point farthest away
+            * from the image centre in a given tuple.
+            * @param coords The coordinates tuple.
+            * @return The distance (squared).
+            */
             double maximal_r2(const coord_tuple_t& coords) const
             {
                 size_t num_channels = coord_tuple_t::channel_order_t::colour_tuple_t::num_vals;
@@ -231,6 +320,9 @@ namespace phtr
             }
 
         private:
+            /**
+            * @brief Internal reference to the image transform object.
+            */
             const IImageTransform& image_transform_;
 
         private:
