@@ -40,7 +40,7 @@ Let us consider the case that a lens has been calibrated on a full-frame 35mm di
 camera, e.g. a Canon EOS 5. In this case, a PanoTools coordinate value of 1.0 corresponds to a distance
 of 12mm on the sensor. When the same lens is used e.g. with an APS-C model, this length has to be
 corrected (or rather, the coefficients in the correction model have to be scaled accordingly). If
-the aspect ration of both sensors is identical, the conversion is straighforward: a value of 1.0
+the aspect ratio of both sensors is identical, the conversion is straightforward: a value of 1.0
 on the APS-C model corresponds to 0.625 on the full-frame sensor. However, if aspect ratios differ,
 things are a bit more complex.
 
@@ -75,8 +75,8 @@ conversion between landscape and portrait orientation is then just a special cas
 general principle described before.
 
 It is possible to translate between landscape and portrait images by choosing
-A<sub>2</sub>=1/R<sub>1</sub> and one gets y<sub>1</sub>=y<sub>2</sub>*R<sub>1</sub>,
-which means that a coordinate of 1.0 in a portrait image (e.g. R<sub>2</sub>=2/3) corresponds
+A<sub>2</sub>=1/A<sub>1</sub> and one gets y<sub>1</sub>=y<sub>2</sub>*A<sub>1</sub>,
+which means that a coordinate of 1.0 in a portrait image (e.g. A<sub>2</sub>=2/3) corresponds
 to 1.0*3/2=1.5 in the calibrated coordinate system (for aspect ratio 3:2).
 
 @section techback_physcoords Calculating physical coordinates
