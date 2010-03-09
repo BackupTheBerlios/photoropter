@@ -38,7 +38,7 @@ namespace phtr
          * @brief Fisheye lens geometry ('equisolid angle' variant).
          * @details The equisolid projection resembles the reflection of
          * a mirror ball viewed from a distance. This fisheye geometry
-         * is one of the most popular ones.
+         * is one of the more popular ones.
          *
          * Equisolid projection uses the following mapping function:
          * @f[r=2f\sin(\theta/2)@f]

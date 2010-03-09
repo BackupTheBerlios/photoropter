@@ -1,0 +1,35 @@
+/**
+
+@page techback_sizes Image and Sensor Sizes
+
+In the past, one of the most popular image formats was the '135' film (also known as 35mm film),
+which allowed for image sizes of 36x24mm. Considering analog film, this format was actually quite small
+(known e.g. as "Kleinbild" or "small image" in Germany), and due to its limitations (noticeable grain
+and noise, limited dynamics), several larger formats were in use as well (medium format etc.).
+
+On the other hand, when considering the case of digital sensors, 36x24mm is rather large, and
+only in use in digital single-lens reflex cameras (DSLRs). Mainly due to cost considerations
+manufacturers reduced the size of the sensor for their initial camera models, leading to a
+variety of sensor sizes even in the (rather small) field of DSLRs.
+
+The following image shows the most widespread image sensors in modern professional and
+semi-professional DSLR cameras.
+@image html sensors.png "Image sensors in DSLRs"
+
+The classical 36x24mm is usually designated 'full frame' and is in use mainly in the upper price segment.
+The 'DX' format with a size of 24x16mm (or 'crop factor' of 1.5) is used by most manufacturers, including
+Nikon, Pentax, Samsung and Sony (usually called 'DX' by Nikon and 'APS-C' by the others). Canon
+uses a different 'APS-C' with a crop factor of 1.6, yielding a slightly smaller sensor size
+of 22.5x15mm. Sigma uses a crop factor of 1.74 (20.7x13.8mm). Olympus and Panasonic jointly developed
+the 'Four Thirds' standard which only specifies the 'diagonal' crop factor of 2.0, yielding
+possible  sensor sizes of e.g. 17.3x13mm (4:3 aspect) or 18x12mm (3:2 aspect). While Olympus focuses
+on the 4:3 aspect ratio, newer Panasonic models even feature multi-aspect sensors, meaning that
+the user can select the active sensor area freely.
+
+All this does not even include the myriad of different sensor sizes that are used in compact cameras.
+Fortunately in the case of most compacts, the camera's lens is fixed, meaning that it is usually
+impossible to find the same optical lens used with different sensor sizes. However, this is an
+important issue with DSLRs, since most third-party lenses (e.g. by Sigma, Tamron, Tokina and others)
+are available for several different camera systems.
+
+*/

@@ -38,9 +38,10 @@ namespace phtr
          * @brief Fisheye lens geometry ('stereographic' variant).
          * @details The stereographic projection is quite rare, but actually visually
          * rather pleasing since it does not introduce too strong distortions near
-         * the image border.
+         * the image border. At least one lens is currently known/suspected to
+         * implement stereographic mapping (Samyang/Vivitar 8mm).
          *
-         * Equisolid projection uses the following mapping function:
+         * The stereographic projection uses the following mapping function:
          * @f[r=2f\tan(\theta/2)@f]
          */
         class FisheyeStereo

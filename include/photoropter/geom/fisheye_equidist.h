@@ -40,7 +40,7 @@ namespace phtr
          * image centre to a proportional spatial angle. This fisheye geometry
          * is the simplest possibility and is also the one used by the PanoTools
          * and Hugin when the input lens geometry is set to 'fisheye'. It is
-         * also on of the most popular projection.
+         * also one of the more popular projections in real-life lenses.
          *
          * Equidistant fisheye projection uses the following mapping function:
          * @f[r=f\theta@f]

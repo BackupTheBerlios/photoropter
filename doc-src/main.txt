@@ -9,13 +9,13 @@ flaws commonly found in images taken with digital cameras. The library aims to
 be reasonably light-weight, yet providing a clean interface and proper code
 encapsulation.
 
-@section toc Contents
+@section main_toc Contents:
 <ol>
-<li>@ref overview</li>
-<li>@ref tutorial</li>
-<li>@ref techback</li>
-<li>@ref license</li>
-<li>@ref codingstyle</li>
+<li>@subpage overview</li>
+<li>@subpage tutorial</li>
+<li>@subpage techback</li>
+<li>@subpage license</li>
+<li>@subpage codingstyle</li>
 </ol>
 
 */

@@ -1,0 +1,118 @@
+/**
+
+@page techback_geom Lens geometries
+
+Disregarding unintended distortions and limited depth of field, 
+the lens optics of most cameras produce images that are (nearly)
+identical to those produced by a pinhole camera. The characteristic
+property of a pinhole projection is that straight lines are always
+mapped to straight lines. Because of that property, the pinhole or
+rectilinear (also sometimes called 'gnomonic') projection is often
+referred to as 'distortion-free'. However, this depends on what
+one regards as image distortions, and for special applications
+camera optics exist that implement different coordinate mappings. 
+
+@section techback_geom_rect Rectilinear projection
+
+The rectilinear projection satisfies the following equation:
+@f[r=f\tan(\theta),@f]
+where r is the distance from the image centre, f is the
+effective focal length of the lens system and
+@f$\theta@f$ is the inclination angle.
+
+As mentioned before, this projection always maps straight lines
+to straight lines, because of which it is preferred for architectural
+shots and also often called 'distortion-free'. However, at short
+focal lengths objects near the image border tend to appear
+noticeably larger than they actually are, since the tan function
+diverges for large angles (i.e., @f$\theta\to\pi/2@f$).
+
+This is the projection that is implemented by most camera optics
+by a fair margin. However, many zooms and wide-angle lenses show
+some amount of geometric aberration (which of course can be corrected
+using Photoropter).
+
+@section techback_geom_fish Fisheye projections
+
+@subsection techback_geom_equidist 'Equidistant' fisheye projection
+
+The simplest projection that does not diverge for @f$\theta\to\pi/2@f$ is
+the one that satisfies
+@f[r=f\theta.@f]
+In this projection, the distance from the image centre is proportional
+to the inclination angle, and thus it is possible to even map the complete
+solid angle of @f$\Omega=4\pi@f$ to the image plane.
+
+This projection is used by the PanoTools suite (and thus also by Hugin)
+when 'fisheye' is selected as input geometry. Quite a lot of fisheye lenses
+implement it or the equisolid geometry (which shows similar properties).
+
+@subsection techback_geom_equisolid 'Equisolid angle' fisheye projection
+
+This projection satisfies
+@f[r=2f\sin(\theta/2).@f]
+It is the second popular fisheye mapping for which quite a lot of lenses
+have been built. For inclination angles @f$\theta<\pi/2@f$, there is not
+too much difference to equidistant types, and actually most real-life
+lenses implement a mapping function that is 'something in between' the two.
+
+The equisolid angle projection gets its name from the property that
+areas of objects remain unchanged. Because of that it used to be popular
+in weather monitoring. However, marginal objects get 'squished'
+quite strongly (especially for @f$\theta>\pi/2@f$), so their proportions
+do not remain the same.
+
+@subsection techback_geom_stereo 'Stereographic' fisheye projection
+
+This rather rare projection follows
+@f[r=2f\tan(\theta/2).@f]
+It shows the interesting property that perpendicular lines remain
+perpendicular, and thus is a 'conformal' projection. The results are
+often regarded as visually pleasing, since a stereographic projection does
+not distort the area of marginal objects too much while retaining
+their proportions.
+
+To my knowledge only one lens has been developed for this projection
+type so far (i.e., the Samyang/Vivitar 8mm diagonal fisheye for
+APS-C type cameras).
+
+@subsection techback_geom_ortho 'Orthographic' fisheye projection
+
+The fourth fisheye projection is called 'orthographic' and is
+also extremely rare. Its formula is
+@f[r=f\sin(\theta).@f]
+
+The only lens that I know of to ever implement orthographic projection
+was the "OP Fisheye-NIKKOR 10mm f/5.6" by Nikon (developed in the
+late 1960s, it is now extremely difficult to get). Orthographic projection
+tends to compress marginal objects quite strongly, thus emphasising the
+image centre. It is limited to inclination angles @f$\theta\leq\pi/2\f$.
+
+@section techback_geom_comparison Comparison of the different mapping functions
+
+When looking at the mapping functions of the different projections, we get
+the following result:
+@image html fisheye1.png "Comparison of different projection functions"
+
+The rectilinear function diverges quickly, while the fisheye projections
+remain bounded. Given a fixed focal length, the larger angles can be mapped
+to significantly different distances from the center. Especially the
+stereographic and orthographic mappings show a noticeably different behaviour
+to the equidistant and equisolid mappings.
+
+If we postulate a fixed viewing angle of 180 degrees over the image
+diagonal of an APS-C type camera, we get different focal lengths for
+the different lens types as a result:
+@image html fisheye2.png "Different focal lengths for fixed viewing angle"
+
+Therefore e.g. an 8mm Peleng fisheye (which more or less implements an
+equidistant mapping) supports full 180° viewing angle even on a
+crop factor of 1.6, while the aforementioned Samyang 8mm achieves
+"only" about 160 (crop 1.6) to 168 (crop 1.5) degrees due to its
+stereographic mapping function. When looking e.g. at Four Thirds (as the
+smallest 'cropped' sensor used in DSLR cameras with a crop factor 2.0),
+one gets a viewing angle of roughly 155° for the equidistant and  136° for
+the stereographic case. 
+
+
+*/

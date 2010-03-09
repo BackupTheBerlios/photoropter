@@ -10,8 +10,8 @@ project(photoropter)
 
 # version
 set(photoropter_VERSION_MAJOR "0")
-set(photoropter_VERSION_MINOR "0")
-set(photoropter_VERSION_PATCH "7b")
+set(photoropter_VERSION_MINOR "1")
+set(photoropter_VERSION_PATCH "0b")
 set(photoropter_VERSION 
   "${photoropter_VERSION_MAJOR}.${photoropter_VERSION_MINOR}.${photoropter_VERSION_PATCH}")
 
@@ -105,6 +105,9 @@ if(DOXYGEN_FOUND)
   set(DOXY_INPUT "${DOXY_INPUT} \"${DOXYGEN_DOCSRC_DIR}/license.txt\"")
   set(DOXY_INPUT "${DOXY_INPUT} \"${DOXYGEN_DOCSRC_DIR}/codingstyle.txt\"")
   set(DOXY_INPUT "${DOXY_INPUT} \"${DOXYGEN_DOCSRC_DIR}/techback.txt\"")
+  set(DOXY_INPUT "${DOXY_INPUT} \"${DOXYGEN_DOCSRC_DIR}/techback_geom.txt\"")
+  set(DOXY_INPUT "${DOXY_INPUT} \"${DOXYGEN_DOCSRC_DIR}/techback_phtrcoord.txt\"")
+  set(DOXY_INPUT "${DOXY_INPUT} \"${DOXYGEN_DOCSRC_DIR}/techback_sizes.txt\"")
   set(DOXY_INPUT "${DOXY_INPUT} \"${DOXYGEN_DOCSRC_DIR}/tutorial.txt\"")
 
   if(PHTR_DOCUMENT_ALL)
@@ -186,6 +189,7 @@ set(PHTR_INCLUDES
   ${PHTR_INCLUDE_DIR}/model/subpixel_correction_model.h
   ${PHTR_INCLUDE_DIR}/model/vignetting_colour_model.h
   ${PHTR_INCLUDE_DIR}/auto_scaler.h
+  ${PHTR_INCLUDE_DIR}/auto_scaler.tpl.h
   ${PHTR_INCLUDE_DIR}/colour_correction_queue.h
   ${PHTR_INCLUDE_DIR}/colour_correction_queue.tpl.h
   ${PHTR_INCLUDE_DIR}/exception.h
@@ -223,6 +227,7 @@ set(PHTR_SOURCES
   ${PHTR_SRC_DIR}/model/ptlens_pixel_model.cpp
   ${PHTR_SRC_DIR}/model/scaler_pixel_model.cpp
   ${PHTR_SRC_DIR}/model/vignetting_colour_model.cpp
+  ${PHTR_SRC_DIR}/auto_scaler.cpp
   ${PHTR_SRC_DIR}/colour_correction_queue.cpp
   ${PHTR_SRC_DIR}/exception.cpp
   ${PHTR_SRC_DIR}/gamma_func.cpp

@@ -324,29 +324,29 @@ add_models()
     if (settings_.auto_scale)
     {
         std::auto_ptr<IAutoScaler> scaler(get_auto_scaler(storage_T, *image_transform_));
-    double auto_scale;
-    bool found_scale = scaler->find_scale(std::max(dst_width_, dst_height_), auto_scale);
-    std::stringstream sstr;
+        double auto_scale;
+        bool found_scale = scaler->find_scale(std::max(dst_width_, dst_height_), auto_scale);
+        std::stringstream sstr;
 
-    if (found_scale)
-    {
-        sstr << "Autoscale: " << 1.0 / auto_scale;
+        if (found_scale)
+        {
+            sstr << "Autoscale: " << 1.0 / auto_scale;
 
-        model::ScalerPixelModel scaler_mod(param_aspect,
-            image_aspect,
-            settings_.param_crop,
-            settings_.image_crop);
+            model::ScalerPixelModel scaler_mod(param_aspect,
+                                               image_aspect,
+                                               settings_.param_crop,
+                                               settings_.image_crop);
 
-        scaler_mod.set_model_param(1.0 / auto_scale);
+            scaler_mod.set_model_param(1.0 / auto_scale);
 
-        image_transform_->pixel_queue().add_model(scaler_mod);
-    }
-    else
-    {
-        sstr << "Autoscale failed.";
-    }
+            image_transform_->pixel_queue().add_model(scaler_mod);
+        }
+        else
+        {
+            sstr << "Autoscale failed.";
+        }
 
-    log(sstr.str());
+        log(sstr.str());
     }
 
     // apply vignetting correction

@@ -68,6 +68,10 @@ namespace phtr
 
         /**
         * @brief A geometric %model to perform geometry conversion.
+        * @details Usually you will not use this template directly, but
+        * create instances through @ref get_geometry_conversion().
+        * @param src_model_T The source geometry.
+        * @param dst_model_T The destination geometry.
         */
         template <typename src_model_T, typename dst_model_T>
         class GeometryConvertPixelModel
@@ -182,7 +186,8 @@ namespace phtr
                 double input_crop);
 
         /**
-         * @brief Function to instantiate a matching geometry conversion object.
+         * @brief Function to instantiate a matching @ref GeometryConvertPixelModel<>
+         * geometry conversion object.
          * @param src_geom     The source geometry.
          * @param dst_geom     The destination geometry.
          * @param input_aspect The aspect ratio of the image.
