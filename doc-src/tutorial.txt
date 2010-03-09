@@ -33,7 +33,7 @@ view_r_t src_img_view(src_ptr, img_width, img_height);
 view_w_t dst_img_view(dst_ptr, img_width, img_height);
 @endcode
 
-And that's it. This will create two image views for Photoropter to work with
+And that's all. This will create two image views for Photoropter to work with
 (one for reading and one for writing). Since a reading view is strictly
 read-only, an instance can even work directly on top of your application's image
 data.
@@ -41,8 +41,8 @@ data.
 @section tutorial_ptlens PTLens correction
 
 Now let's perform a geometric transformation on the image. For this, we have to
-decide the interpolation method Photoropter shall use (at the moment, only
-bilinear interpolation is supported, but that will change).
+decide the interpolation method Photoropter shall use; bilinear interpolation
+yields reasonable quality and is quite fast, so we will use that one here.
 
 @code
 #include <photoropter/image_transform.h>
@@ -65,8 +65,12 @@ std::auto_ptr<IImageTransform> transform(get_image_transform(Interpolation::Bili
 @endcode
 
 Now we have a transformation object which works on the two views we created
-earlier. The latter holds two transformation queues: one for geometrical and one
+earlier. The latter holds three transformation queues: two for geometrical and one
 for colour transformations. Of course, the PTLens model is a geometrical one.
+Furthermore, it can work both on the pixel and on the subpixel level, allowing
+very sophisticated TCA corrections (i.e. essentially the same as Hugin's
+fulla tool provides). At this point we are interested in a purely
+geometrical correction, so we use only the pixel queue.
 
 @code
 #include <photoropter/model/pixel_correction_model.h>
@@ -101,6 +105,6 @@ even of multiple CPU cores), so it should be done quite quickly. Of course,
 there's much more that Photoropter can do, e.g. dealing with different forms of
 regions of interest (ROI), gamma handling, colour corrections... this was just a
 first example. If you want to see a bit more, have a look inside the 'phtrx'
-demo application: it shows a larger subset of Photoropters abilities.
+demo application: it shows a larger subset of Photoropter's abilities.
 
 */

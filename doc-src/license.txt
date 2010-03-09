@@ -30,7 +30,7 @@ part of Photoropter you contributed to.</li>
 you may or may not have committed. This essentially means that if you steal
 code from someone else and present it to me as your own, I \em will
 make you regret it.</li>
-<li>For the moment, the most easy way to send me your contributions is by
+<li>For the moment, the easiest way to send me your contributions is by
 sending me a patch file via mail.</li>
 </ul>
 
