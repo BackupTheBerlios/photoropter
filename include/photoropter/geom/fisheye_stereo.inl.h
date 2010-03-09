@@ -44,11 +44,11 @@ namespace phtr
         }
 
         bool
-        FisheyeStereo::
-        to_spherical_coords(const double& x,
-                            const double& y,
-                            double& phi,
-                            double& theta) const
+            FisheyeStereo::
+            to_spherical_coords(const double& x,
+            const double& y,
+            double& phi,
+            double& theta) const
         {
             double r = std::sqrt(x * x + y * y);
 
@@ -64,21 +64,18 @@ namespace phtr
         }
 
         bool
-        FisheyeStereo::
-        to_cartesian_coords(const double& phi,
-                            const double& theta,
-                            double& x,
-                            double& y) const
+            FisheyeStereo::
+            to_cartesian_coords(const double& phi,
+            const double& theta,
+            double& x,
+            double& y) const
         {
-            double r(0.0);
-            if (theta >= PHTR_PI / 2.0)
+            if (theta >= PHTR_PI)
             {
-                r = 4.0 * theta * focal_length_;
+                return false;
             }
-            else
-            {
-                r = std::tan(theta / 2) * 2.0 * focal_length_;
-            }
+
+            double r = std::tan(theta / 2) * 2.0 * focal_length_;
 
             x = std::cos(phi) * r;
             y = -std::sin(phi) * r;

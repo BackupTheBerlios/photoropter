@@ -28,6 +28,7 @@ THE SOFTWARE.
 #define PHTR_AUTO_SCALER_H__
 
 #include <cmath>
+#include <algorithm>
 
 #include <photoropter/pixel_correction_queue.h>
 #include <photoropter/subpixel_correction_queue.h>
@@ -56,10 +57,11 @@ namespace phtr
             /**
             * @brief Try to find the minimal image scale.
             * @details Scaling the image by 1/result should lead to an image without black borders.
-            * @param precision The desired reciprocal precision (usually the number of pixels).
-            * @return The scale.
+            * @param[in] precision The desired reciprocal precision (usually the number of pixels).
+            * @param[out] scale The scale
+            * @return 'true' if autoscaler was successful, 'false' otherwise.
             */
-            virtual double find_scale(size_t precision) const = 0;
+            virtual bool find_scale(size_t precision, double& scale) const = 0;
     };
 
     /**
@@ -67,26 +69,25 @@ namespace phtr
     * @brief The scaling implementation tries to find the 'minimal' scaling factor
     * of the image, so that scaling the image by 1/result should lead to an image
     * without black borders.
-    * @note The algorithm is experimental and not strictly guaranteed to converge
-    * under all circumstances.
+    * @note The algorithm is currently to be considered 'experimental' and not
+    * strictly guaranteed to converge under all circumstances.
     */
-    class AutoScalerImpl : public IAutoScaler
+    template <typename coord_tuple_T>
+    class AutoScaler : public IAutoScaler
     {
 
             /* ****************************************
              * public interface
              * **************************************** */
 
-        typedef mem::CoordTupleRGB coord_tuple_t;
-
         public:
             /**
             * @brief Constructor.
             * @details Copies the geometric transformation queues of a given
             * transformation object.
-            * @param image_transform The image transformation object.
+            * @param[in] image_transform The image transformation object.
             */
-            AutoScalerImpl(const IImageTransform& image_transform)
+            AutoScaler(const IImageTransform& image_transform)
                     : image_transform_(image_transform)
             {
                 pixel_queue_ = image_transform_.pixel_queue();
@@ -97,44 +98,147 @@ namespace phtr
             /**
             * @brief Try to find the minimal image scale.
             * @details Scaling the image by 1/result should lead to an image without black borders.
-            * @param precision The desired reciprocal precision (usually the number of pixels).
-            * @return The scale.
+            * @param[in] precision The desired reciprocal precision (usually the number of pixels).
+            * @param[out] scale The scale
+            * @return 'true' if autoscaler was successful, 'false' otherwise.
             */
-            double find_scale(size_t precision) const
+            bool find_scale(size_t precision, double& scale) const
             {
-                const double max_diff = 0.01 / static_cast<double>(precision);
-                double diff(2 * max_diff * static_cast<double>(precision));
+                double v1(1.0);
+                double v2(1.0);
+                bool found_pair = find_start_pair(precision, v1, v2);
 
-                double factor(1.0);
-                double next_factor(1.0);
-
-                double step_fact = static_cast<double>(precision / 20);
-
-                size_t iter = 0;
-                while (iter < precision && diff > max_diff * factor)
+                if (!found_pair)
                 {
-                    next_factor = find_scale_step(precision, factor);
-                    next_factor = ((step_fact - 1) * factor + next_factor) / static_cast<double>(step_fact);
-                    diff = std::fabs(factor - next_factor);
-
-                    factor = next_factor;
-                    ++iter;
+                    return false;
                 }
-                std::cerr << iter << std::endl;
 
-                // overshoot slightly to avoid border effects
-                return 1.0 / (1.0 / factor + 2.0 / static_cast<double>(precision));
+                if (bisect(precision, precision, v1, v2))
+                {
+                    //std::cerr << "bisect successful: " << v1 << " " << v2 << std::endl;
+                    scale = (v1 + v2) / 2.0;
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+
             }
 
             /* ****************************************
              * internals
              * **************************************** */
 
+    private:
+        /**
+        * @brief Perform bisection search.
+        * @param[in] precision The precision to be achieved (reciprocal value).
+        * @param[in] The (remaining) search depth.
+        * @param[in,out] val1 The left bracketing value.
+        * @param[in,out] val2 The right bracketing value.
+        */
+        bool bisect(size_t precision, size_t step, double& val1, double& val2) const
+        {
+            if (!step)
+            {
+                // search depth exhausted, fail
+                return false;
+            }
+
+            double mid_val = (val1 + val2) / 2.0;
+            double diff = std::fabs(val1 - val2);
+            if (static_cast<double>(precision * 10) * diff < std::fabs(mid_val))
+            {
+                // desired precision achieved, succeed
+                return true;
+            }
+
+            double scale_step1 = find_scale_step(precision, val1) - 1.0;
+            double scale_step2 = find_scale_step(precision, val2) - 1.0;
+            double mid_scale_step = find_scale_step(precision, mid_val) - 1.0;
+            //std::cerr << step << " " << val1 << " " << scale_step1 + 1.0 << "  " <<
+            //    mid_val << " " << mid_scale_step + 1.0 << "  " <<
+            //    val2 << " " << scale_step2 + 1.0 << std::endl;
+
+            if (!(scale_step1 * scale_step2 < 0))
+            {
+                // val1 and val2 not bracketing the value we are looking for, fail
+                return false;
+            }
+
+            if (scale_step1 * mid_scale_step < 0)
+            {
+                val2 = mid_val;
+            }
+            else
+            {
+                val1 = mid_val;
+            }
+
+            // recursion: step one level down
+            --step;
+            return bisect(precision, step, val1, val2);
+        }
+
+    private:
+        /**
+        * @brief Find the starting pair for the bisection search.
+        * @details In this first search, the given start value is examined whether the
+        * corresponding scaling factor is >1.0 or <1.0; depending on the result, a
+        * quick search for a fitting second value is performed.
+        * @param[in] precision The precision to be achieved (reciprocal value).
+        * @param[in,out] val1 The left bracketing value. Input is a arbitrary start value,
+        * output the found left bracketing value (if any)
+        * @param[out] val2 The right bracketing value.
+        */
+        bool find_start_pair(size_t precision, double& val1, double& val2) const
+        {
+            double mult(2.0);
+            double scale_step = find_scale_step(precision, val1);
+
+            val2 = val1;
+
+            const size_t max_step(10);
+            size_t step(0);
+
+            if (scale_step < 1.0)
+            {
+                while (step < max_step)
+                {
+                    ++step;
+                    val1 /= mult;
+                    scale_step = find_scale_step(precision, val1);
+
+                    if (scale_step >= 1.0)
+                    {
+                        return true;
+                    }
+                }
+            }
+            else
+            {
+                while (step < max_step)
+                {
+                    ++step;
+                    val2 *= mult;
+                    scale_step = find_scale_step(precision, val2);
+
+                    if (scale_step < 1.0)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
         private:
             /**
             * @brief Perform iteration step.
-            * @param precision The desired reciprocal precision (usually the number of pixels).
-            * @param pre_scale Scaling factor from previous iterations.
+            * @param[in] precision The desired reciprocal precision (usually the number of pixels).
+            * @param[in] pre_scale Scaling factor from previous iterations.
             */
             double find_scale_step(size_t precision, double pre_scale) const
             {
@@ -146,9 +250,9 @@ namespace phtr
                 double fact_y = search_horizontal(aspect_ratio, px_width, pre_scale);
                 double fact_x = search_vertical(aspect_ratio, px_height, pre_scale);
 
-                double factor = min(fact_x, fact_y);
+                double factor = std::min(fact_x, fact_y);
 
-                return std::sqrt(factor) * pre_scale;
+                return std::sqrt(factor);
 
             }
 
@@ -157,9 +261,9 @@ namespace phtr
             * @brief Perform horizontal search.
             * @details The top and bottom borders of the destination image are
             * 'scanned' fo the minimal scaling factor.
-            * @param aspect_ratio The image aspect ratio.
-            * @param px_width The image's pixel width to be assumed.
-            * @param pre_scale Scaling factor from previous iterations.
+            * @param[in] aspect_ratio The image aspect ratio.
+            * @param[in] px_width The image's pixel width to be assumed.
+            * @param[in] pre_scale Scaling factor from previous iterations.
             * @return The factor (squared).
             */
             double search_horizontal(double aspect_ratio, size_t px_width, double pre_scale) const
@@ -179,7 +283,7 @@ namespace phtr
                     interp_coord_t cur_pixel_x(static_cast<interp_coord_t>(i));
                     interp_coord_t cur_dst_x = cur_pixel_x * scale_x - aspect_ratio;
 
-                    factor_tmp = min(get_factor(cur_dst_x, dst_top, pre_scale),
+                    factor_tmp = std::min(get_factor(cur_dst_x, dst_top, pre_scale),
                                      get_factor(cur_dst_x, dst_bottom, pre_scale));
                     if (first)
                     {
@@ -201,9 +305,9 @@ namespace phtr
             * @brief Perform vertical search.
             * @details The left and right borders of the destination image are
             * 'scanned' fo the minimal scaling factor.
-            * @param aspect_ratio The image aspect ratio.
-            * @param px_width The image's pixel width to be assumed.
-            * @param pre_scale Scaling factor from previous iterations.
+            * @param[in] aspect_ratio The image aspect ratio.
+            * @param[in] px_width The image's pixel width to be assumed.
+            * @param[in] pre_scale Scaling factor from previous iterations.
             * @return The factor (squared).
             */
             double search_vertical(double aspect_ratio, size_t px_height, double pre_scale) const
@@ -223,7 +327,7 @@ namespace phtr
                     interp_coord_t cur_pixel_y(static_cast<interp_coord_t>(i));
                     interp_coord_t cur_dst_y = cur_pixel_y * scale_y - 1.0;
 
-                    factor_tmp = min(get_factor(dst_left, cur_dst_y, pre_scale),
+                    factor_tmp = std::min(get_factor(dst_left, cur_dst_y, pre_scale),
                                      get_factor(dst_right, cur_dst_y, pre_scale));
                     if (first)
                     {
@@ -242,32 +346,13 @@ namespace phtr
 
         private:
             /**
-            * @brief Auxiliary function: minimum of two values.
-            * @param x1 First value.
-            * @param x2 Second value.
-            * @return The minimal value.
-            */
-            double min(double x1, double x2) const
-            {
-                if (x1 < x2)
-                {
-                    return x1;
-                }
-                else
-                {
-                    return x2;
-                }
-            }
-
-        private:
-            /**
             * @brief Get the 'scaling factor' for a border point.
             * @brief This determines (for a given border point in the destination image) the distance of the
             * corresponding point to the image centre in the source image (squared) and calculates the ratio to
             * the corresponding distance in the destination image.
-            * @param dest_x Horizontal coordinate in the destination image.
-            * @param dest_y Vertical coordinate in the destination image.
-            * @param pre_scale Scaling factor from previous iterations.
+            * @param[in] dest_x Horizontal coordinate in the destination image.
+            * @param[in] dest_y Vertical coordinate in the destination image.
+            * @param[in] pre_scale Scaling factor from previous iterations.
             * @return The scaling factor (squared).
             */
             double get_factor(interp_coord_t dest_x, interp_coord_t dest_y, double pre_scale) const
@@ -276,7 +361,7 @@ namespace phtr
                 interp_coord_t dst_r2 = dest_x * dest_x + dest_y * dest_y;
 
                 mem::CoordTupleMono pixel_coords;
-                coord_tuple_t subpixel_coords;
+                coord_tuple_T subpixel_coords;
 
                 // apply coordinate transformations
                 pixel_queue_.get_src_coords(dest_x * pre_scale, dest_y * pre_scale, pixel_coords);
@@ -291,12 +376,12 @@ namespace phtr
             /**
             * @brief Calculate the distance of the point farthest away
             * from the image centre in a given tuple.
-            * @param coords The coordinates tuple.
+            * @param[in] coords The coordinates tuple.
             * @return The distance (squared).
             */
-            double maximal_r2(const coord_tuple_t& coords) const
+            double maximal_r2(const coord_tuple_T& coords) const
             {
-                size_t num_channels = coord_tuple_t::channel_order_t::colour_tuple_t::num_vals;
+                size_t num_channels = coord_tuple_T::channel_order_t::colour_tuple_t::num_vals;
 
                 interp_coord_t r2(1.0);
                 bool first(true);
@@ -336,7 +421,50 @@ namespace phtr
             * @brief The internal queue of geometrical correction models to be applied.
             */
             SubpixelCorrectionQueue subpixel_queue_;
-    };
+
+    }; // template class AutoScaler<>
+
+    typedef AutoScaler<mem::CoordTupleRGB> AutoScalerRGB;
+    typedef AutoScaler<mem::CoordTupleRGBA> AutoScalerRGBA;
+
+    /**
+    * @brief Get an AutoScaler implementation based on the storage type.
+    * @details This function determines the storage type at runtime and creates
+    * the appropriate auto scaler.
+    * @param[in] storage_type The storage type.
+    * @param[in] image_transform The image transform object to be used.
+    * @return The auto scaler.
+    */
+    inline IAutoScaler* get_auto_scaler(mem::Storage::type storage_type, const IImageTransform& image_transform)
+    {
+        switch (storage_type)
+        {
+        case mem::Storage::rgb_8_inter:
+        default:
+            return new AutoScalerRGB(image_transform);
+            break;
+
+        case mem::Storage::rgb_16_inter:
+            return new AutoScalerRGB(image_transform);
+            break;
+
+        case mem::Storage::rgb_32_inter:
+            return new AutoScalerRGB(image_transform);
+            break;
+
+        case mem::Storage::rgba_8_inter:
+            return new AutoScalerRGBA(image_transform);
+            break;
+
+        case mem::Storage::rgba_16_inter:
+            return new AutoScalerRGBA(image_transform);
+            break;
+
+        case mem::Storage::rgba_32_inter:
+            return new AutoScalerRGBA(image_transform);
+            break;
+        }
+    }
 
 } // namespace phtr
 

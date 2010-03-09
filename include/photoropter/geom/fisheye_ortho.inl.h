@@ -44,11 +44,11 @@ namespace phtr
         }
 
         bool
-        FisheyeOrtho::
-        to_spherical_coords(const double& x,
-                            const double& y,
-                            double& phi,
-                            double& theta) const
+            FisheyeOrtho::
+            to_spherical_coords(const double& x,
+            const double& y,
+            double& phi,
+            double& theta) const
         {
             double r = std::sqrt(x * x + y * y);
 
@@ -61,33 +61,27 @@ namespace phtr
             double asin_arg = r / focal_length_;
             if (asin_arg >= 1.0)
             {
-                theta = PHTR_PI / 2.0 * asin_arg;
+                return false;
             }
-            else
-            {
-                theta = std::asin(asin_arg);
-            }
+
+            theta = std::asin(asin_arg);
 
             return true;
         }
 
         bool
-        FisheyeOrtho::
-        to_cartesian_coords(const double& phi,
-                            const double& theta,
-                            double& x,
-                            double& y) const
+            FisheyeOrtho::
+            to_cartesian_coords(const double& phi,
+            const double& theta,
+            double& x,
+            double& y) const
         {
-            double r;
-
             if (theta >= PHTR_PI / 2)
             {
-                r = 2.0 * theta / PHTR_PI * focal_length_;
+                return false;
             }
-            else
-            {
-                r = std::sin(theta) * focal_length_;
-            }
+
+            double r = std::sin(theta) * focal_length_;
 
             x = std::cos(phi) * r;
             y = -std::sin(phi) * r;

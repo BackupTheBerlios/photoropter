@@ -49,6 +49,7 @@ struct Settings
             tca_r(1.0),
             tca_b(1.0),
             do_scale(false),
+            auto_scale(false),
             scale_fact(1.0),
             vignetting_corr(false),
             vignetting_params(3, 0),
@@ -94,6 +95,7 @@ struct Settings
 
     // linear scale
     bool do_scale;
+    bool auto_scale;
     double scale_fact;
 
     // perform vignetting correction?

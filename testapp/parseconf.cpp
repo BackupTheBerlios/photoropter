@@ -80,6 +80,7 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
         ("param-crop", po::value<double>(), "Crop factor used for parameter calibration")
         ("image-crop", po::value<double>(), "Diagonal image crop factor")
         ("scale,s", po::value<double>(), "Linear scaling factor")
+        ("autoscale", "enable auto-scaling")
         ("sub-rect", po::value<std::string>(), "Clip a sub-rectangle from the image: x0:y0:width:height")
         ("gain-func", po::value<std::string>(), "Type of gain function:\n"
          "  srgb    - sRGB gamma (default)\n"
@@ -147,6 +148,11 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
             settings.scale_fact = options_map["scale"].as<double>();
         }
 
+        if (options_map.count("autoscale"))
+        {
+            settings.auto_scale = true;
+        }
+
         if (options_map.count("input-file"))
         {
             settings.inp_file = options_map["input-file"].as<std::string>();
@@ -194,7 +200,7 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
             }
             else
             {
-                std::cerr << "Error: incorrent number of parameters for centre shift" << std::endl;
+                std::cerr << "Error: incorrect number of parameters for centre shift" << std::endl;
                 return false;
             }
 
@@ -229,7 +235,7 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
             }
             else
             {
-                std::cerr << "Error: incorrent number of parameters for PTLens correction" << std::endl;
+                std::cerr << "Error: incorrect number of parameters for PTLens correction" << std::endl;
                 return false;
             }
 
@@ -264,7 +270,7 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
             }
             else
             {
-                std::cerr << "Error: incorrent number of parameters for PTLens correction" << std::endl;
+                std::cerr << "Error: incorrect number of parameters for PTLens correction" << std::endl;
                 return false;
             }
 
@@ -299,7 +305,7 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
             }
             else
             {
-                std::cerr << "Error: incorrent number of parameters for PTLens correction" << std::endl;
+                std::cerr << "Error: incorrect number of parameters for PTLens correction" << std::endl;
                 return false;
             }
 
@@ -334,7 +340,7 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
             }
             else
             {
-                std::cerr << "Error: incorrent number of parameters for centre shift" << std::endl;
+                std::cerr << "Error: incorrect number of parameters for centre shift" << std::endl;
                 return false;
             }
 
@@ -369,7 +375,7 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
             }
             else
             {
-                std::cerr << "Error: incorrent number of parameters for Vignetting correction" << std::endl;
+                std::cerr << "Error: incorrect number of parameters for Vignetting correction" << std::endl;
                 return false;
             }
 
@@ -397,7 +403,7 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
             size_t num_params = tmp_list.size();
             if (num_params != 4)
             {
-                std::cerr << "Error: incorrent number of parameters for sub rectangle" << std::endl;
+                std::cerr << "Error: incorrect number of parameters for sub rectangle" << std::endl;
                 return false;
             }
 
@@ -509,7 +515,7 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
             }
             else
             {
-                std::cerr << "Error: incorrent number of parameters for geometry conversion" << std::endl;
+                std::cerr << "Error: incorrect number of parameters for geometry conversion" << std::endl;
                 return false;
             }
 
@@ -550,7 +556,7 @@ bool parse_command_line(int argc, char* argv[], Settings& settings)
             }
             else
             {
-                std::cerr << "Error: incorrent number of parameters for focal length specification" << std::endl;
+                std::cerr << "Error: incorrect number of parameters for focal length specification" << std::endl;
                 return false;
             }
 
